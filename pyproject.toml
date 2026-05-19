@@ -1,0 +1,62 @@
+[project]
+name = "odoo-addons-l10n-paraguay"
+version = "0.1.0"
+description = "OCA-style Odoo Community 18 modules for Paraguay (DNIT/SIFEN) fiscal localization"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "AGPL-3.0" }
+authors = [
+  { name = "Careaga Dev", email = "dev@careaga.dev" },
+]
+keywords = ["odoo", "odoo18", "l10n", "paraguay", "sifen", "dnit", "oca"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Framework :: Odoo",
+  "Framework :: Odoo :: 18.0",
+  "License :: OSI Approved :: GNU Affero General Public License v3",
+  "Operating System :: OS Independent",
+]
+
+# Runtime dependencies for the Paraguayan SIFEN/DNIT pipeline.
+# Pinned roughly to versions known to work with Odoo 18 wheels at bootstrap time.
+dependencies = [
+  "lxml>=4.9",
+  "signxml>=3.2",
+  "zeep>=4.2",
+  "cryptography>=42.0",
+  "qrcode[pil]>=7.4",
+  "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit>=3.6",
+  "pylint-odoo>=9.1",
+  "black>=24.0",
+  "isort>=5.13",
+  "flake8>=7.0",
+  "pytest>=8.0",
+  "pytest-odoo>=1.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/Ezcareaga/l10n-paraguay"
+Repository = "https://github.com/Ezcareaga/l10n-paraguay"
+Issues = "https://github.com/Ezcareaga/l10n-paraguay/issues"
+
+# Placeholder: when modules are added under top-level package dirs (l10n_py_*),
+# their __manifest__.py files are the source of truth for Odoo. This pyproject.toml
+# is for ancillary tooling (pre-commit, type checkers, the codegraph CLI) only.
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_odoo = "odoo"
+known_odoo_addons = "odoo.addons"
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "ODOO", "ODOO_ADDONS", "FIRSTPARTY", "LOCALFOLDER"]

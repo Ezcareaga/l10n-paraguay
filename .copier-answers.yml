@@ -1,0 +1,26 @@
+# Generated when this repo is regenerated from OCA's oca-addons-repo-template.
+# This is a placeholder; replace with a real copier run once the template is vendored
+# (see references/oca-addons-repo-template/).
+#
+# Run (from repo root, with copier installed):
+#   copier copy gh:OCA/oca-addons-repo-template .
+#
+# TODO(bootstrap): drive the real copier prompt and let it overwrite this file.
+_src_path: gh:OCA/oca-addons-repo-template
+odoo_version: 18.0
+repo_slug: l10n-paraguay
+repo_name: Paraguay Localization
+repo_description: OCA-style Odoo Community 18 modules for Paraguay (DNIT/SIFEN)
+include_wkhtmltopdf: false
+include_pg_dependencies: false
+include_metabase: false
+travis_apt_packages: []
+travis_apt_sources: []
+dependency_installation_mode: PIP
+ci: GitHub
+generate_requirements_txt: true
+rebel_module_groups: []
+convert_readme_fragments_to_markdown: true
+github_check_license: true
+github_enable_makepot: false
+github_enable_stale_action: false

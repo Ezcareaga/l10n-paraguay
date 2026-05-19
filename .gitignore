@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+develop-eggs/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing / coverage
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+htmlcov/
+
+# Type checkers
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+
+# Odoo runtime
+*.pyo
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+.odoorc
+*.log
+filestore/
+sessions/
+data_dir/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local config
+*.local
+.env.local
+.env.*.local
+
+# Codegraph index (regenerable)
+.codegraph/index.db
+.codegraph/*.tmp
+
+# Reference repos are shallow clones for codegraph indexing, NOT source of truth.
+# Regenerable via `scripts/setup_references.ps1` (Windows) / `scripts/setup_references.sh` (POSIX).
+references/
+
+# Generated docs caches
+docs/_build/
+docs/.doctrees/
+
+# Pre-commit
+.pre-commit-cache/
+
+# Node (not used directly but may sneak in via tooling)
+node_modules/
+
+# Original/raw fixtures may be large — keep tracked but exclude transient files
+docs/original/*.tmp
+docs/original/*.partial
+
+# Editor backups
+*.bak
+*.orig
