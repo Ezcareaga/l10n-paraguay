@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# bin/codegraph — wrapper POSIX para el CLI codegraph
+#
+# Uso:
+#   ./bin/codegraph search "account.edi.format inheritance"
+#   ./bin/codegraph symbol "L10nLatamDocumentType"
+#   ./bin/codegraph file "references/odoo-18.0/addons/l10n_pe/__manifest__.py"
+#   ./bin/codegraph stats
+
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+CLI="$REPO_ROOT/scripts/codegraph_cli.py"
+
+if command -v python >/dev/null 2>&1; then
+    PYTHON=python
+elif command -v python3 >/dev/null 2>&1; then
+    PYTHON=python3
+else
+    echo "ERROR: Python not found. Install Python 3.11+." >&2
+    exit 2
+fi
+
+exec "$PYTHON" "$CLI" "$@"
