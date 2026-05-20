@@ -52,6 +52,7 @@ INCLUDE_DIRS = [
 EXT_KIND = {
     ".py": "python",
     ".xml": "xml",
+    ".xsd": "xsd",
     ".csv": "csv",
     ".rst": "rst",
     ".po": "po",
