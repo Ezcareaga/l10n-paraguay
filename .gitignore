@@ -96,3 +96,8 @@ docs/original/*.partial
 # Editor backups
 *.bak
 *.orig
+
+# Claude Code — local config (no commit)
+.claude/CLAUDE.local.md
+.claude/settings.local.json
+.claude/memory/
