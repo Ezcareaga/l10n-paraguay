@@ -1,0 +1,61 @@
+# Odoo 18 Community + PostgreSQL 16 — desarrollo local de l10n-paraguay.
+#
+# Uso (desde repo root):
+#   docker compose -f infra/docker-compose.yml up -d
+#   # primera vez: abrir http://localhost:8069 y crear DB l10n_py_dev
+#   # (Country: Paraguay, Language: Spanish, Demo data: NO)
+#
+# Logs / shell:
+#   docker compose -f infra/docker-compose.yml logs -f odoo
+#   docker compose -f infra/docker-compose.yml exec odoo bash
+#
+# Reset total:
+#   docker compose -f infra/docker-compose.yml down -v
+#
+# Puerto Postgres 5433 (no 5432) — defensivo contra postgres local del host.
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: l10n_py_db
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  odoo:
+    image: odoo:18.0
+    container_name: l10n_py_odoo
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      HOST: postgres
+      USER: odoo
+      PASSWORD: odoo
+    ports:
+      - "8069:8069"
+      - "8072:8072"
+    volumes:
+      - odoo_data:/var/lib/odoo
+      # Mount del repo completo: Odoo escanea /mnt/extra-addons/l10n-paraguay/
+      # buscando módulos con __manifest__.py (l10n_py_base, l10n_py_account, etc.)
+      - ..:/mnt/extra-addons/l10n-paraguay
+    command:
+      - --dev=all
+      - --addons-path=/mnt/extra-addons,/mnt/extra-addons/l10n-paraguay
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  odoo_data:
