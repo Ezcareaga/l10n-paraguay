@@ -115,8 +115,33 @@ python scripts/build_index.py
 
 ## Estado actual
 
-**Bootstrap completado:** 2026-05-19. Próximo paso: empezar `l10n_py_base`
-siguiendo [docs/50_MODULES_ROADMAP.md](docs/50_MODULES_ROADMAP.md) **Fase 1**.
+**Fase 1a completada:** 2026-05-22. `l10n_py_base` instalable en `l10n_py_dev`
+con 21 tests verdes. Próximo paso: `l10n_py_account` (resto de Fase 1) —
+plan de cuentas + taxes IVA + `l10n_latam.document.type` + timbrado.
+
+## Skills + subagents — defaults del proyecto
+
+Sobre la regla global (`~/.claude/CLAUDE.md` REGLA #1), defaults específicos
+para este repo (Odoo 18 + Python 3.11 + Paraguay/SIFEN):
+
+| Trigger | Skill | Subagent |
+|---|---|---|
+| Nuevo módulo `l10n_py_*` | `superpowers:brainstorming` + `superpowers:writing-plans` | `python-pro` |
+| Modelos / ORM Odoo (`models/`) | `ecc:python-testing` | `python-pro` |
+| Migrations SQL / ORM heavy | `ecc:database-migrations` | `postgres-pro` |
+| Vistas XML / OWL components | — | `react-specialist` (OWL ≈ React) |
+| EDI XML / firma XAdES / SOAP | — | `python-pro` + `security-auditor` (opus) |
+| Tests Odoo (TransactionCase + unit) | `superpowers:test-driven-development` + `ecc:python-testing` | `test-automator` |
+| Security review (antes de PR pública / OCA) | `ecc:security-review` | `security-auditor` (opus) |
+| Arquitectura cross-módulo | — | `architect-reviewer` (opus) |
+| Antes de commit | `ecc:code-review` + `superpowers:verification-before-completion` | `code-reviewer` |
+| Búsqueda en `references/` | — | **NUNCA** Read manual — usar `bin/codegraph` |
+
+**Excepciones específicas del proyecto** (ejecutar directo, sin skill):
+- Regenerar data files con `scripts/generate_module_data.py` después de tocar
+  CSVs canónicos.
+- Reinstalar el módulo en `l10n_py_dev` con `docker exec ... -u l10n_py_base`.
+- Consultas read-only al codegraph (`bin/codegraph search/symbol/file`).
 
 ## Para Claude Code en futuras sesiones
 
