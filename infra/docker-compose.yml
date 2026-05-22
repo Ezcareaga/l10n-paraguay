@@ -48,9 +48,11 @@ services:
       - "8072:8072"
     volumes:
       - odoo_data:/var/lib/odoo
-      # Mount del repo completo: Odoo escanea /mnt/extra-addons/l10n-paraguay/
-      # buscando módulos con __manifest__.py (l10n_py_base, l10n_py_account, etc.)
-      - ..:/mnt/extra-addons/l10n-paraguay
+      # Solo `addons/` del repo: Odoo escanea /mnt/extra-addons/l10n-paraguay/
+      # buscando módulos l10n_py_* con __manifest__.py. Mantener references/
+      # fuera del mount evita escaneos de 200+ MB y riesgo de cargar módulos
+      # de otras localizaciones por accidente. Ver BUGS_BACKLOG.md #1.
+      - ../addons:/mnt/extra-addons/l10n-paraguay
     command:
       - --dev=all
       - --addons-path=/mnt/extra-addons,/mnt/extra-addons/l10n-paraguay

@@ -12,7 +12,7 @@ módulos `l10n_py_*` de este repo.
    Después de instalar, abrir Docker Desktop y dejar que termine la inicialización.
 
 2. **Compartir la unidad C:** con Docker (Settings → Resources → File Sharing).
-   Necesario para que el mount `..:/mnt/extra-addons/l10n-paraguay` funcione.
+   Necesario para que el mount `../addons:/mnt/extra-addons/l10n-paraguay` funcione.
 
 3. **WSL2** habilitado (Docker Desktop suele instalarlo solo).
 
