@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_l10n_py_regime_user,l10n_py.regime.user,model_l10n_py_regime,base.group_user,1,0,0,0
+access_l10n_py_regime_manager,l10n_py.regime.manager,model_l10n_py_regime,base.group_system,1,1,1,1
+access_l10n_py_taxpayer_type_user,l10n_py.taxpayer.type.user,model_l10n_py_taxpayer_type,base.group_user,1,0,0,0
+access_l10n_py_taxpayer_type_manager,l10n_py.taxpayer.type.manager,model_l10n_py_taxpayer_type,base.group_system,1,1,1,1
+access_l10n_py_recipient_nature_user,l10n_py.recipient.nature.user,model_l10n_py_recipient_nature,base.group_user,1,0,0,0
+access_l10n_py_recipient_nature_manager,l10n_py.recipient.nature.manager,model_l10n_py_recipient_nature,base.group_system,1,1,1,1
+access_l10n_py_district_user,l10n_py.district.user,model_l10n_py_district,base.group_user,1,0,0,0
+access_l10n_py_district_manager,l10n_py.district.manager,model_l10n_py_district,base.group_system,1,1,1,1

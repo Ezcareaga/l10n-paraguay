@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="l10n_py_recipient_nature_view_list" model="ir.ui.view">
+        <field name="name">l10n_py.recipient.nature.list</field>
+        <field name="model">l10n_py.recipient.nature</field>
+        <field name="arch" type="xml">
+            <list string="Naturaleza del Receptor">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="l10n_py_recipient_nature_view_form" model="ir.ui.view">
+        <field name="name">l10n_py.recipient.nature.form</field>
+        <field name="model">l10n_py.recipient.nature</field>
+        <field name="arch" type="xml">
+            <form string="Naturaleza del Receptor">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_l10n_py_recipient_nature" model="ir.actions.act_window">
+        <field name="name">Naturaleza del Receptor</field>
+        <field name="res_model">l10n_py.recipient.nature</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

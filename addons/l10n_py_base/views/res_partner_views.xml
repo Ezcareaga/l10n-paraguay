@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_l10n_py" model="ir.ui.view">
+        <field name="name">res.partner.form.l10n.py</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Inserta campos PY en una nueva pestaña 'Paraguay' visible
+                 solo cuando el partner es de Paraguay. -->
+            <xpath expr="//notebook" position="inside">
+                <page name="l10n_py" string="Paraguay"
+                      invisible="country_code != 'PY'">
+                    <group>
+                        <group string="Identificación SIFEN">
+                            <field name="l10n_py_taxpayer_type_id"/>
+                            <field name="l10n_py_recipient_nature_id"/>
+                            <field name="l10n_py_regime_id"/>
+                            <field name="l10n_py_dv" readonly="1"/>
+                        </group>
+                        <group string="Domicilio DNIT">
+                            <field name="l10n_py_district_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

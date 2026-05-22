@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="l10n_py_regime_view_list" model="ir.ui.view">
+        <field name="name">l10n_py.regime.list</field>
+        <field name="model">l10n_py.regime</field>
+        <field name="arch" type="xml">
+            <list string="Regímenes Tributarios">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="l10n_py_regime_view_form" model="ir.ui.view">
+        <field name="name">l10n_py.regime.form</field>
+        <field name="model">l10n_py.regime</field>
+        <field name="arch" type="xml">
+            <form string="Régimen Tributario">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_l10n_py_regime" model="ir.actions.act_window">
+        <field name="name">Regímenes Tributarios</field>
+        <field name="res_model">l10n_py.regime</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

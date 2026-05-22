@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="l10n_py_taxpayer_type_view_list" model="ir.ui.view">
+        <field name="name">l10n_py.taxpayer.type.list</field>
+        <field name="model">l10n_py.taxpayer.type</field>
+        <field name="arch" type="xml">
+            <list string="Tipos de Contribuyente">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="l10n_py_taxpayer_type_view_form" model="ir.ui.view">
+        <field name="name">l10n_py.taxpayer.type.form</field>
+        <field name="model">l10n_py.taxpayer.type</field>
+        <field name="arch" type="xml">
+            <form string="Tipo de Contribuyente">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_l10n_py_taxpayer_type" model="ir.actions.act_window">
+        <field name="name">Tipos de Contribuyente</field>
+        <field name="res_model">l10n_py.taxpayer.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

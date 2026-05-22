@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Root menu for Paraguay catalogs under Contacts -->
+    <menuitem id="menu_l10n_py_root"
+              name="Paraguay"
+              parent="contacts.menu_contacts"
+              sequence="100"/>
+
+    <menuitem id="menu_l10n_py_regime"
+              name="Regímenes Tributarios"
+              parent="menu_l10n_py_root"
+              action="action_l10n_py_regime"
+              sequence="10"/>
+
+    <menuitem id="menu_l10n_py_taxpayer_type"
+              name="Tipos de Contribuyente"
+              parent="menu_l10n_py_root"
+              action="action_l10n_py_taxpayer_type"
+              sequence="20"/>
+
+    <menuitem id="menu_l10n_py_recipient_nature"
+              name="Naturaleza Receptor"
+              parent="menu_l10n_py_root"
+              action="action_l10n_py_recipient_nature"
+              sequence="30"/>
+
+    <menuitem id="menu_l10n_py_district"
+              name="Distritos"
+              parent="menu_l10n_py_root"
+              action="action_l10n_py_district"
+              sequence="40"/>
+
+</odoo>

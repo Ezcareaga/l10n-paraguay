@@ -1,0 +1,271 @@
+id,code,name,state_id:id,active
+district_py_1,1,ASUNCION (DISTRITO),l10n_py_base.state_py_1,True
+district_py_2,2,CONCEPCION (MUNICIPIO),l10n_py_base.state_py_2,True
+district_py_3,3,SAN LAZARO,l10n_py_base.state_py_2,True
+district_py_4,4,SAN CARLOS,l10n_py_base.state_py_2,True
+district_py_5,5,BELEN,l10n_py_base.state_py_2,True
+district_py_6,6,LORETO,l10n_py_base.state_py_2,True
+district_py_7,7,HORQUETA,l10n_py_base.state_py_2,True
+district_py_8,8,SAN SALVADOR,l10n_py_base.state_py_2,True
+district_py_9,9,YBY YA'U,l10n_py_base.state_py_2,True
+district_py_10,10,SAN PEDRO DE YCUAMANDYYU,l10n_py_base.state_py_3,True
+district_py_11,11,ANTEQUERA,l10n_py_base.state_py_3,True
+district_py_12,12,GRAL. E.AQUINO,l10n_py_base.state_py_3,True
+district_py_13,13,ITACURUBI DEL ROSARIO,l10n_py_base.state_py_3,True
+district_py_14,14,SAN ESTANISLAO (SANTANI),l10n_py_base.state_py_3,True
+district_py_15,15,LIMA,l10n_py_base.state_py_3,True
+district_py_16,16,NUEVA GERMANIA,l10n_py_base.state_py_3,True
+district_py_17,17,TACUATI,l10n_py_base.state_py_3,True
+district_py_18,18,UNION,l10n_py_base.state_py_3,True
+district_py_19,19,25 DE DICIEMBRE,l10n_py_base.state_py_3,True
+district_py_20,20,VILLA DEL ROSARIO,l10n_py_base.state_py_3,True
+district_py_21,21,YATAITY DEL NORTE,l10n_py_base.state_py_3,True
+district_py_22,22,ISIDORO RESQUIN,l10n_py_base.state_py_3,True
+district_py_23,23,CHORE,l10n_py_base.state_py_3,True
+district_py_24,24,SAN PABLO,l10n_py_base.state_py_3,True
+district_py_25,25,SAN JOSE DEL ROSARIO,l10n_py_base.state_py_3,True
+district_py_26,26,CAACUPE,l10n_py_base.state_py_4,True
+district_py_27,27,ALTOS,l10n_py_base.state_py_4,True
+district_py_28,28,ARROYOS Y ESTEROS,l10n_py_base.state_py_4,True
+district_py_29,29,ATYRA,l10n_py_base.state_py_4,True
+district_py_30,30,CARAGUATAY,l10n_py_base.state_py_4,True
+district_py_31,31,EMBOSCADA,l10n_py_base.state_py_4,True
+district_py_32,32,EUSEBIO AYALA,l10n_py_base.state_py_4,True
+district_py_33,33,ISLA PUCU,l10n_py_base.state_py_4,True
+district_py_34,34,ITACURUBI DE LA CORDILLERA,l10n_py_base.state_py_4,True
+district_py_35,35,JUAN DE MENA,l10n_py_base.state_py_4,True
+district_py_36,36,NUEVA COLOMBIA,l10n_py_base.state_py_4,True
+district_py_37,37,PIRIBEBUY,l10n_py_base.state_py_4,True
+district_py_38,38,1RO.DE MARZO,l10n_py_base.state_py_4,True
+district_py_39,39,SAN BERNARDINO,l10n_py_base.state_py_4,True
+district_py_40,40,SANTA ELENA,l10n_py_base.state_py_4,True
+district_py_41,41,TOBATI,l10n_py_base.state_py_4,True
+district_py_42,42,VALENZUELA,l10n_py_base.state_py_4,True
+district_py_43,43,LOMA GRANDE,l10n_py_base.state_py_4,True
+district_py_44,44,SAN JOSE OBRERO,l10n_py_base.state_py_4,True
+district_py_45,45,VILLARRICA,l10n_py_base.state_py_5,True
+district_py_46,46,SAN SALVADOR,l10n_py_base.state_py_5,True
+district_py_47,47,BORJA,l10n_py_base.state_py_5,True
+district_py_48,48,INDEPENDENCIA (R.D.MELGAREJO),l10n_py_base.state_py_5,True
+district_py_49,49,GRAL.EUGENIO A. GARAY,l10n_py_base.state_py_5,True
+district_py_50,50,CNEL. MARTINEZ,l10n_py_base.state_py_5,True
+district_py_51,51,JOSE FASSARDI,l10n_py_base.state_py_5,True
+district_py_52,52,FELIX PEREZ CARDOZO,l10n_py_base.state_py_5,True
+district_py_53,53,MAURICIO JOSE TROCHE,l10n_py_base.state_py_5,True
+district_py_54,54,ITAPE,l10n_py_base.state_py_5,True
+district_py_55,55,ITURBE,l10n_py_base.state_py_5,True
+district_py_56,56,MBOCAYATY,l10n_py_base.state_py_5,True
+district_py_57,57,NATALICIO TALAVERA,l10n_py_base.state_py_5,True
+district_py_58,58,ÑUMI,l10n_py_base.state_py_5,True
+district_py_59,59,YATAITY,l10n_py_base.state_py_5,True
+district_py_60,60,DR. BOTREL,l10n_py_base.state_py_5,True
+district_py_61,61,CNEL. OVIEDO,l10n_py_base.state_py_6,True
+district_py_62,62,CAAGUAZU,l10n_py_base.state_py_6,True
+district_py_63,63,CARAYAO,l10n_py_base.state_py_6,True
+district_py_64,64,CECILIO BAEZ,l10n_py_base.state_py_6,True
+district_py_65,65,NUEVA LONDRES,l10n_py_base.state_py_6,True
+district_py_66,66,SAN JOAQUIN,l10n_py_base.state_py_6,True
+district_py_67,67,SAN JOSE DE LOS ARROYOS,l10n_py_base.state_py_6,True
+district_py_68,68,YHU,l10n_py_base.state_py_6,True
+district_py_69,69,JUAN MANUEL FRUTOS,l10n_py_base.state_py_6,True
+district_py_70,70,REPATRIACION,l10n_py_base.state_py_6,True
+district_py_71,71,SANTA ROSA DEL MBUTUY,l10n_py_base.state_py_6,True
+district_py_72,72,J. EULOGIO ESTIGARRIBIA,l10n_py_base.state_py_6,True
+district_py_73,73,JOSE D. OCAMPOS,l10n_py_base.state_py_6,True
+district_py_74,74,R.I.3 CORRALES,l10n_py_base.state_py_6,True
+district_py_75,75,RAUL A. OVIEDO,l10n_py_base.state_py_6,True
+district_py_76,76,MCAL.F.SOLANO LOPEZ,l10n_py_base.state_py_6,True
+district_py_77,77,CAAZAPA,l10n_py_base.state_py_7,True
+district_py_78,78,BUENA VISTA,l10n_py_base.state_py_7,True
+district_py_79,79,GRAL. H. MORINIGO,l10n_py_base.state_py_7,True
+district_py_80,80,MACIEL,l10n_py_base.state_py_7,True
+district_py_81,81,MOISES BERTONI,l10n_py_base.state_py_7,True
+district_py_82,82,SAN JUAN NEPOMUCENO,l10n_py_base.state_py_7,True
+district_py_83,83,ABAI,l10n_py_base.state_py_7,True
+district_py_84,84,TAVAI,l10n_py_base.state_py_7,True
+district_py_85,85,YEGROS,l10n_py_base.state_py_7,True
+district_py_86,86,YUTY,l10n_py_base.state_py_7,True
+district_py_87,87,ENCARNACION,l10n_py_base.state_py_8,True
+district_py_88,88,BELLA VISTA,l10n_py_base.state_py_8,True
+district_py_89,89,CAMBYRETA,l10n_py_base.state_py_8,True
+district_py_90,90,CAPITAN MEZA,l10n_py_base.state_py_8,True
+district_py_91,91,CARMEN DEL PARANA,l10n_py_base.state_py_8,True
+district_py_92,92,CAPITAN MIRANDA,l10n_py_base.state_py_8,True
+district_py_93,93,CORONEL BOGADO,l10n_py_base.state_py_8,True
+district_py_94,94,FRAM,l10n_py_base.state_py_8,True
+district_py_95,95,GRAL. ARTIGAS,l10n_py_base.state_py_8,True
+district_py_96,96,GRAL. DELGADO,l10n_py_base.state_py_8,True
+district_py_97,97,HOHENAU,l10n_py_base.state_py_8,True
+district_py_98,98,JESUS,l10n_py_base.state_py_8,True
+district_py_99,99,OBLIGADO,l10n_py_base.state_py_8,True
+district_py_100,100,SAN COSME Y DAMIAN,l10n_py_base.state_py_8,True
+district_py_101,101,SAN PEDRO DEL PARANA,l10n_py_base.state_py_8,True
+district_py_102,102,NUEVA ALBORADA,l10n_py_base.state_py_8,True
+district_py_103,103,TRINIDAD,l10n_py_base.state_py_8,True
+district_py_104,104,NATALIO,l10n_py_base.state_py_8,True
+district_py_105,105,JOSE LEANDRO OVIEDO,l10n_py_base.state_py_8,True
+district_py_106,106,SAN RAFAEL DEL PARANA,l10n_py_base.state_py_8,True
+district_py_107,107,CARLOS A. LOPEZ,l10n_py_base.state_py_8,True
+district_py_108,108,JULIO D. OTAÑO,l10n_py_base.state_py_8,True
+district_py_109,109,EDELIRA,l10n_py_base.state_py_8,True
+district_py_110,110,SAN JUAN DEL PARANA,l10n_py_base.state_py_8,True
+district_py_111,111,LA PAZ,l10n_py_base.state_py_8,True
+district_py_112,112,TOMAS R. PEREIRA,l10n_py_base.state_py_8,True
+district_py_113,113,YATYTAY,l10n_py_base.state_py_8,True
+district_py_114,114,HERIBERTA S.DE IGLESIAS,l10n_py_base.state_py_8,True
+district_py_115,115,SAN JUAN BAUTISTA,l10n_py_base.state_py_9,True
+district_py_116,116,AYOLAS,l10n_py_base.state_py_9,True
+district_py_117,117,SAN IGNACIO,l10n_py_base.state_py_9,True
+district_py_118,118,SAN MIGUEL,l10n_py_base.state_py_9,True
+district_py_119,119,SAN PATRICIO,l10n_py_base.state_py_9,True
+district_py_120,120,SANTIAGO,l10n_py_base.state_py_9,True
+district_py_121,121,SANTA MARIA,l10n_py_base.state_py_9,True
+district_py_122,122,SANTA ROSA,l10n_py_base.state_py_9,True
+district_py_123,123,VILLA FLORIDA,l10n_py_base.state_py_9,True
+district_py_124,124,YABEBYRY,l10n_py_base.state_py_9,True
+district_py_125,125,PARAGUARI,l10n_py_base.state_py_10,True
+district_py_126,126,ACAHAY,l10n_py_base.state_py_10,True
+district_py_127,127,CAAPUCU,l10n_py_base.state_py_10,True
+district_py_128,128,CABALLERO,l10n_py_base.state_py_10,True
+district_py_129,129,CARAPEGUA,l10n_py_base.state_py_10,True
+district_py_130,130,LA COLMENA,l10n_py_base.state_py_10,True
+district_py_131,131,ESCOBAR,l10n_py_base.state_py_10,True
+district_py_132,132,MBUYAPEY,l10n_py_base.state_py_10,True
+district_py_133,133,PIRAYU,l10n_py_base.state_py_10,True
+district_py_134,134,QUIINDY,l10n_py_base.state_py_10,True
+district_py_135,135,ROQUE GONZALEZ,l10n_py_base.state_py_10,True
+district_py_136,136,SAPUCAI,l10n_py_base.state_py_10,True
+district_py_137,137,YBYCUI,l10n_py_base.state_py_10,True
+district_py_138,138,QUYQUYHO,l10n_py_base.state_py_10,True
+district_py_139,139,YBYTYMI,l10n_py_base.state_py_10,True
+district_py_140,140,TEBICUARY MI,l10n_py_base.state_py_10,True
+district_py_141,141,YAGUARON,l10n_py_base.state_py_10,True
+district_py_142,142,HERNANDARIAS,l10n_py_base.state_py_11,True
+district_py_143,143,DOMINGO MARTINEZ DE IRALA,l10n_py_base.state_py_11,True
+district_py_144,144,ÑACUNDAY,l10n_py_base.state_py_11,True
+district_py_145,145,CIUDAD DEL ESTE,l10n_py_base.state_py_11,True
+district_py_146,146,JUAN LEON MALLORQUIN,l10n_py_base.state_py_11,True
+district_py_147,147,ITAKYRY,l10n_py_base.state_py_11,True
+district_py_148,148,JUAN E.O'LEARY,l10n_py_base.state_py_11,True
+district_py_149,149,PRESIDENTE FRANCO,l10n_py_base.state_py_11,True
+district_py_150,150,YGUAZU,l10n_py_base.state_py_11,True
+district_py_151,151,SAN CRISTOBAL,l10n_py_base.state_py_11,True
+district_py_152,152,AREGUA,l10n_py_base.state_py_12,True
+district_py_153,153,CAPIATA,l10n_py_base.state_py_12,True
+district_py_154,154,FERNANDO DE LA MORA,l10n_py_base.state_py_12,True
+district_py_155,155,GUARAMBARE,l10n_py_base.state_py_12,True
+district_py_156,156,ITA,l10n_py_base.state_py_12,True
+district_py_157,157,ITAUGUA,l10n_py_base.state_py_12,True
+district_py_158,158,LIMPIO,l10n_py_base.state_py_12,True
+district_py_159,159,LUQUE,l10n_py_base.state_py_12,True
+district_py_160,160,MARIANO ROQUE ALONSO,l10n_py_base.state_py_12,True
+district_py_161,161,ÑEMBY,l10n_py_base.state_py_12,True
+district_py_162,162,NUEVA ITALIA,l10n_py_base.state_py_12,True
+district_py_163,163,SAN ANTONIO,l10n_py_base.state_py_12,True
+district_py_164,164,SAN LORENZO,l10n_py_base.state_py_12,True
+district_py_165,165,VILLA ELISA,l10n_py_base.state_py_12,True
+district_py_166,166,VILLETA,l10n_py_base.state_py_12,True
+district_py_167,167,YPACARAI,l10n_py_base.state_py_12,True
+district_py_168,168,YPANE,l10n_py_base.state_py_12,True
+district_py_169,169,LAMBARE,l10n_py_base.state_py_12,True
+district_py_170,170,J.AUGUSTO SALDIVAR,l10n_py_base.state_py_12,True
+district_py_171,171,PILAR,l10n_py_base.state_py_13,True
+district_py_172,172,ALBERDI,l10n_py_base.state_py_13,True
+district_py_173,173,CERRITO,l10n_py_base.state_py_13,True
+district_py_174,174,DESMOCHADOS,l10n_py_base.state_py_13,True
+district_py_175,175,GUAZU CUA,l10n_py_base.state_py_13,True
+district_py_176,176,HUMAITA,l10n_py_base.state_py_13,True
+district_py_177,177,ISLA UMBU,l10n_py_base.state_py_13,True
+district_py_178,178,LAURELES,l10n_py_base.state_py_13,True
+district_py_179,179,PASO DE PATRIA,l10n_py_base.state_py_13,True
+district_py_180,180,MAYOR J.D.MARTINEZ,l10n_py_base.state_py_13,True
+district_py_181,181,SAN JUAN DE ÑEEMBUCU,l10n_py_base.state_py_13,True
+district_py_182,182,TACUARAS,l10n_py_base.state_py_13,True
+district_py_183,183,VILLA OLIVA,l10n_py_base.state_py_13,True
+district_py_184,184,VILLALBIN,l10n_py_base.state_py_13,True
+district_py_185,185,PEDRO JUAN CABALLERO,l10n_py_base.state_py_14,True
+district_py_186,186,BELLA VISTA,l10n_py_base.state_py_14,True
+district_py_187,187,CAPITAN BADO,l10n_py_base.state_py_14,True
+district_py_188,188,VILLA HAYES,l10n_py_base.state_py_15,True
+district_py_189,189,BENJAMIN ACEVAL(MONTE SOCIEDAD,l10n_py_base.state_py_15,True
+district_py_190,190,PTO.PINAZCO,l10n_py_base.state_py_15,True
+district_py_191,191,NANAWA,l10n_py_base.state_py_15,True
+district_py_192,192,MCAL.ESTIGARRIBIA,l10n_py_base.state_py_16,True
+district_py_193,193,BOQUERON,l10n_py_base.state_py_16,True
+district_py_194,194,PEDRO P.PEÑA,l10n_py_base.state_py_16,True
+district_py_195,195,FUERTE OLIMPO,l10n_py_base.state_py_17,True
+district_py_196,196,BAHIA NEGRA,l10n_py_base.state_py_17,True
+district_py_197,197,SAN ISIDRO DEL CURUGUATY,l10n_py_base.state_py_18,True
+district_py_198,198,VILLA YGATIMI,l10n_py_base.state_py_18,True
+district_py_199,199,YPEJHU,l10n_py_base.state_py_18,True
+district_py_200,200,CORPUS CHRISTI,l10n_py_base.state_py_18,True
+district_py_201,201,ITANARA,l10n_py_base.state_py_18,True
+district_py_202,202,FRANCISCO CABALLERO ALVAREZ,l10n_py_base.state_py_18,True
+district_py_203,203,GRAL.JOSE EDUVIGIS DIAZ,l10n_py_base.state_py_13,True
+district_py_205,205,VILLA FRANCA,l10n_py_base.state_py_13,True
+district_py_206,206,POZO COLORADO,l10n_py_base.state_py_15,True
+district_py_207,207,SALTO DEL GUAIRA,l10n_py_base.state_py_18,True
+district_py_209,209,SANTA RITA,l10n_py_base.state_py_11,True
+district_py_210,210,MINGA GUAZU,l10n_py_base.state_py_11,True
+district_py_211,211,LOS CEDRALES,l10n_py_base.state_py_11,True
+district_py_212,212,SAN ALBERTO,l10n_py_base.state_py_11,True
+district_py_213,213,MINGA PORA,l10n_py_base.state_py_11,True
+district_py_214,214,MBOCAYATY DEL YHAGUY,l10n_py_base.state_py_4,True
+district_py_215,215,NARANJAL,l10n_py_base.state_py_11,True
+district_py_216,216,SANTA ROSA DEL MONDAY,l10n_py_base.state_py_11,True
+district_py_217,217,IRUÑA,l10n_py_base.state_py_11,True
+district_py_218,218,PUERTO CASADO,l10n_py_base.state_py_17,True
+district_py_219,219,MBARACAYU,l10n_py_base.state_py_11,True
+district_py_220,220,GUAYAIBI,l10n_py_base.state_py_3,True
+district_py_221,221,PIRAPO,l10n_py_base.state_py_8,True
+district_py_223,223,PUERTO GUARANI,l10n_py_base.state_py_17,True
+district_py_225,225,PASO YOBAY,l10n_py_base.state_py_5,True
+district_py_226,226,CAPIIBARY,l10n_py_base.state_py_3,True
+district_py_227,227,3 DE FEBRERO,l10n_py_base.state_py_6,True
+district_py_228,228,SIMON BOLIVAR,l10n_py_base.state_py_6,True
+district_py_229,229,LA PASTORA,l10n_py_base.state_py_6,True
+district_py_230,230,VILLA FRANCA,l10n_py_base.state_py_13,True
+district_py_231,231,VILLALBIN,l10n_py_base.state_py_13,True
+district_py_232,232,ITAPUA POTY,l10n_py_base.state_py_8,True
+district_py_233,233,MAYOR PABLO LAGERENZA,l10n_py_base.state_py_17,True
+district_py_234,234,GRAL. EUGENIO A. GARAY,l10n_py_base.state_py_16,True
+district_py_235,235,LA PALOMA,l10n_py_base.state_py_18,True
+district_py_236,236,KATUETE,l10n_py_base.state_py_18,True
+district_py_237,237,VAQUERIA,l10n_py_base.state_py_6,True
+district_py_238,238,NUEVA ESPERANZA,l10n_py_base.state_py_18,True
+district_py_239,239,SANTA FE DEL PARANA,l10n_py_base.state_py_11,True
+district_py_240,240,NUEVA ESPERANZA,l10n_py_base.state_py_11,True
+district_py_241,241,YASY KAÑY,l10n_py_base.state_py_18,True
+district_py_242,242,JOSE FALCON,l10n_py_base.state_py_15,True
+district_py_243,243,FEDERICO CHAVEZ,l10n_py_base.state_py_8,True
+district_py_244,244,ESCULIES,l10n_py_base.state_py_6,True
+district_py_245,245,YRYBUCUA,l10n_py_base.state_py_3,True
+district_py_246,246,SIN EQUIVALENCIA,l10n_py_base.state_py_5,True
+district_py_259,259,FILADELFIA,l10n_py_base.state_py_16,True
+district_py_260,260,LOMA PLATA,l10n_py_base.state_py_16,True
+district_py_261,261,TTE. 1RO. IRALA FERNANDEZ,l10n_py_base.state_py_15,True
+district_py_262,262,ALTO VERA,l10n_py_base.state_py_8,True
+district_py_263,263,SANTA ROSA DEL AGUARAY,l10n_py_base.state_py_3,True
+district_py_264,264,TENIENTE ESTEBAN MARTINEZ,l10n_py_base.state_py_15,True
+district_py_265,265,TEBICUARY,l10n_py_base.state_py_5,True
+district_py_266,266,CARMELO PERALTA,l10n_py_base.state_py_17,True
+district_py_267,267,SAN CARLOS DEL APA,l10n_py_base.state_py_2,True
+district_py_268,268,LIBERACIÓN,l10n_py_base.state_py_3,True
+district_py_269,269,TAVAPY,l10n_py_base.state_py_11,True
+district_py_270,270,SARGENTO JOSE FELIX LOPEZ,l10n_py_base.state_py_2,True
+district_py_271,271,YBYRAROBANA,l10n_py_base.state_py_18,True
+district_py_272,272,3 DE MAYO,l10n_py_base.state_py_7,True
+district_py_273,273,DR. RAUL PEÑA,l10n_py_base.state_py_11,True
+district_py_274,274,YBY PYTA,l10n_py_base.state_py_18,True
+district_py_275,275,TEMBIAPORA,l10n_py_base.state_py_6,True
+district_py_276,276,NUEVA TOLEDO,l10n_py_base.state_py_6,True
+district_py_277,277,LOMA PYTA,l10n_py_base.state_py_12,True
+district_py_278,278,KARAPAI,l10n_py_base.state_py_14,True
+district_py_279,279,ZANJA PYTA,l10n_py_base.state_py_14,True
+district_py_280,280,PASO BARRETO (MUNICIPIO),l10n_py_base.state_py_2,True
+district_py_281,281,SAN ALFREDO (MUNICIPIO),l10n_py_base.state_py_2,True
+district_py_282,282,AZOTE¿Y (MUNICIPIO),l10n_py_base.state_py_2,True
+district_py_283,283,MARACANA,l10n_py_base.state_py_18,True
+district_py_284,284,PUERTO ADELA,l10n_py_base.state_py_18,True
+district_py_285,285,SAN VICENTE PANCHOLO,l10n_py_base.state_py_3,True
+district_py_286,286,ARROYITO,l10n_py_base.state_py_2,True
