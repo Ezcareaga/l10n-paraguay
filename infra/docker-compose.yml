@@ -26,8 +26,10 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    # `-d postgres` evita el `FATAL: database "odoo" does not exist`:
+    # pg_isready sin -d hace que libpq use db=user="odoo" por default.
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U odoo"]
+      test: ["CMD-SHELL", "pg_isready -U odoo -d postgres"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -56,6 +58,11 @@ services:
     command:
       - --dev=all
       - --addons-path=/mnt/extra-addons,/mnt/extra-addons/l10n-paraguay
+      # Fijar la DB evita el `FATAL: database "odoo" does not exist` que
+      # logueaba Postgres por el default-db de libpq (asume db=user cuando
+      # no se especifica). Pierde el DB manager UI — está OK para dev.
+      - -d
+      - l10n_py_dev
     restart: unless-stopped
 
 volumes:
