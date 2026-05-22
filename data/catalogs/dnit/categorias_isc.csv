@@ -1,0 +1,7 @@
+# Source: Manual Técnico SIFEN v150, Capítulo 15 — TABLA 7 (CATEGORIAS DEL ISC)
+codigo,nombre,nombre_display,codigo_padre,activo
+1,SECCION I,Sección I - Cigarrillos / Tabacos / Esencias y otros derivados del Tabaco,,1
+2,SECCION II,Sección II - Bebidas con y sin alcohol,,1
+3,SECCION III,Sección III - Alcoholes y Derivados del alcohol,,1
+4,SECCION IV,Sección IV - Combustibles,,1
+5,SECCION V,Sección V - Artículos considerados de lujo,,1

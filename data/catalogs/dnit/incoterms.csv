@@ -1,0 +1,15 @@
+# Source: Manual Técnico SIFEN v150, Capítulo 15 — TABLA 10 (INCOTERMS)
+# Campo: E901 cCondNeg (3 caracteres alfanuméricos)
+# IMPORTANTE: el código es STRING alfa (no numérico) — único catálogo con esta característica.
+codigo,nombre,nombre_display,codigo_padre,activo
+CFR,COSTO Y FLETE,Costo y flete,,1
+CIF,COSTO SEGURO Y FLETE,"Costo, seguro y flete",,1
+CIP,TRANSPORTE Y SEGURO PAGADOS HASTA,Transporte y seguro pagados hasta,,1
+CPT,TRANSPORTE PAGADO HASTA,Transporte pagado hasta,,1
+DAP,ENTREGADA EN LUGAR CONVENIDO,Entregada en lugar convenido,,1
+DAT,ENTREGADA EN TERMINAL,Entregada en terminal,,1
+DDP,ENTREGADA DERECHOS PAGADOS,Entregada derechos pagados,,1
+EXW,EN FABRICA,En fábrica,,1
+FAS,FRANCO AL COSTADO DEL BUQUE,Franco al costado del buque,,1
+FCA,FRANCO TRANSPORTISTA,Franco transportista,,1
+FOB,FRANCO A BORDO,Franco a bordo,,1

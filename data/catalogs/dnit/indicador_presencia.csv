@@ -1,0 +1,10 @@
+# Source: Manual Técnico SIFEN v150, página 75 (campo E011 iIndPres)
+# Solo aplica a Facturas Electrónicas (DE tipo C002=1)
+codigo,nombre,nombre_display,codigo_padre,activo
+1,OPERACION PRESENCIAL,Operación presencial,,1
+2,OPERACION ELECTRONICA,Operación electrónica,,1
+3,OPERACION TELEMARKETING,Operación telemarketing,,1
+4,VENTA A DOMICILIO,Venta a domicilio,,1
+5,OPERACION BANCARIA,Operación bancaria,,1
+6,OPERACION CICLICA,Operación cíclica,,1
+9,OTRO,Otro,,1

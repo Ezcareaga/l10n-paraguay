@@ -1,0 +1,11 @@
+# Source: Manual Técnico SIFEN v150, Capítulo 15 — TABLA 1 (TIPO DE REGIMEN)
+# Campo: D104 cTipReg (1-2 dígitos numéricos)
+codigo,nombre,nombre_display,codigo_padre,activo
+1,REGIMEN DE TURISMO,Régimen de Turismo,,1
+2,IMPORTADOR,Importador,,1
+3,EXPORTADOR,Exportador,,1
+4,MAQUILA,Maquila,,1
+5,LEY 60/90,Ley N° 60/90,,1
+6,REGIMEN DEL PEQUENO PRODUCTOR,Régimen del Pequeño Productor,,1
+7,REGIMEN DEL MEDIANO PRODUCTOR,Régimen del Mediano Productor,,1
+8,REGIMEN CONTABLE,Régimen Contable,,1

@@ -1,0 +1,7 @@
+# Source: Manual Técnico SIFEN v150, Capítulo 15 — TABLA 6 (CODIGOS DE AFECTACION)
+# Campo: E731 iAfecIVA en líneas de ítems.
+codigo,nombre,nombre_display,codigo_padre,activo
+1,GRAVADO IVA,Gravado IVA,,1
+2,EXONERADO,Exonerado (Art.83 - 125),,1
+3,EXENTO,Exento,,1
+4,GRAVADO PARCIAL,Gravado parcial,,1

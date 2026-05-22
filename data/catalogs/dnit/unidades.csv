@@ -1,0 +1,38 @@
+# Source: Manual Técnico SIFEN v150, Capítulo 15 — TABLA 5 (UNIDADES DE MEDIDA)
+# Campo: E709 cUniMed (1-5 dígitos numéricos)
+# Columna `nombre` = código de representación (símbolo abreviado) tal cual usa el PDF.
+codigo,nombre,nombre_display,codigo_padre,activo
+77,UNI,Unidad,,1
+79,kg/m2,Kilogramos sobre metro cuadrado,,1
+83,kg,Kilogramos,,1
+86,g,Gramos,,1
+87,m,Metros,,1
+88,ML,Mililitros,,1
+89,LT,Litros,,1
+90,MG,Miligramos,,1
+91,CM,Centímetros,,1
+92,CM2,Centímetros cuadrados,,1
+93,CM3,Centímetros cúbicos,,1
+94,PUL,Pulgadas,,1
+95,MM,Milímetros,,1
+96,MM2,Milímetros cuadrados,,1
+97,AA,Año,,1
+98,ME,Mes,,1
+99,TN,Tonelada,,1
+100,Hs,Hora,,1
+101,Mi,Minuto,,1
+102,Di,Día,,1
+103,Ya,Yardas,,1
+104,DET,Determinación,,1
+108,MT,Metros,,1
+109,M2,Metros cuadrados,,1
+110,M3,Metros cúbicos,,1
+569,RACION,Ración,,1
+625,Km,Kilómetros,,1
+660,ml,Metro lineal,,1
+666,Se,Segundo,,1
+869,ha,Hectáreas,,1
+885,GL,Unidad Medida Global,,1
+891,pm,Por Milaje,,1
+2329,UI,Unidad Internacional,,1
+2366,CPM,Costo por Mil,,1

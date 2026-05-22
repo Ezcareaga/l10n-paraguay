@@ -1,0 +1,11 @@
+# Source: Manual Técnico SIFEN v150, página 72 (campo D208 iTipIDRec)
+# También aplica al campo D141 iTipIDRespDE (responsable generación DE)
+# El receptor (D208) tiene los códigos 5 y 6 adicionales; D141 solo usa 1-4 y 9.
+codigo,nombre,nombre_display,codigo_padre,activo
+1,CEDULA PARAGUAYA,Cédula paraguaya,,1
+2,PASAPORTE,Pasaporte,,1
+3,CEDULA EXTRANJERA,Cédula extranjera,,1
+4,CARNET DE RESIDENCIA,Carnet de residencia,,1
+5,INNOMINADO,Innominado,,1
+6,TARJETA DIPLOMATICA DE EXONERACION FISCAL,Tarjeta Diplomática de exoneración fiscal,,1
+9,OTRO,Otro,,1

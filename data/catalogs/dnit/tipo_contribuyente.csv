@@ -1,0 +1,4 @@
+# Source: Manual Técnico SIFEN v150, página 72 (campo D205 iTiContRec)
+codigo,nombre,nombre_display,codigo_padre,activo
+1,PERSONA FISICA,Persona Física,,1
+2,PERSONA JURIDICA,Persona Jurídica,,1

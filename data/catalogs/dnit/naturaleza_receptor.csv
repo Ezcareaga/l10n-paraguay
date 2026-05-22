@@ -1,0 +1,4 @@
+# Source: Manual Técnico SIFEN v150, página 72 (campo D201 iNatRec)
+codigo,nombre,nombre_display,codigo_padre,activo
+1,CONTRIBUYENTE,Contribuyente,,1
+2,NO CONTRIBUYENTE,No contribuyente,,1
