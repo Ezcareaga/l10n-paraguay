@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_inherit_l10n_py" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.l10n_py</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_latam_use_documents']" position="after">
+                <field name="l10n_py_require_emission" invisible="1"/>
+                <field name="l10n_py_point_of_emission_id"
+                       invisible="not l10n_py_require_emission"
+                       required="l10n_py_require_emission"
+                       options="{'no_quick_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
