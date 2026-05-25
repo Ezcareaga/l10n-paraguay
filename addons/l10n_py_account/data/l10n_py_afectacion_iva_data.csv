@@ -1,0 +1,5 @@
+id,code,name
+afectacion_iva_1,1,Gravado IVA
+afectacion_iva_2,2,Exonerado (Art. 83 - Ley 125)
+afectacion_iva_3,3,Exento
+afectacion_iva_4,4,Gravado parcial
