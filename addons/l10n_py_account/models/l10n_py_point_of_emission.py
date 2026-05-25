@@ -17,14 +17,12 @@ class L10nPyPointOfEmission(models.Model):
     establishment_code = fields.Char(
         string="Establecimiento",
         required=True,
-        size=3,
-        help="MT v150 C005 dEst — 3 dígitos zero-padded",
+        help="MT v150 C005 dEst — 1-3 dígitos; se zero-pad a 3 en name",
     )
     code = fields.Char(
         string="Punto de Expedición",
         required=True,
-        size=3,
-        help="MT v150 C006 dPunExp — 3 dígitos zero-padded",
+        help="MT v150 C006 dPunExp — 1-3 dígitos; se zero-pad a 3 en name",
     )
     address_id = fields.Many2one(
         "res.partner",

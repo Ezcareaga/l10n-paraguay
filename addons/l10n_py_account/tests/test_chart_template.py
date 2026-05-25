@@ -9,14 +9,15 @@ from .common import L10nPyAccountTestCase
 class TestChartTemplate(L10nPyAccountTestCase):
 
     def test_chart_loaded(self):
+        # Odoo 18: account.account.company_ids (m2m) en vez de company_id
         accounts = self.env["account.account"].search([
-            ("company_id", "=", self.company.id),
+            ("company_ids", "in", self.company.id),
         ])
         self.assertGreater(len(accounts), 50, "PUC debe tener > 50 cuentas cargadas")
 
     def test_subset_active_around_80(self):
         active = self.env["account.account"].search([
-            ("company_id", "=", self.company.id),
+            ("company_ids", "in", self.company.id),
             ("active", "=", True),
         ])
         self.assertGreaterEqual(len(active), 60)
@@ -29,11 +30,16 @@ class TestChartTemplate(L10nPyAccountTestCase):
         self.assertGreater(len(groups), 30, "Debe haber grupos jerárquicos")
 
     def test_iva_taxes_loaded(self):
-        taxes = self.env["account.tax"].search([
-            ("company_id", "=", self.company.id),
-            ("tax_group_id.name", "=", "IVA Paraguay"),
-        ])
-        self.assertEqual(len(taxes), 6, "Deben existir 6 taxes IVA")
+        # Buscar por xmlids (no por count total: AccountTestInvoicingCommon
+        # crea copias de los default taxes durante setUpClass).
+        expected_xmlids = [
+            "tax_iva_venta_10", "tax_iva_venta_5", "tax_iva_venta_exenta",
+            "tax_iva_venta_export", "tax_iva_compra_10", "tax_iva_compra_5",
+        ]
+        for xmlid in expected_xmlids:
+            tax = self.env.ref(f"account.{self.company.id}_{xmlid}", raise_if_not_found=False)
+            self.assertTrue(tax, f"Tax {xmlid} debe estar cargado para company {self.company.id}")
+            self.assertEqual(tax.tax_group_id.name, "IVA Paraguay")
 
     def test_default_sale_tax_is_iva_10(self):
         self.assertEqual(self.company.account_sale_tax_id.amount, 10.0)

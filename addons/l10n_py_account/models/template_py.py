@@ -22,7 +22,9 @@ class AccountChartTemplate(models.AbstractModel):
             "bank_account_code_prefix": "1010104",
             "cash_account_code_prefix": "1010102",
             "transfer_account_code_prefix": "1010103",
-            "code_digits": 9,
+            # code_digits NO se setea: PUC RG 49/14 tiene códigos de longitud
+            # variable (2-11 dígitos). Padding uniforme distorsiona los códigos
+            # canónicos DNIT y rompe búsquedas por código exacto.
         }
 
     @template("py", "res.company")
