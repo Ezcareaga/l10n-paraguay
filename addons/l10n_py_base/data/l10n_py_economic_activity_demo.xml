@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Demo records mínimos. El catálogo completo SIFEN se carga vía WS SET en Fase 2. -->
+<odoo>
+    <data noupdate="1">
+        <record id="economic_activity_1254" model="l10n_py.economic_activity">
+            <field name="code">1254</field>
+            <field name="name">Venta al por menor de artículos de almacén (minimarkets)</field>
+        </record>
+        <record id="economic_activity_5610" model="l10n_py.economic_activity">
+            <field name="code">5610</field>
+            <field name="name">Actividades de restaurantes y servicio móvil de comidas</field>
+        </record>
+    </data>
+</odoo>
