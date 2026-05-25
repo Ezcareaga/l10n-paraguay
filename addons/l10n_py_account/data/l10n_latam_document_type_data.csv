@@ -1,0 +1,6 @@
+id,code,name,report_name,internal_type,sequence,doc_code_prefix,country_id:id
+dt_fe,1,Factura Electrónica,FACTURA ELECTRÓNICA,invoice,10,,base.py
+dt_af,4,Autofactura Electrónica,AUTOFACTURA ELECTRÓNICA,invoice,20,,base.py
+dt_nc,5,Nota de Crédito Electrónica,NOTA DE CRÉDITO ELECTRÓNICA,credit_note,30,,base.py
+dt_nd,6,Nota de Débito Electrónica,NOTA DE DÉBITO ELECTRÓNICA,debit_note,40,,base.py
+dt_nr,7,Nota de Remisión Electrónica,NOTA DE REMISIÓN ELECTRÓNICA,,50,,base.py
