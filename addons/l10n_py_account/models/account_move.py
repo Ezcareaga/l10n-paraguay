@@ -90,9 +90,12 @@ class AccountMove(models.Model):
         return cache
 
     def _post(self, soft=True):
+        # PoE solo aplica a journals SALE (documentos que YO emito a clientes).
+        # Para purchase/bill, el PoE viene del proveedor en su propio documento.
         for move in self.filtered(
             lambda m: m.company_id.account_fiscal_country_id.code == "PY"
             and m.l10n_latam_use_documents
+            and m.journal_id.type == "sale"
         ):
             if not move.journal_id.l10n_py_point_of_emission_id:
                 raise UserError(
