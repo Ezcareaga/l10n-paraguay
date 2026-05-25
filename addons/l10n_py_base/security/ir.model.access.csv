@@ -7,3 +7,5 @@ access_l10n_py_recipient_nature_user,l10n_py.recipient.nature.user,model_l10n_py
 access_l10n_py_recipient_nature_manager,l10n_py.recipient.nature.manager,model_l10n_py_recipient_nature,base.group_system,1,1,1,1
 access_l10n_py_district_user,l10n_py.district.user,model_l10n_py_district,base.group_user,1,0,0,0
 access_l10n_py_district_manager,l10n_py.district.manager,model_l10n_py_district,base.group_system,1,1,1,1
+access_l10n_py_economic_activity_user,l10n_py.economic_activity.user,model_l10n_py_economic_activity,base.group_user,1,0,0,0
+access_l10n_py_economic_activity_manager,l10n_py.economic_activity.manager,model_l10n_py_economic_activity,base.group_system,1,1,1,1

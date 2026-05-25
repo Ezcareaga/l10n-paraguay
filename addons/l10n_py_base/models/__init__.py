@@ -1,4 +1,5 @@
 from . import modulo11
+from . import l10n_py_economic_activity
 from . import l10n_py_regime
 from . import l10n_py_taxpayer_type
 from . import l10n_py_recipient_nature
