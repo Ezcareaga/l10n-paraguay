@@ -6,3 +6,4 @@ from . import l10n_py_afectacion_iva
 from . import l10n_py_point_of_emission
 from . import l10n_py_timbrado
 from . import res_company
+from . import template_py
