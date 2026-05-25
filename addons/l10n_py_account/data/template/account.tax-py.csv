@@ -1,0 +1,7 @@
+id,name,description,amount,amount_type,type_tax_use,tax_group_id,invoice_repartition_line_ids/factor_percent,invoice_repartition_line_ids/repartition_type,invoice_repartition_line_ids/account_id,refund_repartition_line_ids/factor_percent,refund_repartition_line_ids/repartition_type,refund_repartition_line_ids/account_id,l10n_py_afectacion_iva_id,active
+tax_iva_venta_10,IVA Débito Fiscal 10%,IVA 10%,10.0,percent,sale,tax_group_iva_py,100|100,base|tax,|py_201030102,100|100,base|tax,|py_201030102,l10n_py_account.afectacion_iva_1,True
+tax_iva_venta_5,IVA Débito Fiscal 5%,IVA 5%,5.0,percent,sale,tax_group_iva_py,100|100,base|tax,|py_201030102,100|100,base|tax,|py_201030102,l10n_py_account.afectacion_iva_1,True
+tax_iva_venta_exenta,IVA Exenta (ventas),Exenta,0.0,percent,sale,tax_group_iva_py,100,base,,100,base,,l10n_py_account.afectacion_iva_3,True
+tax_iva_venta_export,IVA 0% Exportación,Export,0.0,percent,sale,tax_group_iva_py,100,base,,100,base,,l10n_py_account.afectacion_iva_1,True
+tax_iva_compra_10,IVA Crédito Fiscal 10%,IVA 10%,10.0,percent,purchase,tax_group_iva_py,100|100,base|tax,|py_101030503,100|100,base|tax,|py_101030503,l10n_py_account.afectacion_iva_1,True
+tax_iva_compra_5,IVA Crédito Fiscal 5%,IVA 5%,5.0,percent,purchase,tax_group_iva_py,100|100,base|tax,|py_101030503,100|100,base|tax,|py_101030503,l10n_py_account.afectacion_iva_1,True
