@@ -21,8 +21,8 @@
     "data": [
         "security/l10n_py_account_security.xml",
         "security/ir.model.access.csv",
-        "data/l10n_py_afectacion_iva_data.csv",
-        "data/l10n_latam_document_type_data.csv",
+        "data/l10n_py.afectacion_iva.csv",
+        "data/l10n_latam.document.type.csv",
         "views/l10n_py_afectacion_iva_views.xml",
         "views/l10n_py_timbrado_views.xml",
         "views/l10n_py_point_of_emission_views.xml",

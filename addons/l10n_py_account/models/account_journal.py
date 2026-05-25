@@ -35,6 +35,11 @@ class AccountJournal(models.Model):
         "l10n_latam_use_documents",
     )
     def _check_py_point_of_emission(self):
+        # Skip during chart_template loading — Odoo crea journals con
+        # l10n_latam_use_documents=True antes de que el usuario configure PoE.
+        # El _post defensivo en account.move es la salvaguarda real al postear DTE.
+        if self.env.context.get("install_mode"):
+            return
         for j in self.filtered(lambda x: x.l10n_py_require_emission):
             if not j.l10n_py_point_of_emission_id:
                 raise ValidationError(
@@ -43,6 +48,8 @@ class AccountJournal(models.Model):
 
     @api.constrains("l10n_py_point_of_emission_id", "l10n_latam_use_documents")
     def _check_py_poe_requires_use_documents(self):
+        if self.env.context.get("install_mode"):
+            return
         for j in self.filtered(lambda x: x.l10n_py_point_of_emission_id):
             if not j.l10n_latam_use_documents:
                 raise ValidationError(
