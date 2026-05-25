@@ -6,5 +6,6 @@ from . import l10n_py_recipient_nature
 from . import l10n_py_district
 from . import res_country_state
 from . import res_city
+from . import res_company
 from . import l10n_latam_identification_type
 from . import res_partner
