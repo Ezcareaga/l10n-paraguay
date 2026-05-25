@@ -1,5 +1,7 @@
 # Copyright 2026 Careaga Dev
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
+from . import test_account_move_defensive
+from . import test_account_move_sequence
 from . import test_chart_template
 from . import test_company_extension
 from . import test_document_types
