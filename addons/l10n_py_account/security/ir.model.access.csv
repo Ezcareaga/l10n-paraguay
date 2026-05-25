@@ -5,3 +5,4 @@ access_l10n_py_timbrado_user,l10n_py.timbrado.user,model_l10n_py_timbrado,group_
 access_l10n_py_timbrado_manager,l10n_py.timbrado.manager,model_l10n_py_timbrado,base.group_system,1,1,1,1
 access_l10n_py_point_of_emission_user,l10n_py.point_of_emission.user,model_l10n_py_point_of_emission,group_l10n_py_account_user,1,0,0,0
 access_l10n_py_point_of_emission_manager,l10n_py.point_of_emission.manager,model_l10n_py_point_of_emission,base.group_system,1,1,1,1
+access_l10n_py_migration_wizard,l10n_py.account.migration.wizard,model_l10n_py_account_migration_wizard,base.group_system,1,1,1,1
