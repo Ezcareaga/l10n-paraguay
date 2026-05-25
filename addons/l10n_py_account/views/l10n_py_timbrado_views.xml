@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_py_timbrado_tree" model="ir.ui.view">
+        <field name="name">l10n_py.timbrado.tree</field>
+        <field name="model">l10n_py.timbrado</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'active'" decoration-muted="state == 'expired'">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_l10n_py_timbrado_form" model="ir.ui.view">
+        <field name="name">l10n_py.timbrado.form</field>
+        <field name="model">l10n_py.timbrado</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,expired"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="date_from"/>
+                        <field name="date_to" placeholder="Vacío = indefinido"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_l10n_py_timbrado" model="ir.actions.act_window">
+        <field name="name">Timbrados DNIT</field>
+        <field name="res_model">l10n_py.timbrado</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
