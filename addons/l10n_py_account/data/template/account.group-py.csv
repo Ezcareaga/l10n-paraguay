@@ -1,0 +1,165 @@
+id,code_prefix_start,code_prefix_end,name
+py_10_grp,10,10,Activo
+py_101_grp,101,101,Activo Corriente
+py_10101_grp,10101,10101,Disponibilidades
+py_10102_grp,10102,10102,Inversiones Temporarias
+py_10103_grp,10103,10103,Créditos
+py_10104_grp,10104,10104,Inventarios
+py_10105_grp,10105,10105,Gastos Pagados Por Adelantado
+py_10106_grp,10106,10106,Otros Activos
+py_102_grp,102,102,Activo No Corriente
+py_10201_grp,10201,10201,Créditos A Largo Plazo
+py_10202_grp,10202,10202,Inventarios A Realizar A Largo Plazo
+py_10203_grp,10203,10203,Inversiones A Largo Plazo
+py_10204_grp,10204,10204,"Propiedad, Planta Y Equipo"
+py_10205_grp,10205,10205,Otros Activos A Largo Plazo
+py_10206_grp,10206,10206,Cargos Diferidos
+py_10207_grp,10207,10207,Activos Intangibles
+py_20_grp,20,20,Pasivo
+py_201_grp,201,201,Pasivo Corriente
+py_20101_grp,20101,20101,Acreedores Comerciales
+py_20102_grp,20102,20102,Deudas Financieras
+py_20103_grp,20103,20103,Otras Cuentas Por Pagar
+py_20104_grp,20104,20104,Provisiones
+py_20105_grp,20105,20105,Ingresos Diferidos
+py_202_grp,202,202,Pasivo  No Corriente
+py_20201_grp,20201,20201,Acreedores Comerciales A Largo Plazo
+py_20202_grp,20202,20202,Deudas Financieras A Largo Plazo
+py_20203_grp,20203,20203,Otras Cuentas Por Pagar
+py_20204_grp,20204,20204,Provisiones Para Obligaciones A Largo Plazo
+py_20205_grp,20205,20205,Ingresos Diferidos A Largo Plazo
+py_30_grp,30,30,Patrimonio Neto
+py_301_grp,301,301,Capital
+py_30101_grp,30101,30101,Capital Integrado
+py_302_grp,302,302,Reservas
+py_30201_grp,30201,30201,Reserva Legal
+py_30202_grp,30202,30202,Reserva De Revalúo
+py_30203_grp,30203,30203,Otras Reservas
+py_303_grp,303,303,Resultados
+py_30301_grp,30301,30301,Resultados Acumulados
+py_30302_grp,30302,30302,Resultado Del Ejercicio
+py_40_grp,40,40,Ingresos Operativos
+py_401_grp,401,401,Ventas De Mercaderías
+py_40101_grp,40101,40101,Ventas De Mercaderías Gravadas Por El Iva
+py_40102_grp,40102,40102,Ventas De Mercaderías Exentas Del Iva
+py_402_grp,402,402,Ventas De Productos Agrícolas
+py_40201_grp,40201,40201,Ventas De Soja Y Sus Derivados
+py_40202_grp,40202,40202,Ventas De Maíz
+py_40203_grp,40203,40203,Ventas De Trigo
+py_40204_grp,40204,40204,Otros Productos Agrícolas
+py_403_grp,403,403,Ventas De Ganado
+py_404_grp,404,404,Ventas De Productos Frutícolas Y Hortícolas
+py_405_grp,405,405,Ventas De Productos De La Explotación Forestal
+py_406_grp,406,406,Exportaciones De Productos Agrícolas Exportados
+py_40601_grp,40601,40601,Exportaciones De Soja Y Sus Derivados
+py_40602_grp,40602,40602,Exportaciones De Otros Productos Agrícolas
+py_407_grp,407,407,Exportaciones De Bienes Industrializados
+py_40701_grp,40701,40701,Exportaciones De Productos Farmacéuticos
+py_40702_grp,40702,40702,Exportaciones De Maquinarias Y Equipos
+py_40703_grp,40703,40703,Exportaciones De Otros Productos Industrializados
+py_408_grp,408,408,Exportaciones De Otros Productos
+py_409_grp,409,409,Ventas De Servicios Gravados
+py_410_grp,410,410,Ventas De Bienes - Regímenes Especiales
+py_41001_grp,41001,41001,Ventas De Mercaderias - Regimen De Turismo
+py_41002_grp,41002,41002,Ventas De Mercaderías - Zona Franca
+py_41003_grp,41003,41003,Ventas Por Régimen De Maquila
+py_41004_grp,41004,41004,Ventas Bajo Otros Regímenes Especiales
+py_411_grp,411,411,Otras Ventas Exentas Del Iva
+py_498_grp,498,498,(-) Descuentos Concedidos
+py_499_grp,499,499,(-) Devoluciones
+py_50_grp,50,50,Costos Operativos
+py_501_grp,501,501,Costo De Mercaderías
+py_50101_grp,50101,50101,Costo De Mercaderías Gravadas Por El Iva
+py_50102_grp,50102,50102,Costo De Mercaderías Exentas Del Iva
+py_502_grp,502,502,Costo De Productos Agrícolas
+py_50201_grp,50201,50201,Costo De Ventas De Soja Y Sus Derivados
+py_50202_grp,50202,50202,Costo De Ventas De Maíz
+py_50203_grp,50203,50203,Costo De Ventas De Trigo
+py_50204_grp,50204,50204,Costo De Ventas De Otros Productos Agrícolas
+py_503_grp,503,503,Costo De Ventas De Ganado
+py_504_grp,504,504,Costo De Ventas De Productos Frutícolas Y Hortícolas
+py_505_grp,505,505,Costo De Ventas De Productos De La Explotación Forestal
+py_506_grp,506,506,Costo De Productos Agrícolas Exportados
+py_50601_grp,50601,50601,Costo  De Soja Y Sus Derivados Exportados
+py_50602_grp,50602,50602,Costo De Otros Productos Agrícolas Exportados
+py_507_grp,507,507,Costo De Bienes Industrializados Exportados
+py_50701_grp,50701,50701,Costo De Productos Farmaceúticos Exportados
+py_50702_grp,50702,50702,Costo De Maquinarias Y Equipos Exportados
+py_50703_grp,50703,50703,Costo De Otros Productos Industrializados Exportados
+py_508_grp,508,508,Costo De Otros Productos Exportados
+py_509_grp,509,509,Costo De Servicios Gravados
+py_510_grp,510,510,Costo De Ventas De Bienes - Regímenes Especiales
+py_51001_grp,51001,51001,Costo De Ventas De Mercaderías - Régimen De Turismo
+py_51002_grp,51002,51002,Costo De Ventas De Mercaderías - Zona Franca
+py_51003_grp,51003,51003,Costo De Ventas Por Régimen De Maquila
+py_51004_grp,51004,51004,Costo De Ventas Bajo Otros Regímenes Especiales
+py_511_grp,511,511,Costo De Ventas Exentas Del Iva
+py_60_grp,60,60,Ganancias (O Pérdidas) Brutas En Ventas
+py_7_grp,7,7,Ingresos Por Activos Biológicos
+py_701_grp,701,701,Ingresos Por Producción Y/O Tenencia De Activos Biológicos
+py_70101_grp,70101,70101,Ingresos Por Producción Y/O Tenencia De Bienes Del Sector Agrícola
+py_70102_grp,70102,70102,Ingresos Por Producción Y/O Tenencia De Ganado
+py_70103_grp,70103,70103,Ingresos Por Producción Y/O Tenencia De Bienes De La Actividad Forestal
+py_702_grp,702,702,(-) Costo De Producción Y/O Tenencia De Activos Biológicos
+py_70201_grp,70201,70201,(-) Costo De Producción Y/O Tenencia De Bienes Del Sector Agrícola
+py_70202_grp,70202,70202,(-) Costo De Producción Y/O Tenencia De Ganado
+py_70203_grp,70203,70203,(-) Costo De Producción Y/O Tenencia De Bienes De La Actividad Forestal
+py_70204_grp,70204,70204,(-) Mermas Y Mortandad
+py_80_grp,80,80,Otros Ingresos
+py_801_grp,801,801,Intereses Ganados
+py_802_grp,802,802,Comisiones Cobradas
+py_803_grp,803,803,Descuentos Obtenidos
+py_804_grp,804,804,Subvenciones
+py_805_grp,805,805,Resultado Por Diferencia De Cambio
+py_90_grp,90,90,Ganancias (O Pérdidas) Brutas Totales
+py_100_grp,100,100,Gastos De Ventas O Comercialización
+py_1001_grp,1001,1001,Sueldos Y Otras Remuneraciones Al Personal
+py_100101_grp,100101,100101,Sueldos Y Jornales
+py_100102_grp,100102,100102,Aporte Patronal
+py_100103_grp,100103,100103,Otros Beneficios Al Personal
+py_1002_grp,1002,1002,Comisiones Pagadas Sobre Ventas
+py_1003_grp,1003,1003,Viáticos A Vendedores
+py_1004_grp,1004,1004,Publicidad Y Propaganda
+py_1005_grp,1005,1005,Fletes Pagados
+py_1099_grp,1099,1099,Otros Gastos De Ventas
+py_110_grp,110,110,Gastos De Administración
+py_1101_grp,1101,1101,Sueldos Y Otras Remuneraciones Al Personal
+py_110101_grp,110101,110101,Sueldos Y Jornales
+py_110102_grp,110102,110102,Aporte Patronal
+py_110103_grp,110103,110103,Otros Beneficios Al Personal
+py_1102_grp,1102,1102,Remuneración Personal Superior
+py_1103_grp,1103,1103,Gastos De Representación
+py_1104_grp,1104,1104,Honorarios Profesionales
+py_1105_grp,1105,1105,Alquileres
+py_1106_grp,1106,1106,"Agua, Luz, Teléfono E Internet"
+py_1107_grp,1107,1107,Movilidad
+py_1108_grp,1108,1108,Combustibles Y Lubricantes
+py_1109_grp,1109,1109,Reparaciones Y Mantenimientos
+py_1110_grp,1110,1110,Seguros Pagados
+py_1111_grp,1111,1111,Útiles De Oficina
+py_1112_grp,1112,1112,Gastos Pagados En El Exterior
+py_1113_grp,1113,1113,Juicios Y Gastos Judiciales
+py_1114_grp,1114,1114,Gastos De Cobranzas
+py_1115_grp,1115,1115,Donaciones Y Contribuciones
+py_1116_grp,1116,1116,Comisiones Y Gastos Bancarios Operacionales
+py_1117_grp,1117,1117,"Impuestos, Patentes, Tasas Y Otras Contribuciones"
+py_1118_grp,1118,1118,Multas Y Sanciones
+py_120_grp,120,120,Ganancias (O Pérdidas) Antes De Gastos Financieros
+py_13_grp,13,13,Gastos Bancarios Y Financieros
+py_1301_grp,1301,1301,Intereses Pagados A Entidades Bancarias Y Financieras
+py_1302_grp,1302,1302,Otros Intereses Pagados
+py_1303_grp,1303,1303,Comisiones Y Gastos Bancarios Sobre Operaciones Crediticias
+py_1304_grp,1304,1304,Resultado Por Diferencia De Cambio
+py_14_grp,14,14,Previsiones
+py_1401_grp,1401,1401,Desafectación De Previsiones
+py_1402_grp,1402,1402,(-) Constitución De Previsiones
+py_15_grp,15,15,Depreciaciones Y Amortizaciones De Activos
+py_1501_grp,1501,1501,Depreciaciones Del Ejercicio
+py_1502_grp,1502,1502,Amortizaciones Del Ejercicio
+py_16_grp,16,16,Ganancias (O Pérdidas) Operativas
+py_17_grp,17,17,Otros Resultados No Operativos
+py_1701_grp,1701,1701,Utilidad/Pérdida En Venta De Activos Fijos
+py_1702_grp,1702,1702,Utilidad/Pérdida En Venta De Inversiones
+py_1703_grp,1703,1703,Cuentas Incobrables Recuperadas
+py_18_grp,18,18,Ganancias (O Pérdidas ) Antes Del Impuesto A La Renta
+py_19_grp,19,19,Impuesto A La Renta

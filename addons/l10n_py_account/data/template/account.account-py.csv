@@ -1,0 +1,140 @@
+id,code,name,account_type,reconcile,non_trade,active
+py_1010101,1010101,Recaudaciones A Depositar,asset_cash,False,,True
+py_1010102,1010102,Caja,asset_cash,False,,True
+py_1010103,1010103,Fondos Fijos,asset_cash,False,,True
+py_1010104,1010104,Bancos,asset_cash,False,,True
+py_1010201,1010201,Inversiones Financieras,asset_current,False,,False
+py_1010202,1010202,Inversiones En Entidades Vinculadas,asset_current,False,,False
+py_1010203,1010203,Otras Inversiones,asset_current,False,,False
+py_1010204,1010204,"Intereses, Regalías Y Otros Rendimientos De Inversiones",asset_current,False,,False
+py_1010301,1010301,Deudores Por Ventas,asset_current,False,,True
+py_1010302,1010302,Deudores Por Préstamos,asset_current,False,,False
+py_1010303,1010303,Cuentas A Cobrar A Directores Y Funcionarios,asset_current,False,,False
+py_1010304,1010304,Cuentas A Cobrar A Socios O A Entidades Vinculadas,asset_current,False,,False
+py_1010305,1010305,Créditos Por Impuestos Corrientes,asset_current,False,,True
+py_101030501,101030501,Anticipos Y Retenciones De Impuesto A La Renta,asset_current,False,,True
+py_101030502,101030502,Retenciones De Iva,asset_current,False,,True
+py_101030503,101030503,Iva - Crédito Fiscal,asset_current,False,,True
+py_101030504,101030504,Iva - Crédito Fiscal - Régimen De Turismo,asset_current,False,,True
+py_1010306,1010306,Anticipo A Proveedores,asset_current,False,,False
+py_101030601,101030601,Anticipos A Proveedores Locales,asset_current,False,,False
+py_101030602,101030602,Anticipos A Proveedores Del Exterior,asset_current,False,,False
+py_1010399,1010399,(-) Previsión Para Créditos De Dudoso Cobro,asset_current,False,,False
+py_1010401,1010401,Mercaderías,asset_current,False,,True
+py_101040101,101040101,Mercaderías Gravadas Por El Iva Al 10%,asset_current,False,,True
+py_101040102,101040102,Mercaderías Gravadas Por El Iva Al 5%,asset_current,False,,True
+py_101040103,101040103,Mercaderías Exentas Del Iva,asset_current,False,,True
+py_1010402,1010402,Mercaderías Regímenes Especiales,asset_current,False,,True
+py_101040201,101040201,Mercaderías Régimen De Turismo,asset_current,False,,True
+py_101040202,101040202,Mercaderías Zona Franca,asset_current,False,,True
+py_101040203,101040203,Mercaderías Régimen De Maquila,asset_current,False,,True
+py_101040204,101040204,Mercaderías Otros Regímenes Especiales,asset_current,False,,True
+py_1010403,1010403,Productos Terminados,asset_current,False,,True
+py_101040301,101040301,Productos Terminados Gravados Por El Iva Al 10%,asset_current,False,,True
+py_101040302,101040302,Productos Terminados Gravados Por El Iva Al 5%,asset_current,False,,True
+py_101040303,101040303,Productos Terminados Exentos Del Iva,asset_current,False,,True
+py_1010404,1010404,Productos En Proceso,asset_current,False,,True
+py_1010405,1010405,Materias Primas,asset_current,False,,True
+py_1010406,1010406,"Materiales, Suministros Y Repuestos",asset_current,False,,True
+py_1010407,1010407,Productos Agrícolas,asset_current,False,,True
+py_1010408,1010408,Productos Forestales,asset_current,False,,True
+py_1010409,1010409,Activos Biológicos En Producción,asset_current,False,,True
+py_1010410,1010410,Activos Biológicos En Desarrollo,asset_current,False,,True
+py_1010411,1010411,Importaciones En Curso,asset_current,False,,True
+py_1010499,1010499,(-) Previsión Por Devaluación De Inventarios,asset_current,False,,True
+py_1010501,1010501,Alquileres Pagados Por Adelantado,asset_prepayments,False,,False
+py_1010502,1010502,Seguros A Devengar,asset_current,False,,False
+py_1020101,1020101,Deudores Por Ventas,asset_non_current,False,,False
+py_1020102,1020102,Deudores Por Préstamos,asset_non_current,False,,False
+py_1020103,1020103,Cuentas A Cobrar A Directores Y Funcionarios,asset_non_current,False,,False
+py_1020104,1020104,Cuentas A Cobrar A Socios O Entidades Vinculadas,asset_non_current,False,,False
+py_1020105,1020105,Deudores En Gestión De Cobro – Morosos O Similares,asset_non_current,False,,False
+py_1020106,1020106,Anticipos A Proveedores,asset_non_current,False,,False
+py_102010601,102010601,Anticipos A Proveedores Locales,asset_non_current,False,,False
+py_102010602,102010602,Anticipos A Proveedores Del Exterior,asset_non_current,False,,False
+py_1020107,1020107,Créditos Por Impuestos Diferidos,asset_non_current,False,,False
+py_1020199,1020199,(-) Previsión Para Créditos De Dudoso Cobro,asset_non_current,False,,False
+py_1020201,1020201,Activos Biológicos En Producción,asset_non_current,False,,False
+py_1020202,1020202,Activos Biológicos En Desarrollo,asset_non_current,False,,False
+py_1020299,1020299,(-) Previsión Por Devaluación De Activos Biológicos,asset_non_current,False,,False
+py_1020301,1020301,Inversiones Financieras,asset_non_current,False,,False
+py_1020302,1020302,Inversiones En Entidades Vinculadas,asset_non_current,False,,False
+py_1020303,1020303,Inversiones Inmobiliarias,asset_non_current,False,,False
+py_1020304,1020304,Otras Inversiones,asset_non_current,False,,False
+py_1020305,1020305,"Intereses, Regalías Y Otros Rendimientos De Inversiones",asset_non_current,False,,False
+py_1020399,1020399,(-) Previsión Por Devaluación De Inversiones,asset_non_current,False,,False
+py_1020401,1020401,Inmuebles,asset_fixed,False,,True
+py_1020402,1020402,Rodados /Transportes,asset_fixed,False,,True
+py_1020403,1020403,"Muebles, Útiles Y Enseres",asset_fixed,False,,True
+py_1020404,1020404,Maquinarias,asset_fixed,False,,True
+py_1020405,1020405,Equipos,asset_fixed,False,,True
+py_1020406,1020406,Herramientas,asset_fixed,False,,False
+py_1020407,1020407,Bienes Fuera De Operación,asset_fixed,False,,False
+py_1020408,1020408,Mejoras En Predio Ajeno,asset_fixed,False,,False
+py_1020497,1020497,Bienes Incorporados Al Amparo De La Ley N° 60/90,asset_fixed,False,,False
+py_1020498,1020498,Bienes En Arrendamiento Financiero,asset_fixed,False,,False
+py_1020499,1020499,(-) Depreciación Acumulada,asset_fixed,False,,False
+py_1020501,1020501,Derechos Fiduciarios,asset_non_current,False,,False
+py_1020601,1020601,Gastos De Constitución,asset_non_current,False,,False
+py_1020602,1020602,Gastos De Organización,asset_non_current,False,,False
+py_1020603,1020603,Gastos De Desarrollo,asset_non_current,False,,False
+py_1020604,1020604,Gastos De Proyectos De Inversión,asset_non_current,False,,False
+py_1020699,1020699,(-) Amortización Acumulada,asset_non_current,False,,False
+py_1020701,1020701,"Licencias, Marcas Y Patentes",asset_non_current,False,,False
+py_1020702,1020702,Franquicias,asset_non_current,False,,False
+py_1020799,1020799,(-) Amortización Acumulada,asset_non_current,False,,False
+py_2010101,2010101,Proveedores Locales,liability_payable,True,,True
+py_2010102,2010102,Proveedores Del Exterior,liability_payable,True,,True
+py_2010103,2010103,Intereses A Pagar A Proveedores,liability_payable,True,,True
+py_2010104,2010104,Otros Acreedores,liability_current,False,,True
+py_2010201,2010201,Préstamos De Bancos Y Otras Entidades Financieras,asset_cash,False,,True
+py_2010202,2010202,"Préstamos Del Dueño, Socios O  Entidades Vinculadas",liability_current,False,,True
+py_2010203,2010203,Arrendamientos Financieros,liability_current,False,,True
+py_2010204,2010204,Otros Préstamos A Pagar,liability_current,False,,True
+py_2010205,2010205,Intereses A Pagar,liability_current,False,,True
+py_2010301,2010301,Deudas Fiscales Corrientes,liability_current,False,,True
+py_201030101,201030101,Impuesto A La Renta A Pagar,liability_current,False,,True
+py_201030102,201030102,Iva A Pagar,liability_current,False,,True
+py_201030103,201030103,Retenciones De Impuestos A Ingresar,liability_current,False,,True
+py_2010302,2010302,Obligaciones Laborales Y Cargas Sociales,liability_current,False,,True
+py_2010303,2010303,Dividendos A Pagar,liability_current,False,,True
+py_2010304,2010304,Pasivos Fiduciarios,liability_current,False,,True
+py_2010401,2010401,Obligaciones Por Garantías Otorgadas,liability_current,False,,True
+py_2010402,2010402,Obligaciones Legales Por Litigios,liability_current,False,,True
+py_2010403,2010403,Provisión Para Beneficios A Empleados,liability_current,False,,True
+py_2010501,2010501,Anticipos De Clientes,liability_current,False,,True
+py_2010502,2010502,Subvenciones,liability_current,False,,True
+py_2010503,2010503,Derechos De Fidelización De Clientes,liability_current,False,,True
+py_2010504,2010504,Alquileres Cobrados Por Adelantado,liability_current,False,,True
+py_2020101,2020101,Proveedores Locales,liability_non_current,False,,True
+py_2020102,2020102,Proveedores Del Exterior,liability_non_current,False,,True
+py_2020103,2020103,Intereses A  Pagar A Proveedores,liability_non_current,False,,True
+py_2020104,2020104,Otros Acreedores,liability_non_current,False,,True
+py_2020201,2020201,Préstamos De Bancos Y Otras Entidades Financieras,asset_cash,False,,True
+py_2020202,2020202,"Préstamos Del Dueño, Socios O  Entidades Vinculadas",liability_non_current,False,,True
+py_2020203,2020203,Arrendamientos Financieros,liability_non_current,False,,True
+py_2020204,2020204,Otros Préstamos,liability_non_current,False,,True
+py_2020205,2020205,Intereses A Pagar,liability_non_current,False,,True
+py_2020301,2020301,Pasivos Por Impuestos Diferidos,liability_non_current,False,,True
+py_2020302,2020302,Pasivos Fiduciarios,liability_non_current,False,,True
+py_2020401,2020401,Obligaciones Por Garantías Otorgadas,liability_non_current,False,,True
+py_2020402,2020402,Obligaciones Legales Por Litigios Pendientes,liability_non_current,False,,True
+py_2020403,2020403,Provisiones Para Beneficios A Empleados,liability_non_current,False,,True
+py_2020501,2020501,Anticipos De Clientes,liability_non_current,False,,True
+py_2020502,2020502,Subvenciones,liability_non_current,False,,True
+py_2020503,2020503,Derecho De Fidelización De Clientes,liability_non_current,False,,True
+py_2020504,2020504,Alquileres Cobrados Por Adelantado,liability_non_current,False,,True
+py_3010101,3010101,Capital Suscripto,equity,False,,True
+py_3010102,3010102,(-) Capital A Integrar,equity,False,,True
+py_3020201,3020201,Reserva De Revalúo Fiscal,equity,False,,False
+py_3020202,3020202,Reserva De Revalúo Técnico,equity,False,,False
+py_4060101,4060101,Exportaciones A Empresas Vinculadas,income,False,,False
+py_4060102,4060102,Exportaciones A Terceros No Vinculados,income,False,,False
+py_4100101,4100101,Ventas A Extranjeros,income,False,,False
+py_4100102,4100102,Ventas A Distribuidores Locales,income,False,,False
+py_4100103,4100103,Ventas A Clientes Locales,income,False,,False
+py_5060101,5060101,Costo De Exportaciones A Empresas Vinculadas,expense,False,,False
+py_5060102,5060102,Costo De Exportaciones A Terceros No Vinculados,expense,False,,False
+py_5100101,5100101,Costo De Ventas A Extranjeros,expense,False,,False
+py_5100102,5100102,Costo De Ventas A Distribuidores Locales,expense,False,,False
+py_5100103,5100103,Costo De Ventas A Clientes Locales,expense,False,,False
