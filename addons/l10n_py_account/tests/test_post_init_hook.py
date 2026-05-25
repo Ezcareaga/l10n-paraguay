@@ -40,12 +40,14 @@ class TestPostInitHook(TransactionCase):
             "account_fiscal_country_id": country_py.id,
             "chart_template": "generic_coa",  # chart distinto a 'py'
         })
-        # Crear algunas cuentas custom
+        # Crear >20 cuentas custom con códigos únicos
         # Odoo 18: account.account usa company_ids (m2m), no company_id
-        for code in ["1000", "2000", "3000"] * 8:  # >20 cuentas
+        for i in range(24):
             self.env["account.account"].create({
-                "name": f"Cuenta {code}", "code": code,
-                "account_type": "asset_current", "company_ids": [company.id],
+                "name": f"Cuenta {i:04d}",
+                "code": f"{1000 + i}",
+                "account_type": "asset_current",
+                "company_ids": [(6, 0, [company.id])],
             })
         accounts_before = self.env["account.account"].search_count([
             ("company_ids", "in", [company.id]),

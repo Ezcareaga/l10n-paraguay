@@ -31,7 +31,6 @@ class AccountJournal(models.Model):
     @api.constrains(
         "l10n_py_point_of_emission_id",
         "type",
-        "country_code",
         "l10n_latam_use_documents",
     )
     def _check_py_point_of_emission(self):

@@ -5,15 +5,13 @@ from odoo.tests.common import tagged
 
 from .common import L10nPyAccountTestCase
 
-# Códigos sin puntos (RG 49/14 Anexos.xls). Si alguno desaparece del PUC,
-# Hechauka no se podrá declarar correctamente.
-HECHAUKA_REQUIRED_CODES = [
+HECHAUKA_REQUIRED_LEAF_ACCOUNTS = [
     # Disponibilidades
     "1010101", "1010102", "1010104",
     # Créditos
     "1010301",                       # Deudores por ventas
-    "10103050102",                   # Retenciones de IVA
-    "10103050103",                   # IVA Crédito Fiscal
+    "101030502",                     # Retenciones de IVA (9 dígitos en RG 49/14)
+    "101030503",                     # IVA Crédito Fiscal (9 dígitos)
     # Mercaderías
     "101040101", "101040102", "101040103",
     # Pasivo
@@ -22,26 +20,35 @@ HECHAUKA_REQUIRED_CODES = [
     "201030103",                     # Retenciones a ingresar
     # Patrimonio
     "3010101",                       # Capital integrado
-    # Ingresos
-    "401",                           # Ventas mercaderías
-    # Costos
-    "501",                           # Costo mercaderías
-    # Resultado
-    "19",                            # Impuesto a la Renta
-    "20",                            # Resultado neto del ejercicio
+]
+HECHAUKA_REQUIRED_GROUPS = [
+    "401",   # Ventas mercaderías (grupo, no leaf en RG 49/14)
+    "501",   # Costo mercaderías (grupo)
+    "19",    # Impuesto a la Renta (grupo top-level)
+    "20",    # Resultado neto del ejercicio (grupo)
 ]
 
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestHechaukaCriticalAccounts(L10nPyAccountTestCase):
 
-    def test_all_required_codes_present(self):
-        for code in HECHAUKA_REQUIRED_CODES:
+    def test_all_required_leaf_accounts_present(self):
+        for code in HECHAUKA_REQUIRED_LEAF_ACCOUNTS:
             account = self.env["account.account"].search([
                 ("code", "=", code),
-                ("company_id", "=", self.company.id),
+                ("company_ids", "in", self.company.id),
             ])
             self.assertTrue(
                 account,
                 f"Cuenta {code} requerida por Hechauka RG 49/14 está ausente del PUC",
+            )
+
+    def test_all_required_groups_present(self):
+        for code in HECHAUKA_REQUIRED_GROUPS:
+            group = self.env["account.group"].search([
+                ("code_prefix_start", "=", code),
+            ])
+            self.assertTrue(
+                group,
+                f"Grupo de cuentas {code} requerido por Hechauka RG 49/14 está ausente",
             )

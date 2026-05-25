@@ -7,8 +7,8 @@ py_1010201,1010201,Inversiones Financieras,asset_current,False,,False
 py_1010202,1010202,Inversiones En Entidades Vinculadas,asset_current,False,,False
 py_1010203,1010203,Otras Inversiones,asset_current,False,,False
 py_1010204,1010204,"Intereses, Regalías Y Otros Rendimientos De Inversiones",asset_current,False,,False
-py_1010301,1010301,Deudores Por Ventas,asset_current,False,,True
-py_1010302,1010302,Deudores Por Préstamos,asset_current,False,,False
+py_1010301,1010301,Deudores Por Ventas,asset_receivable,True,,True
+py_1010302,1010302,Deudores Por Préstamos,asset_receivable,True,,False
 py_1010303,1010303,Cuentas A Cobrar A Directores Y Funcionarios,asset_current,False,,False
 py_1010304,1010304,Cuentas A Cobrar A Socios O A Entidades Vinculadas,asset_current,False,,False
 py_1010305,1010305,Créditos Por Impuestos Corrientes,asset_current,False,,True
@@ -44,11 +44,11 @@ py_1010411,1010411,Importaciones En Curso,asset_current,False,,True
 py_1010499,1010499,(-) Previsión Por Devaluación De Inventarios,asset_current,False,,True
 py_1010501,1010501,Alquileres Pagados Por Adelantado,asset_prepayments,False,,False
 py_1010502,1010502,Seguros A Devengar,asset_current,False,,False
-py_1020101,1020101,Deudores Por Ventas,asset_non_current,False,,False
-py_1020102,1020102,Deudores Por Préstamos,asset_non_current,False,,False
+py_1020101,1020101,Deudores Por Ventas,asset_receivable,True,,False
+py_1020102,1020102,Deudores Por Préstamos,asset_receivable,True,,False
 py_1020103,1020103,Cuentas A Cobrar A Directores Y Funcionarios,asset_non_current,False,,False
 py_1020104,1020104,Cuentas A Cobrar A Socios O Entidades Vinculadas,asset_non_current,False,,False
-py_1020105,1020105,Deudores En Gestión De Cobro – Morosos O Similares,asset_non_current,False,,False
+py_1020105,1020105,Deudores En Gestión De Cobro – Morosos O Similares,asset_receivable,True,,False
 py_1020106,1020106,Anticipos A Proveedores,asset_non_current,False,,False
 py_102010601,102010601,Anticipos A Proveedores Locales,asset_non_current,False,,False
 py_102010602,102010602,Anticipos A Proveedores Del Exterior,asset_non_current,False,,False

@@ -36,8 +36,9 @@ class L10nPyAccountMigrationWizard(models.TransientModel):
 
     def _compute_existing_accounts_count(self):
         for w in self:
+            # Odoo 18: account.account.company_ids es Many2many (no company_id)
             w.existing_accounts_count = self.env["account.account"].search_count([
-                ("company_id", "=", w.company_id.id),
+                ("company_ids", "in", w.company_id.id),
             ])
 
     def action_apply(self):
@@ -57,7 +58,7 @@ class L10nPyAccountMigrationWizard(models.TransientModel):
     def _apply_clean(self):
         # Eliminar todas las cuentas y recargar chart 'py'
         existing = self.env["account.account"].search([
-            ("company_id", "=", self.company_id.id),
+            ("company_ids", "in", self.company_id.id),
         ])
         existing.unlink()
         self.env["account.chart.template"].try_loading(

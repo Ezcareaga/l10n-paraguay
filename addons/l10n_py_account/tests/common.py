@@ -8,12 +8,14 @@ class L10nPyAccountTestCase(AccountTestInvoicingCommon):
     """Fixture: company PY + chart 'py' + timbrado active + PoE + sale journal con PoE."""
 
     @classmethod
-    def setUpClass(cls, chart_template_ref="py"):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    @AccountTestInvoicingCommon.setup_chart_template("py")
+    def setUpClass(cls):
+        super().setUpClass()
         cls.company = cls.company_data["company"]
         cls.country_py = cls.env.ref("base.py")
+        # setup_chart_template setea account_fiscal_country_id via @template;
+        # acá fijamos country_id (residencia) para que matchee.
         cls.company.country_id = cls.country_py
-        cls.company.account_fiscal_country_id = cls.country_py
         cls.timbrado = cls.env["l10n_py.timbrado"].create({
             "name": "12345678",
             "date_from": "2026-01-01",

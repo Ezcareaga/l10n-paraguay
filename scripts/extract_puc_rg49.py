@@ -37,7 +37,9 @@ def infer_account_type(code: str, name: str) -> str:
     n = name.upper()
     if code.startswith("1010101") or "RECAUDACIONES" in n or "CAJA" in n or "FONDOS" in n or "BANCOS" in n:
         return "asset_cash"
-    if code.startswith("1010103") and "DEUDORES" in n:
+    # Deudores por ventas / cuentas por cobrar → receivable
+    # (independiente del prefix porque RG 49/14 varía: 1010301, 1010103, etc.)
+    if "DEUDORES" in n or "CUENTAS POR COBRAR" in n:
         return "asset_receivable"
     if "INVENTARIO" in n or "MERCADER" in n or code.startswith("1010104"):
         return "asset_current"
