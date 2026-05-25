@@ -10,5 +10,6 @@ from . import test_journal_extension
 from . import test_migration_wizard
 from . import test_point_of_emission
 from . import test_post_init_hook
+from . import test_pyme_e2e
 from . import test_taxes
 from . import test_timbrado
