@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Stub para Task 3 — list/form/action de economic_activity. -->
 <odoo>
+    <record id="view_l10n_py_economic_activity_tree" model="ir.ui.view">
+        <field name="name">l10n_py.economic_activity.tree</field>
+        <field name="model">l10n_py.economic_activity</field>
+        <field name="arch" type="xml">
+            <list string="Actividades Económicas DNIT">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_l10n_py_economic_activity_form" model="ir.ui.view">
+        <field name="name">l10n_py.economic_activity.form</field>
+        <field name="model">l10n_py.economic_activity</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_l10n_py_economic_activity" model="ir.actions.act_window">
+        <field name="name">Actividades Económicas</field>
+        <field name="res_model">l10n_py.economic_activity</field>
+        <field name="view_mode">list,form</field>
+    </record>
 </odoo>
