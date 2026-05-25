@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Stub para Fase 1b — campos Paraguay en res.company (Task 3+). -->
 <odoo>
+    <record id="view_company_form_inherit_l10n_py" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.l10n_py</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Paraguay (Fiscal)" invisible="country_id and country_id != %(base.py)d">
+                    <group>
+                        <group string="Identidad DNIT">
+                            <field name="l10n_py_nombre_fantasia"/>
+                            <field name="l10n_py_dv" readonly="1"/>
+                            <field name="l10n_py_taxpayer_type_id"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="l10n_py_regime_id"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group string="Actividades Económicas">
+                            <field name="l10n_py_economic_activity_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_quick_create': True}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
 </odoo>
