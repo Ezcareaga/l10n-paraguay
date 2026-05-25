@@ -13,8 +13,10 @@ Paraguay -Base
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
+.. |badge3| image:: https://img.shields.io/badge/version-18.0.1.1.0-blue.png
+    :alt: Version: 18.0.1.1.0
 
-|badge1| |badge2|
+|badge1| |badge2| |badge3|
 
 Foundational module for the Paraguayan localization. Provides the canonical
 DNIT/SIFEN catalogs (departments, districts, cities, regimes, taxpayer types,
