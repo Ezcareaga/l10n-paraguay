@@ -61,9 +61,13 @@ class TestAccountMoveSequence(L10nPyAccountTestCase):
     def test_doc_type_change_draft_resets_name(self):
         inv = self._make_invoice("dt_fe")
         self.assertFalse(inv.name or inv.name == "/")
-        # Cambio a NC en draft
-        inv.l10n_latam_document_type_id = self.env.ref("l10n_py_account.dt_nc")
-        inv.move_type = "out_refund"
+        # Cambio simultáneo move_type+doc_type en draft: el constraint
+        # _check_invoice_type_document_type valida combinaciones, debemos cambiar
+        # ambos a la vez para evitar estado intermedio incompatible (NC requiere out_refund).
+        inv.write({
+            "move_type": "out_refund",
+            "l10n_latam_document_type_id": self.env.ref("l10n_py_account.dt_nc").id,
+        })
         # El name se recompute solo al postear; verificamos que el sequence reset funciona
 
     def test_format_document_number_inverse_works(self):
