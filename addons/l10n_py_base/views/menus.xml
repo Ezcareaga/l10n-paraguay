@@ -31,4 +31,11 @@
               action="action_l10n_py_district"
               sequence="40"/>
 
+    <menuitem
+        id="menu_l10n_py_economic_activity"
+        name="Actividades Económicas"
+        parent="menu_l10n_py_root"
+        action="action_l10n_py_economic_activity"
+        sequence="50"/>
+
 </odoo>
