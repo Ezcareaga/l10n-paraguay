@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_py_afectacion_iva_tree" model="ir.ui.view">
+        <field name="name">l10n_py.afectacion_iva.tree</field>
+        <field name="model">l10n_py.afectacion_iva</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_l10n_py_afectacion_iva" model="ir.actions.act_window">
+        <field name="name">Afectación IVA (SIFEN)</field>
+        <field name="res_model">l10n_py.afectacion_iva</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>
