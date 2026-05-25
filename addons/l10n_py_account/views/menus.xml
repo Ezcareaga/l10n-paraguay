@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_l10n_py_account_config"
+        name="Paraguay"
+        parent="account.menu_finance_configuration"
+        sequence="100"/>
+    <menuitem
+        id="menu_l10n_py_timbrado"
+        name="Timbrados"
+        parent="menu_l10n_py_account_config"
+        action="action_l10n_py_timbrado"
+        sequence="10"/>
+    <menuitem
+        id="menu_l10n_py_poe"
+        name="Puntos de Emisión"
+        parent="menu_l10n_py_account_config"
+        action="action_l10n_py_poe"
+        sequence="20"/>
+    <menuitem
+        id="menu_l10n_py_afectacion_iva"
+        name="Afectación IVA (SIFEN)"
+        parent="menu_l10n_py_account_config"
+        action="action_l10n_py_afectacion_iva"
+        sequence="30"/>
+    <menuitem
+        id="menu_l10n_py_migration_wizard"
+        name="Migración Chart"
+        parent="menu_l10n_py_account_config"
+        action="action_l10n_py_account_migration_wizard"
+        sequence="90"/>
+</odoo>
