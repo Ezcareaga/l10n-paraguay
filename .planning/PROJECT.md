@@ -50,16 +50,24 @@ Odoo Community + estos módulos y factura legalmente en Paraguay.
 
 ### Active
 
-<!-- Pendiente: el usuario va a pasar el archivo del milestone Fase 2
-(`l10n_py_edi`). Esta sección se completa en /gsd:new-milestone o
-al definir REQUIREMENTS.md del milestone. -->
+<!-- Milestone activo: Pre-Fase 2 Foundation & Housekeeping.
+     Scope completo en .planning/REQUIREMENTS.md, roadmap en .planning/ROADMAP.md.
+     Source spec: docs/55_PRE_FASE_2_FOUNDATION.md.
+     Estructura: 1 milestone con 5 phases (una por Bloque A→E). -->
 
-- [ ] **Milestone Fase 2 — `l10n_py_edi`**: scope a definir cuando el usuario
-  pase el archivo de contexto del milestone. Roadmap macro
-  [`docs/50_MODULES_ROADMAP.md`](../docs/50_MODULES_ROADMAP.md#fase-2) propone:
-  CDC + XML builder (grupos AA/A/B/C/D/E/F/H) + firma XAdES + cliente SOAP +
-  eventos + KuDE + wizards cancelación/inutilización + homologación
-  sifen-test.set.gov.py.
+**Milestone activo: Pre-Fase 2 — Foundation & Housekeeping** (35 v1 REQs, 5 phases).
+Lleva el repo de "side project con código" a "proyecto OCA-ready" *antes* de
+arrancar Fase 2 EDI (firma + CCFE). Detalle en
+[`.planning/REQUIREMENTS.md`](REQUIREMENTS.md) y [`.planning/ROADMAP.md`](ROADMAP.md);
+spec en [`docs/55_PRE_FASE_2_FOUNDATION.md`](../docs/55_PRE_FASE_2_FOUNDATION.md).
+
+- [ ] **Phase 1 — Bloque A: Foundation técnica (CI/CD + pre-commit)** — 8 REQs (CI-01..08): pre-commit OCA, GitHub Actions test+lint, dependabot, commitlint, branch protection en `main`
+- [ ] **Phase 2 — Bloque B: Security baseline** — 7 REQs (SEC-01..07): LICENSE, SECURITY.md, gitleaks+Bandit workflow, docs/60-61 (security baseline + compliance Ley 6534)
+- [ ] **Phase 3 — Bloque C: Documentación operacional** — 10 REQs (DOC-01..10): README, CHANGELOG, CONTRIBUTING, CoC, docs/70-72 (ARCHITECTURE, DEPLOYMENT, RUNBOOK), ADRs 0001-0005
+- [ ] **Phase 4 — Bloque D: Repo hygiene + Release** — 6 REQs (REL-01..06): Issue/PR templates, CODEOWNERS, release.yml, tag `v0.1.0`
+- [ ] **Phase 5 — Bloque E: Multi-rubro foundation** — 4 REQs (IND-01..04): ADR-0004 multi-rubro, docs/80, auditoría grep rubro-agnosticismo
+
+**Siguiente milestone (después de Pre-Fase 2):** **Fase 2 — `l10n_py_edi` MVP** (8-12 semanas). Roadmap macro en [`docs/50_MODULES_ROADMAP.md`](../docs/50_MODULES_ROADMAP.md#fase-2). Scope propuesto: CDC + XML builder (grupos AA/A/B/C/D/E/F/H) + firma XAdES + cliente SOAP + eventos + KuDE + wizards cancelación/inutilización + homologación sifen-test.set.gov.py.
 
 ### Out of Scope
 
@@ -207,4 +215,4 @@ This document evolves at phase transitions and milestone boundaries.
 - PR #2 (l10n_py_account 1.0.0): https://github.com/Ezcareaga/l10n-paraguay/pull/2
 
 ---
-*Last updated: 2026-05-26 — initial GSD bootstrap (post Fase 1 completada).*
+*Last updated: 2026-05-26 — initial GSD bootstrap (post Fase 1 completada) + milestone Pre-Fase 2 Foundation activado.*

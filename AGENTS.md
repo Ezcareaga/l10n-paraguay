@@ -177,3 +177,27 @@ Sobre esa regla, defaults específicos del repo (Odoo 18 + Python 3.11 + Paragua
 - Para el setup Odoo en sí: docs/10-15.
 - Para convenciones OCA: docs/20-21.
 - Para patrones latam (lo más cercano): docs/33 (Ecuador) y docs/34 (Argentina).
+- **Planning GSD activo:** ver `.planning/PROJECT.md` (contexto vivo) +
+  `.planning/STATE.md` (current focus) + `.planning/ROADMAP.md` (phases del
+  milestone activo). Resume sesión con `/gsd:resume-work`.
+
+<!-- GSD:workflow-start source:GSD defaults -->
+## GSD Workflow Enforcement
+
+Antes de usar Edit/Write o tools de cambio sobre código, arrancá por un
+comando GSD para que planning + execution se mantengan sincronizados.
+
+**Entry points:**
+- `/gsd:resume-work` — reanudar desde STATE.md
+- `/gsd:plan-phase <N>` — decomponer una phase en plans atómicos
+- `/gsd:execute-phase <N>` — ejecutar la phase completa (subagents + atomic commits)
+- `/gsd:quick` — fixes chicos, doc updates, tasks ad-hoc
+- `/gsd:debug` — investigación + bug fix con state persistente
+
+**Estado actual:** milestone **Pre-Fase 2 Foundation** activo. Phase 1 (Bloque A
+— CI/CD + pre-commit) lista para planificar con `/gsd:plan-phase 1`. Detalle
+completo en [`.planning/STATE.md`](.planning/STATE.md).
+
+No hacer edits directos al repo fuera de un GSD workflow salvo que el usuario
+pida explícitamente bypass.
+<!-- GSD:workflow-end -->

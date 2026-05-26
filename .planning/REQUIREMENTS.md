@@ -118,60 +118,61 @@ Excluido explícitamente de este milestone con razonamiento (prevención de scop
 
 ## Traceability
 
-> Esta sección la llena `gsd-roadmapper` al crear `ROADMAP.md`. Cada REQ-ID se mapea a exactamente una phase.
+> Mapeo REQ → Phase del milestone Pre-Fase 2. Roadmap completo en [`.planning/ROADMAP.md`](ROADMAP.md).
 
 | Requirement | Phase | Status |
 |---|---|---|
-| CI-01 | TBD | Pending |
-| CI-02 | TBD | Pending |
-| CI-03 | TBD | Pending |
-| CI-04 | TBD | Pending |
-| CI-05 | TBD | Pending |
-| CI-06 | TBD | Pending |
-| CI-07 | TBD | Pending |
-| CI-08 | TBD | Pending |
-| SEC-01 | TBD | Pending |
-| SEC-02 | TBD | Pending |
-| SEC-03 | TBD | Pending |
-| SEC-04 | TBD | Pending |
-| SEC-05 | TBD | Pending |
-| SEC-06 | TBD | Pending |
-| SEC-07 | TBD | Pending |
-| DOC-01 | TBD | Pending |
-| DOC-02 | TBD | Pending |
-| DOC-03 | TBD | Pending |
-| DOC-04 | TBD | Pending |
-| DOC-05 | TBD | Pending |
-| DOC-06 | TBD | Pending |
-| DOC-07 | TBD | Pending |
-| DOC-08 | TBD | Pending |
-| DOC-09 | TBD | Pending |
-| DOC-10 | TBD | Pending |
-| REL-01 | TBD | Pending |
-| REL-02 | TBD | Pending |
-| REL-03 | TBD | Pending |
-| REL-04 | TBD | Pending |
-| REL-05 | TBD | Pending |
-| REL-06 | TBD | Pending |
-| IND-01 | TBD | Pending |
-| IND-02 | TBD | Pending |
-| IND-03 | TBD | Pending |
-| IND-04 | TBD | Pending |
+| CI-01 | Phase 1 | Pending |
+| CI-02 | Phase 1 | Pending |
+| CI-03 | Phase 1 | Pending |
+| CI-04 | Phase 1 | Pending |
+| CI-05 | Phase 1 | Pending |
+| CI-06 | Phase 1 | Pending |
+| CI-07 | Phase 1 | Pending |
+| CI-08 | Phase 1 | Pending |
+| SEC-01 | Phase 2 | Pending |
+| SEC-02 | Phase 2 | Pending |
+| SEC-03 | Phase 2 | Pending |
+| SEC-04 | Phase 2 | Pending |
+| SEC-05 | Phase 2 | Pending |
+| SEC-06 | Phase 2 | Pending |
+| SEC-07 | Phase 2 | Pending |
+| DOC-01 | Phase 3 | Pending |
+| DOC-02 | Phase 3 | Pending |
+| DOC-03 | Phase 3 | Pending |
+| DOC-04 | Phase 3 | Pending |
+| DOC-05 | Phase 3 | Pending |
+| DOC-06 | Phase 3 | Pending |
+| DOC-07 | Phase 3 | Pending |
+| DOC-08 | Phase 3 | Pending |
+| DOC-09 | Phase 3 | Pending |
+| DOC-10 | Phase 3 | Pending |
+| REL-01 | Phase 4 | Pending |
+| REL-02 | Phase 4 | Pending |
+| REL-03 | Phase 4 | Pending |
+| REL-04 | Phase 4 | Pending |
+| REL-05 | Phase 4 | Pending |
+| REL-06 | Phase 4 | Pending |
+| IND-01 | Phase 5 | Pending |
+| IND-02 | Phase 5 | Pending |
+| IND-03 | Phase 5 | Pending |
+| IND-04 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: **35 total**
-- Mapped to phases: 0 (pending roadmapper)
-- Unmapped: 35 ⚠️ (será 0 después de `gsd-roadmapper`)
+- Mapped to phases: **35** ✓
+- Unmapped: **0**
+- Duplicated: **0**
 
-**v1 breakdown by Bloque:**
-| Bloque | Categoría | REQ count |
-|---|---|---|
-| A — Foundation técnica | CI-01..08 | 8 |
-| B — Security baseline | SEC-01..07 | 7 |
-| C — Documentación operacional | DOC-01..10 | 10 |
-| D — Repo hygiene + Release | REL-01..06 | 6 |
-| E — Multi-rubro foundation | IND-01..04 | 4 |
-| **Total** | — | **35** |
+**v1 breakdown by Bloque/Phase:**
+| Bloque | Phase | Categoría | REQ count |
+|---|---|---|---|
+| A — Foundation técnica | Phase 1 | CI-01..08 | 8 |
+| B — Security baseline | Phase 2 | SEC-01..07 | 7 |
+| C — Documentación operacional | Phase 3 | DOC-01..10 | 10 |
+| D — Repo hygiene + Release | Phase 4 | REL-01..06 | 6 |
+| E — Multi-rubro foundation | Phase 5 | IND-01..04 | 4 |
+| **Total** | — | — | **35** |
 
 ---
 
@@ -179,11 +180,11 @@ Excluido explícitamente de este milestone con razonamiento (prevención de scop
 
 Lean PRD-style summary del valor que cada Bloque entrega:
 
-- **Como maintainer**, al pushear código a una PR, quiero que **CI corra lint + tests automáticamente** y rechace merges con problemas, para no depender de mi disciplina manual *(Bloque A)*.
-- **Como future cliente PyME**, al recibir el módulo, quiero que **el manejo de CCFE/firmas digitales tenga estrategia documentada de encriptación, backup y rotación de keys**, para confiar que mis certificados privados están protegidos *(Bloque B)*.
-- **Como reviewer OCA**, al evaluar el repo para mergear a `OCA/l10n-paraguay`, quiero ver **README real, CONTRIBUTING.md completo, ADRs versionados, ARCHITECTURE.md, RUNBOOK.md**, para aceptarlo sin pedirme yo mismo todo eso *(Bloque C)*.
-- **Como contribuidor externo**, al querer aportar al repo, quiero **issue templates, PR template, CODEOWNERS, release notes**, para saber cómo contribuir sin preguntar *(Bloque D)*.
-- **Como dev futuro** que necesita crear un módulo `l10n_py_industry_*`, quiero **estrategia multi-rubro formalizada en un ADR + roadmap doc**, para no duplicar trabajo ni asumir mal qué hace base vs qué hace industry *(Bloque E)*.
+- **Como maintainer**, al pushear código a una PR, quiero que **CI corra lint + tests automáticamente** y rechace merges con problemas, para no depender de mi disciplina manual *(Bloque A / Phase 1)*.
+- **Como future cliente PyME**, al recibir el módulo, quiero que **el manejo de CCFE/firmas digitales tenga estrategia documentada de encriptación, backup y rotación de keys**, para confiar que mis certificados privados están protegidos *(Bloque B / Phase 2)*.
+- **Como reviewer OCA**, al evaluar el repo para mergear a `OCA/l10n-paraguay`, quiero ver **README real, CONTRIBUTING.md completo, ADRs versionados, ARCHITECTURE.md, RUNBOOK.md**, para aceptarlo sin pedirme yo mismo todo eso *(Bloque C / Phase 3)*.
+- **Como contribuidor externo**, al querer aportar al repo, quiero **issue templates, PR template, CODEOWNERS, release notes**, para saber cómo contribuir sin preguntar *(Bloque D / Phase 4)*.
+- **Como dev futuro** que necesita crear un módulo `l10n_py_industry_*`, quiero **estrategia multi-rubro formalizada en un ADR + roadmap doc**, para no duplicar trabajo ni asumir mal qué hace base vs qué hace industry *(Bloque E / Phase 5)*.
 
 ## Acceptance Criteria
 
@@ -246,4 +247,4 @@ El milestone Pre-Fase 2 está **complete** cuando:
 
 *Requirements defined: 2026-05-26*
 *Source: `docs/55_PRE_FASE_2_FOUNDATION.md`*
-*Last updated: 2026-05-26 after initial definition (pre-roadmapper)*
+*Last updated: 2026-05-26 after roadmapper traceability mapping (35/35 mapped, 0 orphaned)*
