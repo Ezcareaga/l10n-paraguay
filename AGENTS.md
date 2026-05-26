@@ -115,14 +115,35 @@ python scripts/build_index.py
 
 ## Estado actual
 
-**Fase 1a completada:** 2026-05-22. `l10n_py_base` instalable en `l10n_py_dev`
-con 21 tests verdes. Próximo paso: `l10n_py_account` (resto de Fase 1) —
-plan de cuentas + taxes IVA + `l10n_latam.document.type` + timbrado.
+- **Fase 1a completada:** 2026-05-22. `l10n_py_base 18.0.1.0.0`, 17 tests.
+- **Fase 1b completada:** 2026-05-25. `l10n_py_base 18.0.1.1.0` + `l10n_py_account 18.0.1.0.0`,
+  **97 tests verdes** (l10n_py_base 23 + l10n_py_account 74). PR1 + PR2
+  mergeados a `main` vía rebase. Resumen consolidado:
+  [`docs/60_FASE_1_RETROSPECTIVA.md`](docs/60_FASE_1_RETROSPECTIVA.md).
+- **Próximo:** Fase 2 = `l10n_py_edi` (CDC + firma XAdES + SOAP SIFEN + KuDE + eventos).
 
 ## Skills + subagents — defaults del proyecto
 
-Sobre la regla global (`~/.claude/CLAUDE.md` REGLA #1), defaults específicos
-para este repo (Odoo 18 + Python 3.11 + Paraguay/SIFEN):
+### REGLA REFORZADA (override de global REGLA #1)
+
+**Cualquier task de código en este repo va por subagent. Sin excepciones de
+tamaño.** Edits inline solo para correcciones triviales de typos en docs o
+configuración, nunca para código de modelos/tests/views/scripts.
+
+**Trigger explícito de escalación a subagent**: cualquiera de estos cuenta como
+fallo de iteración y obliga a dispatch a subagent especializado, no a seguir
+inline:
+
+- 1 (uno) test que falla después de un fix tuyo
+- 1 (un) traceback de Odoo que no entendés en el primer leído
+- 1 (un) "esto debería funcionar pero..."
+- Más de 2 lecturas de archivos seguidas para entender un único bug
+
+**Razón:** sesión 2026-05-25 perdió 1h debuggeando inline 6 tests que
+`voltagent-qa-sec:debugger` resolvió en una pasada. El costo de dispatch
+upfront (≈ 2-3 min) es menor que el costo de tropezar inline.
+
+Sobre esa regla, defaults específicos del repo (Odoo 18 + Python 3.11 + Paraguay/SIFEN):
 
 | Trigger | Skill | Subagent |
 |---|---|---|
