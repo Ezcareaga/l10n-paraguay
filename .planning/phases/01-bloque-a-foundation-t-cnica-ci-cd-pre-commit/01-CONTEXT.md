@@ -332,5 +332,48 @@ No applicable — `gsd-sdk query todo.match-phase 1` devolvió `todo_count: 0`.
 
 ---
 
+<addendum>
+## Addendum — 2026-05-27 (post-RESEARCH.md)
+
+`gsd-phase-researcher` produjo `01-RESEARCH.md` y dissolvió 2 decisiones lockeadas. User confirmó las resoluciones via AskUserQuestion:
+
+### A-01: D-11 stack OVERRIDDEN → OCA standard (py3.10 + PG12)
+
+- **Origen:** D-11 fijó "1 job en matrix: Python 3.11 × PostgreSQL 16 × Odoo 18 community" basado en suposición de stack manual.
+- **Resolución:** Adoptar OCA-CI standard image `ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest` + service `postgres:12` (matches Brazil 18.0 + canónico `oca-addons-repo-template`). Habilita `oca_install_addons` / `oca_run_tests` / `manifestoo` out-of-the-box.
+- **Impacto en REQs:** CI-03 literal text dice "Python 3.11 + PostgreSQL 16" — REQ NO se amenda (no es typo, fue decisión deliberada superseded por la confirmación de usuario). Divergencia documentada: implementación usa 3.10/PG12 alineado con OCA standard, runtime de producción puede seguir siendo 3.11+/PG15+.
+- **Evidence:** RESEARCH.md R-02; user decision via AskUserQuestion 2026-05-27 ("OCA standard 3.10 + PG12").
+
+### A-02: D-08 RESOLVED AS MOOT (no auto-bump hook exists)
+
+- **Origen:** D-08 difirió al researcher leer `oca-fix-manifest-version` para decidir accept/block del auto-bump de `version=`.
+- **Resolución:** Hook `oca-fix-manifest-version` NO existe en `OCA/odoo-pre-commit-hooks@v0.0.33` ni en `OCA/maintainer-tools@b89f767`. Es typo en REQ-CI-01 (ahora amendado: `oca-fix-manifest-website` + `manifest-version-format` C8106 via pylint-odoo, ambos read-only / website-only — NO bumpean `version=`). Manifests actuales (`18.0.1.1.0` y `18.0.1.0.0`) ya pasan el check.
+- **Evidence:** RESEARCH.md R-01; user decision via AskUserQuestion 2026-05-27 ("Amendar REQ-CI-01").
+
+### A-03: REQ-CI-01 amendado (typo fix)
+
+- **Edit:** `oca-fix-manifest-version` → `oca-fix-manifest-website` + `pylint-odoo C8106 manifest-version-format` + `prettier+plugin-xml` (formalización D-03).
+- **Commit:** integrado con esta addendum en `docs(planning): align Phase 1 with RESEARCH.md`.
+
+### A-04: Discretion items resueltos por researcher
+
+- `.coveragerc` final → en `01-RESEARCH.md` Deliverables.
+- 3 workflow YAMLs literales → en RESEARCH.md Deliverables.
+- `commitlint.config.js` literal → RESEARCH.md.
+- `dependabot.yml` literal → RESEARCH.md.
+- Required status check names para CI-07 → `pre-commit`, `test (test with Odoo)`, `commitlint`.
+- CI-08 PR de prueba scope → agregar 1 línea a `CHANGES.rst` raíz (nuevo).
+- Codecov action pin → `codecov/codecov-action@v5` (Brazil usa v4, v5 es current major).
+
+### Pendings que se trasladan a PLAN.md
+
+- **R-03 medium uncertainty:** env var exacto que `oca_run_tests` lee para test-tags (RESEARCH propone `ODOO_TEST_TAGS`). Planner debe agregar smoke-verification step.
+- **R-05 dependency:** `.pylintrc` y `.pylintrc-mandatory` no existen en repo; planner agrega task de copiar desde l10n-brazil (o renderizar de jinja).
+- **R-06 wagoid behavior:** validación de PR title con `commitlint-github-action@v6` requiere smoke-test en CI-08 (PR con title `fixed bug` debe ser rechazado).
+</addendum>
+
+---
+
 *Phase: 1-bloque-a-foundation-t-cnica-ci-cd-pre-commit*
 *Context gathered: 2026-05-27*
+*Addendum: 2026-05-27 (post-RESEARCH.md, user-confirmed resolutions)*

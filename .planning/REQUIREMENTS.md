@@ -13,7 +13,7 @@
 
 ### CI — Bloque A: Foundation técnica (CI/CD + pre-commit)
 
-- [ ] **CI-01**: Pre-commit config (`.pre-commit-config.yaml`) con hooks OCA completos (black, isort, flake8, pylint-odoo, oca-checks-odoo-module, oca-fix-manifest-version, codespell, yamllint) corre limpio sobre todo el repo
+- [ ] **CI-01**: Pre-commit config (`.pre-commit-config.yaml`) con hooks OCA completos (black, isort, flake8, pylint-odoo incl. C8106 `manifest-version-format`, oca-checks-odoo-module, oca-fix-manifest-website, codespell, yamllint, prettier+plugin-xml) corre limpio sobre todo el repo. *Amendment 2026-05-27: `oca-fix-manifest-version` (no existe en OCA tooling) reemplazado por `oca-fix-manifest-website` + check read-only `manifest-version-format` via pylint-odoo — ver `.planning/phases/01-.../01-RESEARCH.md` R-01.*
 - [ ] **CI-02**: Commit baseline `chore: apply pre-commit fixes baseline` aplicado antes de activar pre-commit en CI (mitigación de 100+ cambios cosméticos del primer run)
 - [ ] **CI-03**: GitHub Actions workflow `test.yml` ejecuta tests Odoo en matriz Python 3.11 + PostgreSQL 16 + Odoo 18.0, con tags `-standard,l10n_py` (skip external SIFEN)
 - [ ] **CI-04**: GitHub Actions workflow `lint.yml` corre pre-commit en cada PR contra `main`
