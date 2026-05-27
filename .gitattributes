@@ -1,0 +1,21 @@
+# Force LF line endings for all text files across all OSes.
+# Without this, Windows clones with core.autocrlf=true convert LF→CRLF on
+# checkout, which makes the `mixed-line-ending` pre-commit hook fail on
+# every run even though the files are stored as LF in git.
+* text=auto eol=lf
+
+# Keep binary files as-is (no EOL conversion).
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.p12 binary
+*.pfx binary
+*.pem binary
+
+# Union merge for test-requirements (OCA convention from l10n-brazil).
+test-requirements.txt merge=union

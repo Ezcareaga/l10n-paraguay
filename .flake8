@@ -1,0 +1,21 @@
+[flake8]
+# Aligned with OCA l10n-argentina-16.0/.flake8 (canonical OCA flake8 config).
+# max-line-length=88 matches black.
+# B950 (bugbear "line too long > max + 10%") = effectively cap at 97 chars;
+# disabled because we already enforce 88-char hard cap via black, and tightening
+# beyond that is a refactor decision (see BUGS_BACKLOG TD-005).
+max-line-length = 88
+max-complexity = 16
+# B = bugbear (selected); B9 = opinionated bugbear checks (NOT selected — too
+# noisy on existing code, deferred to TD-005).
+select = C,E,F,W,B
+# E203: whitespace before ':' (black behaviour)
+# E501: line length (88 black-enforced is enough; B950 NOT selected)
+# W503: line break before binary operator (black behaviour)
+# B017: assertRaises(Exception) — deferred to TD-005 (needs Odoo-specific
+#        exception classes — UserError/ValidationError — per test case)
+# B907: manual quote surround — purely cosmetic; deferred to TD-005
+ignore = E203,E501,W503,B017,B907
+per-file-ignores =
+    __init__.py:F401
+    __manifest__.py:B018

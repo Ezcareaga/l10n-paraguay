@@ -1,0 +1,13 @@
+# Codespell config for l10n-paraguay.
+# Whitelist of Spanish / Paraguayan tokens reported as false positives by the
+# bare `pre-commit run codespell --all-files` pass over the repo at HEAD ~3a10fc7.
+# Only tokens that ACTUALLY trigger findings are listed — do not pre-emptively
+# expand the list. If codespell starts flagging new tokens later, add them.
+
+[codespell]
+# Lowercase canonical form — codespell matches case-insensitively.
+ignore-words-list = agai,asent,auxiliar,caf,calle,calles,codo,comando,comandos,cristal,caracteres,clases,cliente,extensiones,falso,fase,fases,flor,fram,hace,ine,ines,inmutable,instale,imposible,inicial,jave,maka,millon,mision,nane,nd,noe,oriente,parana,posible,residencial,requiere,responsable,secuencial,serie,servin,soler,simular,thirdparty,vai,vas,vender,yau,accesible,aceptable,aplicable,argumentos,arquitectural,asume,autor,componentes,comercial,contener,detecte,direccion,doble,dobles,fiel,funcional,historial,ignora,implemente,limite,manifiesto,mis,momento,oficial,pase,previos,profesional,registre,relevante,responde,ser,te,termine,valide,varios,visibles
+
+# Skip non-English content paths (Paraguayan catalogs, vendored references,
+# generated artifacts, planning notes, ISO-8859-1 INE CSVs).
+skip = ./references,./.git,./.venv,./node_modules,./.planning,./data/catalogs/_verification,./addons/*/data/*.csv,*.po,*.pot,*.lock

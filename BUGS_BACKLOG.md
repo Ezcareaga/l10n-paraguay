@@ -66,3 +66,83 @@ principal). `--addons-path` también hay que pasarlo explícito porque el
 **TODO opcional:** crear wrapper `bin/odoo-test.ps1`/`bin/odoo-test.sh`
 que encapsule este comando con un módulo como argumento. No es bloqueante;
 documentar acá basta para que futuros subagentes lo conozcan.
+
+## TD-004 — XML data files use deprecated `<data noupdate="1">` wrapper (ABIERTO)
+
+**Detectado:** 2026-05-27 durante Fase 1 P1-C (semantic baseline pre-commit run).
+**Severidad:** baja (sin impacto en runtime — Odoo 18 sigue cargando el XML; es
+solo deprecation warning del hook `oca-checks-odoo-module`).
+
+**Síntoma:** 7 archivos XML del set `addons/l10n_py_*/` usan el wrapper legacy
+`<odoo><data noupdate="1">...</data></odoo>`. Odoo 18 prefiere el formato
+moderno `<odoo noupdate="1">...</odoo>` (colapsar `<data>` en el elemento
+raíz). `oca-checks-odoo-module` v0.0.33 marca `xml-deprecated-data-node` en cada
+uno.
+
+Archivos afectados:
+
+- `addons/l10n_py_account/security/l10n_py_account_security.xml`
+- `addons/l10n_py_base/data/l10n_latam_identification_type_data.xml`
+- `addons/l10n_py_base/data/l10n_py_economic_activity_demo.xml`
+- `addons/l10n_py_base/data/l10n_py_recipient_nature_data.xml`
+- `addons/l10n_py_base/data/l10n_py_regime_data.xml`
+- `addons/l10n_py_base/data/l10n_py_taxpayer_type_data.xml`
+- `addons/l10n_py_base/data/res_country_state_data.xml`
+
+**Estado actual:** los 7 archivos están excluidos del hook
+`oca-checks-odoo-module` en `.pre-commit-config.yaml` (bloque `exclude:` con
+comentario apuntando acá). `pre-commit run --all-files` exit 0 sobre `main`
+con esta exclusión documentada.
+
+**Solución:** 6 de los 7 son auto-generados por
+`scripts/generate_module_data.py` — cambiar el template Jinja (cerca de
+la línea 44, `<odoo><data noupdate="1">` → `<odoo noupdate="1">`) y
+regenerar.
+El 7° (`l10n_py_account_security.xml`) es hand-edited, requiere un edit
+manual. Después de regenerar: correr D-07 (97 tests) para confirmar que el
+parser de Odoo sigue contento con el formato nuevo, y remover el bloque
+`exclude:` del hook.
+
+**Owner:** Phase 2 (`l10n_py_edi`) prep o un mini-plan dedicado dentro del
+milestone Pre-Fase 2 — lo primero que llegue.
+
+**Refs:**
+
+- `.planning/phases/01-bloque-a-foundation-t-cnica-ci-cd-pre-commit/p1c-review.md`
+- `.planning/phases/01-bloque-a-foundation-t-cnica-ci-cd-pre-commit/01-RESEARCH.md` (R-01)
+- `.pre-commit-config.yaml` (bloque `oca-checks-odoo-module: args:`)
+
+## TD-005 — Flake8/bugbear opinionated checks suprimidos (ABIERTO)
+
+**Detectado:** 2026-05-27 durante Fase 1 P1-C cuando se bumpeó flake8
+3.9.2 → 7.1.1 y flake8-bugbear 21.9.2 → 24.10.31.
+**Severidad:** baja (refactor cosmético, sin impacto runtime).
+
+**Síntoma:** flake8-bugbear v24 introduce checks opinionados que el código
+existente no satisface. Tres checks suprimidos en `.flake8` (`ignore =
+...B017,B907` + remoción de `B9` del `select`):
+
+- **B017** — `assertRaises(Exception)` muy genérico en
+  `addons/l10n_py_account/tests/test_point_of_emission.py:31` y
+  `test_timbrado.py:54`. Fix: usar la excepción concreta
+  (`UserError`/`ValidationError` de `odoo.exceptions`) según el caso.
+- **B907** — comillas manuales reemplazables por `!r`:
+  `scripts/codegraph_cli.py:59`, `scripts/extract_pdf.py:34`,
+  `scripts/generate_module_data.py:67-75` (7 hits). Fix: convertir
+  `f'"{x}"'` → `f'{x!r}'`.
+- **B950** — líneas > 88+10% (= 97 chars):
+  `addons/l10n_py_account/models/account_journal.py:46,58`,
+  `account_move.py:36`, `template_py.py:22`,
+  `addons/l10n_py_base/models/res_company.py:26`. Fix: split en multilínea
+  o usar paréntesis implícitos. Ya cumplen el cap soft de 88 char vía
+  black (que no rompe esas líneas porque son strings o comentarios).
+
+**Estado actual:** `.flake8` suprime los tres checks con comentario que
+apunta acá. flake8 corre clean sobre `main`.
+
+**Owner:** plan de refactor cosmético al final de Pre-Fase 2 (cuando todo
+el código del milestone esté congelado) o como parte del code review pre-PR
+OCA, lo primero que llegue.
+
+**Refs:** `.flake8` (`ignore =`/`select =`),
+`.planning/phases/01-bloque-a-foundation-t-cnica-ci-cd-pre-commit/p1c-precommit-final-run.log`

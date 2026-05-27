@@ -29,7 +29,6 @@ from __future__ import annotations
 
 import argparse
 import ast
-import os
 import sqlite3
 import sys
 import time
@@ -126,6 +125,8 @@ CREATE TABLE IF NOT EXISTS metadata (
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+
 def is_excluded(path: str) -> bool:
     p = path.replace("\\", "/")
     return any(pat in p for pat in EXCLUDE_PATTERNS)

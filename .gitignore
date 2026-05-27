@@ -101,3 +101,6 @@ docs/original/*.partial
 .claude/CLAUDE.local.md
 .claude/settings.local.json
 .claude/memory/
+
+# Snapshots para pasar a Claude.ai (locales, no commit)
+SNAPSHOT_FOR_CLAUDE_AI.md

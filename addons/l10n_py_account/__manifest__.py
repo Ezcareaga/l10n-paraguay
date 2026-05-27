@@ -17,7 +17,6 @@
         "account",
         "l10n_latam_invoice_document",
     ],
-    "auto_install": ["account"],
     "data": [
         "security/l10n_py_account_security.xml",
         "security/ir.model.access.csv",

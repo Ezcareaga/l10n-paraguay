@@ -191,10 +191,10 @@ class ResPartner(models.Model):
 The module inherits base_vat.view_partner_base_vat_form and replaces:
 
 `xml
-<field name="l10n_latam_identification_type_id" 
-    placeholder="Type" 
+<field name="l10n_latam_identification_type_id"
+    placeholder="Type"
     domain="country_id and ['|', ('country_id', '=', False), ('country_id', '=', country_id)] or []"
-    required="True" 
+    required="True"
     readonly="parent_id"/>
 <field name="vat" placeholder="Number" class="oe_inline" readonly="parent_id"/>
 `

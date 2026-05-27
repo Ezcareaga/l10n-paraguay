@@ -32,6 +32,8 @@ OUT_DIR = ROOT / "addons" / "l10n_py_account" / "data" / "template"
 # Códigos RG 49/14 (sin puntos) que mapeamos a account_type Odoo.
 # Reglas: Activo (1.x) → asset_*, Pasivo (2.x) → liability_*, Patrimonio (3.x) → equity,
 # Ingresos (4.x, 7.x, 8.x, 17.x) → income, Costos+Gastos (5.x, 10.x-15.x) → expense.
+
+
 def infer_account_type(code: str, name: str) -> str:
     """Mapea código RG 49/14 → account_type Odoo 18."""
     n = name.upper()
