@@ -16,16 +16,16 @@ priority: reference
 
 ## 1. Tabla de equivalencias rápida
 
-| Tabla PostgreSQL ÑandeFact | Modelo Odoo equivalente | ¿Crear nuevo o extender? |
-|---------------------------|--------------------------|--------------------------|
-| `comercio` | `res.company` | Extender (campos SIFEN) |
-| `usuario` | `res.users` | Extender (PIN opcional para POS) |
-| `producto` | `product.product` + `product.template` | Extender (unidad medida SIFEN) |
-| `cliente` | `res.partner` | Extender (ya tiene `vat`, agregar `l10n_latam_identification_type_id` vía `l10n_latam_base`) |
-| `factura` | `account.move` (filtrado por `move_type`) | Extender (CDC, KuDE, etc) |
-| `factura_detalle` | `account.move.line` | Extender (`l10n_py_iva_*`) |
-| `sync_queue` | `account.edi.document` + `queue.job` (OCA) | Ya existe (no replicar) |
-| `usuario_pin` (custom para POS) | `res.users` (`l10n_py_pin_hash` opcional) | Extender solo si POS requiere |
+| Tabla PostgreSQL ÑandeFact      | Modelo Odoo equivalente                    | ¿Crear nuevo o extender?                                                                     |
+| ------------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `comercio`                      | `res.company`                              | Extender (campos SIFEN)                                                                      |
+| `usuario`                       | `res.users`                                | Extender (PIN opcional para POS)                                                             |
+| `producto`                      | `product.product` + `product.template`     | Extender (unidad medida SIFEN)                                                               |
+| `cliente`                       | `res.partner`                              | Extender (ya tiene `vat`, agregar `l10n_latam_identification_type_id` vía `l10n_latam_base`) |
+| `factura`                       | `account.move` (filtrado por `move_type`)  | Extender (CDC, KuDE, etc)                                                                    |
+| `factura_detalle`               | `account.move.line`                        | Extender (`l10n_py_iva_*`)                                                                   |
+| `sync_queue`                    | `account.edi.document` + `queue.job` (OCA) | Ya existe (no replicar)                                                                      |
+| `usuario_pin` (custom para POS) | `res.users` (`l10n_py_pin_hash` opcional)  | Extender solo si POS requiere                                                                |
 
 ## 2. Schema ÑandeFact (referencia conceptual)
 
@@ -299,6 +299,7 @@ class L10nPyInutilizacionRange(models.Model):
 ## 4. Campos a agregar vía `_inherit`
 
 ### `res.company`
+
 ```python
 class ResCompany(models.Model):
     _inherit = 'res.company'
@@ -323,6 +324,7 @@ class ResCompany(models.Model):
 ```
 
 ### `res.partner`
+
 ```python
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -336,6 +338,7 @@ class ResPartner(models.Model):
 ```
 
 ### `account.move`
+
 ```python
 class AccountMove(models.Model):
     _inherit = 'account.move'
@@ -353,6 +356,7 @@ class AccountMove(models.Model):
 ```
 
 ### `account.move.line`
+
 ```python
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
@@ -366,6 +370,7 @@ class AccountMoveLine(models.Model):
 ```
 
 ### `account.tax`
+
 ```python
 class AccountTax(models.Model):
     _inherit = 'account.tax'
@@ -374,6 +379,7 @@ class AccountTax(models.Model):
 ```
 
 ### `product.template`
+
 ```python
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
@@ -383,14 +389,14 @@ class ProductTemplate(models.Model):
 
 ## 5. Regla de oro: no replicar lo que Odoo ya tiene
 
-| Tentación | Por qué NO replicar | Qué hacer en su lugar |
-|-----------|----------------------|-----------------------|
-| Crear `l10n_py.invoice` | `account.move` ya cubre todo el lifecycle (draft/posted/cancel/reversed) | Extender `account.move` |
-| Crear `l10n_py.invoice_line` | `account.move.line` ya tiene tax + qty + price | Extender `account.move.line` |
-| Crear `l10n_py.sync_queue` | `account.edi.document` ya tiene state/retry/error/attachment | Implementar `account.edi.format` para Paraguay |
-| Crear `l10n_py.customer` | `res.partner` es universal en Odoo | Extender `res.partner` |
-| Crear `l10n_py.product` | `product.product/template` es universal | Extender `product.template` |
-| Crear `l10n_py.user` | `res.users` es universal | Extender `res.users` (solo si POS exige PIN) |
+| Tentación                    | Por qué NO replicar                                                      | Qué hacer en su lugar                          |
+| ---------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------- |
+| Crear `l10n_py.invoice`      | `account.move` ya cubre todo el lifecycle (draft/posted/cancel/reversed) | Extender `account.move`                        |
+| Crear `l10n_py.invoice_line` | `account.move.line` ya tiene tax + qty + price                           | Extender `account.move.line`                   |
+| Crear `l10n_py.sync_queue`   | `account.edi.document` ya tiene state/retry/error/attachment             | Implementar `account.edi.format` para Paraguay |
+| Crear `l10n_py.customer`     | `res.partner` es universal en Odoo                                       | Extender `res.partner`                         |
+| Crear `l10n_py.product`      | `product.product/template` es universal                                  | Extender `product.template`                    |
+| Crear `l10n_py.user`         | `res.users` es universal                                                 | Extender `res.users` (solo si POS exige PIN)   |
 
 Esto NO es solo "mejor código" — es **requisito para que el módulo funcione con
 el resto de addons OCA y Enterprise**. Un módulo que crea su propio sistema de

@@ -127,15 +127,15 @@ class AccountEdiDocument(models.Model):
 
 ## 2. Hooks que `account.edi.format` expone
 
-| Método | Cuándo lo llama el framework | Qué debe devolver/hacer |
-|--------|------------------------------|--------------------------|
-| `_get_move_applicability(move)` | Antes de postear o pedir EDI | dict con `{'post': fn, 'cancel': fn, 'edi_content': fn}` o `None` si no aplica |
-| `_needs_web_services()` | Para decidir si crear `edi.document` con `state='to_send'` | bool |
-| `_is_compatible_with_journal(journal)` | Filtro en UI de journal config | bool |
-| `_check_move_configuration(move)` | Antes de postear | list[str] de errores; vacía si OK |
-| `_post_invoice_edi(invoices)` | Cron / botón "Send Now" | dict `{invoice: {'success': bool, 'error': str, 'attachment': record, 'blocking_level': str}}` |
-| `_cancel_invoice_edi(invoices)` | Al cancelar move con `edi_state='sent'` | mismo formato que post |
-| `_export_invoice_xml(invoice)` (legacy) | Generar XML sin enviar (debug) | bytes XML |
+| Método                                  | Cuándo lo llama el framework                               | Qué debe devolver/hacer                                                                        |
+| --------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `_get_move_applicability(move)`         | Antes de postear o pedir EDI                               | dict con `{'post': fn, 'cancel': fn, 'edi_content': fn}` o `None` si no aplica                 |
+| `_needs_web_services()`                 | Para decidir si crear `edi.document` con `state='to_send'` | bool                                                                                           |
+| `_is_compatible_with_journal(journal)`  | Filtro en UI de journal config                             | bool                                                                                           |
+| `_check_move_configuration(move)`       | Antes de postear                                           | list[str] de errores; vacía si OK                                                              |
+| `_post_invoice_edi(invoices)`           | Cron / botón "Send Now"                                    | dict `{invoice: {'success': bool, 'error': str, 'attachment': record, 'blocking_level': str}}` |
+| `_cancel_invoice_edi(invoices)`         | Al cancelar move con `edi_state='sent'`                    | mismo formato que post                                                                         |
+| `_export_invoice_xml(invoice)` (legacy) | Generar XML sin enviar (debug)                             | bytes XML                                                                                      |
 
 **Cambio en Odoo 17/18:** se introdujo `_get_move_applicability` para reemplazar
 varios métodos sueltos. La preferencia ahora es **un solo método** que devuelve
@@ -223,13 +223,13 @@ def post_init_hook(env):
 
 ## 6. Reintentos y manejo de errores
 
-| Situación | `blocking_level` | ¿Cron reintenta? |
-|-----------|------------------|-------------------|
-| Red caída, timeout | `'warning'` | Sí (próximo cron) |
-| SIFEN devuelve `0361` (lote en procesamiento) | `'info'` | Sí |
-| SIFEN devuelve `0300-0399` (rechazo de negocio) | `'error'` | NO — user debe corregir y reintentar manualmente |
-| Cert inválido / TLS handshake fail | `'error'` | NO — admin debe revisar config |
-| Exception inesperada en el código nuestro | `'error'` | NO — bug del módulo |
+| Situación                                       | `blocking_level` | ¿Cron reintenta?                                 |
+| ----------------------------------------------- | ---------------- | ------------------------------------------------ |
+| Red caída, timeout                              | `'warning'`      | Sí (próximo cron)                                |
+| SIFEN devuelve `0361` (lote en procesamiento)   | `'info'`         | Sí                                               |
+| SIFEN devuelve `0300-0399` (rechazo de negocio) | `'error'`        | NO — user debe corregir y reintentar manualmente |
+| Cert inválido / TLS handshake fail              | `'error'`        | NO — admin debe revisar config                   |
+| Exception inesperada en el código nuestro       | `'error'`        | NO — bug del módulo                              |
 
 El user puede **forzar reintento** desde la UI: botón "Send Now" en la factura,
 o "Process Documents" en `account.edi.document`.
@@ -254,15 +254,16 @@ o "Process Documents" en `account.edi.document`.
 
 ## 8. Comparación rápida con localizaciones existentes
 
-| Localización | Repo | Patrón clave |
-|--------------|------|--------------|
-| `l10n_ar_edi` | odoo/odoo (community) | WSAA + WSFEv1, CAE, document types vía `l10n_latam` |
-| `l10n_pe_edi` | odoo/odoo (**enterprise**) | UBL 2.1, OSE (Digiflow/SUNAT), IAP opcional |
-| `l10n_ec_edi` | OCA/l10n-ecuador | Clave de acceso 49 dígitos (similar a CDC), .p12, REST a SRI |
-| `l10n_mx_edi` | odoo/odoo (community) | CFDI 4.0, PAC providers |
-| `l10n_cl_edi` | odoo/odoo (community) | Folios CAF, autorización SII |
+| Localización  | Repo                       | Patrón clave                                                 |
+| ------------- | -------------------------- | ------------------------------------------------------------ |
+| `l10n_ar_edi` | odoo/odoo (community)      | WSAA + WSFEv1, CAE, document types vía `l10n_latam`          |
+| `l10n_pe_edi` | odoo/odoo (**enterprise**) | UBL 2.1, OSE (Digiflow/SUNAT), IAP opcional                  |
+| `l10n_ec_edi` | OCA/l10n-ecuador           | Clave de acceso 49 dígitos (similar a CDC), .p12, REST a SRI |
+| `l10n_mx_edi` | odoo/odoo (community)      | CFDI 4.0, PAC providers                                      |
+| `l10n_cl_edi` | odoo/odoo (community)      | Folios CAF, autorización SII                                 |
 
 **Implicación para `l10n_py_edi`:**
+
 - El patrón más cercano es **`l10n_ec_edi`** (OCA, clave de acceso, .p12 directo
   al SRI). Ver `references/l10n-ecuador-17.0/l10n_ec_edi/` (cuando disponible).
 - Para la integración con `l10n_latam_invoice_document` (tipos de documento),
@@ -271,6 +272,7 @@ o "Process Documents" en `account.edi.document`.
   en community son los ejemplos más completos.
 
 Consultar via codegraph:
+
 ```
 codegraph search "account.edi.format inheritance"
 codegraph search "_post_invoice_edi implementation"

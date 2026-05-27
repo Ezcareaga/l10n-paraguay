@@ -11,6 +11,7 @@ priority: critical
 
 > **`l10n_pe_edi` NO está en Odoo 18 Community.** Es un addon **Enterprise-only**.
 > El sparse checkout de `odoo/odoo` 18.0 community contiene solamente:
+>
 > - `l10n_pe`
 > - `l10n_pe_pos`
 > - `l10n_pe_website_sale`
@@ -29,28 +30,31 @@ document types, certificate management, environment toggle test/prod).
 
 ## 1. Módulos del paquete Perú (Enterprise)
 
-| Módulo | Técnico | Propósito | Disp. Comm |
-|--------|---------|-----------|------------|
-| Peru - Accounting | `l10n_pe` | CoA, taxes, document types base | ✓ |
-| Peru - E-invoicing | `l10n_pe_edi` | EDI SUNAT | ✗ Enterprise |
-| Peru - Accounting Reports | `l10n_pe_reports` | RVIE, RCE, PLE | ✗ Enterprise |
-| Peruvian e-Delivery Note | `l10n_pe_edi_stock` | Guía de remisión | ✗ Enterprise |
-| Peru - Stock Reports | `l10n_pe_reports_stock` | PLE inventario | ✗ Enterprise |
-| Peruvian eCommerce | `l10n_pe_website_sale` | Checkout + identification | ✓ |
-| Peruvian POS | `l10n_pe_pos` | POS con datos fiscales | ✓ |
+| Módulo                    | Técnico                 | Propósito                       | Disp. Comm   |
+| ------------------------- | ----------------------- | ------------------------------- | ------------ |
+| Peru - Accounting         | `l10n_pe`               | CoA, taxes, document types base | ✓            |
+| Peru - E-invoicing        | `l10n_pe_edi`           | EDI SUNAT                       | ✗ Enterprise |
+| Peru - Accounting Reports | `l10n_pe_reports`       | RVIE, RCE, PLE                  | ✗ Enterprise |
+| Peruvian e-Delivery Note  | `l10n_pe_edi_stock`     | Guía de remisión                | ✗ Enterprise |
+| Peru - Stock Reports      | `l10n_pe_reports_stock` | PLE inventario                  | ✗ Enterprise |
+| Peruvian eCommerce        | `l10n_pe_website_sale`  | Checkout + identification       | ✓            |
+| Peruvian POS              | `l10n_pe_pos`           | POS con datos fiscales          | ✓            |
 
 ## 2. Setup de empresa (lo que se mapea a `l10n_py_base`)
 
 ### Datos de la company
+
 - **Country**: Peru
 - **NIF (VAT)**: RUC
 - **Address Type Code**: código de establecimiento SUNAT (default 0000)
 
 ### Chart of Accounts
+
 Instalación automática con `l10n_pe`. Basado en PCGE peruano + NIIF-compatible.
 Incluye cuentas pre-mapeadas para taxes, payable, receivable.
 
 ### Equivalente Paraguay
+
 - En `l10n_py_base`: campos `l10n_py_ruc`, `l10n_py_dv_ruc`, `l10n_py_nombre_fantasia`
 - En `l10n_py_account`: chart of accounts paraguayo (probablemente PUCE o uno
   custom — investigar el estándar contable PY)
@@ -61,27 +65,32 @@ Incluye cuentas pre-mapeadas para taxes, payable, receivable.
 Perú tiene 3 opciones:
 
 ### 1. IAP (Odoo In-App Purchase) — recomendado por Odoo SA
+
 - Odoo provee certificado digital
 - Envía a OSE (Digiflow) → SUNAT
 - Maneja CDR (constancia de recepción)
 - Cuesta créditos (~22 EUR / 1000)
 
 ### 2. Digiflow directo
+
 - User compra certificado propio
 - Firma agreement con Digiflow como OSE
 - Provee SOL credentials
 
 ### 3. SUNAT directo
+
 - Requiere certificación SUNAT (compleja)
 - User maneja cert propio
 - SOL credentials directas
 
 ### Equivalente Paraguay
+
 **No hay IAP de Odoo para Paraguay.** Único camino: certificado CCFE propio +
 conexión directa a SIFEN (siRecepDE / siRecepLoteDE). Análogo al modo "SUNAT
 directo" de Perú.
 
 → En `l10n_py_edi/settings`: solo dos campos relevantes:
+
 - `l10n_py_ccfe_certificate` (Binary, encriptado)
 - `l10n_py_ccfe_password` (Char, encriptado)
 - `l10n_py_environment` (Selection: test / production)
@@ -91,6 +100,7 @@ Sin proveedor intermedio, sin créditos, sin agreements.
 ## 4. Taxes — patrón
 
 Naming convention en `l10n_pe`:
+
 ```
 "IGV 18% (Gravada Operación Onerosa)"
 "IGV 0% (Exonerada)"
@@ -98,12 +108,15 @@ Naming convention en `l10n_pe`:
 ```
 
 Cada tax tiene campos EDI específicos:
+
 - Tax type classification (clasificación SUNAT)
 - Tax support code (código de afectación IGV)
 - Tax grid (para reportes 104, etc.)
 
 ### Equivalente Paraguay
+
 Naming en `l10n_py_account`:
+
 ```
 "IVA 10% (Gravada)"
 "IVA 5% (Reducida)"
@@ -112,18 +125,21 @@ Naming en `l10n_py_account`:
 ```
 
 Campos custom en `account.tax`:
+
 - `l10n_py_tax_code`: código IVA SIFEN (1=gravado, 3=exento)
 - `l10n_py_iva_proporcion_default`: 100 (default), 85, 30, 50
 
 ## 5. Identification types (lo que va a `l10n_py_base`)
 
 Perú:
+
 - DNI (Documento Nacional de Identidad)
 - RUC (Registro Único de Contribuyentes)
 - CE (Carné de Extranjería)
 - Pasaporte
 
 ### Equivalente Paraguay
+
 - CI (Cédula de Identidad paraguaya) — código DNIT 1
 - Pasaporte — código DNIT 2
 - CI extranjera — código DNIT 3
@@ -137,6 +153,7 @@ Estos se cargan como records de `l10n_latam.identification.type` con
 ## 6. Document types (lo que va a `l10n_py_account`)
 
 Perú maneja:
+
 - Factura (01)
 - Boleta (03 — para no-contribuyentes)
 - Nota de Crédito (07)
@@ -145,7 +162,9 @@ Perú maneja:
 Cada uno con su sequence per journal.
 
 ### Equivalente Paraguay
+
 Records de `l10n_latam.document.type` con `country_id = base.py`:
+
 - Factura Electrónica (code='01', internal_type='invoice')
 - Autofactura (code='04')
 - Nota de Crédito Electrónica (code='05', internal_type='credit_note')
@@ -157,10 +176,12 @@ Detalle en [`31_L10N_LATAM_INVOICE_DOCUMENT.md`](31_L10N_LATAM_INVOICE_DOCUMENT.
 ## 7. Journal setup
 
 Perú requiere:
+
 - **Use Documents**: enable (activa l10n_latam_invoice_document)
 - **Electronic Data Interchange**: seleccionar "Peru UBL 2.1"
 
 ### Equivalente Paraguay
+
 - **Use Documents**: enable
 - **Electronic Data Interchange**: seleccionar "SIFEN (DNIT Paraguay)" — record
   creado por `l10n_py_edi`
@@ -171,6 +192,7 @@ Perú requiere:
 ## 8. Lifecycle de factura electrónica
 
 Perú:
+
 ```
 draft → posted → sent → accepted/rejected
 ```
@@ -178,6 +200,7 @@ draft → posted → sent → accepted/rejected
 `sent` significa "transmitido a OSE/SUNAT". `accepted` cuando llega CDR.
 
 ### Equivalente Paraguay (usando `account.edi.document`)
+
 ```
 draft → posted → edi_state='to_send' → edi_state='sent' (DTE aprobado)
                                      → edi_state='to_send' con error (corregir)
@@ -192,6 +215,7 @@ implementa los hooks (ver [`15_ODOO_ACCOUNT_EDI_FRAMEWORK.md`](15_ODOO_ACCOUNT_E
 Perú cancela vía un workflow específico que envía evento a SUNAT.
 
 ### Equivalente Paraguay
+
 - Wizard `l10n.py.cancellation.wizard` (TransientModel)
 - Pide campo `motivo` obligatorio (>5 chars)
 - Llama `account.edi.format._cancel_invoice_edi(invoices)` con el motivo
@@ -201,12 +225,14 @@ Perú cancela vía un workflow específico que envía evento a SUNAT.
 ## 10. Reportes (Fase de `l10n_py_reports`)
 
 Perú tiene un sistema robusto de reportes PLE (Planilla de Libros Electrónicos):
+
 - PLE 5.1 (libro diario)
 - PLE 8.4 (registro compras electrónico)
 - PLE 14.4 (registro ventas)
 - etc.
 
 ### Equivalente Paraguay
+
 - **Libro IVA Ventas**
 - **Libro IVA Compras**
 - **Hechauka** — sistema declaración de DNIT (estructura específica)
@@ -232,6 +258,7 @@ community) o el built-in de `account` (manejo de reports custom). Investigar.
    journal). Ver detalles en [`31_L10N_LATAM_INVOICE_DOCUMENT.md`](31_L10N_LATAM_INVOICE_DOCUMENT.md).
 
 ## Para query del código real
+
 ```
 codegraph search "l10n_pe chart_template"
 codegraph search "l10n_pe.document.type data"

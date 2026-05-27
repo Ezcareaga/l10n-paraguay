@@ -38,25 +38,25 @@ data/catalogs/
 
 ## Estado actual (2026-05-22)
 
-| Catálogo | Fuente canónica | CSV en `dnit/` |
-|---|---|---|
-| Departamentos | DNIT XLSX (confirmado por Manual v150 Tabla 2.1) | ✅ 18 |
-| Distritos | DNIT XLSX | ✅ 270 |
-| Ciudades | DNIT XLSX | ✅ 6419 |
-| Régimenes | Manual v150 TABLA 1 | ✅ 8 |
-| Tipos documento identidad | Manual v150 campo D208 | ✅ 7 |
-| Tipo contribuyente | Manual v150 campo D205 | ✅ 2 |
-| Naturaleza receptor | Manual v150 campo D201 | ✅ 2 |
-| Tipo operación | Manual v150 campo D202 | ✅ 4 |
-| Indicador presencia | Manual v150 campo E011 | ✅ 7 |
-| Unidades de medida | Manual v150 TABLA 5 | ✅ 34 |
-| Afectación IVA | Manual v150 TABLA 6 | ✅ 4 |
-| Categorías ISC | Manual v150 TABLA 7 | ✅ 5 |
-| Tasas ISC | Manual v150 TABLA 8 | ✅ 12 |
-| Incoterms | Manual v150 TABLA 10 | ✅ 11 |
-| Actividades económicas | Web service SET | ⏳ defer (cachear en `l10n_py_base`) |
-| Monedas | ISO 4217 (Odoo `res.currency`) | N/A — built-in |
-| Países | ISO 3166-1 (Odoo `res.country`) | N/A — built-in |
+| Catálogo                  | Fuente canónica                                  | CSV en `dnit/`                       |
+| ------------------------- | ------------------------------------------------ | ------------------------------------ |
+| Departamentos             | DNIT XLSX (confirmado por Manual v150 Tabla 2.1) | ✅ 18                                |
+| Distritos                 | DNIT XLSX                                        | ✅ 270                               |
+| Ciudades                  | DNIT XLSX                                        | ✅ 6419                              |
+| Régimenes                 | Manual v150 TABLA 1                              | ✅ 8                                 |
+| Tipos documento identidad | Manual v150 campo D208                           | ✅ 7                                 |
+| Tipo contribuyente        | Manual v150 campo D205                           | ✅ 2                                 |
+| Naturaleza receptor       | Manual v150 campo D201                           | ✅ 2                                 |
+| Tipo operación            | Manual v150 campo D202                           | ✅ 4                                 |
+| Indicador presencia       | Manual v150 campo E011                           | ✅ 7                                 |
+| Unidades de medida        | Manual v150 TABLA 5                              | ✅ 34                                |
+| Afectación IVA            | Manual v150 TABLA 6                              | ✅ 4                                 |
+| Categorías ISC            | Manual v150 TABLA 7                              | ✅ 5                                 |
+| Tasas ISC                 | Manual v150 TABLA 8                              | ✅ 12                                |
+| Incoterms                 | Manual v150 TABLA 10                             | ✅ 11                                |
+| Actividades económicas    | Web service SET                                  | ⏳ defer (cachear en `l10n_py_base`) |
+| Monedas                   | ISO 4217 (Odoo `res.currency`)                   | N/A — built-in                       |
+| Países                    | ISO 3166-1 (Odoo `res.country`)                  | N/A — built-in                       |
 
 ## ✅ Discrepancia DNIT vs INE — resuelta
 
@@ -83,12 +83,12 @@ ajustados de filas brutas vs únicas), ver `dnit/discrepancies.md`.
 
 ## Fuentes (URLs)
 
-| Archivo | URL | Fecha descarga |
-|---|---|---|
-| `dnit_codigo_referencia_geografica.xlsx` | https://www.dnit.gov.py/documents/20123/420592/CODIGO+DE+REFERENCIA+GEOGRAFICA.xlsx | 2026-05-20 |
-| `ine_2022_*.xlsx` | https://www.ine.gov.py/microdatos/codigo-geografico-2022.php | 2026-05-20 |
-| `ine_2012_*.csv` | https://www.datos.gov.py/dataset/códigos-geográficos-censo-nacional-de-población-y-viviendas-2012-paraguay | 2026-05-20 |
-| `conacyt_distritos_actualizado.xlsx` | https://www.conacyt.gov.py/sites/default/files/DISTRITOS_DEL_PARAGUAY_ACTUALIZADO_2_1.xlsx | 2026-05-20 |
+| Archivo                                  | URL                                                                                                        | Fecha descarga |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------- |
+| `dnit_codigo_referencia_geografica.xlsx` | https://www.dnit.gov.py/documents/20123/420592/CODIGO+DE+REFERENCIA+GEOGRAFICA.xlsx                        | 2026-05-20     |
+| `ine_2022_*.xlsx`                        | https://www.ine.gov.py/microdatos/codigo-geografico-2022.php                                               | 2026-05-20     |
+| `ine_2012_*.csv`                         | https://www.datos.gov.py/dataset/códigos-geográficos-censo-nacional-de-población-y-viviendas-2012-paraguay | 2026-05-20     |
+| `conacyt_distritos_actualizado.xlsx`     | https://www.conacyt.gov.py/sites/default/files/DISTRITOS_DEL_PARAGUAY_ACTUALIZADO_2_1.xlsx                 | 2026-05-20     |
 
 ## Schema propuesto para `dnit/*.csv` (cuando se generen)
 
@@ -112,5 +112,5 @@ codigo,nombre,codigo_padre,activo
   distritos físicos.
 - La hoja se llama "División Político-Administrativa" — 7403 filas × 9 columnas.
 - Columnas: `(blank) | CodDepto | NombreDepto | CodDistrito | NombreDistrito |
-  CodCiudad | NombreCiudad | CodBarrio | NombreBarrio`. La col 1 está vacía
+CodCiudad | NombreCiudad | CodBarrio | NombreBarrio`. La col 1 está vacía
   (probablemente artefacto del template Excel del DNIT).

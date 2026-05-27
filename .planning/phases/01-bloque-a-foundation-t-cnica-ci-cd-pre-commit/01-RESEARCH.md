@@ -3,6 +3,7 @@
 **Researched:** 2026-05-27
 **Researcher:** gsd-phase-researcher
 **Inputs:**
+
 - `.planning/PROJECT.md`
 - `.planning/REQUIREMENTS.md` (CI — Bloque A, CI-01..08)
 - `.planning/ROADMAP.md` (Phase 1)
@@ -113,14 +114,14 @@
 
 - **Decision:** Hand-roll from `references/l10n-brazil/.pre-commit-config.yaml` pruning to CI-01 set, adding codespell + yamllint (NOT in Brazil), keeping prettier+plugin-xml, dropping eslint+whool+oca-gen-addon-readme+ruff (per D-03 — CI-01 lists black/isort/flake8 separate, not ruff).
 - **Pins (all sourced from `oca-addons-repo-template@v1.41` `odoo_version < 19` block, lines 79-98):**
-  - `oca/maintainer-tools` → `b89f767503be6ab2b11e4f50a7557cb20066e667` ([line 88](references\oca-addons-repo-template\src\.pre-commit-config.yaml.jinja#L88))
-  - `OCA/odoo-pre-commit-hooks` → `v0.0.33` ([line 90](references\oca-addons-repo-template\src\.pre-commit-config.yaml.jinja#L90))
-  - `OCA/pylint-odoo` → `v9.1.3` ([line 94](references\oca-addons-repo-template\src\.pre-commit-config.yaml.jinja#L94))
-  - `pre-commit/pre-commit-hooks` → `v4.6.0` ([line 91](references\oca-addons-repo-template\src\.pre-commit-config.yaml.jinja#L91))
-  - `psf/black` → `22.8.0` ([line 81](references\oca-addons-repo-template\src\.pre-commit-config.yaml.jinja#L81))
-  - `PyCQA/isort` → `5.12.0` ([line 87](references\oca-addons-repo-template\src\.pre-commit-config.yaml.jinja#L87))
-  - `PyCQA/flake8` → `3.9.2` ([line 84](references\oca-addons-repo-template\src\.pre-commit-config.yaml.jinja#L84))
-  - `prettier` → `3.3.3`, `@prettier/plugin-xml` → `3.4.1` ([lines 92-93](references\oca-addons-repo-template\src\.pre-commit-config.yaml.jinja#L92))
+  - `oca/maintainer-tools` → `b89f767503be6ab2b11e4f50a7557cb20066e667` ([line 88](references\oca-addons-repo-template\src.pre-commit-config.yaml.jinja#L88))
+  - `OCA/odoo-pre-commit-hooks` → `v0.0.33` ([line 90](references\oca-addons-repo-template\src.pre-commit-config.yaml.jinja#L90))
+  - `OCA/pylint-odoo` → `v9.1.3` ([line 94](references\oca-addons-repo-template\src.pre-commit-config.yaml.jinja#L94))
+  - `pre-commit/pre-commit-hooks` → `v4.6.0` ([line 91](references\oca-addons-repo-template\src.pre-commit-config.yaml.jinja#L91))
+  - `psf/black` → `22.8.0` ([line 81](references\oca-addons-repo-template\src.pre-commit-config.yaml.jinja#L81))
+  - `PyCQA/isort` → `5.12.0` ([line 87](references\oca-addons-repo-template\src.pre-commit-config.yaml.jinja#L87))
+  - `PyCQA/flake8` → `3.9.2` ([line 84](references\oca-addons-repo-template\src.pre-commit-config.yaml.jinja#L84))
+  - `prettier` → `3.3.3`, `@prettier/plugin-xml` → `3.4.1` ([lines 92-93](references\oca-addons-repo-template\src.pre-commit-config.yaml.jinja#L92))
   - `codespell` → `v2.4.2` (verified via WebFetch `github.com/codespell-project/codespell` — latest stable as of 2026-03-05)
   - `yamllint` → `v1.38.0` (verified via WebFetch `github.com/adrienverge/yamllint` — latest stable as of 2026-01-13)
 - **Literal content:** see Deliverables § `.pre-commit-config.yaml` below.
@@ -159,11 +160,13 @@ The `job:` block names from the 3 workflows are the canonical status check ident
 - `commitlint.yml` → job name **`commitlint`** (top-level `jobs.commitlint`).
 
 **Suggested required checks list in branch protection UI:**
+
 - `pre-commit` (from `pre-commit` job)
 - `test (test with Odoo)` (from `test` job, matrix-expanded display)
 - `commitlint` (from `commitlint` job)
 
 **`gh` CLI snippet to set protection programmatically:**
+
 ```bash
 gh api -X PUT repos/Ezcareaga/l10n-paraguay/branches/main/protection \
   --input - <<'JSON'
@@ -190,6 +193,7 @@ gh api -X PUT repos/Ezcareaga/l10n-paraguay/branches/main/protection \
 }
 JSON
 ```
+
 - `enforce_admins: true` enforces the rule on `@Ezcareaga` too (CI-07 requirement: "incluso owner").
 - `required_approving_review_count: 0` — solo dev, no second reviewer mandatory; conversation resolution still required.
 - Run this **after** the 3 workflows have appeared at least once in GitHub Actions UI (otherwise the API returns "Check 'X' is not registered yet"). CI-08 PR de prueba doubles as the trigger.
@@ -385,6 +389,7 @@ repos:
 `.pylintrc` and `.pylintrc-mandatory` — pylint-odoo expects these. Minimal viable: copy from `references/oca-addons-repo-template/src/.pylintrc.jinja` and `.pylintrc-mandatory.jinja` rendered for `odoo_version=18.0` (or copy Brazil's). Researcher recommends copying Brazil's exactly since they live under `references/l10n-brazil/.pylintrc` and `.pylintrc-mandatory` (verify file presence in plan step; if absent there too, render from jinja).
 
 `.yamllint` — minimal config:
+
 ```yaml
 extends: default
 rules:
@@ -392,7 +397,7 @@ rules:
     max: 120
     level: warning
   truthy:
-    check-keys: false  # GitHub Actions uses `on:` key which yamllint flags as truthy
+    check-keys: false # GitHub Actions uses `on:` key which yamllint flags as truthy
   document-start: disable
 ```
 
@@ -420,8 +425,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: 'pip'
-          cache-dependency-path: '.pre-commit-config.yaml'
+          cache: "pip"
+          cache-dependency-path: ".pre-commit-config.yaml"
 
       - name: Setup Node.js (for prettier)
         uses: actions/setup-node@v4
@@ -504,7 +509,7 @@ jobs:
 
       - name: Check development status
         run: manifestoo -d . check-dev-status --default-dev-status=Beta
-        continue-on-error: true   # Beta is fine; do not block during Pre-Fase 2
+        continue-on-error: true # Beta is fine; do not block during Pre-Fase 2
 
       - name: Initialize test database
         run: oca_init_test_database
@@ -550,7 +555,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # commitlint needs full history to diff PR commits
+          fetch-depth: 0 # commitlint needs full history to diff PR commits
 
       - name: Validate PR commits
         uses: wagoid/commitlint-github-action@v6
@@ -576,41 +581,41 @@ jobs:
 // Locally usable with `npx commitlint --from=origin/main`.
 
 module.exports = {
-  extends: ['@commitlint/config-conventional'],
+  extends: ["@commitlint/config-conventional"],
   rules: {
-    'type-enum': [
+    "type-enum": [
       2,
-      'always',
+      "always",
       [
-        'feat',     // new feature
-        'fix',      // bug fix
-        'refactor', // code change neither feat nor fix
-        'test',     // adding / fixing tests
-        'docs',     // documentation only
-        'chore',    // tooling, infra, no code change
-        'style',    // formatting, no semantic change
-        'perf',     // performance improvement
-        'build',    // build system / dependencies
-        'ci',       // CI/CD config
-        'revert',   // revert previous commit
+        "feat", // new feature
+        "fix", // bug fix
+        "refactor", // code change neither feat nor fix
+        "test", // adding / fixing tests
+        "docs", // documentation only
+        "chore", // tooling, infra, no code change
+        "style", // formatting, no semantic change
+        "perf", // performance improvement
+        "build", // build system / dependencies
+        "ci", // CI/CD config
+        "revert", // revert previous commit
       ],
     ],
-    'scope-enum': [
-      1,  // 1 = warning (not error) — scope is optional
-      'always',
+    "scope-enum": [
+      1, // 1 = warning (not error) — scope is optional
+      "always",
       [
-        'l10n_py_base',
-        'l10n_py_account',
-        'pre-commit',
-        'ci',
-        'docs',
-        '',  // allow empty scope
+        "l10n_py_base",
+        "l10n_py_account",
+        "pre-commit",
+        "ci",
+        "docs",
+        "", // allow empty scope
       ],
     ],
-    'subject-case': [2, 'never', ['upper-case', 'pascal-case', 'start-case']],
-    'header-max-length': [2, 'always', 100],
-    'body-leading-blank': [2, 'always'],
-    'footer-leading-blank': [2, 'always'],
+    "subject-case": [2, "never", ["upper-case", "pascal-case", "start-case"]],
+    "header-max-length": [2, "always", 100],
+    "body-leading-blank": [2, "always"],
+    "footer-leading-blank": [2, "always"],
   },
 };
 ```
@@ -758,6 +763,7 @@ JSON
 ```
 
 CI-07 explicit knobs translated:
+
 - "PR required (incluso owner)" → `enforce_admins: true` + `required_approving_review_count: 0` (PR required but no second approver mandatory).
 - "status checks (lint + tests) must pass" → 3 `checks` listed above.
 - "conversation resolution required" → `required_conversation_resolution: true`.
@@ -776,4 +782,4 @@ CI-07 explicit knobs translated:
 
 ---
 
-*RESEARCH.md created 2026-05-27. Confidence: HIGH for hook pins (sourced from OCA template + Brazil); HIGH for action versions (verified WebFetch); MEDIUM for `ODOO_TEST_TAGS` env var convention (needs smoke-test confirmation); HIGH for `oca-fix-manifest-version` non-existence (verified across 3 canonical OCA repos at the pinned commits).*
+_RESEARCH.md created 2026-05-27. Confidence: HIGH for hook pins (sourced from OCA template + Brazil); HIGH for action versions (verified WebFetch); MEDIUM for `ODOO_TEST_TAGS` env var convention (needs smoke-test confirmation); HIGH for `oca-fix-manifest-version` non-existence (verified across 3 canonical OCA repos at the pinned commits)._

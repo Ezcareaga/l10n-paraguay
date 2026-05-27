@@ -14,14 +14,14 @@ Suite de módulos **Odoo Community 18** para la localización fiscal de **Paragu
 
 ## Módulos planificados
 
-| Módulo | Propósito | Estado |
-|---|---|---|
-| `l10n_py_base` | RUC, regímenes, departamentos/distritos, datos del país | TODO |
-| `l10n_py_account` | Plan de cuentas, impuestos, tipos de documento, timbrado | TODO |
-| `l10n_py_edi` | XML SIFEN, firma XAdES, SOAP DNIT, CDC, KuDE, eventos | TODO |
-| `l10n_py_reports` | Libros IVA, Hechauka, RG90, declaraciones | TODO |
-| `l10n_py_pos` | POS con integración SIFEN | TODO |
-| `l10n_py_withholding` | Retenciones IVA / IRE / IRP | TODO |
+| Módulo                | Propósito                                                | Estado |
+| --------------------- | -------------------------------------------------------- | ------ |
+| `l10n_py_base`        | RUC, regímenes, departamentos/distritos, datos del país  | TODO   |
+| `l10n_py_account`     | Plan de cuentas, impuestos, tipos de documento, timbrado | TODO   |
+| `l10n_py_edi`         | XML SIFEN, firma XAdES, SOAP DNIT, CDC, KuDE, eventos    | TODO   |
+| `l10n_py_reports`     | Libros IVA, Hechauka, RG90, declaraciones                | TODO   |
+| `l10n_py_pos`         | POS con integración SIFEN                                | TODO   |
+| `l10n_py_withholding` | Retenciones IVA / IRE / IRP                              | TODO   |
 
 Roadmap completo → [`docs/50_MODULES_ROADMAP.md`](docs/50_MODULES_ROADMAP.md).
 
@@ -65,16 +65,16 @@ Entradas recomendadas según rol:
 
 ## Repos de referencia indexados
 
-En [`references/`](references/) se mantienen *shallow clones* de Odoo core y
+En [`references/`](references/) se mantienen _shallow clones_ de Odoo core y
 otras localizaciones LATAM, indexados para queries via el CLI `codegraph`.
 **No leer manualmente** — usar el índice (mucho más rápido y barato en contexto).
 
-| Repo | Propósito |
-|---|---|
-| `odoo-18.0/` | Sparse checkout de addons clave (`account`, `account_edi`, `l10n_latam_*`, `l10n_pe`, `l10n_pe_edi`, `l10n_ec`, `l10n_ar`, `point_of_sale`, …) |
-| `l10n-peru/`, `l10n-ecuador/`, `l10n-argentina/`, `l10n-brazil/` | Repos OCA de localizaciones vecinas |
-| `oca-addons-repo-template/` | Template oficial OCA — fuente de `.copier-answers.yml` |
-| `nandefact/` | Sistema previo SIFEN en Node/TS del mismo autor — referencia conceptual de dominio |
+| Repo                                                             | Propósito                                                                                                                                      |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `odoo-18.0/`                                                     | Sparse checkout de addons clave (`account`, `account_edi`, `l10n_latam_*`, `l10n_pe`, `l10n_pe_edi`, `l10n_ec`, `l10n_ar`, `point_of_sale`, …) |
+| `l10n-peru/`, `l10n-ecuador/`, `l10n-argentina/`, `l10n-brazil/` | Repos OCA de localizaciones vecinas                                                                                                            |
+| `oca-addons-repo-template/`                                      | Template oficial OCA — fuente de `.copier-answers.yml`                                                                                         |
+| `nandefact/`                                                     | Sistema previo SIFEN en Node/TS del mismo autor — referencia conceptual de dominio                                                             |
 
 ## Licencia
 

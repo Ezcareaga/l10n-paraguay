@@ -15,13 +15,13 @@ zip). Se mantienen tal cual fueron descargados — no editar.
 
 **Descargado durante el bootstrap** (vía `https://www.dnit.gov.py/web/e-kuatia/documentacion-tecnica`):
 
-| Archivo | Tamaño | Contenido |
-|---------|--------|-----------|
-| `sifen_manual_tecnico_v150.pdf` | 5.0 MB | Manual Técnico SIFEN versión 150 — fuente de verdad oficial DNIT |
-| `sifen_guia_mejores_practicas.pdf` | 509 KB | Guía de Mejores Prácticas para Gestión del Envío de DE |
-| `sifen_guia_pruebas.pdf` | 1.1 MB | Guía de Pruebas para e-Kuatia (homologación) |
-| `xsd/Estructura_DE_xsd.xml` | 21 KB | **XSD preliminar 2018** (versión temprana, NO valida v150) |
-| `xsd/Extructura_xml_DE.xml` | 9 KB | **XML de ejemplo** de un DE v150 (factura electrónica) |
+| Archivo                            | Tamaño | Contenido                                                        |
+| ---------------------------------- | ------ | ---------------------------------------------------------------- |
+| `sifen_manual_tecnico_v150.pdf`    | 5.0 MB | Manual Técnico SIFEN versión 150 — fuente de verdad oficial DNIT |
+| `sifen_guia_mejores_practicas.pdf` | 509 KB | Guía de Mejores Prácticas para Gestión del Envío de DE           |
+| `sifen_guia_pruebas.pdf`           | 1.1 MB | Guía de Pruebas para e-Kuatia (homologación)                     |
+| `xsd/Estructura_DE_xsd.xml`        | 21 KB  | **XSD preliminar 2018** (versión temprana, NO valida v150)       |
+| `xsd/Extructura_xml_DE.xml`        | 9 KB   | **XML de ejemplo** de un DE v150 (factura electrónica)           |
 
 ### ⚠ Importante sobre los XSDs
 
@@ -82,26 +82,27 @@ inline con el conocimiento heredado de ÑandeFact.
 
 Para descargar manualmente, navegar a https://www.dnit.gov.py/web/e-kuatia y
 entrar a las secciones:
+
 - **Normativas**
 - **Documentación Técnica**
 
 Buscar y descargar a esta carpeta:
 
-| Archivo | Destino sugerido | Descripción |
-|---------|------------------|-------------|
-| Manual Técnico SIFEN v150 (o vigente) | `docs/original/sifen_manual_tecnico_v150.pdf` | Spec completa del DE, XML, web services, eventos |
+| Archivo                                       | Destino sugerido                                    | Descripción                                           |
+| --------------------------------------------- | --------------------------------------------------- | ----------------------------------------------------- |
+| Manual Técnico SIFEN v150 (o vigente)         | `docs/original/sifen_manual_tecnico_v150.pdf`       | Spec completa del DE, XML, web services, eventos      |
 | Manual Especificaciones Técnicas y de Negocio | `docs/original/sifen_especificaciones_tecnicas.pdf` | Detalle de validaciones, códigos respuesta, casos uso |
-| `siRecepDE_v150.xsd` | `docs/original/xsd/siRecepDE_v150.xsd` | Schema XML para recepción individual de DE |
-| `siRecepLoteDE.xsd` | `docs/original/xsd/siRecepLoteDE.xsd` | Schema XML para recepción de lote |
-| `siRecepEvento.xsd` | `docs/original/xsd/siRecepEvento.xsd` | Schema XML para eventos (cancelación, inutilización) |
-| `DE_v150.xsd` | `docs/original/xsd/DE_v150.xsd` | Schema del Documento Electrónico |
-| Catálogo departamentos | `docs/original/catalogo_departamentos.csv` | Códigos 1-17 |
-| Catálogo distritos | `docs/original/catalogo_distritos.csv` | ~258 distritos con códigos |
-| Catálogo ciudades | `docs/original/catalogo_ciudades.csv` | ~3400 ciudades con códigos |
-| Catálogo actividades económicas | `docs/original/catalogo_actividades.csv` | Códigos CIIU paraguayos |
-| Catálogo monedas | `docs/original/catalogo_monedas.csv` | PYG, USD, BRL, ARS, EUR, etc. |
-| Catálogo unidades de medida | `docs/original/catalogo_unidades.csv` | 77=UNI, 83=KG, 87=LT, etc. |
-| Catálogo regímenes tributarios | `docs/original/catalogo_regimenes.csv` | 8=Turismo, etc. |
+| `siRecepDE_v150.xsd`                          | `docs/original/xsd/siRecepDE_v150.xsd`              | Schema XML para recepción individual de DE            |
+| `siRecepLoteDE.xsd`                           | `docs/original/xsd/siRecepLoteDE.xsd`               | Schema XML para recepción de lote                     |
+| `siRecepEvento.xsd`                           | `docs/original/xsd/siRecepEvento.xsd`               | Schema XML para eventos (cancelación, inutilización)  |
+| `DE_v150.xsd`                                 | `docs/original/xsd/DE_v150.xsd`                     | Schema del Documento Electrónico                      |
+| Catálogo departamentos                        | `docs/original/catalogo_departamentos.csv`          | Códigos 1-17                                          |
+| Catálogo distritos                            | `docs/original/catalogo_distritos.csv`              | ~258 distritos con códigos                            |
+| Catálogo ciudades                             | `docs/original/catalogo_ciudades.csv`               | ~3400 ciudades con códigos                            |
+| Catálogo actividades económicas               | `docs/original/catalogo_actividades.csv`            | Códigos CIIU paraguayos                               |
+| Catálogo monedas                              | `docs/original/catalogo_monedas.csv`                | PYG, USD, BRL, ARS, EUR, etc.                         |
+| Catálogo unidades de medida                   | `docs/original/catalogo_unidades.csv`               | 77=UNI, 83=KG, 87=LT, etc.                            |
+| Catálogo regímenes tributarios                | `docs/original/catalogo_regimenes.csv`              | 8=Turismo, etc.                                       |
 
 ### Procedimiento manual sugerido
 

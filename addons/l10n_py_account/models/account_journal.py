@@ -42,7 +42,9 @@ class AccountJournal(models.Model):
         for j in self.filtered(lambda x: x.l10n_py_require_emission):
             if not j.l10n_py_point_of_emission_id:
                 raise ValidationError(
-                    _("Los diarios de ventas paraguayos con documentos requieren un Punto de Emisión.")
+                    _(
+                        "Los diarios de ventas paraguayos con documentos requieren un Punto de Emisión."
+                    )
                 )
 
     @api.constrains("l10n_py_point_of_emission_id", "l10n_latam_use_documents")
@@ -52,5 +54,7 @@ class AccountJournal(models.Model):
         for j in self.filtered(lambda x: x.l10n_py_point_of_emission_id):
             if not j.l10n_latam_use_documents:
                 raise ValidationError(
-                    _('Un diario con Punto de Emisión PY debe tener "Usar Documentos" habilitado.')
+                    _(
+                        'Un diario con Punto de Emisión PY debe tener "Usar Documentos" habilitado.'
+                    )
                 )

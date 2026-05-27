@@ -26,6 +26,7 @@ priority: important
 ```
 
 Atributos clave:
+
 - `name` — display identifier (convención `<model>.<type>` o `.inherit.<purpose>`)
 - `model` — modelo target
 - `type` — categoría (puede omitirse; Odoo lo infiere del root element)
@@ -62,6 +63,7 @@ Atributos clave:
 ```
 
 **Position options:**
+
 - `before` — insertar antes
 - `after` — insertar después
 - `inside` — insertar como hijo (default)
@@ -69,6 +71,7 @@ Atributos clave:
 - `attributes` — solo modificar atributos del elemento
 
 **Convenciones OCA (ver `20_OCA_GUIDELINES.md`):**
+
 - Evitar `position="replace"` salvo justificación
 - Un módulo solo debería heredar una vista una vez (consolidar todos los cambios)
 - Para "esconder" un campo: `invisible="1"` en `position="attributes"` en lugar de `replace`
@@ -163,6 +166,7 @@ Es equivalente a `<xpath expr="//field[@name='partner_id']" position="after">`.
 ```
 
 Atributos:
+
 - `editable` — `'top'` | `'bottom'` | omitido (read-only)
 - `default_order` — ej: `'date desc, id'`
 - `decoration-<class>` — `info`, `success`, `warning`, `danger`, `muted` con expresión Python
@@ -191,6 +195,7 @@ Atributos:
 ```
 
 QWeb dentro de Kanban — common expressions:
+
 - `<field name="x"/>` — render del field
 - `<t t-esc="record.x.value"/>` — texto plano
 - `<t t-if="...">...</t>` — condicional
@@ -233,6 +238,7 @@ QWeb dentro de Kanban — common expressions:
 ## 7. Otras vistas
 
 ### Calendar
+
 ```xml
 <calendar date_start="invoice_date" color="partner_id" mode="month">
     <field name="name"/>
@@ -241,6 +247,7 @@ QWeb dentro de Kanban — common expressions:
 ```
 
 ### Pivot
+
 ```xml
 <pivot string="Analysis">
     <field name="partner_id" type="row"/>
@@ -250,6 +257,7 @@ QWeb dentro de Kanban — common expressions:
 ```
 
 ### Graph
+
 ```xml
 <graph string="Monthly" type="line">
     <field name="invoice_date" type="row" interval="month"/>
@@ -258,6 +266,7 @@ QWeb dentro de Kanban — common expressions:
 ```
 
 ### Activity
+
 ```xml
 <activity string="Activities">
     <field name="partner_id"/>
@@ -270,6 +279,7 @@ QWeb dentro de Kanban — common expressions:
 ```
 
 ### Qweb (templates para reportes y mails)
+
 ```xml
 <template id="report_kude_document">
     <t t-call="web.html_container">
@@ -304,6 +314,7 @@ QWeb dentro de Kanban — common expressions:
 ```
 
 **Variables disponibles en la expresión:**
+
 - Todos los fields del record actual (por nombre)
 - `parent.<field>` — campos del padre en One2many/embedded views
 - `context.get('key')` — del contexto

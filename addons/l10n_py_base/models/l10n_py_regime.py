@@ -19,7 +19,11 @@ class L10nPyRegime(models.Model):
     active = fields.Boolean(default=True)
 
     _sql_constraints = [
-        ("l10n_py_regime_code_uniq", "unique(code)", "El código SIFEN del régimen debe ser único."),
+        (
+            "l10n_py_regime_code_uniq",
+            "unique(code)",
+            "El código SIFEN del régimen debe ser único.",
+        ),
     ]
 
     def name_get(self):

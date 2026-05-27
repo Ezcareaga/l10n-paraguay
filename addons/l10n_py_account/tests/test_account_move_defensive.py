@@ -8,25 +8,39 @@ from .common import L10nPyAccountTestCase
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestAccountMoveDefensive(L10nPyAccountTestCase):
-
     def _make_invoice(self):
-        partner = self.env["res.partner"].create({
-            "name": "Cliente", "country_id": self.country_py.id,
-        })
-        return self.env["account.move"].with_company(self.company).create({
-            "move_type": "out_invoice",
-            "partner_id": partner.id,
-            "journal_id": self.sale_journal.id,
-            "l10n_latam_document_type_id": self.env.ref("l10n_py_account.dt_fe").id,
-            "invoice_line_ids": [(0, 0, {"name": "X", "quantity": 1, "price_unit": 100})],
-        })
+        partner = self.env["res.partner"].create(
+            {
+                "name": "Cliente",
+                "country_id": self.country_py.id,
+            }
+        )
+        return (
+            self.env["account.move"]
+            .with_company(self.company)
+            .create(
+                {
+                    "move_type": "out_invoice",
+                    "partner_id": partner.id,
+                    "journal_id": self.sale_journal.id,
+                    "l10n_latam_document_type_id": self.env.ref(
+                        "l10n_py_account.dt_fe"
+                    ).id,
+                    "invoice_line_ids": [
+                        (0, 0, {"name": "X", "quantity": 1, "price_unit": 100})
+                    ],
+                }
+            )
+        )
 
     def test_post_without_poe_raises_user_error(self):
         # Simular estado "roto" desde una migración o backup: journal sale PY con
         # use_documents=True pero sin PoE. Bypass de constraints con install_mode.
-        self.sale_journal.with_context(install_mode=True).write({
-            "l10n_py_point_of_emission_id": False,
-        })
+        self.sale_journal.with_context(install_mode=True).write(
+            {
+                "l10n_py_point_of_emission_id": False,
+            }
+        )
         invoice = self._make_invoice()
         with self.assertRaises(UserError) as ctx:
             invoice.action_post()
@@ -39,9 +53,11 @@ class TestAccountMoveDefensive(L10nPyAccountTestCase):
 
     def test_starting_sequence_without_poe_raises(self):
         # Mismo patrón: simular journal sin PoE bypaseando constraints.
-        self.sale_journal.with_context(install_mode=True).write({
-            "l10n_py_point_of_emission_id": False,
-        })
+        self.sale_journal.with_context(install_mode=True).write(
+            {
+                "l10n_py_point_of_emission_id": False,
+            }
+        )
         invoice = self._make_invoice()
         with self.assertRaises(UserError):
             invoice._get_starting_sequence()

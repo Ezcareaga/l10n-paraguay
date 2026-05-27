@@ -17,18 +17,19 @@ priority: important
 
 ## 1. Módulos
 
-| Módulo | Disp. Community 18.0 |
-|--------|----------------------|
-| `l10n_ar` | ✓ |
-| `l10n_ar_edi` | ✓ |
-| `l10n_ar_reports` | (probablemente Enterprise — verificar) |
-| `l10n_ar_withholding` | (idem) |
-| `l10n_ar_website_sale` | (idem) |
-| **OCA addons** | en `references/l10n-argentina-16.0/` (16.0 tiene módulos; 17.0 y 18.0 OCA aún vacíos al bootstrap) |
+| Módulo                 | Disp. Community 18.0                                                                               |
+| ---------------------- | -------------------------------------------------------------------------------------------------- |
+| `l10n_ar`              | ✓                                                                                                  |
+| `l10n_ar_edi`          | ✓                                                                                                  |
+| `l10n_ar_reports`      | (probablemente Enterprise — verificar)                                                             |
+| `l10n_ar_withholding`  | (idem)                                                                                             |
+| `l10n_ar_website_sale` | (idem)                                                                                             |
+| **OCA addons**         | en `references/l10n-argentina-16.0/` (16.0 tiene módulos; 17.0 y 18.0 OCA aún vacíos al bootstrap) |
 
 ## 2. Chart of Accounts
 
 Argentina ofrece 3 packages por responsabilidad AFIP:
+
 - **Monotributista** (227 cuentas)
 - **IVA Exento** (290 cuentas)
 - **Responsable Inscripto** (298 cuentas)
@@ -36,6 +37,7 @@ Argentina ofrece 3 packages por responsabilidad AFIP:
 Se elige uno durante el setup inicial de la company.
 
 ### Equivalente Paraguay
+
 Probablemente un solo chart of accounts paraguayo basado en el **Plan Único de
 Cuentas (PUC)** o un estándar OCA-friendly. Investigar si DNIT/SET prescribe
 algo o si la práctica común usa un PUC adaptado.
@@ -48,7 +50,9 @@ Producción        ←  certs específicos del ambiente producción
 ```
 
 ### Equivalente Paraguay
+
 Mismo modelo:
+
 - `sifen-test.set.gov.py` con CCFE de test
 - `sifen.set.gov.py` con CCFE de producción
 
@@ -63,6 +67,7 @@ en `res.company` controla a qué URL apuntar.
 4. Upload de ambos a Odoo (Settings → Argentinean Localization)
 
 ### Equivalente Paraguay
+
 1. Comprar CCFE de prestador autorizado (Documenta, eFirmar, IDOK, etc.)
 2. Recibir `.p12` + password
 3. Upload via wizard en Odoo (`l10n_py_base/wizards/ccfe_upload_wizard.py`)
@@ -77,15 +82,17 @@ prestador. Más simple que Argentina.
 > estudiar este código antes de implementar Paraguay.
 
 ### Letters (clasificación AFIP)
-| Letter | Uso |
-|--------|-----|
-| A | B2B entre vendedores registrados (responsable inscripto a responsable inscripto) |
-| B | B2C / retail (a consumidor final) |
-| C | Monotributista emite |
-| E | Exportación |
-| M | Casos especiales |
+
+| Letter | Uso                                                                              |
+| ------ | -------------------------------------------------------------------------------- |
+| A      | B2B entre vendedores registrados (responsable inscripto a responsable inscripto) |
+| B      | B2C / retail (a consumidor final)                                                |
+| C      | Monotributista emite                                                             |
+| E      | Exportación                                                                      |
+| M      | Casos especiales                                                                 |
 
 ### Document types comunes
+
 - **Factura** (FA-A, FA-B, FA-C, FA-E)
 - **Nota de Crédito** (NC-A, NC-B, etc.)
 - **Nota de Débito** (ND-A, ND-B, etc.)
@@ -132,17 +139,21 @@ Detalles del framework: ver [`31_L10N_LATAM_INVOICE_DOCUMENT.md`](31_L10N_LATAM_
 ## 6. Sequence management
 
 Argentina:
+
 > "For the first invoice, Odoo synchronizes with the AFIP automatically and
 > displays the last sequence used."
 
 Para "Unified Books" (POS preimpreso): docs con misma letter comparten sequence:
+
 - FA-A 0001-00000002
 - NC-A 0001-00000003
 - ND-A 0001-00000004
 
 ### Equivalente Paraguay
+
 NO hay sincronización con SIFEN para sequences — el sistema emisor es la fuente
 de verdad. Pero el principio es similar:
+
 - Sequence per `(establishment, point_of_emission, document_type)`
 - Si se saltea un número → evento de **Inutilización** obligatorio
 
@@ -152,6 +163,7 @@ type. O un `ir.sequence` por `(point, doc_type)` con `_compute` que las arma.
 ## 7. AFIP Responsibility Types — partner classification
 
 Argentina define:
+
 - **Responsable Inscripto**
 - **Monotributista**
 - **Consumidor Final**
@@ -162,7 +174,9 @@ El **responsibility type** del receptor + emisor determina qué letter (A/B/C/E)
 puede emitirse.
 
 ### Equivalente Paraguay
+
 Paraguay tiene:
+
 - **Persona Física (Contribuyente)**
 - **Persona Jurídica (Contribuyente)**
 - **Consumidor Final (No Contribuyente)** — recibe factura con CI o innominado
@@ -176,6 +190,7 @@ haber monto límite legal (revisar Manual Técnico vigente).
 ## 8. Web Services AFIP
 
 Argentina conecta a varios WS según operación:
+
 - **wsfev1** — facturación electrónica estándar (A, B, C, M)
 - **wsbfev1** — fiscal bonds (capital goods)
 - **wsfexv1** — exportación (E)
@@ -183,8 +198,10 @@ Argentina conecta a varios WS según operación:
 Cada uno con WSDL distinto.
 
 ### Equivalente Paraguay
+
 SIFEN tiene también varios WS pero **agrupados por operación, no por tipo de
 documento**:
+
 - `siRecepDE` — individual
 - `siRecepLoteDE` — lote
 - `siRecepEvento` — cancelación/inutilización
@@ -194,13 +211,13 @@ Más simple: un solo "tipo" de envío, varios endpoints según volumen/operació
 
 ## 9. CAE vs CDC
 
-| | Argentina | Paraguay |
-|-|-----------|----------|
-| Identificador | **CAE** (Código de Autorización Electrónica) | **CDC** (Código de Control) |
-| Generación | **AFIP lo devuelve** post-aprobación | **Sistema emisor lo genera** pre-envío |
-| Largo | 14 dígitos | 44 dígitos |
-| Incluye fecha vto | Sí (vto del CAE) | No (CDC eterno una vez aprobado) |
-| Si rechazado | CAE no se otorga, hay que reintentar | CDC reutilizable si corrección no toca campos del CDC |
+|                   | Argentina                                    | Paraguay                                              |
+| ----------------- | -------------------------------------------- | ----------------------------------------------------- |
+| Identificador     | **CAE** (Código de Autorización Electrónica) | **CDC** (Código de Control)                           |
+| Generación        | **AFIP lo devuelve** post-aprobación         | **Sistema emisor lo genera** pre-envío                |
+| Largo             | 14 dígitos                                   | 44 dígitos                                            |
+| Incluye fecha vto | Sí (vto del CAE)                             | No (CDC eterno una vez aprobado)                      |
+| Si rechazado      | CAE no se otorga, hay que reintentar         | CDC reutilizable si corrección no toca campos del CDC |
 
 **Implicación clave para diseño:** Paraguay genera el CDC ANTES de enviar (lo
 que permite incluirlo en el XML que se firma). Argentina firma sin CAE y lo
@@ -219,6 +236,7 @@ def _post_invoice_edi(self, invoices):
 ## 10. Withholdings Argentina
 
 Argentina configura:
+
 - **Earnings (Ganancias)**: income base
 - **Earnings Scale**: tablas progresivas
 - **IIBB (Ingresos Brutos)**: provincial — total amount + untaxed
@@ -226,8 +244,10 @@ Argentina configura:
 Aplicado automáticamente durante creación de pago basado en partner + tipo de op.
 
 ### Equivalente Paraguay
+
 Estructura similar (más simple — sin IIBB provincial):
-- **Retención IVA**: %  sobre IVA en compras
+
+- **Retención IVA**: % sobre IVA en compras
 - **Retención IRE/IRP**: % sobre base imponible
 
 Diseño: ver Phase 6 en `50_MODULES_ROADMAP.md`.
@@ -238,6 +258,7 @@ Diseño: ver Phase 6 en `50_MODULES_ROADMAP.md`.
 - **IIBB reports** (por jurisdicción)
 
 ### Equivalente Paraguay
+
 Más en [`32_L10N_PERU_REFERENCE.md`](32_L10N_PERU_REFERENCE.md) sección 10 y
 en `50_MODULES_ROADMAP.md` Phase 4.
 

@@ -24,6 +24,7 @@ altura de l10n-spain o l10n-brazil.
 ## 2. Audiencia objetivo
 
 ### Inicial (primer año)
+
 - **PyMEs paraguayas con punto de venta físico**:
   - Minimarkets de barrio
   - Comercios pequeños/medianos
@@ -33,25 +34,28 @@ altura de l10n-spain o l10n-brazil.
 - Tamaño: 1-50 empleados, 1-3 puntos de venta
 
 ### Secundaria (segundo año)
+
 - Empresas de servicios profesionales (estudios contables, agencias de viajes —
   tipo régimen 8 con IVA al 5%)
 - Empresas medianas con e-commerce (módulo `l10n_py_website_sale` futuro)
 
 ### Fuera de scope (al menos hoy)
+
 - Grandes empresas con flujos custom enterprise
 - Sectores regulados específicos (farmacias con régimen especial, importadores
   con ICE, etc.) — pueden requerir modules adicionales fuera de este repo
 
 ## 3. Stack
 
-| Capa | Tech | Versión |
-|------|------|---------|
+| Capa           | Tech                                       | Versión  |
+| -------------- | ------------------------------------------ | -------- |
 | Framework Odoo | **Odoo Community Edition** (NO Enterprise) | **18.0** |
-| Lenguaje | Python | 3.11+ |
-| Base de datos | PostgreSQL | 15+ |
-| OS soportado | Linux (target prod) / Windows (target dev) | — |
+| Lenguaje       | Python                                     | 3.11+    |
+| Base de datos  | PostgreSQL                                 | 15+      |
+| OS soportado   | Linux (target prod) / Windows (target dev) | —        |
 
 ### Librerías Python (runtime)
+
 - `lxml` — generación + parsing XML SIFEN
 - `signxml` — firma XAdES-BES del DE
 - `zeep` — cliente SOAP contra WSDL DNIT
@@ -67,33 +71,36 @@ Detalles en [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md).
 
 ## 4. Módulos planificados
 
-| # | Módulo | Propósito | Fase |
-|---|--------|-----------|------|
-| 1 | `l10n_py_base` | RUC, regímenes, departamentos/distritos, datos país | 1 |
-| 2 | `l10n_py_account` | Plan de cuentas, impuestos, tipos de documento, timbrado | 1 |
-| 3 | `l10n_py_edi` | XML SIFEN, firma XAdES, SOAP DNIT, CDC, KuDE, eventos | 2 |
-| 4 | `l10n_py_reports` | Libros IVA, Hechauka, RG90 | 3 |
-| 5 | `l10n_py_pos` | POS con integración SIFEN | 4 |
-| 6 | `l10n_py_withholding` | Retenciones IVA/IRE/IRP | 5 |
+| #   | Módulo                | Propósito                                                | Fase |
+| --- | --------------------- | -------------------------------------------------------- | ---- |
+| 1   | `l10n_py_base`        | RUC, regímenes, departamentos/distritos, datos país      | 1    |
+| 2   | `l10n_py_account`     | Plan de cuentas, impuestos, tipos de documento, timbrado | 1    |
+| 3   | `l10n_py_edi`         | XML SIFEN, firma XAdES, SOAP DNIT, CDC, KuDE, eventos    | 2    |
+| 4   | `l10n_py_reports`     | Libros IVA, Hechauka, RG90                               | 3    |
+| 5   | `l10n_py_pos`         | POS con integración SIFEN                                | 4    |
+| 6   | `l10n_py_withholding` | Retenciones IVA/IRE/IRP                                  | 5    |
 
 Plan detallado por fase en [`50_MODULES_ROADMAP.md`](50_MODULES_ROADMAP.md).
 
 ## 5. Principios
 
 ### Convenciones de código
+
 - **Idioma del código**: inglés (variables, funciones, clases, modelos, XML IDs)
 - **Idioma de comentarios y docstrings**: español
 - **Idioma de UI** (strings, labels): español + i18n via `.pot` (luego Weblate
   agrega `es_PY` específico si difiere de `es`)
 
 ### Calidad
+
 - **Tests obligatorios**: unit para lógica de dominio, integration para
   adaptadores (SIFEN, KuDE), tour/HTTP para flujos UI relevantes
 - **Cobertura objetivo**: 80%+ en módulos nuevos
-- **Pre-commit OCA** activo: black, isort, pylint-odoo, flake8, oca-checks-*
+- **Pre-commit OCA** activo: black, isort, pylint-odoo, flake8, oca-checks-\*
 - **CI verde antes de merge** (GitHub Actions con OCA/oca-ci)
 
 ### Arquitectura
+
 - **OCA-strict**: naming `l10n_py_*`, AGPL-3, manifest OCA-compliant
   (`author` termina en `, Odoo Community Association (OCA)`)
 - **Modelos delgados + servicios puros**: lógica compleja (CDC, firma, XML
@@ -105,6 +112,7 @@ Plan detallado por fase en [`50_MODULES_ROADMAP.md`](50_MODULES_ROADMAP.md).
   ya hace el trabajo (rompe integración con sale/purchase/pos/stock)
 
 ### Documentación
+
 - **Toda la documentación técnica vive en `docs/`** — `CLAUDE.md` solo es
   manifiesto + tabla de contenido
 - Cada doc tiene **frontmatter YAML** (source, fetched_at, summary, priority)
@@ -113,6 +121,7 @@ Plan detallado por fase en [`50_MODULES_ROADMAP.md`](50_MODULES_ROADMAP.md).
 - Cambios de arquitectura **se reflejan en `docs/`** en el mismo PR
 
 ### Git workflow
+
 - **Conventional Commits** (`feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`)
 - Branching: `feat/<name>`, `fix/<name>`, merge a `main` vía squash
 - Pre-commit hooks bloquean commits con errores de lint
@@ -121,6 +130,7 @@ Plan detallado por fase en [`50_MODULES_ROADMAP.md`](50_MODULES_ROADMAP.md).
 ## 6. Criterios de éxito (12-meses)
 
 ### Técnicos
+
 - [ ] 6 módulos `l10n_py_*` publicados en `OCA/l10n-paraguay` (o similar)
 - [ ] Cobertura tests >80% en cada módulo
 - [ ] CI verde en matrix de PostgreSQL 15/16 + Python 3.11/3.12
@@ -128,11 +138,13 @@ Plan detallado por fase en [`50_MODULES_ROADMAP.md`](50_MODULES_ROADMAP.md).
 - [ ] Tests E2E contra `sifen-test.set.gov.py` aprobados (homologación)
 
 ### De adopción
+
 - [ ] 5+ implementaciones reales en producción con clientes reales
 - [ ] 3+ contribuidores externos al repo
 - [ ] Issue tracker activo y respondido
 
 ### De negocio (Careaga Dev)
+
 - [ ] Consultoría rentable basada en el stack (no en cobro por software)
 - [ ] Reputación local como referente técnico de "Odoo para Paraguay"
 
@@ -173,6 +185,7 @@ específico (vendedoras de mercados populares con devices low-end). Este proyect
 es **horizontal**: módulos genéricos OCA-style usables por cualquier PyME.
 
 Lo que sí se hereda:
+
 - **Conocimiento de dominio SIFEN** (CDC, XML, web services, eventos) — en
   [`01_SIFEN_KNOWLEDGE_BASE.md`](01_SIFEN_KNOWLEDGE_BASE.md) y
   [`02_SIFEN_REFERENCIA_COMPLETA.md`](02_SIFEN_REFERENCIA_COMPLETA.md)
@@ -182,6 +195,7 @@ Lo que sí se hereda:
   [`03_DOMAIN_MODEL.md`](03_DOMAIN_MODEL.md)
 
 Lo que NO se hereda:
+
 - Stack (Node/TS → Python)
 - Arquitectura hexagonal estricta (Odoo idioma)
 - Optimizaciones offline-first (Odoo soporta pero no es target inicial)
@@ -189,10 +203,10 @@ Lo que NO se hereda:
 
 ## 10. Stakeholders
 
-| Quién | Rol |
-|-------|-----|
-| **Ez (Alberto Ezequiel Careaga)** | Lead developer, owner del repo, dueño de Careaga Dev |
-| Clientes PyME paraguayas | Beta testers iniciales, fuente de requirements reales |
-| **OCA** | Eventual home del repo, source of best practices |
-| Comunidad Odoo Paraguay | Contribuidores potenciales (consultoras locales) |
-| DNIT | Reguladora — su Manual Técnico SIFEN es el contrato implícito |
+| Quién                             | Rol                                                           |
+| --------------------------------- | ------------------------------------------------------------- |
+| **Ez (Alberto Ezequiel Careaga)** | Lead developer, owner del repo, dueño de Careaga Dev          |
+| Clientes PyME paraguayas          | Beta testers iniciales, fuente de requirements reales         |
+| **OCA**                           | Eventual home del repo, source of best practices              |
+| Comunidad Odoo Paraguay           | Contribuidores potenciales (consultoras locales)              |
+| DNIT                              | Reguladora — su Manual Técnico SIFEN es el contrato implícito |

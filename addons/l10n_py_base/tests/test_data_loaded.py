@@ -6,15 +6,18 @@ from odoo.tests.common import TransactionCase, tagged
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestDataLoaded(TransactionCase):
-
     def test_regimes_loaded(self):
         regimes = self.env["l10n_py.regime"].search([])
-        self.assertEqual(len(regimes), 8, "Debe haber 8 regímenes (Tabla 1 SIFEN v150).")
+        self.assertEqual(
+            len(regimes), 8, "Debe haber 8 regímenes (Tabla 1 SIFEN v150)."
+        )
         self.assertTrue(self.env.ref("l10n_py_base.regime_1").name)
 
     def test_taxpayer_types_loaded(self):
         taxpayer_types = self.env["l10n_py.taxpayer.type"].search([])
-        self.assertEqual(len(taxpayer_types), 2, "Debe haber 2 tipos de contribuyente (PF + PJ).")
+        self.assertEqual(
+            len(taxpayer_types), 2, "Debe haber 2 tipos de contribuyente (PF + PJ)."
+        )
 
     def test_recipient_natures_loaded(self):
         natures = self.env["l10n_py.recipient.nature"].search([])
@@ -47,14 +50,24 @@ class TestDataLoaded(TransactionCase):
 
     def test_district_has_state(self):
         """Cada distrito debe tener un departamento asignado."""
-        districts_without_state = self.env["l10n_py.district"].search([("state_id", "=", False)])
-        self.assertFalse(districts_without_state, "Todos los distritos deben tener departamento.")
+        districts_without_state = self.env["l10n_py.district"].search(
+            [("state_id", "=", False)]
+        )
+        self.assertFalse(
+            districts_without_state, "Todos los distritos deben tener departamento."
+        )
 
     def test_city_has_district(self):
         cities_without_district = self.env["res.city"].search(
-            [("country_id.code", "=", "PY"), ("l10n_py_sifen_code", "!=", False), ("l10n_py_district_id", "=", False)]
+            [
+                ("country_id.code", "=", "PY"),
+                ("l10n_py_sifen_code", "!=", False),
+                ("l10n_py_district_id", "=", False),
+            ]
         )
-        self.assertFalse(cities_without_district, "Todas las ciudades PY deben tener distrito.")
+        self.assertFalse(
+            cities_without_district, "Todas las ciudades PY deben tener distrito."
+        )
 
     def test_post_init_hook_sets_vat_label(self):
         country_py = self.env.ref("base.py")

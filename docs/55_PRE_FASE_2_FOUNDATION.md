@@ -58,7 +58,7 @@ Después del merge de PR2 (Fase 1b completa):
 - ❌ Sin pre-commit instalado (declarado pero no configurado)
 - ❌ Sin `LICENSE` file (en pyproject pero no archivo)
 - ❌ Sin `SECURITY.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `DEPLOYMENT.md`,
-      `RUNBOOK.md`, `ARCHITECTURE.md`, ADRs
+  `RUNBOOK.md`, `ARCHITECTURE.md`, ADRs
 - ❌ Sin issue/PR templates
 - ❌ Sin release process (tags, semantic-release)
 - ❌ Sin estrategia documentada multi-rubro
@@ -73,6 +73,7 @@ un milestone GSD, ejecutado independientemente.
 **Duración estimada:** 3-4 días de trabajo focal.
 
 **Output:**
+
 - `.pre-commit-config.yaml` con OCA hooks completos:
   - black, isort, flake8, pylint-odoo
   - oca-checks-odoo-module
@@ -95,12 +96,14 @@ un milestone GSD, ejecutado independientemente.
   - Conversation resolution required
 
 **Definition of Done:**
+
 - [ ] `pre-commit run --all-files` corre limpio
 - [ ] Push a `main` directo es rechazado por GitHub
 - [ ] PR de prueba (chore: trivial) pasa CI verde
 - [ ] Dependabot abre PRs cuando hay updates disponibles
 
 **Riesgos:**
+
 - Pre-commit OCA puede generar 100+ cambios cosméticos en el primer run.
   Mitigación: hacer un commit `chore: apply pre-commit fixes baseline` separado
   antes de activar el hook en CI.
@@ -110,6 +113,7 @@ un milestone GSD, ejecutado independientemente.
 **Duración estimada:** 2-3 días.
 
 **Output:**
+
 - `LICENSE` (AGPL-3.0 full text)
 - `SECURITY.md`:
   - Versiones soportadas
@@ -133,12 +137,14 @@ un milestone GSD, ejecutado independientemente.
   - Consent management para datos de clientes
 
 **Definition of Done:**
+
 - [ ] `LICENSE` file presente y mencionado en `__manifest__.py` de cada módulo
 - [ ] gitleaks no encuentra secrets en history (limpiar si hay false positives)
 - [ ] Bandit pasa en todos los addons sin warnings críticos
 - [ ] `SECURITY.md` linked desde README
 
 **Riesgos:**
+
 - gitleaks puede encontrar tokens viejos en git history. Mitigación: documentar
   y rotar los tokens. NO reescribir history del repo (rompe forks).
 
@@ -149,6 +155,7 @@ un milestone GSD, ejecutado independientemente.
 **Output:**
 
 **Root del repo:**
+
 - `README.md` actualizado:
   - Estado real (no "TODO" en módulos terminados)
   - Badges (CI, license, code coverage si aplica)
@@ -168,6 +175,7 @@ un milestone GSD, ejecutado independientemente.
   - OCA Code of Conduct (boilerplate) o Contributor Covenant 2.1
 
 **docs/ adiciones:**
+
 - `docs/70_ARCHITECTURE.md` (overview vivo):
   - C4 Context: actores externos (DNIT, SET, Bancos, AFIP/SET fronteras)
   - C4 Container: módulos `l10n_py_*` + dependencies OCA + Odoo core
@@ -196,6 +204,7 @@ un milestone GSD, ejecutado independientemente.
   - `0005-hosting-strategy.md` (preliminar, sin commit a vendor)
 
 **Definition of Done:**
+
 - [ ] README muestra estado real, no "TODO"
 - [ ] Cualquier dev externo puede levantar el proyecto siguiendo solo
       `CONTRIBUTING.md` (probar con alguien sin contexto)
@@ -205,6 +214,7 @@ un milestone GSD, ejecutado independientemente.
       componentes (regla de docs viva)
 
 **Riesgos:**
+
 - ADRs tentación a no actualizar. Mitigación: regla en `CONTRIBUTING.md` —
   cambio arquitectónico = nuevo ADR en mismo PR.
 
@@ -213,6 +223,7 @@ un milestone GSD, ejecutado independientemente.
 **Duración estimada:** 1-2 días.
 
 **Output:**
+
 - `.github/ISSUE_TEMPLATE/`:
   - `bug_report.yml`
   - `feature_request.yml`
@@ -233,12 +244,14 @@ un milestone GSD, ejecutado independientemente.
   - Si NO: documentar release process manual en `CONTRIBUTING.md`
 
 **Definition of Done:**
+
 - [ ] Nuevo issue se crea via template, no en blanco
 - [ ] Nuevo PR llena template automático
 - [ ] `v0.1.0` release publicado en GitHub
 - [ ] Release process documentado (manual o automatizado)
 
 **Riesgos:**
+
 - semantic-release puede ser opinionated y romper si commit messages no son
   perfectos. Mitigación: empezar manual, automatizar después.
 
@@ -247,6 +260,7 @@ un milestone GSD, ejecutado independientemente.
 **Duración estimada:** 1-2 días.
 
 **Output:**
+
 - `docs/adr/0004-multi-rubro-strategy.md`:
   - Decisión: `l10n_py_base` y `l10n_py_account` son **rubro-agnósticos**.
     NO contienen asunciones de minimarket, gastronomía, ni servicios.
@@ -268,12 +282,14 @@ un milestone GSD, ejecutado independientemente.
   - Si encuentra strings que asumen rubro, refactorizar o documentar como TBD
 
 **Definition of Done:**
+
 - [ ] ADR-0004 mergeado y referenciado en README
 - [ ] Auditoría confirma que addons actuales son rubro-agnósticos
 - [ ] Roadmap multi-rubro documentado (sin código todavía)
 - [ ] Documentación de cómo crear un `l10n_py_industry_*` nuevo
 
 **Riesgos:**
+
 - Tentación a empezar `l10n_py_industry_retail` para amiga del minimarket
   durante esta fase. Mitigación: explícito en este doc — el primer rubro se
   construye DESPUÉS de Fase 2 EDI, no antes.
@@ -316,13 +332,13 @@ milestone GSD razonable.
 
 ## Riesgos generales
 
-| Riesgo | Mitigación |
-|---|---|
-| Procastinación: "estoy ansioso por empezar Fase 2 EDI" | Recordar: la deuda técnica de empezar Fase 2 sin foundation cuesta 10x después |
-| Over-engineering en docs operacionales | Empezar con "minimum viable docs", iterar después con uso real |
-| Pre-commit OCA genera muchos cambios | Hacer commit baseline ANTES de activar en CI |
-| Auditoría multi-rubro encuentra acoplamientos | Documentar como tech debt en `BUGS_BACKLOG.md`, refactor en Fase 6 |
-| Security baseline parece "exagerado" para un proyecto chico | No lo es. Vas a manejar CCFE (firmas digitales) — eso es nivel banco |
+| Riesgo                                                      | Mitigación                                                                     |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Procastinación: "estoy ansioso por empezar Fase 2 EDI"      | Recordar: la deuda técnica de empezar Fase 2 sin foundation cuesta 10x después |
+| Over-engineering en docs operacionales                      | Empezar con "minimum viable docs", iterar después con uso real                 |
+| Pre-commit OCA genera muchos cambios                        | Hacer commit baseline ANTES de activar en CI                                   |
+| Auditoría multi-rubro encuentra acoplamientos               | Documentar como tech debt en `BUGS_BACKLOG.md`, refactor en Fase 6             |
+| Security baseline parece "exagerado" para un proyecto chico | No lo es. Vas a manejar CCFE (firmas digitales) — eso es nivel banco           |
 
 ## Lo que NO está en Pre-Fase 2
 

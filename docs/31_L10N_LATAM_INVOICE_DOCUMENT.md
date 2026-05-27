@@ -12,6 +12,7 @@ priority: critical
 Manages country-specific invoice document types defined by fiscal authorities (DGI in Paraguay, AFIP in Argentina, SII in Chile). Each document type has its own sequence number, internal classification, and legal requirements. Essential for countries where invoices must be tagged with official document codes.
 
 Why it matters for Paraguay: SET (Subsistema de Traspaso Electrónico) requires invoices classified as:
+
 - FA (Factura): regular invoice
 - ND (Nota de Débito): debit note
 - NC (Nota de Crédito): credit note
@@ -26,18 +27,19 @@ Each type must have unique sequential numbering per journal.
 
 The central registry model:
 
-| Field | Type | Purpose |
-|-------|------|---------|
-| country_id | Many2one(res.country) | Required; country where document type is valid |
-| code | Char | Government code (e.g., 'FA', '01' for Argentina) |
-| name | Char | Human-readable name (translatable) |
-| doc_code_prefix | Char | Prefix prepended to sequential number (e.g., 'FA ' builds 'FA 0001-0000001') |
-| report_name | Char | Text printed on reports, e.g., "CREDIT NOTE" (translatable) |
-| internal_type | Selection | Classification: invoice, debit_note, credit_note, all |
-| sequence | Integer | Sort order in UI (lower = first) |
-| active | Boolean | Enable/disable without deleting |
+| Field           | Type                  | Purpose                                                                      |
+| --------------- | --------------------- | ---------------------------------------------------------------------------- |
+| country_id      | Many2one(res.country) | Required; country where document type is valid                               |
+| code            | Char                  | Government code (e.g., 'FA', '01' for Argentina)                             |
+| name            | Char                  | Human-readable name (translatable)                                           |
+| doc_code_prefix | Char                  | Prefix prepended to sequential number (e.g., 'FA ' builds 'FA 0001-0000001') |
+| report_name     | Char                  | Text printed on reports, e.g., "CREDIT NOTE" (translatable)                  |
+| internal_type   | Selection             | Classification: invoice, debit_note, credit_note, all                        |
+| sequence        | Integer               | Sort order in UI (lower = first)                                             |
+| active          | Boolean               | Enable/disable without deleting                                              |
 
 internal_type values:
+
 - invoice – matches account.move.move_type in [out_invoice, in_invoice]
 - debit_note – matches out_invoice moved to debit note status
 - credit_note – matches out_refund, in_refund (refund moves)
@@ -58,31 +60,32 @@ Five new fields and extensive compute logic:
 
 `python
 l10n_latam_available_document_type_ids = fields.Many2many(
-    'l10n_latam.document.type',
-    compute='_compute_l10n_latam_available_document_types'
+'l10n_latam.document.type',
+compute='\_compute_l10n_latam_available_document_types'
 )
 
 l10n_latam_document_type_id = fields.Many2one(
-    'l10n_latam.document.type',
-    compute='_compute_l10n_latam_document_type',
-    store=True
+'l10n_latam.document.type',
+compute='\_compute_l10n_latam_document_type',
+store=True
 )
 
 l10n_latam_document_number = fields.Char(
-    compute='_compute_l10n_latam_document_number',
-    inverse='_inverse_l10n_latam_document_number'
+compute='\_compute_l10n_latam_document_number',
+inverse='\_inverse_l10n_latam_document_number'
 )
 
 l10n_latam_use_documents = fields.Boolean(
-    related='journal_id.l10n_latam_use_documents'
+related='journal_id.l10n_latam_use_documents'
 )
 
 l10n_latam_manual_document_number = fields.Boolean(
-    compute='_compute_l10n_latam_manual_document_number'
+compute='\_compute_l10n_latam_manual_document_number'
 )
 `
 
 Constraints enforced:
+
 1. Posted invoice with l10n_latam_use_documents=True MUST have document_type
 2. Posted invoice with manual numbering MUST have document_number
 3. document_type.internal_type must match move_type (credit_note only for refunds)
@@ -92,16 +95,17 @@ Constraints enforced:
 
 `python
 l10n_latam_use_documents = fields.Boolean(
-    'Use Documents?',
-    help='If True, invoices require document type classification'
+'Use Documents?',
+help='If True, invoices require document type classification'
 )
 
 l10n_latam_company_use_documents = fields.Boolean(
-    compute='_compute_l10n_latam_company_use_documents'
+compute='\_compute_l10n_latam_company_use_documents'
 )
 `
 
 Behavior:
+
 - On company change: auto-enable l10n_latam_use_documents if journal type (sale/purchase) AND company uses documents
 - Constraint: can't toggle if journal has posted invoices
 
@@ -123,16 +127,20 @@ For documents-enabled journals:
 
 `
 name = "[DOC_CODE_PREFIX] [SEQUENTIAL_NUMBER]"
+
 # Example: "FA 0001-0000001"
+
 `
 
 Rules:
+
 1. If draft & unposted_before & auto-numbering: sequence generated from journal.sequence_id
 2. If manual_document_number: user enters number in l10n_latam_document_number field
 3. On document_type change (draft): name reset to recompute with new prefix
 4. Posted moves: name locked
 
 Sequence Handling:
+
 - One sequence per document_type (not debit/refund sequences)
 - journal.debit_sequence & refund_sequence = False when using documents
 - Sequence never resets (never='never') for document moves
@@ -157,36 +165,37 @@ def _inverse_l10n_latam_document_number(self):
 
 ## Compute Methods (Critical)
 
-### _compute_l10n_latam_available_document_types()
+### \_compute_l10n_latam_available_document_types()
 
 Filters document types by move context:
 
 `python
-def _get_l10n_latam_documents_domain(self):
-    internal_types = []
-    if self.move_type in ['out_refund', 'in_refund']:
-        internal_types = ['credit_note']
-    elif self.move_type in ['out_invoice', 'in_invoice']:
-        internal_types = ['invoice', 'debit_note']
-    
+def \_get_l10n_latam_documents_domain(self):
+internal_types = []
+if self.move_type in ['out_refund', 'in_refund']:
+internal_types = ['credit_note']
+elif self.move_type in ['out_invoice', 'in_invoice']:
+internal_types = ['invoice', 'debit_note']
+
     if self.debit_origin_id:
         internal_types = ['debit_note']
-    
+
     internal_types += ['all']
-    
+
     return [
         ('internal_type', 'in', internal_types),
         ('country_id', '=', self.company_id.account_fiscal_country_id.id)
     ]
+
 `
 
 Only computes when: journal has l10n_latam_use_documents=True, partner_id set, company has fiscal country.
 
-### _compute_l10n_latam_document_type()
+### \_compute_l10n_latam_document_type()
 
 Auto-selects first available type for draft unposted invoices.
 
-### _compute_l10n_latam_document_number()
+### \_compute_l10n_latam_document_number()
 
 Extracts sequential part from move.name: "FA 0001-0000001" -> "0001-0000001"
 
@@ -198,49 +207,52 @@ Extracts sequential part from move.name: "FA 0001-0000001" -> "0001-0000001"
 
 `python
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+\_inherit = 'account.move'
 
     def _get_l10n_latam_documents_domain(self):
         domain = super()._get_l10n_latam_documents_domain()
-        
+
         # Restrict based on partner ID type
         if self.partner_id.l10n_latam_identification_type_id.name == 'CI':
             domain = [
                 ('code', '=', 'FA_SIMPLE'),
                 ('country_id', '=', self.company_id.account_fiscal_country_id.id)
             ]
-        
+
         return domain
+
 `
 
 ### Manual Numbering Logic
 
 `python
-def _is_manual_document_number(self):
-    """Determine if move requires manual number entry."""
-    if self.country_code != 'PY':
-        return super()._is_manual_document_number()
-    
+def \_is_manual_document_number(self):
+"""Determine if move requires manual number entry."""
+if self.country_code != 'PY':
+return super().\_is_manual_document_number()
+
     return self.l10n_latam_use_documents and self.journal_id.type == 'purchase'
+
 `
 
 ### Number Format Validation
 
 `python
 class L10nLatamDocumentType(models.Model):
-    _inherit = 'l10n_latam.document.type'
+\_inherit = 'l10n_latam.document.type'
 
     def _format_document_number(self, document_number):
         if self.country_id.code != "PY":
             return super()._format_document_number(document_number)
-        
+
         if self.code == 'FA':
             parts = document_number.split('-')
             if len(parts) != 2 or len(parts[0]) > 4 or len(parts[1]) > 8:
                 raise UserError("FA format: XXXX-XXXXXXXX")
             return f"{parts[0]:>04s}-{parts[1]:>08s}"
-        
+
         return document_number
+
 `
 
 ---
@@ -260,6 +272,7 @@ Extends internal_type with invoice_in, invoice, receipt_invoice, stock_picking. 
 ## Data Setup for Paraguay
 
 `xml
+
 <!-- l10n_py/data/l10n_latam.document.type.xml -->
 <record model='l10n_latam.document.type' id='dt_fa'>
     <field name='country_id' ref='base.py'/>
@@ -313,6 +326,7 @@ Extends internal_type with invoice_in, invoice, receipt_invoice, stock_picking. 
 `
 
 Logic:
+
 - document_type hidden unless journal uses documents & partner exists
 - document_number shown only if manual (vs auto-sequenced) AND draft
 - Both fields locked after posting
@@ -322,10 +336,10 @@ Logic:
 ## Key Takeaways for Paraguay
 
 1. Define 3+ document types (FA, ND, NC) with correct internal_type & country_id
-2. Document types auto-filter by move_type and partner via _get_l10n_latam_documents_domain()
-3. Override _format_document_number() to validate DGI number formats (e.g., "0001-0000001")
-4. Override _is_manual_document_number() if purchase journals need manual entry
-5. Implement res.company._localization_use_documents() returning True
+2. Document types auto-filter by move_type and partner via \_get_l10n_latam_documents_domain()
+3. Override \_format_document_number() to validate DGI number formats (e.g., "0001-0000001")
+4. Override \_is_manual_document_number() if purchase journals need manual entry
+5. Implement res.company.\_localization_use_documents() returning True
 6. Don't allow l10n_latam_use_documents toggle on journals with posted invoices
 7. Use l10n_latam_document_number field in forms (auto builds move.name with prefix)
 8. Test auto-selection and format validation thoroughly

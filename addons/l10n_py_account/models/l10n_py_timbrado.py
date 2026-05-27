@@ -52,11 +52,13 @@ class L10nPyTimbrado(models.Model):
     @api.constrains("state", "company_id")
     def _check_single_active(self):
         for rec in self.filtered(lambda r: r.state == "active"):
-            others = self.search([
-                ("company_id", "=", rec.company_id.id),
-                ("state", "=", "active"),
-                ("id", "!=", rec.id),
-            ])
+            others = self.search(
+                [
+                    ("company_id", "=", rec.company_id.id),
+                    ("state", "=", "active"),
+                    ("id", "!=", rec.id),
+                ]
+            )
             if others:
                 raise ValidationError(
                     _("Solo puede haber un timbrado vigente por empresa.")

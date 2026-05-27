@@ -13,16 +13,16 @@ instituciones.
 
 ## Inventario
 
-| Archivo | Origen | Fecha publicación | Filas | Notas |
-|---|---|---|---|---|
-| `dnit_codigo_referencia_geografica.xlsx` | DNIT (e-Kuatia) | 2023 (epoch 1687266715) | 7403 | **Fuente más cercana a SIFEN** — desnormalizado, 4 niveles en una sola tabla |
-| `ine_2022_departamentos.xlsx` | INE | 2022 | 18 | Convención CNPV (Asunción=00) |
-| `ine_2022_distritos.xlsx` | INE | 2022 | 258 | Códigos COD_DIS de 2 dígitos |
-| `ine_2022_barrios_localidades.xlsx` | INE | 2022 | 8697 | Catálogo más completo de barrios |
-| `ine_2012_departamentos.csv` | INE (datos.gov.py) | 2012 | 18 | CNPV original |
-| `ine_2012_distritos.csv` | INE (datos.gov.py) | 2012 | 250 | CSV con `;`, encoding latin-1 |
-| `ine_2012_barrios_localidades.csv` | INE (datos.gov.py) | 2012 | 8336 | Idem |
-| `conacyt_distritos_actualizado.xlsx` | CONACYT | 2014 | 251 | Tercera referencia, hoja útil = "Hoja1" |
+| Archivo                                  | Origen             | Fecha publicación       | Filas | Notas                                                                        |
+| ---------------------------------------- | ------------------ | ----------------------- | ----- | ---------------------------------------------------------------------------- |
+| `dnit_codigo_referencia_geografica.xlsx` | DNIT (e-Kuatia)    | 2023 (epoch 1687266715) | 7403  | **Fuente más cercana a SIFEN** — desnormalizado, 4 niveles en una sola tabla |
+| `ine_2022_departamentos.xlsx`            | INE                | 2022                    | 18    | Convención CNPV (Asunción=00)                                                |
+| `ine_2022_distritos.xlsx`                | INE                | 2022                    | 258   | Códigos COD_DIS de 2 dígitos                                                 |
+| `ine_2022_barrios_localidades.xlsx`      | INE                | 2022                    | 8697  | Catálogo más completo de barrios                                             |
+| `ine_2012_departamentos.csv`             | INE (datos.gov.py) | 2012                    | 18    | CNPV original                                                                |
+| `ine_2012_distritos.csv`                 | INE (datos.gov.py) | 2012                    | 250   | CSV con `;`, encoding latin-1                                                |
+| `ine_2012_barrios_localidades.csv`       | INE (datos.gov.py) | 2012                    | 8336  | Idem                                                                         |
+| `conacyt_distritos_actualizado.xlsx`     | CONACYT            | 2014                    | 251   | Tercera referencia, hoja útil = "Hoja1"                                      |
 
 ## URLs originales
 
@@ -57,16 +57,19 @@ por cada barrio.
 ### INE 2022 (XLSX)
 
 Departamentos:
+
 ```
 COD_DEP (str 2 dígitos) | DEPARTAMENTO
 ```
 
 Distritos:
+
 ```
 Idx | CÓDIGO (4 dígitos = depto+distrito) | COD_DEP | DEPARTAMENTO | COD_DIS | DISTRITO
 ```
 
 Barrios:
+
 ```
 COD_DEP | COD_DIS | COD_AREA | COD_BAR_LOC | BARRIO_LOCALIDAD | DEPARTAMENTO | DISTRITO
 ```
@@ -74,16 +77,19 @@ COD_DEP | COD_DIS | COD_AREA | COD_BAR_LOC | BARRIO_LOCALIDAD | DEPARTAMENTO | D
 ### INE 2012 (CSV)
 
 Departamentos (`;`-separated, encoding latin-1):
+
 ```
 codigo_dpto;descripcion_dpto
 ```
 
 Distritos:
+
 ```
 Codigo concatenado;Codigo de Departamento;Descripcion de Departamento;Codigo de Distrito;Descripcin de Distrito
 ```
 
 Barrios:
+
 ```
 Codigo concatenado;Codigo de Departamento;Descripcion de Departamento;Codigo de Distrito;Descripcion de Distrito;Area;Codigo de Barrio/Localidad;Descripcion de Barrio/Localidad
 ```
@@ -91,6 +97,7 @@ Codigo concatenado;Codigo de Departamento;Descripcion de Departamento;Codigo de 
 ### CONACYT
 
 Sheet: `Hoja1`. Title row + header en row 3:
+
 ```
 DEPARTAMENTO | DISTRITO | CODIGO DEPARTAMENTO | CODIGO-DISTRITO | COD_2
 ```

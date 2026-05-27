@@ -75,7 +75,10 @@ def cmd_search(args: argparse.Namespace) -> int:
         rows = cur.execute(sql, (fts_query, args.limit)).fetchall()
     except sqlite3.OperationalError as e:
         print(f"FTS5 error: {e}", file=sys.stderr)
-        print("Hint: quote phrases con comillas dobles, ej: \"account.edi.format\"", file=sys.stderr)
+        print(
+            'Hint: quote phrases con comillas dobles, ej: "account.edi.format"',
+            file=sys.stderr,
+        )
         return 2
 
     if not rows:
@@ -126,7 +129,9 @@ def cmd_symbol(args: argparse.Namespace) -> int:
 
     for r in rows:
         parent = f" (in {r['parent']})" if r["parent"] else ""
-        print(f"{r['path']}:{r['line']}:{r['col']}  [{r['kind']}]  {r['signature']}{parent}")
+        print(
+            f"{r['path']}:{r['line']}:{r['col']}  [{r['kind']}]  {r['signature']}{parent}"
+        )
     print(f"\n({len(rows)} matches)")
     return 0
 
@@ -190,10 +195,14 @@ def cmd_stats(args: argparse.Namespace) -> int:
     print(f"Files: {files}")
     print(f"Symbols: {syms}\n")
     print("Files by kind:")
-    for kind, count in cur.execute("SELECT kind, COUNT(*) FROM files GROUP BY kind ORDER BY 2 DESC"):
+    for kind, count in cur.execute(
+        "SELECT kind, COUNT(*) FROM files GROUP BY kind ORDER BY 2 DESC"
+    ):
         print(f"  {kind:10}  {count}")
     print("\nSymbols by kind:")
-    for kind, count in cur.execute("SELECT kind, COUNT(*) FROM symbols GROUP BY kind ORDER BY 2 DESC"):
+    for kind, count in cur.execute(
+        "SELECT kind, COUNT(*) FROM symbols GROUP BY kind ORDER BY 2 DESC"
+    ):
         print(f"  {kind:12}  {count}")
     print("\nMetadata:")
     for k, v in cur.execute("SELECT key, value FROM metadata"):
@@ -202,7 +211,9 @@ def cmd_stats(args: argparse.Namespace) -> int:
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(prog="codegraph", description="Query l10n-paraguay code/docs index.")
+    p = argparse.ArgumentParser(
+        prog="codegraph", description="Query l10n-paraguay code/docs index."
+    )
     sub = p.add_subparsers(dest="cmd", required=True)
 
     s = sub.add_parser("search", help="Full-text search across code + docs")
@@ -212,7 +223,9 @@ def main() -> int:
 
     s = sub.add_parser("symbol", help="Find Python symbol definitions")
     s.add_argument("name")
-    s.add_argument("--exact", action="store_true", help="Match exact name (default: substring)")
+    s.add_argument(
+        "--exact", action="store_true", help="Match exact name (default: substring)"
+    )
     s.add_argument("--limit", type=int, default=30)
     s.set_defaults(fn=cmd_symbol)
 

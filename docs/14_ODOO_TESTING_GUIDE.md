@@ -12,12 +12,12 @@ priority: important
 
 ## 1. Clases base de tests
 
-| Clase | Aislamiento | Cuándo usar |
-|-------|-------------|-------------|
-| `TransactionCase` | Sub-transacción por test (rollback automático) | 95% — default |
-| `SingleTransactionCase` | Una sola transacción para toda la clase | Cuando setup es muy caro y tests son independientes |
-| `HttpCase` | Como TransactionCase + browser_js + URL routes | Tests de UI, controllers, tours |
-| `ChromeBrowserException` | (exception) | Errores en JS tours |
+| Clase                    | Aislamiento                                    | Cuándo usar                                         |
+| ------------------------ | ---------------------------------------------- | --------------------------------------------------- |
+| `TransactionCase`        | Sub-transacción por test (rollback automático) | 95% — default                                       |
+| `SingleTransactionCase`  | Una sola transacción para toda la clase        | Cuando setup es muy caro y tests son independientes |
+| `HttpCase`               | Como TransactionCase + browser_js + URL routes | Tests de UI, controllers, tours                     |
+| `ChromeBrowserException` | (exception)                                    | Errores en JS tours                                 |
 
 ```python
 from odoo.tests import TransactionCase, tagged
@@ -54,13 +54,13 @@ class TestL10nPyCdc(TransactionCase):
 
 ### Tags estándar en Odoo
 
-| Tag | Significado |
-|-----|-------------|
-| `standard` | Default — corre en `--test-enable` sin filtros |
-| `at_install` | Corre al instalar el módulo (antes de cargar otros módulos dependientes) |
-| `post_install` | Corre después que todos los modules están instalados |
-| `-standard` | EXCLUYE del default (solo si lo invocás explícitamente) |
-| `external` | Requiere servicios externos (en OCA: SIFEN test, AFIP test, etc.) |
+| Tag            | Significado                                                              |
+| -------------- | ------------------------------------------------------------------------ |
+| `standard`     | Default — corre en `--test-enable` sin filtros                           |
+| `at_install`   | Corre al instalar el módulo (antes de cargar otros módulos dependientes) |
+| `post_install` | Corre después que todos los modules están instalados                     |
+| `-standard`    | EXCLUYE del default (solo si lo invocás explícitamente)                  |
+| `external`     | Requiere servicios externos (en OCA: SIFEN test, AFIP test, etc.)        |
 
 ### Convención de tags útil
 
@@ -256,17 +256,18 @@ def test_create_invoice_tour(self):
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("l10n_py_edi.tour_create_invoice", {
-    test: true,
-    steps: () => [
-        { trigger: 'a[data-menu-xmlid="account.menu_finance_receivables"]' },
-        { trigger: '.o_list_button_add' },
-        { trigger: 'input[name="partner_id"]', run: 'text Acme PY' },
-        // ...
-    ],
+  test: true,
+  steps: () => [
+    { trigger: 'a[data-menu-xmlid="account.menu_finance_receivables"]' },
+    { trigger: ".o_list_button_add" },
+    { trigger: 'input[name="partner_id"]', run: "text Acme PY" },
+    // ...
+  ],
 });
 ```
 
 Y registrar el asset en `__manifest__.py`:
+
 ```python
 'assets': {
     'web.assets_tests': [
@@ -277,13 +278,13 @@ Y registrar el asset en `__manifest__.py`:
 
 ## 7. Anti-flaky patterns
 
-| Anti-pattern | Reemplazo |
-|--------------|-----------|
-| `datetime.now()` | `@freeze_time('2026-05-19')` (requiere `pip install freezegun`) |
-| `time.sleep(...)` | Mock del cron / call directo del método |
-| Hardcodear `id=1` | Usar `self.env.ref('module.xml_id').id` o crear el record |
-| Compartir state entre tests | `setUpClass` solo para data, no para counters mutables |
-| Llamar `self.cr.commit()` | NUNCA (rompe el rollback) |
+| Anti-pattern                | Reemplazo                                                       |
+| --------------------------- | --------------------------------------------------------------- |
+| `datetime.now()`            | `@freeze_time('2026-05-19')` (requiere `pip install freezegun`) |
+| `time.sleep(...)`           | Mock del cron / call directo del método                         |
+| Hardcodear `id=1`           | Usar `self.env.ref('module.xml_id').id` o crear el record       |
+| Compartir state entre tests | `setUpClass` solo para data, no para counters mutables          |
+| Llamar `self.cr.commit()`   | NUNCA (rompe el rollback)                                       |
 
 ## 8. Layout de tests en un módulo OCA
 

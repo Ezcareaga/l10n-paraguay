@@ -13,6 +13,7 @@ priority: critical
 ## 1. Naming de módulos
 
 ### Reglas generales
+
 - **Singular** en nombres (excepciones: `multi_*` o nombres ya plurales en Odoo)
 - Prefix `base_` para módulos que sirven de base a otros (ej: `base_location_nuts`)
 - Prefix `l10n_CC_` para localizaciones, donde **CC = ISO 3166-1 alpha-2** del país
@@ -21,16 +22,18 @@ priority: critical
 - Combinación Odoo + OCA: nombre Odoo primero (ej: `crm_partner_firstname`)
 
 ### Para este repo (Paraguay)
-- `l10n_py_base`        — RUC, regímenes, departamentos
-- `l10n_py_account`     — Plan de cuentas, taxes, document types, timbrado
-- `l10n_py_edi`         — XML SIFEN, firma, SOAP, eventos
-- `l10n_py_reports`     — Libros IVA, Hechauka
-- `l10n_py_pos`         — POS con SIFEN
+
+- `l10n_py_base` — RUC, regímenes, departamentos
+- `l10n_py_account` — Plan de cuentas, taxes, document types, timbrado
+- `l10n_py_edi` — XML SIFEN, firma, SOAP, eventos
+- `l10n_py_reports` — Libros IVA, Hechauka
+- `l10n_py_pos` — POS con SIFEN
 - `l10n_py_withholding` — Retenciones IVA/IRE/IRP
 
 ## 2. Manifest (`__manifest__.py`)
 
 ### Campos esenciales
+
 - `license`: requerido — **AGPL-3** para módulos OCA-pure, LGPL-3 a veces para
   módulos sin copyleft fuerte. Para este repo: **AGPL-3** en todos.
 - `author`: termina **siempre** con `, Odoo Community Association (OCA)`
@@ -39,6 +42,7 @@ priority: critical
 - **Nunca** logos de empresa (los authors y contributors bastan)
 
 ### External deps
+
 ```python
 'external_dependencies': {
     'bin': ['wkhtmltopdf'],
@@ -47,7 +51,9 @@ priority: critical
 ```
 
 ### Version numbers
+
 Semver con prefijo Odoo: `<ODOO>.x.y.z`
+
 - **x (major)**: cambios significativos de schema/data — requiere migración
 - **y (minor)**: nuevas features no-breaking — requiere upgrade del módulo
 - **z (patch)**: bug fixes — típicamente solo restart
@@ -88,6 +94,7 @@ module_name/
 ```
 
 ### Convención de archivos
+
 - Splitting por modelo:
   - `models/<model_name>.py`
   - `views/<model_name>_views.xml`
@@ -112,12 +119,14 @@ En `hooks.py` raíz del módulo, con manifest:
 ```
 
 Reglas:
+
 - Solo cuando NO se puede hacer con XML data files
 - `post_load` solo para monkey patches (raro)
 
 ## 5. XML conventions
 
 ### Formato
+
 - Indentación: **4 espacios**
 - En `<record>`: `id` antes que `model`
 - En `<field>`: `name` primero, luego `value`/`eval`, luego otros atributos
@@ -128,17 +137,18 @@ Reglas:
 > **Patrón:** `<model_with_underscores>_<descriptor>`. Sin prefijo del módulo
 > dentro del mismo módulo.
 
-| Tipo | Patrón | Ejemplo |
-|------|--------|---------|
-| Data record | `<model>_<name>` | `res_users_important_person` |
-| View | `<model>_view_<type>` | `res_partner_view_form` |
-| Action | `<model>_action` o `<model>_action_<detail>` | `sale_order_action_child_list` |
-| Menu | `<model>_menu` | `account_invoice_menu` |
-| Security group | `<model>_group_<name>` | `sale_order_group_manager` |
-| Rule | `<model>_rule_<group>` | `account_invoice_rule_company` |
-| Demo record | append `_demo` | `res_partner_demo_customer_demo` |
+| Tipo           | Patrón                                       | Ejemplo                          |
+| -------------- | -------------------------------------------- | -------------------------------- |
+| Data record    | `<model>_<name>`                             | `res_users_important_person`     |
+| View           | `<model>_view_<type>`                        | `res_partner_view_form`          |
+| Action         | `<model>_action` o `<model>_action_<detail>` | `sale_order_action_child_list`   |
+| Menu           | `<model>_menu`                               | `account_invoice_menu`           |
+| Security group | `<model>_group_<name>`                       | `sale_order_group_manager`       |
+| Rule           | `<model>_rule_<group>`                       | `account_invoice_rule_company`   |
+| Demo record    | append `_demo`                               | `res_partner_demo_customer_demo` |
 
 ### Herencia de vistas
+
 - Un módulo solo debe heredar una vista UNA vez (consolidar todos los cambios)
 - Preservar nombres originales para consistencia
 - **Evitar `position="replace"`** — usar priority >100 con comentario explicativo
@@ -147,6 +157,7 @@ Reglas:
 ## 6. Python conventions
 
 ### Import order
+
 1. Standard library
 2. Third-party libraries conocidas
 3. Odoo imports (`from odoo import ...`)
@@ -157,6 +168,7 @@ Reglas:
 Alfabético dentro de cada grupo.
 
 ### PEP8 + flake8
+
 - Seguir PEP8
 - Excepción: `F401` (imports no usados) permitido en `__init__.py`
 - Strings: preferir `%` formatting sobre `.format()` (usar **named placeholders**
@@ -164,6 +176,7 @@ Alfabético dentro de cada grupo.
 - **Readability > conciseness**
 
 ### Naming de métodos
+
 - `_compute_<field>` — para `compute=` de fields
 - `_inverse_<field>` — para `inverse=` de fields computed
 - `_search_<field>` — para search en computed sin store
@@ -173,6 +186,7 @@ Alfabético dentro de cada grupo.
 - `action_<name>` — métodos invocados desde botones de UI
 
 ### Orden dentro de la clase
+
 1. Atributos privados (`_name`, `_inherit`, `_description`, `_order`, etc.)
 2. Field declarations
 3. SQL constraints
@@ -184,24 +198,28 @@ Alfabético dentro de cada grupo.
 9. Business methods
 
 ### Naming de fields
+
 - Many2one: sufijo `_id` (`partner_id`)
 - One2many / Many2many: sufijo `_ids` (`line_ids`, `tag_ids`)
 - Omitir `string=` si el nombre técnico es claro (Odoo capitaliza
   automáticamente: `field_name` → "Field Name")
 
 ### Variables
+
 - `snake_case`
 - Nombres significativos (no letras sueltas excepto loops/lambdas)
 - No sufijo `_id`/`_ids` salvo que realmente contengan IDs
 - Constantes globales: `UPPERCASE_WITH_UNDERSCORES`
 
 ### SQL safety
+
 - **NUNCA** concatenar input de usuario en queries SQL
 - **Siempre** parametrizadas: `cr.execute('SELECT ... WHERE id IN %s', (tuple(ids),))`
 - **NUNCA** `cr.commit()` fuera del control del framework — usar `cr.savepoint()`
   o transacciones aisladas
 
 ### Exception handling
+
 - No `pass` desnudo en `except`
 - Log mínimo: `_logger.debug('mensaje', exc_info=1)`
 - Usar `odoo.exceptions.UserError` / `ValidationError`
@@ -211,11 +229,13 @@ Alfabético dentro de cada grupo.
 ### Formato del mensaje
 
 **Título** (≤50 chars, sin prefijo):
+
 ```
 Fix incorrect tax calculation for service items
 ```
 
 **Body** (80 chars por línea, ~5-10 líneas):
+
 ```
 [FIX] account: correct tax calculation for service items
 
@@ -225,6 +245,7 @@ application. Affects invoice and quotation reports.
 ```
 
 ### Convenciones
+
 - **Presente imperativo:** "Fix formatting", no "Fixes" ni "Fixed"
 - Incluir nombre del módulo en el body
 - **Un cambio lógico por commit** (no "Fix pep8" follow-ups)
@@ -238,12 +259,14 @@ application. Affects invoice and quotation reports.
 ## 8. Pull Request & Code Review
 
 ### Antes de submit
+
 - Commit messages concisos y claros
 - Description explica el **POR QUÉ**, no el qué (el diff ya lo muestra)
 - Pasos de demo funcional si aplica
 - Verificar cumplimiento de todos los guidelines
 
 ### Review requirements
+
 - Al menos 1 aprobación de OCA Core Maintainers o PSC
 - Áreas chequeadas:
   - Claridad de documentación
@@ -255,6 +278,7 @@ application. Affects invoice and quotation reports.
   - Commits limpios
 
 ### Merge
+
 - Usar mensaje del autor (`--author` flag)
 - Preservar autoría original
 - PRs inactivos 6+ meses pueden ser cerrados
@@ -269,6 +293,7 @@ application. Affects invoice and quotation reports.
 ## 10. External dependencies
 
 ### Manifest
+
 ```python
 'external_dependencies': {
     'python': ['requests>=2.20'],
@@ -277,11 +302,13 @@ application. Affects invoice and quotation reports.
 ```
 
 ### Version pinning
+
 - **Nunca** pins exactos
 - Lower bounds aceptables para features recientes (ej: `library>1.4`)
 - Upper bounds solo si incompatibilidad confirmada e irresoluble
 
 ### Import handling
+
 ```python
 try:
     import external_lib
@@ -291,6 +318,7 @@ except (ImportError, IOError) as err:
 ```
 
 ### Documentación
+
 - Explicar instalación en `readme/INSTALL.rst`
 - Definir paquetes en `requirements.txt` del repo para CI
 - Listar deps OCA en `oca_dependencies.txt` (una por línea, con URL/branch opcional)
@@ -302,6 +330,7 @@ except (ImportError, IOError) as err:
 - **Repo naming:** `l10n-<cc>` (ej: `l10n-paraguay`)
 
 ### Consideraciones especiales
+
 - Seguir todos los OCA standards
 - **No asumir contextos single-country** en features que podrían reusarse
 - Documentar reglas locales claramente en `readme/DESCRIPTION.rst`
@@ -330,19 +359,20 @@ repos:
       - id: oca-checks-po
   - repo: https://github.com/psf/black
     rev: 24.10.0
-    hooks: [{id: black}]
+    hooks: [{ id: black }]
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
-    hooks: [{id: isort}]
+    hooks: [{ id: isort }]
   - repo: https://github.com/pycqa/flake8
     rev: 7.1.1
-    hooks: [{id: flake8, additional_dependencies: [flake8-bugbear]}]
+    hooks: [{ id: flake8, additional_dependencies: [flake8-bugbear] }]
   - repo: https://github.com/oca/pylint-odoo
     rev: v9.1.5
-    hooks: [{id: pylint_odoo}]
+    hooks: [{ id: pylint_odoo }]
 ```
 
 Correr antes de cada commit:
+
 ```bash
 pre-commit run --all-files
 ```
@@ -365,6 +395,7 @@ readme/
 ```
 
 Comando:
+
 ```bash
 oca-gen-addon-readme --addons-dir=./l10n_py_edi --branch=18.0 --org=Ezcareaga --repo=l10n-paraguay
 ```

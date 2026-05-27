@@ -30,18 +30,21 @@ priority: critical
 ## 2. Tipos de Documentos Electrónicos
 
 ### Prioridad MVP (Factura Electrónica + Nota de Crédito):
-| Código | Tipo | Descripción |
-|--------|------|-------------|
-| 1 | Factura Electrónica (FE) | Venta directa de bienes/servicios |
-| 5 | Nota de Crédito Electrónica | Devoluciones, descuentos, ajustes (referencia CDC de FE) |
+
+| Código | Tipo                        | Descripción                                              |
+| ------ | --------------------------- | -------------------------------------------------------- |
+| 1      | Factura Electrónica (FE)    | Venta directa de bienes/servicios                        |
+| 5      | Nota de Crédito Electrónica | Devoluciones, descuentos, ajustes (referencia CDC de FE) |
 
 ### Fase 2:
-| Código | Tipo | Descripción |
-|--------|------|-------------|
-| 6 | Nota de Débito Electrónica | Ajuste de precio hacia arriba |
-| 7 | Nota de Remisión Electrónica | Traslado de mercadería |
+
+| Código | Tipo                         | Descripción                   |
+| ------ | ---------------------------- | ----------------------------- |
+| 6      | Nota de Débito Electrónica   | Ajuste de precio hacia arriba |
+| 7      | Nota de Remisión Electrónica | Traslado de mercadería        |
 
 ### Fuera de scope típico:
+
 Factura de Exportación, Autofactura, Factura Cambiaria, Comprobante de Retención,
 Recibo Electrónico de Dinero, Boleta Resimple, Comprobante de Donación,
 Comprobante de Importación, Comprobante de Percepción.
@@ -67,6 +70,7 @@ Posición  | Largo | Campo                        | Ejemplo
 **Ejemplo real:** `01800695631001003000013712022010619364760029`
 
 ### Algoritmo del DV del CDC
+
 1. Tomar los primeros 43 dígitos del CDC.
 2. Aplicar módulo 11 con factores multiplicadores del 2 al 9 (derecha a izquierda, cíclico).
 3. Sumar todos los productos parciales.
@@ -74,6 +78,7 @@ Posición  | Largo | Campo                        | Ejemplo
 5. Si `resto == 0` → DV = 0; si `resto == 1` → DV = 1; sino → DV = 11 - resto.
 
 ### Reglas del CDC
+
 - Se genera ANTES de enviar a SIFEN (lo genera el sistema emisor).
 - Si un DE es rechazado y la corrección NO altera campos del CDC, se puede REUTILIZAR el mismo CDC.
 - El código seguridad aleatorio (9 dígitos) debe ser generado por el sistema del contribuyente.
@@ -82,30 +87,34 @@ Posición  | Largo | Campo                        | Ejemplo
 ## 4. IVA Paraguay — Reglas de cálculo
 
 ### Tasas vigentes:
-| Tasa | Aplicación |
-|------|-----------|
-| 10% (general) | Mayoría bienes y servicios, manufactura, tecnología, ropa |
+
+| Tasa          | Aplicación                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------- |
+| 10% (general) | Mayoría bienes y servicios, manufactura, tecnología, ropa                                   |
 | 5% (reducida) | Canasta básica, medicamentos, agropecuarios natural, alquiler vivienda, gastronomía/turismo |
-| 0% (exenta) | Exportaciones, servicios educativos, ciertos servicios financieros |
+| 0% (exenta)   | Exportaciones, servicios educativos, ciertos servicios financieros                          |
 
 ### Proporción gravada del IVA:
-| Proporción | Caso |
-|-----------|------|
-| 100% | Caso normal |
-| 85% | Régimen de turismo |
-| 30% | Venta de inmuebles (30% gravado al 5%, 70% exento) |
-| 50% | Algunos casos especiales |
+
+| Proporción | Caso                                               |
+| ---------- | -------------------------------------------------- |
+| 100%       | Caso normal                                        |
+| 85%        | Régimen de turismo                                 |
+| 30%        | Venta de inmuebles (30% gravado al 5%, 70% exento) |
+| 50%        | Algunos casos especiales                           |
 
 ### Campos IVA en el item del DE:
+
 ```json
 {
-  "ivaTipo": 1,         // 1=Gravado, 2=Parcialmente exento, 3=Exento
+  "ivaTipo": 1, // 1=Gravado, 2=Parcialmente exento, 3=Exento
   "ivaProporcion": 100, // 100, 85, 30, 50, etc.
-  "iva": 10             // Tasa: 10, 5, o 0
+  "iva": 10 // Tasa: 10, 5, o 0
 }
 ```
 
 ### Fórmulas (precios INCLUYEN IVA — caso normal en Paraguay):
+
 ```
 // Tasa 10%:
 baseGravada = precioTotal / 1.10
@@ -123,13 +132,16 @@ porcionExenta = precioTotal * 0.70
 ```
 
 ### Liquidación en la factura
+
 Subtotales separados obligatorios:
+
 - Total IVA 10%
 - Total IVA 5%
 - Total Exenta
 - Total General
 
 ### Redondeo
+
 - PYG: NO tiene decimales — todo entero.
 - Otras monedas: decimales según moneda.
 
@@ -165,11 +177,13 @@ Subtotales separados obligatorios:
 ```
 
 ### Namespace XML:
+
 ```xml
 xmlns="http://ekuatia.set.gov.py/sifen/xsd"
 ```
 
 ### Reglas de formato XML
+
 - Codificación: **UTF-8**
 - Sin espacios en blanco al inicio/final de campos
 - Sin comentarios ni anotaciones
@@ -182,6 +196,7 @@ xmlns="http://ekuatia.set.gov.py/sifen/xsd"
 ## 6. Web Services SIFEN (SOAP 1.2)
 
 ### Protocolo
+
 - Estándar: **SOAP 1.2**
 - Encoding: **Document/Literal**
 - Autenticación: **mutual TLS** con certificado digital CCFE
@@ -189,18 +204,19 @@ xmlns="http://ekuatia.set.gov.py/sifen/xsd"
 
 ### Servicios disponibles
 
-| Web Service | Tipo | Descripción |
-|------------|------|-------------|
-| `siRecepDE` | Síncrono | Recepción de UN DE individual |
-| `siRecepLoteDE` | Asíncrono | Recepción de lote (hasta 50 DE del mismo tipo) |
-| `siResultLoteDE` | Síncrono | Consulta resultado de procesamiento de lote |
-| `siConsDE` | Síncrono | Consulta DE por CDC |
-| `siRecepEvento` | Síncrono | Recepción de eventos (cancelación, inutilización) |
-| `siConsRUC` | Síncrono | Consulta datos de RUC |
+| Web Service      | Tipo      | Descripción                                       |
+| ---------------- | --------- | ------------------------------------------------- |
+| `siRecepDE`      | Síncrono  | Recepción de UN DE individual                     |
+| `siRecepLoteDE`  | Asíncrono | Recepción de lote (hasta 50 DE del mismo tipo)    |
+| `siResultLoteDE` | Síncrono  | Consulta resultado de procesamiento de lote       |
+| `siConsDE`       | Síncrono  | Consulta DE por CDC                               |
+| `siRecepEvento`  | Síncrono  | Recepción de eventos (cancelación, inutilización) |
+| `siConsRUC`      | Síncrono  | Consulta datos de RUC                             |
 
 ### URLs
 
 **Test:**
+
 ```
 Base: https://sifen-test.set.gov.py/de/ws/
 siRecepDE:       /de/ws/sync/recibe.wsdl
@@ -212,17 +228,20 @@ siConsRUC:       /de/ws/consultas/consulta-ruc.wsdl
 ```
 
 **Producción:**
+
 ```
 Base: https://sifen.set.gov.py/de/ws/
 (misma estructura de paths que test)
 ```
 
 ### Schemas XSD
+
 ```
 https://ekuatia.set.gov.py/sifen/xsd/
 ```
 
 ### Flujo de envío de lote
+
 1. Crear estructura `<rLoteDE>` con hasta 50 DE firmados.
 2. Comprimir el contenido XML del lote.
 3. Codificar en Base64.
@@ -234,6 +253,7 @@ https://ekuatia.set.gov.py/sifen/xsd/
 9. Después de 48 horas: consultar cada CDC individual con `siConsDE`.
 
 ### Códigos de respuesta importantes
+
 ```
 0260 - DE aprobado
 0261 - DE rechazado / aprobado con observación
@@ -246,6 +266,7 @@ https://ekuatia.set.gov.py/sifen/xsd/
 ## 7. Firma Digital
 
 ### Requisitos
+
 - Certificado emitido por Prestador de Servicios de Certificación autorizado por la
   Autoridad Certificadora Raíz del Paraguay
 - Tipo **F110** (persona jurídica) o **F211** (persona física)
@@ -254,11 +275,13 @@ https://ekuatia.set.gov.py/sifen/xsd/
 - El certificado firma Y autentica la conexión TLS
 
 ### Estándar de firma
+
 - **XML Digital Signature (XMLDSig)**
 - El CDC precedido por `#` va en el atributo `URI` del tag `Reference`
 - Cada DE individual debe estar firmado antes de incluirlo en un lote
 
 ### Almacenamiento del certificado
+
 - **NUNCA** en texto plano
 - Encriptar el archivo PKCS#12 (.p12/.pfx) en la base de datos
 - La contraseña del certificado debe manejarse como secreto
@@ -266,15 +289,18 @@ https://ekuatia.set.gov.py/sifen/xsd/
 ## 8. KuDE (Representación Gráfica)
 
 ### Definición
+
 Representación gráfica del DE/DTE en formato físico o digital visible. Se entrega
 al receptor que no es facturador electrónico.
 
 ### Formatos soportados
+
 1. Papel carta (formato completo)
 2. Cinta de papel (formato ticket/POS)
 3. Cinta resumen (versión reducida)
 
 ### Campos obligatorios del KuDE
+
 - **Encabezado:** RUC, razón social, nombre fantasía, timbrado, establecimiento,
   punto expedición, número, fecha emisión, CDC
 - **Items:** código, descripción, cantidad, precio unitario, subtotal
@@ -284,12 +310,14 @@ al receptor que no es facturador electrónico.
 - **Información de consulta:** URL de verificación en e-Kuatia
 
 ### Regla importante
+
 NO puede existir información en el KuDE que NO forme parte del XML del DE firmado
 (excepto campos específicos del Manual Técnico como el QR).
 
 ## 9. Código QR
 
 ### Generación
+
 1. Tomar el CDC del DE.
 2. Concatenar con el CSC (32 caracteres alfanuméricos).
 3. Generar hash (según metodología del Manual Técnico).
@@ -297,6 +325,7 @@ NO puede existir información en el KuDE que NO forme parte del XML del DE firma
 5. Generar imagen QR.
 
 ### URL de consulta
+
 ```
 https://ekuatia.set.gov.py/consultas/qr?nVersion=150&Id={CDC}&dFeEmiDE={fechaEmision}&dRucRec={rucReceptor}&dTotGralOpe={totalGeneral}&dTotIVA={totalIVA}&cItems={cantidadItems}&DigestValue={digestValue}&IdCSC={idCSC}&cHashQR={hashQR}
 ```
@@ -305,20 +334,23 @@ https://ekuatia.set.gov.py/consultas/qr?nVersion=150&Id={CDC}&dFeEmiDE={fechaEmi
 
 ### Eventos del emisor (MVP)
 
-| Evento | Descripción | Cuándo usar |
-|--------|-------------|------------|
-| **Cancelación** | Cancelar un DTE aprobado | Cuando la operación no se concretó |
-| **Inutilización** | Inutilizar rango de numeración | Cuando se saltearon números de DE |
+| Evento            | Descripción                    | Cuándo usar                        |
+| ----------------- | ------------------------------ | ---------------------------------- |
+| **Cancelación**   | Cancelar un DTE aprobado       | Cuando la operación no se concretó |
+| **Inutilización** | Inutilizar rango de numeración | Cuando se saltearon números de DE  |
 
 ### Eventos del emisor (fase futura)
-| Evento | Descripción |
-|--------|-------------|
+
+| Evento           | Descripción                                          |
+| ---------------- | ---------------------------------------------------- |
 | Anulación/Ajuste | Anular o ajustar un DTE (usa Nota de Crédito/Débito) |
 
 ### Eventos del receptor (futuros, NO implementar):
+
 Conformidad, Disconformidad, Desconocimiento, Acuse.
 
 ### Estructura de evento de cancelación
+
 ```xml
 <rEnvioEvento>
   <dId>{identificador}</dId>
@@ -332,11 +364,13 @@ Conformidad, Disconformidad, Desconocimiento, Acuse.
 ## 11. Proceso de Homologación
 
 ### Requisitos previos
+
 1. RUC activo y al día con obligaciones tributarias.
 2. Certificado digital CCFE (comprar a prestador autorizado).
 3. Sistema informático de facturación funcional.
 
 ### Pasos
+
 1. **Obtener acceso a ambiente de pruebas:** solicitar en Marangatú.
 2. **Obtener timbrado de prueba:** via Marangatú (sin valor fiscal).
 3. **Obtener CSC de prueba:** via portal e-Kuatia.
@@ -346,6 +380,7 @@ Conformidad, Disconformidad, Desconocimiento, Acuse.
 7. **Obtener CSC de producción:** para generar QR válidos.
 
 ### Ambiente de pruebas
+
 - Disponible 24/7 (salvo mantenimientos)
 - DE emitidos en test NO tienen valor jurídico
 - Valida todo el flujo: conexión TLS, firma, XML, envío, consulta, eventos
@@ -356,6 +391,7 @@ Conformidad, Disconformidad, Desconocimiento, Acuse.
 > referencia conceptual del shape de datos esperado por SIFEN.
 
 ### Paquetes
+
 ```
 facturacionelectronicapy-xmlgen    → Generación de XML del DE
 facturacionelectronicapy-xmlsign   → Firma digital del XML
@@ -365,45 +401,52 @@ facturacionelectronicapy-kude      → Generación del KuDE (PDF)
 ```
 
 ### Equivalentes Python (lo que usaremos en `l10n_py_edi`)
-| TIPS-SA (npm) | Equivalente Python |
-|---------------|---------------------|
-| `xmlgen` | `lxml` + templates Jinja2 (o `xmlschema` para validar) |
-| `xmlsign` | `signxml` o `cryptography` + `xmlsec` |
-| `setapi` | `zeep` (cliente SOAP) + `requests` con mutual TLS |
-| `qrgen` | `qrcode` (con PIL) |
-| `kude` | Reporte QWeb de Odoo (no librería externa) |
+
+| TIPS-SA (npm) | Equivalente Python                                     |
+| ------------- | ------------------------------------------------------ |
+| `xmlgen`      | `lxml` + templates Jinja2 (o `xmlschema` para validar) |
+| `xmlsign`     | `signxml` o `cryptography` + `xmlsec`                  |
+| `setapi`      | `zeep` (cliente SOAP) + `requests` con mutual TLS      |
+| `qrgen`       | `qrcode` (con PIL)                                     |
+| `kude`        | Reporte QWeb de Odoo (no librería externa)             |
 
 Ver detalles en [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md).
 
 ### Estructura del `params` (emisor) — referencia del shape
+
 ```json
 {
   "version": 150,
   "ruc": "80069563-1",
   "razonSocial": "Nombre del contribuyente",
   "nombreFantasia": "Nombre comercial",
-  "actividadesEconomicas": [{ "codigo": "1254", "descripcion": "Venta al por menor" }],
+  "actividadesEconomicas": [
+    { "codigo": "1254", "descripcion": "Venta al por menor" }
+  ],
   "timbradoNumero": "12558946",
   "timbradoFecha": "2022-08-25",
   "tipoContribuyente": 1,
   "tipoRegimen": 8,
-  "establecimientos": [{
-    "codigo": "001",
-    "direccion": "Dirección del local",
-    "numeroCasa": "123",
-    "departamento": 11,
-    "departamentoDescripcion": "ALTO PARANA",
-    "distrito": 145,
-    "distritoDescripcion": "CIUDAD DEL ESTE",
-    "ciudad": 3432,
-    "ciudadDescripcion": "CIUDAD DEL ESTE",
-    "telefono": "0973-XXXXXX",
-    "email": "email@dominio.com"
-  }]
+  "establecimientos": [
+    {
+      "codigo": "001",
+      "direccion": "Dirección del local",
+      "numeroCasa": "123",
+      "departamento": 11,
+      "departamentoDescripcion": "ALTO PARANA",
+      "distrito": 145,
+      "distritoDescripcion": "CIUDAD DEL ESTE",
+      "ciudad": 3432,
+      "ciudadDescripcion": "CIUDAD DEL ESTE",
+      "telefono": "0973-XXXXXX",
+      "email": "email@dominio.com"
+    }
+  ]
 }
 ```
 
 ### Estructura del `data` (documento) — referencia del shape
+
 ```json
 {
   "tipoDocumento": 1,
@@ -422,7 +465,9 @@ Ver detalles en [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md).
     "razonSocial": "Nombre cliente",
     "tipoOperacion": 1,
     "direccion": "Dirección",
-    "departamento": 11, "distrito": 143, "ciudad": 3344,
+    "departamento": 11,
+    "distrito": 143,
+    "ciudad": 3344,
     "pais": "PRY",
     "tipoContribuyente": 1,
     "documentoTipo": 1,
@@ -435,22 +480,25 @@ Ver detalles en [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md).
     "tipo": 1,
     "entregas": [{ "tipo": 1, "monto": "150000", "moneda": "PYG", "cambio": 0 }]
   },
-  "items": [{
-    "codigo": "A-001",
-    "descripcion": "Producto ejemplo",
-    "unidadMedida": 77,
-    "cantidad": 10.5,
-    "precioUnitario": 10800,
-    "ivaTipo": 1,
-    "ivaProporcion": 100,
-    "iva": 10
-  }]
+  "items": [
+    {
+      "codigo": "A-001",
+      "descripcion": "Producto ejemplo",
+      "unidadMedida": 77,
+      "cantidad": 10.5,
+      "precioUnitario": 10800,
+      "ivaTipo": 1,
+      "ivaProporcion": 100,
+      "iva": 10
+    }
+  ]
 }
 ```
 
 ## 13. Codificaciones importantes
 
 ### Tipos de documento del receptor
+
 ```
 1 = Cédula de Identidad paraguaya
 2 = Pasaporte
@@ -462,18 +510,21 @@ Ver detalles en [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md).
 ```
 
 ### Tipos de contribuyente
+
 ```
 1 = Persona Física
 2 = Persona Jurídica
 ```
 
 ### Tipos de condición de venta
+
 ```
 1 = Contado
 2 = Crédito
 ```
 
 ### Tipos de pago (entregas)
+
 ```
 1 = Efectivo                      6 = Giro
 2 = Cheque                        7 = Billetera electrónica
@@ -483,6 +534,7 @@ Ver detalles en [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md).
 ```
 
 ### Presencia del comprador
+
 ```
 1 = Operación presencial          4 = Venta a domicilio
 2 = Operación electrónica         5 = Operación bancaria
@@ -490,6 +542,7 @@ Ver detalles en [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md).
 ```
 
 ### Monedas
+
 ```
 PYG = Guaraní Paraguayo
 USD = Dólar Americano
@@ -500,6 +553,7 @@ EUR = Euro
 ```
 
 ### Unidades de medida comunes
+
 ```
 77 = Unidad (UNI)
 83 = Kilogramo (KG)
@@ -510,17 +564,20 @@ EUR = Euro
 ## 14. Validaciones críticas (errores frecuentes)
 
 ### Del certificado y conexión
+
 - Certificado vencido o revocado
 - RUC del certificado no coincide con RUC del emisor
 - TLS handshake fallido
 
 ### Del formato XML
+
 - Schema inválido (no cumple XSD)
 - Campos obligatorios faltantes
 - Tipos de datos incorrectos
 - Valores fuera de rango
 
 ### Del negocio
+
 - Timbrado vencido o no vigente
 - Número de DE duplicado (CDC ya existe)
 - RUC del emisor cancelado
@@ -531,22 +588,24 @@ EUR = Euro
 - CDC malformado o dígito verificador incorrecto
 
 ### Regla de reenvío
+
 Si el DE es rechazado pero la corrección **NO altera campos que componen el CDC**,
 se puede **reutilizar el MISMO CDC** y reenviar.
 
 ## 15. Plazos SIFEN
 
-| Plazo | Descripción |
-|-------|-------------|
-| 72 horas | Tiempo máximo para transmitir DE a SIFEN después de firma digital |
-| 48 horas | Tiempo máximo para consultar resultado de lote post-envío |
-| 10 minutos | Intervalo mínimo sugerido entre consultas de resultado de lote |
-| 5 años | Tiempo obligatorio de conservación de DTE (emisor y receptor) |
-| 24 horas | Tiempo máximo de procesamiento de lote en alta carga |
+| Plazo      | Descripción                                                       |
+| ---------- | ----------------------------------------------------------------- |
+| 72 horas   | Tiempo máximo para transmitir DE a SIFEN después de firma digital |
+| 48 horas   | Tiempo máximo para consultar resultado de lote post-envío         |
+| 10 minutos | Intervalo mínimo sugerido entre consultas de resultado de lote    |
+| 5 años     | Tiempo obligatorio de conservación de DTE (emisor y receptor)     |
+| 24 horas   | Tiempo máximo de procesamiento de lote en alta carga              |
 
 ## 16. Consideraciones generales para diseño
 
 ### Scope inicial recomendado
+
 - Solo Factura Electrónica (tipo 1) + Nota de Crédito (tipo 5)
 - Solo moneda PYG (Guaraníes, sin decimales) — multi-moneda fase 2
 - Solo condición contado (tipo 1) inicial — crédito fase 2
@@ -555,13 +614,16 @@ se puede **reutilizar el MISMO CDC** y reenviar.
 - Receptor: CI, RUC, o innominado
 
 ### Decisión: firma en servidor vs cliente
+
 La firma se hace **en el servidor** (Odoo backend con CCFE almacenado encriptado):
+
 - Simplifica enormemente el manejo de certificados
 - Evita tener el `.p12` en cada dispositivo (relevante para POS móvil)
 - Permite rotación centralizada de certificados
 - Compatible con multi-empresa: cada `res.company` con su CCFE
 
 ### Flujo conceptual completo
+
 1. Usuario crea factura en Odoo (puede ser POS, sale.order, account.move directo)
 2. Odoo `account.move.action_post()` dispara validaciones locales
 3. `account.edi.format` para Paraguay genera CDC, calcula IVA, valida
@@ -575,8 +637,8 @@ La firma se hace **en el servidor** (Odoo backend con CCFE almacenado encriptado
 
 ---
 
-*Documento heredado de ÑandeFact (2026-02-07). Fuentes: Manual Técnico SIFEN v150,
-DNIT, TIPS-SA, portal e-Kuatia.*
+_Documento heredado de ÑandeFact (2026-02-07). Fuentes: Manual Técnico SIFEN v150,
+DNIT, TIPS-SA, portal e-Kuatia._
 
-*Para mapeo conceptual a entidades Odoo, ver [`01_SIFEN_KNOWLEDGE_BASE.md`](01_SIFEN_KNOWLEDGE_BASE.md)
-sección "Mapeo conceptual a Odoo".*
+_Para mapeo conceptual a entidades Odoo, ver [`01_SIFEN_KNOWLEDGE_BASE.md`](01_SIFEN_KNOWLEDGE_BASE.md)
+sección "Mapeo conceptual a Odoo"._

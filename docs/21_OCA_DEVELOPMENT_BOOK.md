@@ -67,6 +67,7 @@ copier update
 ```
 
 Preguntas que hace el template (van a `.copier-answers.yml`):
+
 - `odoo_version`: 18.0
 - `repo_slug`: l10n-paraguay
 - `repo_name`: Paraguay Localization
@@ -86,7 +87,9 @@ Preguntas que hace el template (van a `.copier-answers.yml`):
 ## 3. CI estándar OCA
 
 ### `.github/workflows/test.yml`
+
 Corre tests en matrix de:
+
 - PostgreSQL versions soportadas (15, 16)
 - Python versions soportadas (3.11, 3.12, 3.13 si Odoo 18 las soporta)
 - Con + sin `oca_dependencies.txt` resuelto
@@ -94,7 +97,9 @@ Corre tests en matrix de:
 Usa la action `OCA/oca-ci`.
 
 ### Pre-commit
+
 Bloquea el commit local si:
+
 - flake8 / black / isort fallan
 - `oca-gen-addon-readme` detecta drift entre `readme/` y `README.rst`
 - pylint-odoo encuentra issues (rule set OCA)
@@ -104,6 +109,7 @@ Bloquea el commit local si:
 ## 4. Dependencies entre repos OCA
 
 `oca_dependencies.txt`:
+
 ```
 # repo-name url-opcional branch-opcional
 account-financial-tools https://github.com/OCA/account-financial-tools 18.0
@@ -116,6 +122,7 @@ también los traerá.
 ## 5. Versionado de módulos en el mismo repo
 
 Reglas observadas en repos maduros:
+
 - Cuando agregás un módulo nuevo: `version = '18.0.1.0.0'`
 - Bug fix sin cambio funcional: bump z (`1.0.0` → `1.0.1`)
 - Feature nueva no-breaking: bump y (`1.0.0` → `1.1.0`)
@@ -151,18 +158,19 @@ Dependencia: `openupgradelib` (instalada por CI via requirements).
 
 ## 7. `readme/` — fragmentos para `oca-gen-addon-readme`
 
-| Fragmento | Contenido |
-|-----------|-----------|
-| `DESCRIPTION.rst` | 1-2 párrafos, qué hace el módulo |
-| `INSTALL.rst` | Solo si hay pasos no-triviales (instalar dep Python, etc.) |
-| `CONFIGURE.rst` | Setup post-instalación: certificados, credenciales, configuración |
-| `USAGE.rst` | Cómo usarlo día a día — capturas de pantalla con `static/description/` |
-| `CONTRIBUTORS.rst` | Lista de personas (formato fijo OCA) |
-| `CREDITS.rst` | Sponsors / créditos especiales / traductores |
-| `ROADMAP.rst` | TODO list pública |
-| `HISTORY.rst` | Changelog (manual o auto vía towncrier) |
+| Fragmento          | Contenido                                                              |
+| ------------------ | ---------------------------------------------------------------------- |
+| `DESCRIPTION.rst`  | 1-2 párrafos, qué hace el módulo                                       |
+| `INSTALL.rst`      | Solo si hay pasos no-triviales (instalar dep Python, etc.)             |
+| `CONFIGURE.rst`    | Setup post-instalación: certificados, credenciales, configuración      |
+| `USAGE.rst`        | Cómo usarlo día a día — capturas de pantalla con `static/description/` |
+| `CONTRIBUTORS.rst` | Lista de personas (formato fijo OCA)                                   |
+| `CREDITS.rst`      | Sponsors / créditos especiales / traductores                           |
+| `ROADMAP.rst`      | TODO list pública                                                      |
+| `HISTORY.rst`      | Changelog (manual o auto vía towncrier)                                |
 
 ### Plantilla `CONTRIBUTORS.rst`
+
 ```rst
 * Alberto Ezequiel Careaga <careagaezz@gmail.com>
 * Odoo Community Association (OCA)
@@ -198,24 +206,26 @@ odoo-bin --i18n-export=l10n_py_edi/i18n/l10n_py_edi.pot --modules=l10n_py_edi --
 ```
 
 OCA conventions:
+
 - Solo commitear `.pot` (template) en PRs
 - `.po` (traducciones) los maneja Weblate
 - Excepción: módulos nuevos pueden incluir `.po` inicial para idiomas críticos
 
 ## 10. Testing patterns observados en repos OCA
 
-| Pattern | Repos donde se ve | Cuándo usarlo |
-|---------|-------------------|---------------|
-| `AccountTestInvoicingCommon` base | l10n-spain, l10n-brazil, l10n-france | Cualquier test de accounting/localizations |
-| `MagicMock` para WS externos | l10n-spain (SII), l10n-brazil (NFe) | EDI / SOAP / REST clients |
-| `@tagged('-standard', 'external_l10n')` | Todos los OCA con integración real | Tests E2E contra servicios test reales |
-| Fixture XML en `tests/fixtures/` | l10n-brazil, account-financial-reporting | Inputs/outputs complejos (XML, JSON, PDFs esperados) |
-| `@freeze_time` para fechas determinísticas | server-tools, sale-workflow | Sequences, expiration dates, etc. |
-| `cls.env = cls.env(context=...)` en setUpClass | account-financial-tools | Pre-set context (tracking_disable, lang, etc.) |
+| Pattern                                        | Repos donde se ve                        | Cuándo usarlo                                        |
+| ---------------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
+| `AccountTestInvoicingCommon` base              | l10n-spain, l10n-brazil, l10n-france     | Cualquier test de accounting/localizations           |
+| `MagicMock` para WS externos                   | l10n-spain (SII), l10n-brazil (NFe)      | EDI / SOAP / REST clients                            |
+| `@tagged('-standard', 'external_l10n')`        | Todos los OCA con integración real       | Tests E2E contra servicios test reales               |
+| Fixture XML en `tests/fixtures/`               | l10n-brazil, account-financial-reporting | Inputs/outputs complejos (XML, JSON, PDFs esperados) |
+| `@freeze_time` para fechas determinísticas     | server-tools, sale-workflow              | Sequences, expiration dates, etc.                    |
+| `cls.env = cls.env(context=...)` en setUpClass | account-financial-tools                  | Pre-set context (tracking_disable, lang, etc.)       |
 
 ## 11. Buenas prácticas misceláneas
 
 ### Logging
+
 ```python
 import logging
 _logger = logging.getLogger(__name__)
@@ -226,17 +236,20 @@ _logger.error('Falló envío de %s: %s', invoice.name, error, exc_info=True)
 ```
 
 Reglas:
+
 - `__name__` (no nombre hardcoded)
 - Lazy formatting (`%s`, no f-strings) para no formatear si el log level lo descarta
 - **Nunca** logguear secretos (CCFE password, tokens, contenidos de cert)
 
 ### Performance
+
 - Usar `prefetch_fields` cuando iterás muchos records: `for r in records.with_prefetch():`
 - Para reportes pesados: `read_group()` o queries SQL crudas (con parámetros)
 - Para batch processing: chunks de 1000 records con `cr.commit()` solo si está OK
   (raro — preferir queue_job de OCA)
 
 ### Money / Currency
+
 - `fields.Monetary` exige `currency_field=` y usa la precision de la currency
 - Para PYG (sin decimales): la currency Odoo ya tiene `decimal_places=0` —
   asegurar que `res.currency` para PYG está cargada con esta config en
@@ -244,13 +257,13 @@ Reglas:
 
 ## 12. Recursos OCA
 
-| Recurso | URL |
-|---------|-----|
-| OCA org | https://github.com/OCA |
-| Web site | https://odoo-community.org |
-| Maintainer tools wiki | https://github.com/OCA/maintainer-tools/wiki |
-| Pre-commit hooks | https://github.com/OCA/odoo-pre-commit-hooks |
-| Pylint-odoo | https://github.com/OCA/pylint-odoo |
-| Copier template | https://github.com/OCA/oca-addons-repo-template |
-| Weblate | https://translation.odoo-community.org |
-| Runboat (CI preview) | https://runboat.odoo-community.org |
+| Recurso               | URL                                             |
+| --------------------- | ----------------------------------------------- |
+| OCA org               | https://github.com/OCA                          |
+| Web site              | https://odoo-community.org                      |
+| Maintainer tools wiki | https://github.com/OCA/maintainer-tools/wiki    |
+| Pre-commit hooks      | https://github.com/OCA/odoo-pre-commit-hooks    |
+| Pylint-odoo           | https://github.com/OCA/pylint-odoo              |
+| Copier template       | https://github.com/OCA/oca-addons-repo-template |
+| Weblate               | https://translation.odoo-community.org          |
+| Runboat (CI preview)  | https://runboat.odoo-community.org              |

@@ -27,10 +27,18 @@ class L10nPyDistrict(models.Model):
     active = fields.Boolean(default=True)
 
     _sql_constraints = [
-        ("l10n_py_district_code_uniq", "unique(code)", "El código del distrito debe ser único."),
+        (
+            "l10n_py_district_code_uniq",
+            "unique(code)",
+            "El código del distrito debe ser único.",
+        ),
     ]
 
     @api.depends("name", "code", "state_id")
     def _compute_display_name(self):
         for rec in self:
-            rec.display_name = f"[{rec.code}] {rec.name} ({rec.state_id.name})" if rec.state_id else f"[{rec.code}] {rec.name}"
+            rec.display_name = (
+                f"[{rec.code}] {rec.name} ({rec.state_id.name})"
+                if rec.state_id
+                else f"[{rec.code}] {rec.name}"
+            )

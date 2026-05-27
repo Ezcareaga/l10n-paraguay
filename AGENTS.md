@@ -39,29 +39,29 @@ comercios de barrio, gastronomía pequeña).
 TODA la documentación vive en [`docs/`](docs/). Este archivo NO contiene
 documentación técnica — solo objetivo + tabla de contenido.
 
-| Sección | Ruta |
-|---|---|
-| Objetivo extendido | [docs/00_OBJECTIVE.md](docs/00_OBJECTIVE.md) |
-| Reglas SIFEN (conceptual) | [docs/01_SIFEN_KNOWLEDGE_BASE.md](docs/01_SIFEN_KNOWLEDGE_BASE.md) |
-| Referencia técnica SIFEN | [docs/02_SIFEN_REFERENCIA_COMPLETA.md](docs/02_SIFEN_REFERENCIA_COMPLETA.md) |
-| Modelo de dominio | [docs/03_DOMAIN_MODEL.md](docs/03_DOMAIN_MODEL.md) |
-| Casos de uso | [docs/04_USE_CASES.md](docs/04_USE_CASES.md) |
-| Modelo de datos | [docs/05_DATA_MODEL.md](docs/05_DATA_MODEL.md) |
-| Estructura módulo Odoo | [docs/10_ODOO_MODULE_STRUCTURE.md](docs/10_ODOO_MODULE_STRUCTURE.md) |
-| ORM Odoo | [docs/11_ODOO_ORM_GUIDE.md](docs/11_ODOO_ORM_GUIDE.md) |
-| Vistas Odoo | [docs/12_ODOO_VIEWS_GUIDE.md](docs/12_ODOO_VIEWS_GUIDE.md) |
-| Seguridad Odoo | [docs/13_ODOO_SECURITY_GUIDE.md](docs/13_ODOO_SECURITY_GUIDE.md) |
-| Testing Odoo | [docs/14_ODOO_TESTING_GUIDE.md](docs/14_ODOO_TESTING_GUIDE.md) |
-| Framework `account_edi` | [docs/15_ODOO_ACCOUNT_EDI_FRAMEWORK.md](docs/15_ODOO_ACCOUNT_EDI_FRAMEWORK.md) |
-| OCA guidelines | [docs/20_OCA_GUIDELINES.md](docs/20_OCA_GUIDELINES.md) |
-| OCA development book | [docs/21_OCA_DEVELOPMENT_BOOK.md](docs/21_OCA_DEVELOPMENT_BOOK.md) |
-| `l10n_latam_base` | [docs/30_L10N_LATAM_BASE.md](docs/30_L10N_LATAM_BASE.md) |
-| `l10n_latam_invoice_document` | [docs/31_L10N_LATAM_INVOICE_DOCUMENT.md](docs/31_L10N_LATAM_INVOICE_DOCUMENT.md) |
-| `l10n_pe` (Peru — patrón EDI) | [docs/32_L10N_PERU_REFERENCE.md](docs/32_L10N_PERU_REFERENCE.md) |
-| `l10n_ec` (Ecuador — patrón más cercano) | [docs/33_L10N_ECUADOR_REFERENCE.md](docs/33_L10N_ECUADOR_REFERENCE.md) |
-| `l10n_ar` (Argentina — doc types) | [docs/34_L10N_ARGENTINA_REFERENCE.md](docs/34_L10N_ARGENTINA_REFERENCE.md) |
-| Librerías Python | [docs/40_PYTHON_LIBRARIES.md](docs/40_PYTHON_LIBRARIES.md) |
-| Roadmap de módulos | [docs/50_MODULES_ROADMAP.md](docs/50_MODULES_ROADMAP.md) |
+| Sección                                  | Ruta                                                                             |
+| ---------------------------------------- | -------------------------------------------------------------------------------- |
+| Objetivo extendido                       | [docs/00_OBJECTIVE.md](docs/00_OBJECTIVE.md)                                     |
+| Reglas SIFEN (conceptual)                | [docs/01_SIFEN_KNOWLEDGE_BASE.md](docs/01_SIFEN_KNOWLEDGE_BASE.md)               |
+| Referencia técnica SIFEN                 | [docs/02_SIFEN_REFERENCIA_COMPLETA.md](docs/02_SIFEN_REFERENCIA_COMPLETA.md)     |
+| Modelo de dominio                        | [docs/03_DOMAIN_MODEL.md](docs/03_DOMAIN_MODEL.md)                               |
+| Casos de uso                             | [docs/04_USE_CASES.md](docs/04_USE_CASES.md)                                     |
+| Modelo de datos                          | [docs/05_DATA_MODEL.md](docs/05_DATA_MODEL.md)                                   |
+| Estructura módulo Odoo                   | [docs/10_ODOO_MODULE_STRUCTURE.md](docs/10_ODOO_MODULE_STRUCTURE.md)             |
+| ORM Odoo                                 | [docs/11_ODOO_ORM_GUIDE.md](docs/11_ODOO_ORM_GUIDE.md)                           |
+| Vistas Odoo                              | [docs/12_ODOO_VIEWS_GUIDE.md](docs/12_ODOO_VIEWS_GUIDE.md)                       |
+| Seguridad Odoo                           | [docs/13_ODOO_SECURITY_GUIDE.md](docs/13_ODOO_SECURITY_GUIDE.md)                 |
+| Testing Odoo                             | [docs/14_ODOO_TESTING_GUIDE.md](docs/14_ODOO_TESTING_GUIDE.md)                   |
+| Framework `account_edi`                  | [docs/15_ODOO_ACCOUNT_EDI_FRAMEWORK.md](docs/15_ODOO_ACCOUNT_EDI_FRAMEWORK.md)   |
+| OCA guidelines                           | [docs/20_OCA_GUIDELINES.md](docs/20_OCA_GUIDELINES.md)                           |
+| OCA development book                     | [docs/21_OCA_DEVELOPMENT_BOOK.md](docs/21_OCA_DEVELOPMENT_BOOK.md)               |
+| `l10n_latam_base`                        | [docs/30_L10N_LATAM_BASE.md](docs/30_L10N_LATAM_BASE.md)                         |
+| `l10n_latam_invoice_document`            | [docs/31_L10N_LATAM_INVOICE_DOCUMENT.md](docs/31_L10N_LATAM_INVOICE_DOCUMENT.md) |
+| `l10n_pe` (Peru — patrón EDI)            | [docs/32_L10N_PERU_REFERENCE.md](docs/32_L10N_PERU_REFERENCE.md)                 |
+| `l10n_ec` (Ecuador — patrón más cercano) | [docs/33_L10N_ECUADOR_REFERENCE.md](docs/33_L10N_ECUADOR_REFERENCE.md)           |
+| `l10n_ar` (Argentina — doc types)        | [docs/34_L10N_ARGENTINA_REFERENCE.md](docs/34_L10N_ARGENTINA_REFERENCE.md)       |
+| Librerías Python                         | [docs/40_PYTHON_LIBRARIES.md](docs/40_PYTHON_LIBRARIES.md)                       |
+| Roadmap de módulos                       | [docs/50_MODULES_ROADMAP.md](docs/50_MODULES_ROADMAP.md)                         |
 
 ## Búsqueda en código de referencia
 
@@ -100,18 +100,18 @@ python scripts/build_index.py
 
 ## Repos de referencia
 
-| Repo | Tamaño | Propósito |
-|---|---|---|
-| `references/odoo-18.0/` | 151 MB | Sparse checkout de addons clave Odoo 18 community |
-| `references/l10n-peru/` (18.0) | <1 MB | OCA Perú (aún sin port a 18.0) |
-| `references/l10n-peru-16.0/` | <1 MB | Idem 16.0 (también vacío — Peru OCA poco activo) |
-| `references/l10n-ecuador/` (18.0) | <1 MB | OCA Ecuador 18.0 (solo `l10n_ec_base`) |
-| `references/l10n-ecuador-17.0/` | <1 MB | OCA Ecuador 17.0 — material útil (`l10n_ec_account_edi`, etc.) |
-| `references/l10n-argentina/` (18.0) | <1 MB | OCA Argentina 18.0 (vacío) |
-| `references/l10n-argentina-16.0/` | <1 MB | OCA Argentina 16.0 (módulos AFIP) |
-| `references/l10n-brazil/` | 32 MB | OCA Brasil 18.0 — único OCA latam con módulos en 18.0 |
-| `references/oca-addons-repo-template/` | <1 MB | Template oficial OCA — referencia para regenerar este repo |
-| `references/nandefact/` | 4 MB | Sistema previo SIFEN en Node/TS (referencia conceptual) |
+| Repo                                   | Tamaño | Propósito                                                      |
+| -------------------------------------- | ------ | -------------------------------------------------------------- |
+| `references/odoo-18.0/`                | 151 MB | Sparse checkout de addons clave Odoo 18 community              |
+| `references/l10n-peru/` (18.0)         | <1 MB  | OCA Perú (aún sin port a 18.0)                                 |
+| `references/l10n-peru-16.0/`           | <1 MB  | Idem 16.0 (también vacío — Peru OCA poco activo)               |
+| `references/l10n-ecuador/` (18.0)      | <1 MB  | OCA Ecuador 18.0 (solo `l10n_ec_base`)                         |
+| `references/l10n-ecuador-17.0/`        | <1 MB  | OCA Ecuador 17.0 — material útil (`l10n_ec_account_edi`, etc.) |
+| `references/l10n-argentina/` (18.0)    | <1 MB  | OCA Argentina 18.0 (vacío)                                     |
+| `references/l10n-argentina-16.0/`      | <1 MB  | OCA Argentina 16.0 (módulos AFIP)                              |
+| `references/l10n-brazil/`              | 32 MB  | OCA Brasil 18.0 — único OCA latam con módulos en 18.0          |
+| `references/oca-addons-repo-template/` | <1 MB  | Template oficial OCA — referencia para regenerar este repo     |
+| `references/nandefact/`                | 4 MB   | Sistema previo SIFEN en Node/TS (referencia conceptual)        |
 
 ## Estado actual
 
@@ -145,20 +145,21 @@ upfront (≈ 2-3 min) es menor que el costo de tropezar inline.
 
 Sobre esa regla, defaults específicos del repo (Odoo 18 + Python 3.11 + Paraguay/SIFEN):
 
-| Trigger | Skill | Subagent |
-|---|---|---|
-| Nuevo módulo `l10n_py_*` | `superpowers:brainstorming` + `superpowers:writing-plans` | `python-pro` |
-| Modelos / ORM Odoo (`models/`) | `ecc:python-testing` | `python-pro` |
-| Migrations SQL / ORM heavy | `ecc:database-migrations` | `postgres-pro` |
-| Vistas XML / OWL components | — | `react-specialist` (OWL ≈ React) |
-| EDI XML / firma XAdES / SOAP | — | `python-pro` + `security-auditor` (opus) |
-| Tests Odoo (TransactionCase + unit) | `superpowers:test-driven-development` + `ecc:python-testing` | `test-automator` |
-| Security review (antes de PR pública / OCA) | `ecc:security-review` | `security-auditor` (opus) |
-| Arquitectura cross-módulo | — | `architect-reviewer` (opus) |
-| Antes de commit | `ecc:code-review` + `superpowers:verification-before-completion` | `code-reviewer` |
-| Búsqueda en `references/` | — | **NUNCA** Read manual — usar `bin/codegraph` |
+| Trigger                                     | Skill                                                            | Subagent                                     |
+| ------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------- |
+| Nuevo módulo `l10n_py_*`                    | `superpowers:brainstorming` + `superpowers:writing-plans`        | `python-pro`                                 |
+| Modelos / ORM Odoo (`models/`)              | `ecc:python-testing`                                             | `python-pro`                                 |
+| Migrations SQL / ORM heavy                  | `ecc:database-migrations`                                        | `postgres-pro`                               |
+| Vistas XML / OWL components                 | —                                                                | `react-specialist` (OWL ≈ React)             |
+| EDI XML / firma XAdES / SOAP                | —                                                                | `python-pro` + `security-auditor` (opus)     |
+| Tests Odoo (TransactionCase + unit)         | `superpowers:test-driven-development` + `ecc:python-testing`     | `test-automator`                             |
+| Security review (antes de PR pública / OCA) | `ecc:security-review`                                            | `security-auditor` (opus)                    |
+| Arquitectura cross-módulo                   | —                                                                | `architect-reviewer` (opus)                  |
+| Antes de commit                             | `ecc:code-review` + `superpowers:verification-before-completion` | `code-reviewer`                              |
+| Búsqueda en `references/`                   | —                                                                | **NUNCA** Read manual — usar `bin/codegraph` |
 
 **Excepciones específicas del proyecto** (ejecutar directo, sin skill):
+
 - Regenerar data files con `scripts/generate_module_data.py` después de tocar
   CSVs canónicos.
 - Reinstalar el módulo en `l10n_py_dev` con `docker exec ... -u l10n_py_base`.
@@ -182,12 +183,14 @@ Sobre esa regla, defaults específicos del repo (Odoo 18 + Python 3.11 + Paragua
   milestone activo). Resume sesión con `/gsd:resume-work`.
 
 <!-- GSD:workflow-start source:GSD defaults -->
+
 ## GSD Workflow Enforcement
 
 Antes de usar Edit/Write o tools de cambio sobre código, arrancá por un
 comando GSD para que planning + execution se mantengan sincronizados.
 
 **Entry points:**
+
 - `/gsd:resume-work` — reanudar desde STATE.md
 - `/gsd:plan-phase <N>` — decomponer una phase en plans atómicos
 - `/gsd:execute-phase <N>` — ejecutar la phase completa (subagents + atomic commits)
@@ -200,4 +203,5 @@ completo en [`.planning/STATE.md`](.planning/STATE.md).
 
 No hacer edits directos al repo fuera de un GSD workflow salvo que el usuario
 pida explícitamente bypass.
+
 <!-- GSD:workflow-end -->

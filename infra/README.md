@@ -6,9 +6,11 @@ módulos `l10n_py_*` de este repo.
 ## Pre-requisitos (Windows)
 
 1. **Docker Desktop** con backend WSL2
+
    ```bash
    winget install Docker.DockerDesktop
    ```
+
    Después de instalar, abrir Docker Desktop y dejar que termine la inicialización.
 
 2. **Compartir la unidad C:** con Docker (Settings → Resources → File Sharing).
@@ -59,11 +61,11 @@ docker compose -f infra/docker-compose.yml down -v
 
 ## Puertos
 
-| Servicio | Container | Host | Notas |
-|---|---|---|---|
-| Postgres | 5432 | 5433 | Cambiado del default para no chocar con postgres del host |
-| Odoo HTTP | 8069 | 8069 | UI principal |
-| Odoo longpolling | 8072 | 8072 | Para chatter, notificaciones |
+| Servicio         | Container | Host | Notas                                                     |
+| ---------------- | --------- | ---- | --------------------------------------------------------- |
+| Postgres         | 5432      | 5433 | Cambiado del default para no chocar con postgres del host |
+| Odoo HTTP        | 8069      | 8069 | UI principal                                              |
+| Odoo longpolling | 8072      | 8072 | Para chatter, notificaciones                              |
 
 ## Conectarse a la DB desde el host
 

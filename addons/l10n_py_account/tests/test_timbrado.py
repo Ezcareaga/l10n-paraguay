@@ -7,7 +7,6 @@ from odoo.tests.common import TransactionCase, tagged
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestTimbrado(TransactionCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

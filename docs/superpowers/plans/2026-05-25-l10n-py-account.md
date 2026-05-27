@@ -121,6 +121,7 @@ scripts/
 ### Task 1: Branch + manifest bump + dependencias
 
 **Files:**
+
 - Modify: `addons/l10n_py_base/__manifest__.py`
 
 - [ ] **Step 1: Crear branch desde dev (o main si dev no existe)**
@@ -136,11 +137,13 @@ Editar `addons/l10n_py_base/__manifest__.py` línea `"version": "18.0.1.0.0"` �
 - [ ] **Step 3: Agregar nuevos data files al manifest**
 
 En el array `"data"` agregar (después de los existing data files, antes de los views):
+
 ```python
 "data/l10n_py_economic_activity_demo.xml",
 ```
 
 Y agregar al final del array (después de los views):
+
 ```python
 "views/l10n_py_economic_activity_views.xml",
 "views/res_company_views.xml",
@@ -151,6 +154,7 @@ Y agregar al final del array (después de los views):
 ```bash
 python -c "with open('addons/l10n_py_base/__manifest__.py') as f: m = eval(f.read()); print(m['version'])"
 ```
+
 Expected: `18.0.1.1.0`
 
 - [ ] **Step 5: Commit**
@@ -165,6 +169,7 @@ git commit -m "chore(l10n_py_base): bump version to 18.0.1.1.0"
 ### Task 2: Modelo `l10n_py.economic_activity`
 
 **Files:**
+
 - Create: `addons/l10n_py_base/models/l10n_py_economic_activity.py`
 - Create: `addons/l10n_py_base/tests/test_economic_activity.py`
 - Create: `addons/l10n_py_base/data/l10n_py_economic_activity_demo.xml`
@@ -205,6 +210,7 @@ class TestEconomicActivity(TransactionCase):
 - [ ] **Step 2: Agregar test al `__init__.py` de tests**
 
 Editar `addons/l10n_py_base/tests/__init__.py`:
+
 ```python
 from . import test_economic_activity
 ```
@@ -241,9 +247,11 @@ class L10nPyEconomicActivity(models.Model):
 - [ ] **Step 4: Agregar import en `models/__init__.py`**
 
 Editar `addons/l10n_py_base/models/__init__.py`, agregar línea:
+
 ```python
 from . import l10n_py_economic_activity
 ```
+
 (orden alfabético entre los imports `l10n_*`)
 
 - [ ] **Step 5: Crear data file demo**
@@ -270,6 +278,7 @@ Crear `addons/l10n_py_base/data/l10n_py_economic_activity_demo.xml`:
 - [ ] **Step 6: Agregar access rules**
 
 Editar `addons/l10n_py_base/security/ir.model.access.csv`, agregar 2 líneas al final:
+
 ```csv
 access_l10n_py_economic_activity_user,l10n_py.economic_activity.user,model_l10n_py_economic_activity,base.group_user,1,0,0,0
 access_l10n_py_economic_activity_manager,l10n_py.economic_activity.manager,model_l10n_py_economic_activity,base.group_system,1,1,1,1
@@ -280,6 +289,7 @@ access_l10n_py_economic_activity_manager,l10n_py.economic_activity.manager,model
 ```bash
 docker compose exec odoo odoo -u l10n_py_base -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: tests `test_create_economic_activity` y `test_demo_records_loaded` PASS.
 
 - [ ] **Step 8: Commit**
@@ -299,6 +309,7 @@ git commit -m "feat(l10n_py_base): add l10n_py.economic_activity catalog model"
 ### Task 3: Views + menú para economic_activity
 
 **Files:**
+
 - Create: `addons/l10n_py_base/views/l10n_py_economic_activity_views.xml`
 - Modify: `addons/l10n_py_base/views/menus.xml`
 
@@ -365,6 +376,7 @@ Editar `addons/l10n_py_base/views/menus.xml`, agregar dentro del menú padre "Ca
 ```bash
 docker compose exec odoo odoo -u l10n_py_base -d l10n_py_dev --stop-after-init
 ```
+
 Expected: sin tracebacks, log "Modules loaded."
 
 - [ ] **Step 4: Commit**
@@ -380,6 +392,7 @@ git commit -m "feat(l10n_py_base): add tree/form/menu for economic_activity"
 ### Task 4: Extensión `res.company` con campos fiscales PY
 
 **Files:**
+
 - Create: `addons/l10n_py_base/models/res_company.py`
 - Modify: `addons/l10n_py_base/models/__init__.py`
 
@@ -459,6 +472,7 @@ class ResCompany(models.Model):
 - [ ] **Step 2: Agregar import en `models/__init__.py`**
 
 Editar `addons/l10n_py_base/models/__init__.py`, agregar línea (orden alfabético):
+
 ```python
 from . import res_company
 ```
@@ -468,6 +482,7 @@ from . import res_company
 ```bash
 docker compose exec odoo odoo -u l10n_py_base -d l10n_py_dev --stop-after-init
 ```
+
 Expected: sin errores.
 
 - [ ] **Step 4: Commit**
@@ -483,6 +498,7 @@ git commit -m "feat(l10n_py_base): extend res.company with PY fiscal identity fi
 ### Task 5: Tests de `res.company` extension
 
 **Files:**
+
 - Create: `addons/l10n_py_base/tests/test_company_setup.py`
 - Modify: `addons/l10n_py_base/tests/__init__.py`
 
@@ -567,6 +583,7 @@ from . import test_company_setup
 ```bash
 docker compose exec odoo odoo -u l10n_py_base -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 4 tests `TestCompanySetup` PASS.
 
 - [ ] **Step 4: Commit**
@@ -582,6 +599,7 @@ git commit -m "test(l10n_py_base): add tests for res.company PY extension"
 ### Task 6: View extension para `res.company` form
 
 **Files:**
+
 - Create: `addons/l10n_py_base/views/res_company_views.xml`
 
 - [ ] **Step 1: Crear la vista**
@@ -642,6 +660,7 @@ git commit -m "feat(l10n_py_base): add Paraguay fiscal section to company form"
 ### Task 7: Update README + CHANGES + PR1
 
 **Files:**
+
 - Modify: `addons/l10n_py_base/readme/CHANGES.rst`
 - Modify: `addons/l10n_py_base/README.rst`
 
@@ -664,6 +683,7 @@ Editar `addons/l10n_py_base/readme/CHANGES.rst`, agregar al inicio (antes de la 
 - [ ] **Step 2: Regenerar README.rst si usás oca-gen-addon-readme**
 
 Si tenés `oca-gen-addon-readme` instalado:
+
 ```bash
 cd addons/l10n_py_base && oca-gen-addon-readme --addon-dir . --branch 18.0 --org-name Ezcareaga --repo-name l10n-paraguay
 ```
@@ -675,6 +695,7 @@ Si no, editar manualmente `README.rst` para reflejar version 18.0.1.1.0 en el ba
 ```bash
 docker compose exec odoo odoo -u l10n_py_base -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 21 (existing) + 6 (new) = **27 tests PASS**.
 
 - [ ] **Step 4: Commit + push + abrir PR**
@@ -710,6 +731,7 @@ EOF
 ### Task 8: Module skeleton + manifest + branch
 
 **Files:**
+
 - Create: `addons/l10n_py_account/__init__.py`
 - Create: `addons/l10n_py_account/__manifest__.py`
 - Create: `addons/l10n_py_account/hooks.py`
@@ -791,6 +813,7 @@ from .hooks import _post_init_hook
 - [ ] **Step 5: Crear `models/__init__.py`, `wizards/__init__.py`, `tests/__init__.py` vacíos**
 
 `addons/l10n_py_account/models/__init__.py`:
+
 ```python
 # Copyright 2026 Careaga Dev
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
@@ -849,6 +872,7 @@ access_l10n_py_point_of_emission_manager,l10n_py.point_of_emission.manager,model
 docker compose exec odoo odoo --update-list -d l10n_py_dev --stop-after-init
 docker compose exec odoo odoo shell -d l10n_py_dev <<< "print(env['ir.module.module'].search([('name','=','l10n_py_account')]).state)"
 ```
+
 Expected: `uninstalled`.
 
 - [ ] **Step 10: Commit**
@@ -863,6 +887,7 @@ git commit -m "feat(l10n_py_account): module skeleton — manifest, init, securi
 ### Task 9: Modelo `l10n_py.afectacion_iva` + data load
 
 **Files:**
+
 - Create: `addons/l10n_py_account/models/l10n_py_afectacion_iva.py`
 - Create: `addons/l10n_py_account/data/l10n_py_afectacion_iva_data.csv`
 - Create: `addons/l10n_py_account/views/l10n_py_afectacion_iva_views.xml`
@@ -929,7 +954,7 @@ afectacion_iva_4,4,Gravado parcial
 </odoo>
 ```
 
-- [ ] **Step 4: Agregar import a models/__init__.py**
+- [ ] **Step 4: Agregar import a models/**init**.py**
 
 ```python
 from . import l10n_py_afectacion_iva
@@ -950,6 +975,7 @@ git commit -m "feat(l10n_py_account): add l10n_py.afectacion_iva catalog (SIFEN 
 ### Task 10: Modelo `l10n_py.timbrado` + tests
 
 **Files:**
+
 - Create: `addons/l10n_py_account/models/l10n_py_timbrado.py`
 - Create: `addons/l10n_py_account/views/l10n_py_timbrado_views.xml`
 - Create: `addons/l10n_py_account/tests/common.py`
@@ -1064,7 +1090,7 @@ class TestTimbrado(TransactionCase):
         self.assertEqual(t.state, "active")
 ```
 
-- [ ] **Step 3: Agregar a tests/__init__.py**
+- [ ] **Step 3: Agregar a tests/**init**.py**
 
 ```python
 from . import test_timbrado
@@ -1148,7 +1174,7 @@ class L10nPyTimbrado(models.Model):
                 )
 ```
 
-- [ ] **Step 5: Agregar import a models/__init__.py**
+- [ ] **Step 5: Agregar import a models/**init**.py**
 
 ```python
 from . import l10n_py_timbrado
@@ -1206,6 +1232,7 @@ from . import l10n_py_timbrado
 ```bash
 docker compose exec odoo odoo -i l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 8 tests `TestTimbrado` PASS. (El test suite completo aún tiene tasks pendientes; algunos otros fallarán hasta completar fixtures.)
 
 - [ ] **Step 8: Commit**
@@ -1225,6 +1252,7 @@ git commit -m "feat(l10n_py_account): add l10n_py.timbrado model + 8 tests"
 ### Task 11: Modelo `l10n_py.point_of_emission` + tests
 
 **Files:**
+
 - Create: `addons/l10n_py_account/models/l10n_py_point_of_emission.py`
 - Create: `addons/l10n_py_account/views/l10n_py_point_of_emission_views.xml`
 - Create: `addons/l10n_py_account/tests/test_point_of_emission.py`
@@ -1288,7 +1316,7 @@ class TestPointOfEmission(TransactionCase):
         self.assertEqual(poe.name, "001-002")
 ```
 
-- [ ] **Step 2: Agregar a tests/__init__.py**
+- [ ] **Step 2: Agregar a tests/**init**.py**
 
 ```python
 from . import test_point_of_emission
@@ -1375,7 +1403,7 @@ class L10nPyPointOfEmission(models.Model):
                     )
 ```
 
-- [ ] **Step 4: Agregar import a models/__init__.py**
+- [ ] **Step 4: Agregar import a models/**init**.py**
 
 ```python
 from . import l10n_py_point_of_emission
@@ -1440,6 +1468,7 @@ from . import l10n_py_point_of_emission
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 6 tests `TestPointOfEmission` PASS.
 
 - [ ] **Step 7: Commit**
@@ -1458,6 +1487,7 @@ git commit -m "feat(l10n_py_account): add l10n_py.point_of_emission model + 6 te
 ### Task 12: Extensión `res.company` (account-level) + tests
 
 **Files:**
+
 - Create: `addons/l10n_py_account/models/res_company.py`
 - Create: `addons/l10n_py_account/views/res_company_views.xml`
 - Create: `addons/l10n_py_account/tests/test_company_extension.py`
@@ -1515,7 +1545,7 @@ class TestCompanyExtension(TransactionCase):
         self.assertFalse(self.company.l10n_py_active_timbrado_id)
 ```
 
-- [ ] **Step 2: Agregar a tests/__init__.py**
+- [ ] **Step 2: Agregar a tests/**init**.py**
 
 ```python
 from . import test_company_extension
@@ -1604,6 +1634,7 @@ from . import res_company
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 4 tests `TestCompanyExtension` PASS.
 
 - [ ] **Step 7: Commit**
@@ -1622,6 +1653,7 @@ git commit -m "feat(l10n_py_account): extend res.company with _localization_use_
 ### Task 13: Extensión `account.journal` + tests
 
 **Files:**
+
 - Create: `addons/l10n_py_account/models/account_journal.py`
 - Create: `addons/l10n_py_account/views/account_journal_views.xml`
 - Create: `addons/l10n_py_account/tests/test_journal_extension.py`
@@ -1710,7 +1742,7 @@ class TestJournalExtension(TransactionCase):
         self.assertEqual(journal.country_code, "PY")
 ```
 
-- [ ] **Step 2: Agregar a tests/__init__.py**
+- [ ] **Step 2: Agregar a tests/**init**.py**
 
 ```python
 from . import test_journal_extension
@@ -1808,6 +1840,7 @@ from . import account_journal
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 7 tests `TestJournalExtension` PASS.
 
 - [ ] **Step 7: Commit**
@@ -1826,6 +1859,7 @@ git commit -m "feat(l10n_py_account): extend account.journal with PoE + constrai
 ### Task 14: Script de extracción PUC RG 49/14 → CSV Odoo
 
 **Files:**
+
 - Create: `scripts/extract_puc_rg49.py`
 
 - [ ] **Step 1: Crear el script de extracción**
@@ -2042,7 +2076,9 @@ if __name__ == "__main__":
 ```bash
 python scripts/extract_puc_rg49.py
 ```
+
 Expected:
+
 ```
 wrote addons/l10n_py_account/data/template/account.group-py.csv (~40 records)
 wrote addons/l10n_py_account/data/template/account.account-py.csv (~200 records)
@@ -2053,6 +2089,7 @@ wrote addons/l10n_py_account/data/template/account.account-py.csv (~200 records)
 ```bash
 grep -E "(101030502|101030503|201030102)" addons/l10n_py_account/data/template/account.account-py.csv
 ```
+
 Expected: 3 líneas, una por cada código (Retenciones IVA, IVA Crédito, IVA a Pagar).
 
 - [ ] **Step 4: Commit**
@@ -2069,6 +2106,7 @@ git commit -m "feat(l10n_py_account): generate PUC RG 49/14 CSVs from DNIT XLS"
 ### Task 15: CSVs de taxes IVA + tax group + fiscal position placeholder
 
 **Files:**
+
 - Create: `addons/l10n_py_account/data/template/account.tax.group-py.csv`
 - Create: `addons/l10n_py_account/data/template/account.tax-py.csv`
 - Create: `addons/l10n_py_account/data/template/account.fiscal.position-py.csv`
@@ -2130,6 +2168,7 @@ class AccountTax(models.Model):
 ```
 
 Agregar a `models/__init__.py`:
+
 ```python
 from . import account_tax
 ```
@@ -2148,6 +2187,7 @@ git commit -m "feat(l10n_py_account): add tax group + 6 IVA taxes + fiscal posit
 ### Task 16: `template_py.py` con decorator `@template('py')`
 
 **Files:**
+
 - Create: `addons/l10n_py_account/models/template_py.py`
 - Modify: `addons/l10n_py_account/models/__init__.py`
 
@@ -2215,6 +2255,7 @@ print('Accounts:', env['account.account'].search_count([('company_id','=',compan
 print('Taxes:', env['account.tax'].search_count([('company_id','=',company.id)]))
 "
 ```
+
 Expected: ~200 accounts, 6 taxes. Sin tracebacks.
 
 - [ ] **Step 4: Commit**
@@ -2230,6 +2271,7 @@ git commit -m "feat(l10n_py_account): add @template('py') decorator loader"
 ### Task 17: Tests del chart template + Hechauka critical accounts + taxes
 
 **Files:**
+
 - Create: `addons/l10n_py_account/tests/test_chart_template.py`
 - Create: `addons/l10n_py_account/tests/test_hechauka_critical_accounts.py`
 - Create: `addons/l10n_py_account/tests/test_taxes.py`
@@ -2460,7 +2502,7 @@ class TestTaxes(L10nPyAccountTestCase):
             self.assertEqual(tax.tax_group_id.name, "IVA Paraguay")
 ```
 
-- [ ] **Step 5: Agregar a tests/__init__.py**
+- [ ] **Step 5: Agregar a tests/**init**.py**
 
 ```python
 from . import test_chart_template
@@ -2473,6 +2515,7 @@ from . import test_taxes
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 8 + 1 (loop) + 10 = 19 nuevos tests PASS.
 
 Si fallan: el más probable es que los XML IDs `py_xxx` no matcheen los códigos esperados — revisar `account.account-py.csv` y el mapping en el script.
@@ -2493,6 +2536,7 @@ git commit -m "test(l10n_py_account): add chart_template + Hechauka + taxes test
 ### Task 18: Document types CSV + `_format_document_number` override + tests
 
 **Files:**
+
 - Create: `addons/l10n_py_account/data/l10n_latam_document_type_data.csv`
 - Create: `addons/l10n_py_account/models/l10n_latam_document_type.py`
 - Create: `addons/l10n_py_account/tests/test_document_types.py`
@@ -2641,7 +2685,7 @@ class TestDocumentTypes(L10nPyAccountTestCase):
         self.assertIn("6", codes)
 ```
 
-- [ ] **Step 5: Agregar a tests/__init__.py**
+- [ ] **Step 5: Agregar a tests/**init**.py**
 
 ```python
 from . import test_document_types
@@ -2652,6 +2696,7 @@ from . import test_document_types
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 12 tests `TestDocumentTypes` PASS.
 
 - [ ] **Step 7: Commit**
@@ -2670,6 +2715,7 @@ git commit -m "feat(l10n_py_account): add 5 SIFEN document types + _format_docum
 ### Task 19: `account.move` — sequence overrides + defensive `_post` + tests
 
 **Files:**
+
 - Create: `addons/l10n_py_account/models/account_move.py`
 - Create: `addons/l10n_py_account/tests/test_account_move_sequence.py`
 - Create: `addons/l10n_py_account/tests/test_account_move_defensive.py`
@@ -2903,6 +2949,7 @@ from . import test_account_move_defensive
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 8 sequence tests + 3 defensive tests = 11 PASS.
 
 - [ ] **Step 6: Commit**
@@ -2921,6 +2968,7 @@ git commit -m "feat(l10n_py_account): account.move sequence per doc_type + defen
 ### Task 20: `account.move.line` — `l10n_py_iva_proporcion`
 
 **Files:**
+
 - Create: `addons/l10n_py_account/models/account_move_line.py`
 - Create: `addons/l10n_py_account/views/account_move_views.xml`
 - Modify: `addons/l10n_py_account/models/__init__.py`
@@ -2995,6 +3043,7 @@ git commit -m "feat(l10n_py_account): add l10n_py_iva_proporcion to account.move
 ### Task 21: Wizard de migración + tests
 
 **Files:**
+
 - Create: `addons/l10n_py_account/wizards/account_migration_wizard.py`
 - Create: `addons/l10n_py_account/wizards/account_migration_wizard_views.xml`
 - Create: `addons/l10n_py_account/tests/test_migration_wizard.py`
@@ -3128,11 +3177,13 @@ class L10nPyAccountMigrationWizard(models.TransientModel):
 - [ ] **Step 3: Agregar import + access rule**
 
 `wizards/__init__.py`:
+
 ```python
 from . import account_migration_wizard
 ```
 
 `security/ir.model.access.csv` (agregar línea):
+
 ```csv
 access_l10n_py_migration_wizard,l10n_py.account.migration.wizard,model_l10n_py_account_migration_wizard,base.group_system,1,1,1,1
 ```
@@ -3182,7 +3233,7 @@ class TestMigrationWizard(TransactionCase):
         self.assertEqual(w.existing_accounts_count, 0)
 ```
 
-- [ ] **Step 5: Agregar a tests/__init__.py**
+- [ ] **Step 5: Agregar a tests/**init**.py**
 
 ```python
 from . import test_migration_wizard
@@ -3193,6 +3244,7 @@ from . import test_migration_wizard
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 3 tests `TestMigrationWizard` PASS.
 
 - [ ] **Step 7: Commit**
@@ -3210,6 +3262,7 @@ git commit -m "feat(l10n_py_account): add migration wizard (clean/assisted/coexi
 ### Task 22: `_post_init_hook` defensivo + tests + menus
 
 **Files:**
+
 - Modify: `addons/l10n_py_account/hooks.py`
 - Create: `addons/l10n_py_account/tests/test_post_init_hook.py`
 - Create: `addons/l10n_py_account/views/menus.xml`
@@ -3381,7 +3434,7 @@ class TestPostInitHook(TransactionCase):
                           "Hook NO debe tocar cuentas existentes")
 ```
 
-- [ ] **Step 4: Agregar a tests/__init__.py**
+- [ ] **Step 4: Agregar a tests/**init**.py**
 
 ```python
 from . import test_post_init_hook
@@ -3392,6 +3445,7 @@ from . import test_post_init_hook
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 2 tests `TestPostInitHook` PASS.
 
 - [ ] **Step 6: Commit**
@@ -3409,6 +3463,7 @@ git commit -m "feat(l10n_py_account): defensive _post_init_hook + menus + 2 test
 ### Task 23: Smoke test E2E PyME (compra + venta + cuadre IVA)
 
 **Files:**
+
 - Create: `addons/l10n_py_account/tests/test_pyme_e2e.py`
 - Modify: `addons/l10n_py_account/tests/__init__.py`
 
@@ -3508,7 +3563,7 @@ class TestPymeE2E(L10nPyAccountTestCase):
         self.assertEqual(abs(balance_a_pagar) - balance_credito, 10.0)
 ```
 
-- [ ] **Step 2: Agregar a tests/__init__.py**
+- [ ] **Step 2: Agregar a tests/**init**.py**
 
 ```python
 from . import test_pyme_e2e
@@ -3519,6 +3574,7 @@ from . import test_pyme_e2e
 ```bash
 docker compose exec odoo odoo -u l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: 1 test `TestPymeE2E` PASS.
 
 - [ ] **Step 4: Commit**
@@ -3534,6 +3590,7 @@ git commit -m "test(l10n_py_account): add PyME E2E smoke test (compra+venta+cuad
 ### Task 24: Verificación full suite + README + CHANGES + PR2
 
 **Files:**
+
 - Create: `addons/l10n_py_account/README.rst`
 - Create: `addons/l10n_py_account/readme/DESCRIPTION.rst`
 - Create: `addons/l10n_py_account/readme/CONFIGURE.rst`
@@ -3696,9 +3753,11 @@ Known issues / Roadmap
 ```bash
 docker compose exec odoo odoo -u l10n_py_base,l10n_py_account -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
+
 Expected: **100 tests** (27 base + 73 account) PASS sin warnings.
 
 Si algún test falla: ejecutar el subset y debuggear:
+
 ```bash
 docker compose exec odoo odoo -d l10n_py_dev --stop-after-init --test-tags l10n_py --test-enable
 ```
@@ -3748,6 +3807,7 @@ EOF
 Después de escribir el plan completo, lo audité contra el spec:
 
 **1. Spec coverage:**
+
 - ✅ Sec 1 (Arquitectura): Tasks 1, 8 cubren manifest + split base/account.
 - ✅ Sec 2 (PUC + Taxes): Tasks 9, 14, 15, 16, 17 cubren afectacion, PUC extraction, taxes, template_py, tests.
 - ✅ Sec 3 (Document types): Task 18.
@@ -3758,11 +3818,13 @@ Después de escribir el plan completo, lo audité contra el spec:
 **2. Placeholder scan:** sin TBD/TODO/"implement later". Los TODO menores del spec (serie alfabética → Fase 2; auto-numbering AF → Fase 2) están explícitamente diferidos.
 
 **3. Type consistency:**
+
 - `l10n_py_point_of_emission_id` se usa consistentemente en Tasks 11, 12, 13, 19, 20, 22.
 - `l10n_py_timbrado` se referencia desde common.py (Task 10) + tests (Task 12, 19, etc).
 - `account_id` en taxes (Task 15) usa códigos sin puntos consistentes con CSV (Task 14).
 
 **Posible riesgo de implementación encontrado en self-review:**
+
 - Task 15 CSV de taxes usa `account_id` con prefijo `py_` (XML ID); verificar sintaxis exacta de Odoo 18 al cargar referencias en CSV nativos del chart template (puede requerir prefix módulo: `l10n_py_account.py_201030102`). **Documentado**: si Task 15 step 5 falla con "External ID not found", ajustar prefijos en el CSV agregando `l10n_py_account.` antes de cada referencia.
 
 ---

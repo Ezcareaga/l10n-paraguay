@@ -13,10 +13,16 @@ class L10nPyEconomicActivity(models.Model):
     _description = "Paraguay - Actividad Económica DNIT"
     _order = "code"
 
-    code = fields.Char(required=True, help="Código de la actividad económica DNIT (ej: 1254)")
+    code = fields.Char(
+        required=True, help="Código de la actividad económica DNIT (ej: 1254)"
+    )
     name = fields.Char(required=True, translate=True)
     active = fields.Boolean(default=True)
 
     _sql_constraints = [
-        ("code_uniq", "unique(code)", "El código de actividad económica debe ser único"),
+        (
+            "code_uniq",
+            "unique(code)",
+            "El código de actividad económica debe ser único",
+        ),
     ]

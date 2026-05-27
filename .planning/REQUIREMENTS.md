@@ -5,7 +5,7 @@
 **Source spec:** [`docs/55_PRE_FASE_2_FOUNDATION.md`](../docs/55_PRE_FASE_2_FOUNDATION.md)
 **Core Value:** Llevar el repo de "side project con código" a "proyecto OCA-ready" — CI/CD, security baseline, docs operacionales, repo hygiene, decisiones multi-rubro — antes de tocar firma digital + CCFE en Fase 2.
 
-> **Audiencia de este milestone:** maintainers + contribuidores futuros + reviewers OCA. La "user story" implícita en cada REQ es *"como maintainer / contribuidor / reviewer, puedo X sin fricción"*.
+> **Audiencia de este milestone:** maintainers + contribuidores futuros + reviewers OCA. La "user story" implícita en cada REQ es _"como maintainer / contribuidor / reviewer, puedo X sin fricción"_.
 
 ---
 
@@ -13,7 +13,7 @@
 
 ### CI — Bloque A: Foundation técnica (CI/CD + pre-commit)
 
-- [ ] **CI-01**: Pre-commit config (`.pre-commit-config.yaml`) con hooks OCA completos (black, isort, flake8, pylint-odoo incl. C8106 `manifest-version-format`, oca-checks-odoo-module, oca-fix-manifest-website, codespell, yamllint, prettier+plugin-xml) corre limpio sobre todo el repo. *Amendment 2026-05-27: `oca-fix-manifest-version` (no existe en OCA tooling) reemplazado por `oca-fix-manifest-website` + check read-only `manifest-version-format` via pylint-odoo — ver `.planning/phases/01-.../01-RESEARCH.md` R-01.*
+- [ ] **CI-01**: Pre-commit config (`.pre-commit-config.yaml`) con hooks OCA completos (black, isort, flake8, pylint-odoo incl. C8106 `manifest-version-format`, oca-checks-odoo-module, oca-fix-manifest-website, codespell, yamllint, prettier+plugin-xml) corre limpio sobre todo el repo. _Amendment 2026-05-27: `oca-fix-manifest-version` (no existe en OCA tooling) reemplazado por `oca-fix-manifest-website` + check read-only `manifest-version-format` via pylint-odoo — ver `.planning/phases/01-.../01-RESEARCH.md` R-01._
 - [ ] **CI-02**: Commit baseline `chore: apply pre-commit fixes baseline` aplicado antes de activar pre-commit en CI (mitigación de 100+ cambios cosméticos del primer run)
 - [ ] **CI-03**: GitHub Actions workflow `test.yml` ejecuta tests Odoo en matriz Python 3.11 + PostgreSQL 16 + Odoo 18.0, con tags `-standard,l10n_py` (skip external SIFEN)
 - [ ] **CI-04**: GitHub Actions workflow `lint.yml` corre pre-commit en cada PR contra `main`
@@ -98,21 +98,21 @@ Deferidos a Pre-Fase 3 o post-deployment (NO en este milestone — ver "Lo que N
 
 Excluido explícitamente de este milestone con razonamiento (prevención de scope creep):
 
-| Feature | Razón |
-|---|---|
-| Monitoring avanzado (Sentry, Better Stack) | Pre-Fase 3 — antes de primer cliente real. Sin clientes en prod aún, monitoring sería ruido |
-| VPS deploy real | Pre-Fase 3 — depende de Pre-Fase 2 completa primero (CI/security/docs) |
-| Onboarding wizard / presets por rubro | Fase 7 multi-rubro — requiere `l10n_py_pos` (Fase 4) en pie primero |
-| Landing page / docs site público | Fase 8 vendibilidad — sin features completas no hay qué vender |
-| Pricing tiers / SaaS model | Fase 8 — proyecto target self-hosted, SaaS viene después de validación con clientes |
-| Hardware compatibility matrix completo | Con primer cliente real — sin hardware en mano, matrix es especulativa |
-| Training plan PyME | Con primer cliente real — UX se valida con usuarios, no en doc previo |
-| OCA copier real (`copier copy gh:OCA/oca-addons-repo-template .`) | Fase 6 — riesgo de pisar archivos custom. Si decide aplicar en Pre-Fase 2 Bloque A, hacer en branch separada con review cuidadoso |
-| `l10n_py_industry_retail` (o cualquier rubro específico) | Post Fase 2 EDI — tentación a empezar para "amiga del minimarket" explícitamente rechazada en spec |
-| Reescribir git history para sacar tokens viejos | Rompe forks. Estrategia: documentar, rotar, NO reescribir |
-| Optimización exhaustiva pre-commit (todos los hooks OCA en su versión más nueva) | Empezar con minimum viable, iterar después con uso real |
-| C4 Code (nivel 4) en ARCHITECTURE.md | Overkill para overview vivo. Container + Component suficiente |
-| Tests E2E contra SIFEN test real | Bloque B (`security`) NO incluye homologación. Eso es Fase 2 propiamente |
+| Feature                                                                          | Razón                                                                                                                             |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Monitoring avanzado (Sentry, Better Stack)                                       | Pre-Fase 3 — antes de primer cliente real. Sin clientes en prod aún, monitoring sería ruido                                       |
+| VPS deploy real                                                                  | Pre-Fase 3 — depende de Pre-Fase 2 completa primero (CI/security/docs)                                                            |
+| Onboarding wizard / presets por rubro                                            | Fase 7 multi-rubro — requiere `l10n_py_pos` (Fase 4) en pie primero                                                               |
+| Landing page / docs site público                                                 | Fase 8 vendibilidad — sin features completas no hay qué vender                                                                    |
+| Pricing tiers / SaaS model                                                       | Fase 8 — proyecto target self-hosted, SaaS viene después de validación con clientes                                               |
+| Hardware compatibility matrix completo                                           | Con primer cliente real — sin hardware en mano, matrix es especulativa                                                            |
+| Training plan PyME                                                               | Con primer cliente real — UX se valida con usuarios, no en doc previo                                                             |
+| OCA copier real (`copier copy gh:OCA/oca-addons-repo-template .`)                | Fase 6 — riesgo de pisar archivos custom. Si decide aplicar en Pre-Fase 2 Bloque A, hacer en branch separada con review cuidadoso |
+| `l10n_py_industry_retail` (o cualquier rubro específico)                         | Post Fase 2 EDI — tentación a empezar para "amiga del minimarket" explícitamente rechazada en spec                                |
+| Reescribir git history para sacar tokens viejos                                  | Rompe forks. Estrategia: documentar, rotar, NO reescribir                                                                         |
+| Optimización exhaustiva pre-commit (todos los hooks OCA en su versión más nueva) | Empezar con minimum viable, iterar después con uso real                                                                           |
+| C4 Code (nivel 4) en ARCHITECTURE.md                                             | Overkill para overview vivo. Container + Component suficiente                                                                     |
+| Tests E2E contra SIFEN test real                                                 | Bloque B (`security`) NO incluye homologación. Eso es Fase 2 propiamente                                                          |
 
 ---
 
@@ -120,45 +120,46 @@ Excluido explícitamente de este milestone con razonamiento (prevención de scop
 
 > Mapeo REQ → Phase del milestone Pre-Fase 2. Roadmap completo en [`.planning/ROADMAP.md`](ROADMAP.md).
 
-| Requirement | Phase | Status |
-|---|---|---|
-| CI-01 | Phase 1 | Pending |
-| CI-02 | Phase 1 | Pending |
-| CI-03 | Phase 1 | Pending |
-| CI-04 | Phase 1 | Pending |
-| CI-05 | Phase 1 | Pending |
-| CI-06 | Phase 1 | Pending |
-| CI-07 | Phase 1 | Pending |
-| CI-08 | Phase 1 | Pending |
-| SEC-01 | Phase 2 | Pending |
-| SEC-02 | Phase 2 | Pending |
-| SEC-03 | Phase 2 | Pending |
-| SEC-04 | Phase 2 | Pending |
-| SEC-05 | Phase 2 | Pending |
-| SEC-06 | Phase 2 | Pending |
-| SEC-07 | Phase 2 | Pending |
-| DOC-01 | Phase 3 | Pending |
-| DOC-02 | Phase 3 | Pending |
-| DOC-03 | Phase 3 | Pending |
-| DOC-04 | Phase 3 | Pending |
-| DOC-05 | Phase 3 | Pending |
-| DOC-06 | Phase 3 | Pending |
-| DOC-07 | Phase 3 | Pending |
-| DOC-08 | Phase 3 | Pending |
-| DOC-09 | Phase 3 | Pending |
-| DOC-10 | Phase 3 | Pending |
-| REL-01 | Phase 4 | Pending |
-| REL-02 | Phase 4 | Pending |
-| REL-03 | Phase 4 | Pending |
-| REL-04 | Phase 4 | Pending |
-| REL-05 | Phase 4 | Pending |
-| REL-06 | Phase 4 | Pending |
-| IND-01 | Phase 5 | Pending |
-| IND-02 | Phase 5 | Pending |
-| IND-03 | Phase 5 | Pending |
-| IND-04 | Phase 5 | Pending |
+| Requirement | Phase   | Status  |
+| ----------- | ------- | ------- |
+| CI-01       | Phase 1 | Pending |
+| CI-02       | Phase 1 | Pending |
+| CI-03       | Phase 1 | Pending |
+| CI-04       | Phase 1 | Pending |
+| CI-05       | Phase 1 | Pending |
+| CI-06       | Phase 1 | Pending |
+| CI-07       | Phase 1 | Pending |
+| CI-08       | Phase 1 | Pending |
+| SEC-01      | Phase 2 | Pending |
+| SEC-02      | Phase 2 | Pending |
+| SEC-03      | Phase 2 | Pending |
+| SEC-04      | Phase 2 | Pending |
+| SEC-05      | Phase 2 | Pending |
+| SEC-06      | Phase 2 | Pending |
+| SEC-07      | Phase 2 | Pending |
+| DOC-01      | Phase 3 | Pending |
+| DOC-02      | Phase 3 | Pending |
+| DOC-03      | Phase 3 | Pending |
+| DOC-04      | Phase 3 | Pending |
+| DOC-05      | Phase 3 | Pending |
+| DOC-06      | Phase 3 | Pending |
+| DOC-07      | Phase 3 | Pending |
+| DOC-08      | Phase 3 | Pending |
+| DOC-09      | Phase 3 | Pending |
+| DOC-10      | Phase 3 | Pending |
+| REL-01      | Phase 4 | Pending |
+| REL-02      | Phase 4 | Pending |
+| REL-03      | Phase 4 | Pending |
+| REL-04      | Phase 4 | Pending |
+| REL-05      | Phase 4 | Pending |
+| REL-06      | Phase 4 | Pending |
+| IND-01      | Phase 5 | Pending |
+| IND-02      | Phase 5 | Pending |
+| IND-03      | Phase 5 | Pending |
+| IND-04      | Phase 5 | Pending |
 
 **Coverage:**
+
 - v1 requirements: **35 total**
 - Mapped to phases: **35** ✓
 - Unmapped: **0**
@@ -180,11 +181,11 @@ Excluido explícitamente de este milestone con razonamiento (prevención de scop
 
 Lean PRD-style summary del valor que cada Bloque entrega:
 
-- **Como maintainer**, al pushear código a una PR, quiero que **CI corra lint + tests automáticamente** y rechace merges con problemas, para no depender de mi disciplina manual *(Bloque A / Phase 1)*.
-- **Como future cliente PyME**, al recibir el módulo, quiero que **el manejo de CCFE/firmas digitales tenga estrategia documentada de encriptación, backup y rotación de keys**, para confiar que mis certificados privados están protegidos *(Bloque B / Phase 2)*.
-- **Como reviewer OCA**, al evaluar el repo para mergear a `OCA/l10n-paraguay`, quiero ver **README real, CONTRIBUTING.md completo, ADRs versionados, ARCHITECTURE.md, RUNBOOK.md**, para aceptarlo sin pedirme yo mismo todo eso *(Bloque C / Phase 3)*.
-- **Como contribuidor externo**, al querer aportar al repo, quiero **issue templates, PR template, CODEOWNERS, release notes**, para saber cómo contribuir sin preguntar *(Bloque D / Phase 4)*.
-- **Como dev futuro** que necesita crear un módulo `l10n_py_industry_*`, quiero **estrategia multi-rubro formalizada en un ADR + roadmap doc**, para no duplicar trabajo ni asumir mal qué hace base vs qué hace industry *(Bloque E / Phase 5)*.
+- **Como maintainer**, al pushear código a una PR, quiero que **CI corra lint + tests automáticamente** y rechace merges con problemas, para no depender de mi disciplina manual _(Bloque A / Phase 1)_.
+- **Como future cliente PyME**, al recibir el módulo, quiero que **el manejo de CCFE/firmas digitales tenga estrategia documentada de encriptación, backup y rotación de keys**, para confiar que mis certificados privados están protegidos _(Bloque B / Phase 2)_.
+- **Como reviewer OCA**, al evaluar el repo para mergear a `OCA/l10n-paraguay`, quiero ver **README real, CONTRIBUTING.md completo, ADRs versionados, ARCHITECTURE.md, RUNBOOK.md**, para aceptarlo sin pedirme yo mismo todo eso _(Bloque C / Phase 3)_.
+- **Como contribuidor externo**, al querer aportar al repo, quiero **issue templates, PR template, CODEOWNERS, release notes**, para saber cómo contribuir sin preguntar _(Bloque D / Phase 4)_.
+- **Como dev futuro** que necesita crear un módulo `l10n_py_industry_*`, quiero **estrategia multi-rubro formalizada en un ADR + roadmap doc**, para no duplicar trabajo ni asumir mal qué hace base vs qué hace industry _(Bloque E / Phase 5)_.
 
 ## Acceptance Criteria
 
@@ -204,20 +205,20 @@ El milestone Pre-Fase 2 está **complete** cuando:
 
 > Release criteria para considerar el milestone shipeable y avanzar a Fase 2 EDI.
 
-| Categoría | Criterio | Cómo se verifica |
-|---|---|---|
-| CI | Lint + test workflow verde en `main` desde hace ≥3 PRs consecutivos | GitHub Actions history |
-| CI | Branch protection bloquea push directo a `main` | Test manual: `git push origin main` rechazado |
-| Sec | `gitleaks` + Bandit verdes en CI | Workflow run latest |
-| Sec | `LICENSE` AGPL-3.0 en raíz + en manifests | `cat LICENSE` + `grep license addons/*/  __manifest__.py` |
-| Docs | README sin "TODO" en módulos completados | Grep `TODO` en README |
-| Docs | CHANGELOG `v0.1.0` con entries reales | Manual read |
-| Docs | ARCHITECTURE + DEPLOYMENT + RUNBOOK + ADRs 0001-0005 presentes | `ls docs/70*.md docs/71*.md docs/72*.md docs/adr/000*.md` |
-| Rel | Issue templates + PR template + CODEOWNERS presentes | `ls .github/` |
-| Rel | Tag `v0.1.0` en GitHub Releases con notes | `gh release view v0.1.0` |
-| Rubro | ADR 0004 + docs/80 + auditoría grep verde | Manual read + grep |
-| Coverage | Cobertura tests ≥80% en código nuevo (módulos existentes baseline) | `coverage report` |
-| Process | Cualquier PR pasa Conventional Commits validation | commitlint workflow |
+| Categoría | Criterio                                                            | Cómo se verifica                                          |
+| --------- | ------------------------------------------------------------------- | --------------------------------------------------------- |
+| CI        | Lint + test workflow verde en `main` desde hace ≥3 PRs consecutivos | GitHub Actions history                                    |
+| CI        | Branch protection bloquea push directo a `main`                     | Test manual: `git push origin main` rechazado             |
+| Sec       | `gitleaks` + Bandit verdes en CI                                    | Workflow run latest                                       |
+| Sec       | `LICENSE` AGPL-3.0 en raíz + en manifests                           | `cat LICENSE` + `grep license addons/*/  __manifest__.py` |
+| Docs      | README sin "TODO" en módulos completados                            | Grep `TODO` en README                                     |
+| Docs      | CHANGELOG `v0.1.0` con entries reales                               | Manual read                                               |
+| Docs      | ARCHITECTURE + DEPLOYMENT + RUNBOOK + ADRs 0001-0005 presentes      | `ls docs/70*.md docs/71*.md docs/72*.md docs/adr/000*.md` |
+| Rel       | Issue templates + PR template + CODEOWNERS presentes                | `ls .github/`                                             |
+| Rel       | Tag `v0.1.0` en GitHub Releases con notes                           | `gh release view v0.1.0`                                  |
+| Rubro     | ADR 0004 + docs/80 + auditoría grep verde                           | Manual read + grep                                        |
+| Coverage  | Cobertura tests ≥80% en código nuevo (módulos existentes baseline)  | `coverage report`                                         |
+| Process   | Cualquier PR pasa Conventional Commits validation                   | commitlint workflow                                       |
 
 ---
 
@@ -225,16 +226,16 @@ El milestone Pre-Fase 2 está **complete** cuando:
 
 **Risks (de la spec `docs/55_PRE_FASE_2_FOUNDATION.md` sección "Riesgos generales"):**
 
-| Riesgo | Mitigación |
-|---|---|
-| Procastinación: "estoy ansioso por empezar Fase 2 EDI" | Recordar: deuda técnica de empezar Fase 2 sin foundation cuesta 10x después. Cerrar Pre-Fase 2 antes de tocar EDI |
-| Over-engineering en docs operacionales | Empezar con minimum viable docs, iterar después con uso real |
-| Pre-commit OCA genera 100+ cambios cosméticos | Commit baseline ANTES de activar en CI (CI-02 explícito) |
-| Auditoría multi-rubro encuentra acoplamientos | Documentar como tech debt en `BUGS_BACKLOG.md`, refactor en Fase 6 (no acá) |
-| Security baseline parece exagerado | No lo es. Vas a manejar CCFE — nivel banco. SEC-06 establece la baseline |
-| Tentación a empezar `l10n_py_industry_retail` durante Bloque E | Explícito en spec: primer rubro se construye DESPUÉS de Fase 2 EDI, no antes |
-| `gitleaks` encuentra tokens en history | Documentar + rotar tokens. NO reescribir history (rompe forks) |
-| `semantic-release` opinionated rompe si commits no perfectos | Empezar manual (REL-06), automatizar después |
+| Riesgo                                                         | Mitigación                                                                                                        |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Procastinación: "estoy ansioso por empezar Fase 2 EDI"         | Recordar: deuda técnica de empezar Fase 2 sin foundation cuesta 10x después. Cerrar Pre-Fase 2 antes de tocar EDI |
+| Over-engineering en docs operacionales                         | Empezar con minimum viable docs, iterar después con uso real                                                      |
+| Pre-commit OCA genera 100+ cambios cosméticos                  | Commit baseline ANTES de activar en CI (CI-02 explícito)                                                          |
+| Auditoría multi-rubro encuentra acoplamientos                  | Documentar como tech debt en `BUGS_BACKLOG.md`, refactor en Fase 6 (no acá)                                       |
+| Security baseline parece exagerado                             | No lo es. Vas a manejar CCFE — nivel banco. SEC-06 establece la baseline                                          |
+| Tentación a empezar `l10n_py_industry_retail` durante Bloque E | Explícito en spec: primer rubro se construye DESPUÉS de Fase 2 EDI, no antes                                      |
+| `gitleaks` encuentra tokens en history                         | Documentar + rotar tokens. NO reescribir history (rompe forks)                                                    |
+| `semantic-release` opinionated rompe si commits no perfectos   | Empezar manual (REL-06), automatizar después                                                                      |
 
 **Dependencies:**
 
@@ -245,6 +246,6 @@ El milestone Pre-Fase 2 está **complete** cuando:
 
 ---
 
-*Requirements defined: 2026-05-26*
-*Source: `docs/55_PRE_FASE_2_FOUNDATION.md`*
-*Last updated: 2026-05-26 after roadmapper traceability mapping (35/35 mapped, 0 orphaned)*
+_Requirements defined: 2026-05-26_
+_Source: `docs/55_PRE_FASE_2_FOUNDATION.md`_
+_Last updated: 2026-05-26 after roadmapper traceability mapping (35/35 mapped, 0 orphaned)_

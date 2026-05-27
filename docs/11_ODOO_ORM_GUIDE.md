@@ -14,11 +14,11 @@ priority: important
 
 Tres clases base — cada modelo hereda de una:
 
-| Clase | Propósito | Tabla DB | Cuándo usar |
-|-------|-----------|----------|-------------|
-| `models.Model` | Modelo persistido estándar | Sí | 90% de casos (entidades de negocio) |
-| `models.TransientModel` | Datos temporales auto-limpiados | Sí (con cron de limpieza) | Wizards, formularios multi-step |
-| `models.AbstractModel` | Mixin sin tabla propia | No | Compartir lógica entre múltiples modelos (ej: mail.thread) |
+| Clase                   | Propósito                       | Tabla DB                  | Cuándo usar                                                |
+| ----------------------- | ------------------------------- | ------------------------- | ---------------------------------------------------------- |
+| `models.Model`          | Modelo persistido estándar      | Sí                        | 90% de casos (entidades de negocio)                        |
+| `models.TransientModel` | Datos temporales auto-limpiados | Sí (con cron de limpieza) | Wizards, formularios multi-step                            |
+| `models.AbstractModel`  | Mixin sin tabla propia          | No                        | Compartir lógica entre múltiples modelos (ej: mail.thread) |
 
 ### Atributos de configuración del modelo
 
@@ -38,11 +38,11 @@ class L10nPyTimbrado(models.Model):
 
 ### Inheritance config
 
-| Atributo | Tipo | Significado |
-|----------|------|-------------|
-| `_inherit = 'model.name'` | str o list[str] | Extiende modelo(s) existente(s) — mismo `_name` |
-| `_inherit = ['mail.thread']` | list | Mixin (sin cambiar `_name`) |
-| `_inherits = {'res.partner': 'partner_id'}` | dict | **Delegation** — campos del padre accesibles directamente vía FK |
+| Atributo                                    | Tipo            | Significado                                                      |
+| ------------------------------------------- | --------------- | ---------------------------------------------------------------- |
+| `_inherit = 'model.name'`                   | str o list[str] | Extiende modelo(s) existente(s) — mismo `_name`                  |
+| `_inherit = ['mail.thread']`                | list            | Mixin (sin cambiar `_name`)                                      |
+| `_inherits = {'res.partner': 'partner_id'}` | dict            | **Delegation** — campos del padre accesibles directamente vía FK |
 
 ## 2. Field types
 
@@ -98,6 +98,7 @@ total = fields.Float(compute='_compute_total', inverse='_inverse_total', store=T
 ```
 
 ### Parámetros comunes
+
 - `string`: label (default: capitaliza el field name)
 - `default`: valor estático o callable: `default=lambda self: self.env.company`
 - `required`: bool
@@ -108,7 +109,9 @@ total = fields.Float(compute='_compute_total', inverse='_inverse_total', store=T
 - `tracking`: int (orden) — log changes en chatter (requiere `mail.thread`)
 
 ### Campos automáticos del ORM
+
 Si `_log_access = True` (default), Odoo crea:
+
 - `id`, `create_date`, `create_uid`, `write_date`, `write_uid`
 
 ## 3. Recordset operations
@@ -164,6 +167,7 @@ data = self.env['sale.order'].search_read(domain, ['name', 'amount'], limit=10, 
 ### Search domains
 
 Tuplas `(field, operator, value)`:
+
 ```python
 [('state', 'in', ['draft', 'confirmed']),
  '|',
@@ -259,6 +263,7 @@ records.with_context(tracking_disable=True).sudo().write(...)
 ## 5. Method decorators
 
 ### `@api.depends('field1', 'rel.field2')`
+
 Marca dependencias de un computed field. Esencial para `compute=` + `store=True`.
 
 ```python
@@ -269,6 +274,7 @@ def _compute_totals(self):
 ```
 
 ### `@api.constrains('field1', 'field2')`
+
 Validación post-write. Si raises `ValidationError`, rollback de la transacción.
 
 ```python
@@ -280,6 +286,7 @@ def _check_price(self):
 ```
 
 ### `@api.onchange('field')`
+
 Triggered cuando el usuario cambia el campo en el form (NO en write a DB).
 Usado para pre-llenar otros campos.
 
@@ -291,6 +298,7 @@ def _onchange_partner(self):
 ```
 
 ### `@api.model`
+
 Classmethod-like. Recibe `cls`-equivalente pero opera sin recordset específico.
 
 ```python
@@ -300,6 +308,7 @@ def create_from_template(self, template_name):
 ```
 
 ### `@api.model_create_multi` (preferido sobre solo `@api.model` en create)
+
 Permite que `create()` reciba **list de dicts** además de un solo dict.
 Es la forma idiomática moderna.
 

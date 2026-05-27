@@ -62,37 +62,37 @@ Total: 0/35 v1 REQs complete (milestone Pre-Fase 2)
 
 ## Repo State Snapshot (2026-05-26)
 
-| Item | State |
-|---|---|
-| Branch activa | `main` |
-| Último commit en `main` | `3fc654a docs(claude): harden subagent rule + Fase 1 retrospectiva consolidada` |
-| Módulos productivos | `addons/l10n_py_base 18.0.1.1.0` + `addons/l10n_py_account 18.0.1.0.0` |
-| Tests acumulados | 97 verdes (l10n_py_base 23 + l10n_py_account 74) |
-| PRs mergeados a `main` | PR #1 (l10n_py_base 1.1.0), PR #2 (l10n_py_account 1.0.0) |
-| Docker Compose dev | Operacional (bind mount `addons/` resuelto) |
-| codegraph index | Activo, 12k+ símbolos |
-| CI/CD | ❌ Sin activar (Phase 1 lo configura) |
-| Pre-commit | ❌ Sin activar (Phase 1 lo configura) |
-| Branch protection en `main` | ❌ Sin activar (Phase 1 lo configura) |
-| LICENSE file | ❌ Sólo en `pyproject.toml`, sin archivo (Phase 2 lo agrega) |
-| SECURITY.md / CONTRIBUTING.md / CHANGELOG.md | ❌ Inexistentes (Phases 2-3 los crean) |
-| Issue/PR templates | ❌ Inexistentes (Phase 4) |
-| Release `v0.1.0` | ❌ Sin taggear (Phase 4) |
+| Item                                         | State                                                                           |
+| -------------------------------------------- | ------------------------------------------------------------------------------- |
+| Branch activa                                | `main`                                                                          |
+| Último commit en `main`                      | `3fc654a docs(claude): harden subagent rule + Fase 1 retrospectiva consolidada` |
+| Módulos productivos                          | `addons/l10n_py_base 18.0.1.1.0` + `addons/l10n_py_account 18.0.1.0.0`          |
+| Tests acumulados                             | 97 verdes (l10n_py_base 23 + l10n_py_account 74)                                |
+| PRs mergeados a `main`                       | PR #1 (l10n_py_base 1.1.0), PR #2 (l10n_py_account 1.0.0)                       |
+| Docker Compose dev                           | Operacional (bind mount `addons/` resuelto)                                     |
+| codegraph index                              | Activo, 12k+ símbolos                                                           |
+| CI/CD                                        | ❌ Sin activar (Phase 1 lo configura)                                           |
+| Pre-commit                                   | ❌ Sin activar (Phase 1 lo configura)                                           |
+| Branch protection en `main`                  | ❌ Sin activar (Phase 1 lo configura)                                           |
+| LICENSE file                                 | ❌ Sólo en `pyproject.toml`, sin archivo (Phase 2 lo agrega)                    |
+| SECURITY.md / CONTRIBUTING.md / CHANGELOG.md | ❌ Inexistentes (Phases 2-3 los crean)                                          |
+| Issue/PR templates                           | ❌ Inexistentes (Phase 4)                                                       |
+| Release `v0.1.0`                             | ❌ Sin taggear (Phase 4)                                                        |
 
 ---
 
 ## Performance Metrics
 
-| Métrica | Baseline (entry milestone) | Target (exit milestone) |
-|---|---|---|
-| Tests verdes | 97 | ≥97 (no regresión por pre-commit baseline) |
-| Cobertura tests | TBD (Phase 1 mide baseline) | ≥80% en código nuevo |
-| Lint warnings (pre-commit) | n/a (sin pre-commit) | 0 |
-| Security warnings HIGH (Bandit) | n/a (sin Bandit) | 0 |
-| Secrets en HEAD (gitleaks) | n/a (sin gitleaks) | 0 |
-| Push directo a `main` | Permitido | Rechazado |
-| ADRs en `docs/adr/` | 0 | 5 (0001-0005) |
-| Docs operacionales (`docs/70-72`) | 0 | 3 |
+| Métrica                           | Baseline (entry milestone)  | Target (exit milestone)                    |
+| --------------------------------- | --------------------------- | ------------------------------------------ |
+| Tests verdes                      | 97                          | ≥97 (no regresión por pre-commit baseline) |
+| Cobertura tests                   | TBD (Phase 1 mide baseline) | ≥80% en código nuevo                       |
+| Lint warnings (pre-commit)        | n/a (sin pre-commit)        | 0                                          |
+| Security warnings HIGH (Bandit)   | n/a (sin Bandit)            | 0                                          |
+| Secrets en HEAD (gitleaks)        | n/a (sin gitleaks)          | 0                                          |
+| Push directo a `main`             | Permitido                   | Rechazado                                  |
+| ADRs en `docs/adr/`               | 0                           | 5 (0001-0005)                              |
+| Docs operacionales (`docs/70-72`) | 0                           | 3                                          |
 
 ---
 
@@ -158,15 +158,15 @@ Reads STATE.md → identifies current focus (Phase 1 CONTEXT.md ready) → sugge
 
 Subagents disponibles relevantes para este milestone (verificar con `ls ~/.claude/agents/voltagent-*`):
 
-| Phase | Subagent primario | Skills sugeridas |
-|---|---|---|
-| Phase 1 (CI) | `voltagent-dev-exp:git-workflow-manager` + `python-pro` | `superpowers:writing-plans`, `superpowers:executing-plans` |
-| Phase 2 (Sec) | `voltagent-qa-sec:security-auditor` (opus) | `ecc:security-review` |
-| Phase 3 (Docs) | `voltagent-dev-exp:documentation-engineer` | `superpowers:writing-plans` |
-| Phase 4 (Release) | `voltagent-dev-exp:git-workflow-manager` | — |
-| Phase 5 (Multi-rubro) | `architect-reviewer` (opus) para ADR-0004 | `superpowers:brainstorming` antes de ADR |
-| Antes de cada PR | `voltagent-qa-sec:code-reviewer` | `superpowers:verification-before-completion` |
+| Phase                 | Subagent primario                                       | Skills sugeridas                                           |
+| --------------------- | ------------------------------------------------------- | ---------------------------------------------------------- |
+| Phase 1 (CI)          | `voltagent-dev-exp:git-workflow-manager` + `python-pro` | `superpowers:writing-plans`, `superpowers:executing-plans` |
+| Phase 2 (Sec)         | `voltagent-qa-sec:security-auditor` (opus)              | `ecc:security-review`                                      |
+| Phase 3 (Docs)        | `voltagent-dev-exp:documentation-engineer`              | `superpowers:writing-plans`                                |
+| Phase 4 (Release)     | `voltagent-dev-exp:git-workflow-manager`                | —                                                          |
+| Phase 5 (Multi-rubro) | `architect-reviewer` (opus) para ADR-0004               | `superpowers:brainstorming` antes de ADR                   |
+| Antes de cada PR      | `voltagent-qa-sec:code-reviewer`                        | `superpowers:verification-before-completion`               |
 
 ---
 
-*STATE initialized: 2026-05-26 — initial GSD bootstrap of milestone Pre-Fase 2.*
+_STATE initialized: 2026-05-26 — initial GSD bootstrap of milestone Pre-Fase 2._

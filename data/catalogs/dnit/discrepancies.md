@@ -30,11 +30,11 @@ en title-case pero NO para los códigos.
 
 ## 📊 Conteos finales vs estimaciones previas
 
-| Catálogo | Estimado en READMEs anteriores | Real (dedup por código) |
-|---|---|---|
-| Departamentos | 18 | **18** ✓ |
-| Distritos | 258 (INE) – 284 (DNIT) | **270** |
-| Ciudades | 3400 – 6431 | **6419** |
+| Catálogo      | Estimado en READMEs anteriores | Real (dedup por código) |
+| ------------- | ------------------------------ | ----------------------- |
+| Departamentos | 18                             | **18** ✓                |
+| Distritos     | 258 (INE) – 284 (DNIT)         | **270**                 |
+| Ciudades      | 3400 – 6431                    | **6419**                |
 
 **Diagnóstico distritos (270 vs 284):** el número 284 que figuraba en
 `data/catalogs/README.md` correspondía al **máximo código numérico** observado
@@ -85,14 +85,14 @@ En el UI podría limpiarse, pero el matching debe respetar el nombre completo.
 El Manual Técnico v150 explícitamente **NO embute** los siguientes catálogos,
 sino que los delega a fuentes externas. Estos NO están en `dnit/`:
 
-| Catálogo | Razón | Fuente externa |
-|---|---|---|
-| Actividades económicas | Servicio web en vivo | https://servicios.set.gov.py/eset-publico/consultarActividadEconomicaIService.do |
-| Países | ISO 3166-1 alfa-3 | Odoo ya provee `res.country` |
-| Monedas | ISO 4217 | Odoo ya provee `res.currency` |
-| Tipos de vehículos | "Link de descarga" no publicado | Pendiente — usar tabla XSD si aparece |
-| Regímenes aduaneros | Sitio aduana.gov.py | http://www.aduana.gov.py/3123-4-circuitos-de-regimenes.html |
-| Tabla 2.2 — Ciudades (alt) | DNIT solo ofrece link de descarga | Cubierto por `ciudades.csv` desde Tabla 2.1 |
+| Catálogo                   | Razón                             | Fuente externa                                                                   |
+| -------------------------- | --------------------------------- | -------------------------------------------------------------------------------- |
+| Actividades económicas     | Servicio web en vivo              | https://servicios.set.gov.py/eset-publico/consultarActividadEconomicaIService.do |
+| Países                     | ISO 3166-1 alfa-3                 | Odoo ya provee `res.country`                                                     |
+| Monedas                    | ISO 4217                          | Odoo ya provee `res.currency`                                                    |
+| Tipos de vehículos         | "Link de descarga" no publicado   | Pendiente — usar tabla XSD si aparece                                            |
+| Regímenes aduaneros        | Sitio aduana.gov.py               | http://www.aduana.gov.py/3123-4-circuitos-de-regimenes.html                      |
+| Tabla 2.2 — Ciudades (alt) | DNIT solo ofrece link de descarga | Cubierto por `ciudades.csv` desde Tabla 2.1                                      |
 
 Para `l10n_py_base`, las actividades económicas requerirán **caché local +
 refresh periódico** del servicio web. Se diseñará al construir el módulo.

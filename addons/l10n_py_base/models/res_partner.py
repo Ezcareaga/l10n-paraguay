@@ -59,7 +59,9 @@ class ResPartner(models.Model):
         for rec in self:
             id_type = rec.l10n_latam_identification_type_id
             is_py_partner = rec.country_id and rec.country_id.code == "PY"
-            is_py_id_type = bool(id_type and (id_type.l10n_py_sifen_code or id_type.l10n_py_is_ruc))
+            is_py_id_type = bool(
+                id_type and (id_type.l10n_py_sifen_code or id_type.l10n_py_is_ruc)
+            )
             if not (is_py_partner or is_py_id_type):
                 continue
             if not rec.vat:
@@ -91,5 +93,8 @@ class ResPartner(models.Model):
             # Cédula extranjera (código 3): solo formato no vacío
             if id_type.l10n_py_sifen_code == "3" and not rec.vat.strip():
                 raise ValidationError(
-                    _("La Cédula extranjera del contacto %s no puede estar vacía.", rec.display_name)
+                    _(
+                        "La Cédula extranjera del contacto %s no puede estar vacía.",
+                        rec.display_name,
+                    )
                 )

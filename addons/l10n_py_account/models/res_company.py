@@ -22,10 +22,13 @@ class ResCompany(models.Model):
     def _compute_l10n_py_active_timbrado(self):
         Timbrado = self.env["l10n_py.timbrado"]
         for company in self:
-            company.l10n_py_active_timbrado_id = Timbrado.search([
-                ("company_id", "=", company.id),
-                ("state", "=", "active"),
-            ], limit=1)
+            company.l10n_py_active_timbrado_id = Timbrado.search(
+                [
+                    ("company_id", "=", company.id),
+                    ("state", "=", "active"),
+                ],
+                limit=1,
+            )
 
     def _localization_use_documents(self):
         self.ensure_one()

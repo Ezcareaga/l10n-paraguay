@@ -19,7 +19,11 @@ class L10nPyRecipientNature(models.Model):
     active = fields.Boolean(default=True)
 
     _sql_constraints = [
-        ("l10n_py_recipient_nature_code_uniq", "unique(code)", "El código SIFEN de la naturaleza del receptor debe ser único."),
+        (
+            "l10n_py_recipient_nature_code_uniq",
+            "unique(code)",
+            "El código SIFEN de la naturaleza del receptor debe ser único.",
+        ),
     ]
 
     def name_get(self):

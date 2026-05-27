@@ -35,7 +35,13 @@ OUT_DIR = ROOT / "addons" / "l10n_py_account" / "data" / "template"
 def infer_account_type(code: str, name: str) -> str:
     """Mapea código RG 49/14 → account_type Odoo 18."""
     n = name.upper()
-    if code.startswith("1010101") or "RECAUDACIONES" in n or "CAJA" in n or "FONDOS" in n or "BANCOS" in n:
+    if (
+        code.startswith("1010101")
+        or "RECAUDACIONES" in n
+        or "CAJA" in n
+        or "FONDOS" in n
+        or "BANCOS" in n
+    ):
         return "asset_cash"
     # Deudores por ventas / cuentas por cobrar → receivable
     # (independiente del prefix porque RG 49/14 varía: 1010301, 1010103, etc.)
@@ -54,14 +60,21 @@ def infer_account_type(code: str, name: str) -> str:
     if "PROVEEDORES" in n and code.startswith("201"):
         return "liability_payable"
     if code.startswith("2"):
-        return "liability_current" if code.startswith("201") else "liability_non_current"
+        return (
+            "liability_current" if code.startswith("201") else "liability_non_current"
+        )
     if code.startswith("3"):
         return "equity"
     if code.startswith("4") and "DESCUENTOS CONCEDIDOS" in n:
         return "income_other"
     if code.startswith("4") or code.startswith("8"):
         return "income"
-    if code.startswith("5") or code.startswith("10") or code.startswith("11") or code.startswith("13"):
+    if (
+        code.startswith("5")
+        or code.startswith("10")
+        or code.startswith("11")
+        or code.startswith("13")
+    ):
         return "expense"
     if code.startswith("15"):
         return "expense_depreciation"
@@ -72,40 +85,79 @@ def infer_account_type(code: str, name: str) -> str:
 # Códigos sin puntos. Resto se carga como active=False.
 ACTIVE_CODES = {
     # 1.01.01 Disponibilidades
-    "1010101", "1010102", "1010103", "1010104",
+    "1010101",
+    "1010102",
+    "1010103",
+    "1010104",
     # 1.01.03 Créditos
-    "1010301", "1010305", "10103050102", "10103050103",  # IVA Crédito + retenciones
+    "1010301",
+    "1010305",
+    "10103050102",
+    "10103050103",  # IVA Crédito + retenciones
     # 1.01.04 Mercaderías (excepto agro/regímenes especiales)
-    "10104", "1010401", "101040101", "101040102", "101040103",
+    "10104",
+    "1010401",
+    "101040101",
+    "101040102",
+    "101040103",
     # 1.02.04 PPyE
-    "1020401", "1020402", "1020403", "1020404", "1020405",
+    "1020401",
+    "1020402",
+    "1020403",
+    "1020404",
+    "1020405",
     "10204099",  # depreciación acumulada
     # 2.01 Pasivo corriente
     "2010101",  # Proveedores locales
     "2010301",  # Deudas fiscales corrientes (padre)
-    "201030101", "201030102", "201030103",  # IRACIS / IVA a Pagar / Retenciones
+    "201030101",
+    "201030102",
+    "201030103",  # IRACIS / IVA a Pagar / Retenciones
     "2010302",  # Obligaciones laborales
     # 3 Patrimonio
-    "30101", "3010101",  # Capital
+    "30101",
+    "3010101",  # Capital
     "30201",  # Reserva legal
     "30301",  # Resultados acumulados
     # 4 Ingresos
-    "401", "40101", "40102",  # Ventas mercaderías gravadas/exentas
-    "4010101", "4010102",  # subniveles gravadas IVA 10/5%
+    "401",
+    "40101",
+    "40102",  # Ventas mercaderías gravadas/exentas
+    "4010101",
+    "4010102",  # subniveles gravadas IVA 10/5%
     "409",  # Ventas servicios gravados
     "498",  # Descuentos concedidos
     "499",  # Devoluciones
     # 5 Costos
-    "501", "50101", "50102",  # Costo mercaderías
+    "501",
+    "50101",
+    "50102",  # Costo mercaderías
     # 8 Otros ingresos
-    "801", "802", "803", "805",  # intereses, comisiones, descuentos, dif. cambio
+    "801",
+    "802",
+    "803",
+    "805",  # intereses, comisiones, descuentos, dif. cambio
     # 10-11 Gastos
-    "1001", "1002", "1004", "1005",  # Gastos de ventas
-    "1101", "1105", "1106", "1107", "1108", "1109", "1110", "1111", "1117",
+    "1001",
+    "1002",
+    "1004",
+    "1005",  # Gastos de ventas
+    "1101",
+    "1105",
+    "1106",
+    "1107",
+    "1108",
+    "1109",
+    "1110",
+    "1111",
+    "1117",
     # 13 Gastos bancarios
-    "1301", "1303", "1304",
+    "1301",
+    "1303",
+    "1304",
     # 15 Depreciaciones
-    "1501", "1502",
+    "1501",
+    "1502",
     # 19 IR
     "19",
     # 20 Resultado neto
@@ -150,12 +202,14 @@ def extract_chart() -> tuple[list[dict], list[dict]]:
                 if grp_id in seen_ids:
                     continue
                 seen_ids.add(grp_id)
-                groups.append({
-                    "id": grp_id,
-                    "code_prefix_start": code_clean,
-                    "code_prefix_end": code_clean,
-                    "name": name.title(),
-                })
+                groups.append(
+                    {
+                        "id": grp_id,
+                        "code_prefix_start": code_clean,
+                        "code_prefix_end": code_clean,
+                        "name": name.title(),
+                    }
+                )
             else:
                 if xml_id in seen_ids:
                     continue
@@ -164,17 +218,19 @@ def extract_chart() -> tuple[list[dict], list[dict]]:
                 is_active = code_clean in ACTIVE_CODES or any(
                     code_clean.startswith(active) for active in ACTIVE_CODES
                 )
-                accounts.append({
-                    "id": xml_id,
-                    "code": code_clean,
-                    "name": name.title(),
-                    "account_type": acc_type,
-                    "reconcile": "True" if acc_type in (
-                        "asset_receivable", "liability_payable"
-                    ) else "False",
-                    "non_trade": "",
-                    "active": "True" if is_active else "False",
-                })
+                accounts.append(
+                    {
+                        "id": xml_id,
+                        "code": code_clean,
+                        "name": name.title(),
+                        "account_type": acc_type,
+                        "reconcile": "True"
+                        if acc_type in ("asset_receivable", "liability_payable")
+                        else "False",
+                        "non_trade": "",
+                        "active": "True" if is_active else "False",
+                    }
+                )
 
     return groups, accounts
 

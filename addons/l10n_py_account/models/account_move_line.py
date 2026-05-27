@@ -11,5 +11,5 @@ class AccountMoveLine(models.Model):
         string="Proporción IVA (%)",
         default=100,
         help="Porcentaje (1-100) de la base gravada por IVA. < 100 indica "
-             "afectación 'Gravado parcial' SIFEN. Usado por XML builder en Fase 2.",
+        "afectación 'Gravado parcial' SIFEN. Usado por XML builder en Fase 2.",
     )

@@ -52,6 +52,7 @@ schema.assertValid(root)  # raises XMLSyntaxError si no valida
 ```
 
 ### Gotchas
+
 - SIFEN exige **sin prefijos en namespace** — el `nsmap={None: '...'}` es la forma
   de tener namespace por defecto.
 - SIFEN exige **sin whitespace** entre etiquetas — pasar `pretty_print=False`.
@@ -93,6 +94,7 @@ signed_xml = etree.tostring(signed_root, encoding='UTF-8', xml_declaration=True)
 ```
 
 ### Gotchas
+
 - **SIFEN** especifica XAdES-BES enveloped. signxml hace eso por default.
 - El `reference_uri='#<cdc>'` debe coincidir con `Id="<cdc>"` del nodo `<DE>`.
 - Si la firma falla en SIFEN, comparar con un DE aprobado conocido — diff de
@@ -137,6 +139,7 @@ print(response['dMsgRes'])     # 'Aprobado'
 ```
 
 ### Gotchas
+
 - SIFEN devuelve respuestas SOAP que pueden ser de un solo elemento — Zeep las
   envuelve en dicts; navegar con cuidado.
 - Para `siRecepLoteDE`: comprimir el XML del lote y base64-encode ANTES de
@@ -182,6 +185,7 @@ hash_qr = digest.finalize().hex()
 ```
 
 ### Gotchas
+
 - `load_pkcs12` falla con error críptico si la password es incorrecta — wrap en
   try/except y dar mensaje user-friendly.
 - Para Fernet keys: generar UNA vez con `Fernet.generate_key()` y guardar en
@@ -229,6 +233,7 @@ qr_base64 = base64.b64encode(buffer.getvalue()).decode()
 ```
 
 ### Gotchas
+
 - Para tickets POS (cinta de papel angosta), `box_size=6` y `border=1` queda
   bien.
 - Para PDF carta, `box_size=10` y `border=2` es estándar.
@@ -280,6 +285,7 @@ resp = session.post('https://sifen-test.set.gov.py/de/ws/sync/recibe.wsdl',
 ```
 
 Y a nivel repo (`requirements.txt`):
+
 ```
 lxml>=4.9
 signxml>=3.2
@@ -291,13 +297,13 @@ requests-pkcs12>=1.21
 
 ## 8. Librerías que evaluamos pero NO usamos (y por qué)
 
-| Librería | Por qué no |
-|----------|------------|
+| Librería                   | Por qué no                                                                                 |
+| -------------------------- | ------------------------------------------------------------------------------------------ |
 | `xmlsec` (Python bindings) | Mejor performance que signxml pero compilación nativa compleja en Windows; signxml alcanza |
-| `suds-py3` | Cliente SOAP más viejo y menos mantenido que zeep |
-| `pyOpenSSL` | Cryptography moderna preferida; pyOpenSSL en modo mantenimiento |
-| `qrcode-terminal` | Solo terminal; necesitamos PIL backend |
-| `python-pkcs12` | menos popular; requests-pkcs12 mejor integrado con requests/zeep |
+| `suds-py3`                 | Cliente SOAP más viejo y menos mantenido que zeep                                          |
+| `pyOpenSSL`                | Cryptography moderna preferida; pyOpenSSL en modo mantenimiento                            |
+| `qrcode-terminal`          | Solo terminal; necesitamos PIL backend                                                     |
+| `python-pkcs12`            | menos popular; requests-pkcs12 mejor integrado con requests/zeep                           |
 
 ## 9. Versiones recomendadas (al bootstrap, 2026-05)
 

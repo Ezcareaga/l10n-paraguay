@@ -17,6 +17,7 @@ Esta phase NO escribe LICENSE/SECURITY (Phase 2), NO escribe docs operacionales
 multi-rubro (Phase 5). Cualquier idea sobre esos bloques va a Deferred.
 
 Sequencing interno (locked en ROADMAP.md Phase 1 details, NO paralelizable):
+
 1. CI-01 `.pre-commit-config.yaml`
 2. CI-02 commit baseline (absorber cambios cosméticos del primer run)
 3. CI-04 lint workflow
@@ -37,14 +38,14 @@ Sequencing interno (locked en ROADMAP.md Phase 1 details, NO paralelizable):
   oca-checks-odoo-module, oca-fix-manifest-version, codespell, yamllint. NO
   correr `copier copy gh:OCA/oca-addons-repo-template .` (prohibido en
   `docs/55_PRE_FASE_2_FOUNDATION.md` — defer a Fase 6 OCA).
-  *Razón:* mantiene migración futura al copier sin pisarse ahora; deja config
+  _Razón:_ mantiene migración futura al copier sin pisarse ahora; deja config
   editable; alineado con la `pyproject.toml` que ya tiene `[tool.black]` y
   `[tool.isort]` configurados con secciones OCA.
 
 - **D-02: Pin a versiones Brazil 18.0.** Refs exactas:
   `oca/maintainer-tools @ b89f767503be6ab2b11e4f50a7557cb20066e667`,
   `OCA/odoo-pre-commit-hooks v0.0.33`. Black/isort/codespell/yamllint también
-  a la versión que Brazil tiene. *Razón:* probadas en producción contra Odoo
+  a la versión que Brazil tiene. _Razón:_ probadas en producción contra Odoo
   18.0; menor riesgo de incompatibilidad que latest stable.
 
 - **D-03: Agregar SOLO `prettier + @prettier/plugin-xml` como extra.** Brazil
@@ -61,23 +62,25 @@ Sequencing interno (locked en ROADMAP.md Phase 1 details, NO paralelizable):
 ### Baseline CI-02
 
 - **D-05: Dos commits separados por capa.**
+
   - Commit A — cosmético: `black + isort + prettier+plugin-xml`.
   - Commit B — semántico: `codespell + oca-fix-manifest-version + yamllint
-    + oca-checks-odoo-module`.
-  *Razón:* `git blame` post-baseline queda legible (Quién cambió esto: ¿layout
-  o lógica?). Costo 2x setup, vale la trazabilidad en un repo con 2 addons
+    - oca-checks-odoo-module`.
+
+  Razon: `git blame` post-baseline queda legible (Quien cambio esto: layout
+  o logica?). Costo 2x setup, vale la trazabilidad en un repo con 2 addons
   vivos.
 
 - **D-06: Push directo a `main`.** Aprovechar que CI-07 (branch protection)
-  todavía no existe en ese punto del sequencing. *Override de la regla
-  global CLAUDE.md "nunca commit directo a main":* aceptable porque la regla
+  todavía no existe en ese punto del sequencing. _Override de la regla
+  global CLAUDE.md "nunca commit directo a main":_ aceptable porque la regla
   todavía no está enforced en CI, y la alternativa (PR formal contra `main`
   sin branch protection) es ceremonial. Para los siguientes commits ya entra
   el patrón PR.
 
 - **D-07: Gate hard de tests al baseline.** Antes del commit A y después del
   commit B, correr el suite completo: `docker exec ... -d odoo_test
-  --test-tags l10n_py -i l10n_py_base,l10n_py_account` y verificar **97 tests
+--test-tags l10n_py -i l10n_py_base,l10n_py_account` y verificar **97 tests
   verdes** (l10n_py_base 23 + l10n_py_account 74). Si rompe en cualquier
   punto: `git reset --hard` y debuggear antes de reintentar. Cero tolerancia
   a regresión por cambios cosméticos.
@@ -94,11 +97,12 @@ Sequencing interno (locked en ROADMAP.md Phase 1 details, NO paralelizable):
 - **D-09: OCA action oficial para install.** Usar la action que l10n-brazil
   18.0 usa para levantar Odoo 18 community + Postgres 16 (probablemente
   `oca/oca-ci` o equivalente — researcher confirma el nombre exacto y versión
-  pinneable). NO pip-install nightly manual, NO docker-compose CI. *Razón:*
+  pinneable). NO pip-install nightly manual, NO docker-compose CI. _Razón:_
   alineado con OCA, menos YAML mantenido a mano, action ya resuelve
   `l10n_latam_base` + `l10n_latam_invoice_document` como deps.
 
 - **D-10: Tags por external dependency.**
+
   - `@tagged('l10n_py', 'post_install', '-at_install')` — todos los tests
     locales que no llaman a red. Los 97 tests existentes ya usan tags
     similares — verificar al ejecutar plan.
@@ -114,7 +118,7 @@ Sequencing interno (locked en ROADMAP.md Phase 1 details, NO paralelizable):
 
 - **D-12: Triggers conservadores.** `on: pull_request: branches: [main]` +
   `on: push: branches: [main]`. NO `workflow_dispatch`, NO `schedule`.
-  *Razón:* consumo mínimo CI; corre cuando importa (PR + merge). Si más
+  _Razón:_ consumo mínimo CI; corre cuando importa (PR + merge). Si más
   adelante queremos scheduled o manual, se agrega — pero no antes de tener
   señal de que falta.
 
@@ -123,7 +127,7 @@ Sequencing interno (locked en ROADMAP.md Phase 1 details, NO paralelizable):
 - **D-13: Codecov + badge en README, sin gate hard.** test.yml corre con
   coverage, publica a Codecov, postea comment automático en cada PR mostrando
   delta de cobertura. README incluye badge. NO se falla la PR si coverage
-  baja — pura señal informativa. *Razón:* enforcement social > enforcement
+  baja — pura señal informativa. _Razón:_ enforcement social > enforcement
   duro; un gate hard bloquea refactors legítimos donde coverage cae temporal.
   El constraint ≥80% del repo queda como convención reforzada por el badge
   visible.
@@ -147,6 +151,7 @@ Sequencing interno (locked en ROADMAP.md Phase 1 details, NO paralelizable):
 
 Áreas donde el researcher / planner tiene libertad para terminar de
 especificar sin reabrir discuss:
+
 - Versión exacta del hook `oca-fix-manifest-version` y comportamiento sobre
   los `version=` de manifests (decidir en plan-phase 1 con evidencia).
 - Versión exacta de la OCA action de install Odoo (D-09).
@@ -165,6 +170,7 @@ especificar sin reabrir discuss:
 </decisions>
 
 <canonical_refs>
+
 ## Canonical References
 
 **Downstream agents MUST read these before planning or implementing.**
@@ -230,6 +236,7 @@ especificar sin reabrir discuss:
 </canonical_refs>
 
 <code_context>
+
 ## Existing Code Insights
 
 ### Reusable Assets
@@ -239,10 +246,10 @@ especificar sin reabrir discuss:
   alineados con estas secciones; researcher verifica match.
 - **`pyproject.toml` `[project.optional-dependencies.dev]`** — declara
   `pre-commit>=3.6, pylint-odoo>=9.1, black>=24.0, isort>=5.13, flake8>=7.0,
-  pytest>=8.0, pytest-odoo>=1.1` — sirven como floor para los pins de D-02.
-- **97 tests existentes** (l10n_py_base 23 + l10n_py_account 74) usan
+pytest>=8.0, pytest-odoo>=1.1` — sirven como floor para los pins de D-02.
+- **97 tests existentes** (l10n*py_base 23 + l10n_py_account 74) usan
   `@tagged(...)`. Researcher debe leer un test representativo (ej.
-  `addons/l10n_py_base/tests/test_*.py`) para confirmar el patrón exacto de
+  `addons/l10n_py_base/tests/test*\*.py`) para confirmar el patrón exacto de
   tags ya en uso, antes de imponer D-10.
 - **`docker-compose.yml` + bind mount `addons/`** — entorno dev funciona;
   la OCA action de CI debe replicar el mismo `--addons-path addons/`.
@@ -255,7 +262,7 @@ especificar sin reabrir discuss:
   `references/l10n-brazil/` ya citados arriba como canonical refs.
 - **Atomic commits + Conventional Commits** (CLAUDE.md). Los 2 commits del
   baseline (D-05) deben respetar `chore(pre-commit): apply cosmetic baseline`
-  + `chore(pre-commit): apply semantic baseline`.
+  - `chore(pre-commit): apply semantic baseline`.
 - **Subagent override** (project CLAUDE.md): cualquier task de código va por
   subagent. Para Phase 1 plan-phase, los subagents relevantes:
   `voltagent-dev-exp:git-workflow-manager` (workflow YAML + pre-commit),
@@ -370,10 +377,10 @@ No applicable — `gsd-sdk query todo.match-phase 1` devolvió `todo_count: 0`.
 - **R-03 medium uncertainty:** env var exacto que `oca_run_tests` lee para test-tags (RESEARCH propone `ODOO_TEST_TAGS`). Planner debe agregar smoke-verification step.
 - **R-05 dependency:** `.pylintrc` y `.pylintrc-mandatory` no existen en repo; planner agrega task de copiar desde l10n-brazil (o renderizar de jinja).
 - **R-06 wagoid behavior:** validación de PR title con `commitlint-github-action@v6` requiere smoke-test en CI-08 (PR con title `fixed bug` debe ser rechazado).
-</addendum>
+  </addendum>
 
 ---
 
-*Phase: 1-bloque-a-foundation-t-cnica-ci-cd-pre-commit*
-*Context gathered: 2026-05-27*
-*Addendum: 2026-05-27 (post-RESEARCH.md, user-confirmed resolutions)*
+_Phase: 1-bloque-a-foundation-t-cnica-ci-cd-pre-commit_
+_Context gathered: 2026-05-27_
+_Addendum: 2026-05-27 (post-RESEARCH.md, user-confirmed resolutions)_

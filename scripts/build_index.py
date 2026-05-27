@@ -73,7 +73,7 @@ EXCLUDE_PATTERNS = [
     "/dist/",
     "/build/",
     "/.codegraph/",
-    "/i18n/",          # .pot/.po los indexamos pero NO los .mo
+    "/i18n/",  # .pot/.po los indexamos pero NO los .mo
 ]
 
 # Tamaño máximo de un archivo a indexar (8 MB)
@@ -174,13 +174,15 @@ def extract_python_symbols(content: str, file_id: int) -> list[tuple]:
 
     def visit(node, parent: Optional[str] = None) -> None:
         if isinstance(node, ast.ClassDef):
-            base_names = [
-                _name_of(b)
-                for b in node.bases
-                if _name_of(b)
-            ]
-            sig = f"class {node.name}({', '.join(base_names)})" if base_names else f"class {node.name}"
-            out.append((file_id, node.name, "class", node.lineno, node.col_offset, sig, parent))
+            base_names = [_name_of(b) for b in node.bases if _name_of(b)]
+            sig = (
+                f"class {node.name}({', '.join(base_names)})"
+                if base_names
+                else f"class {node.name}"
+            )
+            out.append(
+                (file_id, node.name, "class", node.lineno, node.col_offset, sig, parent)
+            )
             for child in node.body:
                 if isinstance(child, ast.Assign):
                     for tgt in child.targets:
@@ -190,21 +192,25 @@ def extract_python_symbols(content: str, file_id: int) -> list[tuple]:
                             and isinstance(child.value, ast.Constant)
                             and isinstance(child.value.value, str)
                         ):
-                            out.append((
-                                file_id,
-                                child.value.value,
-                                "odoo_model",
-                                child.lineno,
-                                child.col_offset,
-                                f"{tgt.id} = {child.value.value!r}",
-                                node.name,
-                            ))
+                            out.append(
+                                (
+                                    file_id,
+                                    child.value.value,
+                                    "odoo_model",
+                                    child.lineno,
+                                    child.col_offset,
+                                    f"{tgt.id} = {child.value.value!r}",
+                                    node.name,
+                                )
+                            )
                 visit(child, parent=node.name)
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             kind = "method" if parent else "function"
             args = ", ".join(a.arg for a in node.args.args)
             sig = f"def {node.name}({args})"
-            out.append((file_id, node.name, kind, node.lineno, node.col_offset, sig, parent))
+            out.append(
+                (file_id, node.name, kind, node.lineno, node.col_offset, sig, parent)
+            )
             for child in node.body:
                 visit(child, parent=node.name)
         else:
@@ -302,8 +308,12 @@ def show_stats() -> dict:
     cur = conn.cursor()
     files = cur.execute("SELECT COUNT(*) FROM files").fetchone()[0]
     syms = cur.execute("SELECT COUNT(*) FROM symbols").fetchone()[0]
-    by_kind = dict(cur.execute("SELECT kind, COUNT(*) FROM files GROUP BY kind").fetchall())
-    sym_by_kind = dict(cur.execute("SELECT kind, COUNT(*) FROM symbols GROUP BY kind").fetchall())
+    by_kind = dict(
+        cur.execute("SELECT kind, COUNT(*) FROM files GROUP BY kind").fetchall()
+    )
+    sym_by_kind = dict(
+        cur.execute("SELECT kind, COUNT(*) FROM symbols GROUP BY kind").fetchall()
+    )
     meta = dict(cur.execute("SELECT key, value FROM metadata").fetchall())
     conn.close()
     return {
@@ -320,7 +330,9 @@ def show_stats() -> dict:
 # ---------------------------------------------------------------------------
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build l10n-paraguay search index.")
-    parser.add_argument("--stats", action="store_true", help="Show current index stats and exit")
+    parser.add_argument(
+        "--stats", action="store_true", help="Show current index stats and exit"
+    )
     args = parser.parse_args()
 
     if args.stats:
@@ -340,7 +352,9 @@ def main() -> int:
         print(f"    {kind}: {count}", file=sys.stderr)
     print(f"  Total Python symbols: {stats['symbols']}", file=sys.stderr)
     print(f"  Duration: {stats['duration_s']}s", file=sys.stderr)
-    print(f"  Database: {DB_PATH} ({DB_PATH.stat().st_size // 1024} KB)", file=sys.stderr)
+    print(
+        f"  Database: {DB_PATH} ({DB_PATH.stat().st_size // 1024} KB)", file=sys.stderr
+    )
     return 0
 
 

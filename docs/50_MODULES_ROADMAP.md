@@ -21,6 +21,7 @@ priority: critical
 **Duración estimada:** 4-6 semanas.
 
 ### Scope
+
 - `l10n_py_base`
   - Catálogos DNIT/SIFEN: departamentos (17), distritos (~258), ciudades (~3400),
     actividades económicas, tipos de régimen
@@ -40,11 +41,13 @@ priority: critical
   - Configuración default de `l10n_latam_use_documents = True` en sale journals
 
 ### Dependencias
+
 - `account`
 - `l10n_latam_base`
 - `l10n_latam_invoice_document`
 
 ### Validación (Definition of Done)
+
 - [ ] Módulo se instala sin warnings en una DB limpia con `-i l10n_py_account`
 - [ ] Demo data: company de prueba con RUC válido, partner con CI válido,
       producto con tax 10%
@@ -54,6 +57,7 @@ priority: critical
       `move_type='out_invoice'` en company PY
 
 ### Riesgos
+
 - **Chart of accounts**: si no hay un PUC estándar paraguayo accesible, hay que
   construirlo desde cero o adaptar uno latinoamericano. Investigar con contadores
   locales (Ez probablemente tiene contacto).
@@ -65,6 +69,7 @@ priority: critical
 **Duración estimada:** 8-12 semanas.
 
 ### Scope MVP
+
 - Record `account.edi.format` con code `'py_dnit_sifen'`
 - Subclase Python con `_get_move_applicability`, `_post_invoice_edi`,
   `_cancel_invoice_edi`
@@ -83,11 +88,13 @@ priority: critical
 - Logs en chatter de cada move
 
 ### Dependencias
+
 - `l10n_py_account`
 - `account_edi`
 - (`account_edi_ubl_cii` — solo si compartimos algún builder UBL, probablemente no)
 
 ### Validación
+
 - [ ] Cargar CCFE de prueba (provista por DNIT en homologación) sin errores
 - [ ] Generar XML que pase validación XSD oficial offline
 - [ ] Firma del XML pasa verificación con OpenSSL externo
@@ -100,6 +107,7 @@ priority: critical
 - [ ] Tests `external`: 100% verde contra SIFEN test
 
 ### Riesgos
+
 - **Homologación SIFEN puede tardar**: depende de obtener CCFE de prueba (un
   cliente real con timbrado test, o solicitar Ez como persona física)
 - **Firma XAdES**: SIFEN es estricto con canonicalization. Puede requerir
@@ -108,6 +116,7 @@ priority: critical
   plan a conversión .p12 → .pem si requests-pkcs12 da problemas
 
 ### Métrica final
+
 > Una FE creada en Odoo PY, postear, esperar cron, ver `edi_state='sent'` con
 > XML firmado en attachments y respuesta SIFEN en chatter. Generar KuDE PDF que
 > al escanear QR lleva a e-Kuatia y muestra el DTE aprobado.
@@ -117,6 +126,7 @@ priority: critical
 **Duración estimada:** 6-8 semanas.
 
 ### Scope
+
 - **Libro IVA Ventas**: lista DTEs `out_invoice` + `out_refund` del periodo con
   totales por tasa
 - **Libro IVA Compras**: lista DTEs `in_invoice` + `in_refund` con totales y
@@ -128,16 +138,19 @@ priority: critical
   (verificar `account_reports` no-enterprise alternative)
 
 ### Dependencias
+
 - `l10n_py_edi`
 - `account` (reports framework)
 - Probable: `account_reports` (Enterprise) o un OCA alternativo
 
 ### Validación
+
 - [ ] Libro IVA Ventas/Compras cuadran con suma de moves de la company
 - [ ] Hechauka exporta TXT que pasa validación del DNIT en su sistema
 - [ ] DDJJ IVA refleja correctamente los créditos y débitos del periodo
 
 ### Riesgos
+
 - Si `account_reports` Enterprise no se puede usar, hay que escribir reports
   custom (más laborioso pero factible)
 - Formato Hechauka cambia con frecuencia — versionar el exporter
@@ -147,6 +160,7 @@ priority: critical
 **Duración estimada:** 6-8 semanas.
 
 ### Scope
+
 - Extensión `pos.order` y `pos.session` para integración SIFEN
 - Al cerrar sesión POS: las pos.orders generan account.moves; cada move dispara
   flujo EDI normal
@@ -158,10 +172,12 @@ priority: critical
 - Frontend POS (OWL components) extendido para mostrar campos SIFEN
 
 ### Dependencias
+
 - `l10n_py_edi`
 - `point_of_sale`
 
 ### Validación
+
 - [ ] Vender desde POS sin partner (innominado) → factura con tipo_documento=5
       en cliente
 - [ ] Vender con partner identificado (CI) → factura con datos del cliente
@@ -170,6 +186,7 @@ priority: critical
 - [ ] Performance: POS responsive (<200ms por venta) aunque haya backlog SIFEN
 
 ### Riesgos
+
 - **Performance del POS**: el cálculo del CDC al cerrar la sesión no debe
   bloquear la UI — usar background job
 - **Impresoras térmicas variadas**: testear con al menos 2 modelos comunes en
@@ -182,6 +199,7 @@ priority: critical
 **Duración estimada:** 4-6 semanas.
 
 ### Scope
+
 - **Retención IVA**: % retenido sobre IVA en compras (vendor bills)
 - **Retención IRE** (Impuesto a la Renta Empresarial): % sobre base imponible
 - **Retención IRP** (Impuesto a la Renta Personal): % sobre base imponible
@@ -193,17 +211,20 @@ priority: critical
 - Reporte de retenciones mensuales/anuales
 
 ### Dependencias
+
 - `l10n_py_edi` (para flujo EDI si el comprobante de retención también es DTE)
 - `l10n_py_reports` (para reportes de retenciones)
 - Inspirar en `l10n_ec_withhold` (OCA Ecuador) y `l10n_ar_withholding` (Odoo)
 
 ### Validación
+
 - [ ] Crear vendor bill con tax retención IVA → vendor payment registra el
       withholding
 - [ ] Comprobante de retención generado con datos correctos
 - [ ] Reporte mensual de retenciones cuadra
 
 ### Riesgos
+
 - Definición legal de retenciones puede cambiar (decretos DNIT) — desacoplar
   cálculo del código (usar configuration models, no constantes)
 
@@ -212,6 +233,7 @@ priority: critical
 **Duración estimada:** 4 semanas.
 
 ### Scope
+
 - README OCA-compliant en cada módulo (`oca-gen-addon-readme` desde `readme/*`)
 - Capturas de pantalla en `static/description/`
 - Documentación de homologación step-by-step
@@ -220,6 +242,7 @@ priority: critical
 - Pull request a `OCA/l10n-paraguay` (proponer creación del repo si no existe)
 
 ### Validación
+
 - [ ] CI verde en GitHub Actions con Python 3.11, 3.12 y PostgreSQL 15, 16
 - [ ] README de cada módulo se ve bien en GitHub
 - [ ] Repo aceptado por OCA o publicado independientemente con estándar OCA

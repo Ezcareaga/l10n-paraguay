@@ -133,6 +133,7 @@ l10n_py_edi/
 ```
 
 ### Reglas de oro
+
 - `license` **obligatorio** en todos los módulos OCA
 - `author` **debe terminar** en `, Odoo Community Association (OCA)`
 - `version` con prefijo `<odoo_version>.x.y.z` (ej: `18.0.1.0.0` — primer release)
@@ -140,6 +141,7 @@ l10n_py_edi/
 - `data` también: orden de carga es de arriba a abajo (security ANTES de data)
 
 ### Campos opcionales útiles
+
 - `external_dependencies`: bloquea la instalación si falta el paquete Python o binario
 - `pre_init_hook` / `post_init_hook` / `uninstall_hook`: funciones en `hooks.py`
   para tareas no expresables en XML
@@ -147,6 +149,7 @@ l10n_py_edi/
   (bridge module pattern)
 
 ### Categorías OCA estándar
+
 - `Accounting/Localizations/Account Charts` — para `l10n_py_base` (CoA)
 - `Accounting/Localizations/EDI` — para `l10n_py_edi`
 - `Accounting/Localizations/Reports` — para `l10n_py_reports`
@@ -155,6 +158,7 @@ l10n_py_edi/
 ## 4. `__init__.py` patterns
 
 ### Top-level del módulo
+
 ```python
 # l10n_py_edi/__init__.py
 from . import controllers
@@ -164,6 +168,7 @@ from . import wizards
 ```
 
 ### `models/__init__.py`
+
 ```python
 from . import account_edi_format
 from . import account_move
@@ -176,6 +181,7 @@ from . import res_partner
 — importa primero el base.
 
 ### Hooks (opcional, si manifest los declara)
+
 ```python
 # l10n_py_edi/hooks.py
 def post_init_hook(env):
@@ -192,6 +198,7 @@ def uninstall_hook(env):
 ## 5. Data files (XML)
 
 ### Esqueleto básico
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
@@ -202,6 +209,7 @@ def uninstall_hook(env):
 ```
 
 ### `noupdate="1"` — datos que NO se sobreescriben en update
+
 ```xml
 <odoo>
     <data noupdate="1">
@@ -220,6 +228,7 @@ def uninstall_hook(env):
 **plantillas / demo / defaults** que el usuario puede editar.
 
 ### `<field>` con `ref` (referencias a otros XML IDs)
+
 ```xml
 <record id="my_view" model="ir.ui.view">
     <field name="name">my.view</field>
@@ -232,6 +241,7 @@ def uninstall_hook(env):
 ```
 
 ### `<field>` con `eval` (expresiones Python)
+
 ```xml
 <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
 <field name="start_date" eval="datetime.date.today()"/>
@@ -241,6 +251,7 @@ def uninstall_hook(env):
 Vars disponibles: `time`, `datetime`, `timedelta`, `relativedelta`, `ref()`, `obj`.
 
 ### Shortcuts útiles
+
 ```xml
 <menuitem id="menu_l10n_py" name="Paraguay" parent="account.menu_finance"/>
 <menuitem id="menu_l10n_py_timbrado"
@@ -256,6 +267,7 @@ Vars disponibles: `time`, `datetime`, `timedelta`, `relativedelta`, `ref()`, `ob
 ## 6. Data files (CSV)
 
 Formato:
+
 ```csv
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_l10n_py_timbrado_user,l10n_py.timbrado.user,model_l10n_py_timbrado,base.group_user,1,0,0,0
@@ -271,15 +283,15 @@ access_l10n_py_timbrado_manager,l10n_py.timbrado.manager,model_l10n_py_timbrado,
 
 Patrón: `<model_with_underscores>_<descriptor>`
 
-| Tipo | Patrón | Ejemplo |
-|------|--------|---------|
-| Data record | `<model>_<descriptor>` | `res_users_admin` |
-| View | `<model>_view_<type>` | `account_move_view_form` |
-| Action | `<model>_action` | `account_move_action` |
-| Menu | `<model>_menu` | `account_move_menu` |
-| Security group | `<model>_group_<name>` | `account_move_group_manager` |
-| Rule | `<model>_rule_<group>` | `account_move_rule_company` |
-| Demo | append `_demo` | `res_partner_demo_customer_demo` |
+| Tipo           | Patrón                 | Ejemplo                          |
+| -------------- | ---------------------- | -------------------------------- |
+| Data record    | `<model>_<descriptor>` | `res_users_admin`                |
+| View           | `<model>_view_<type>`  | `account_move_view_form`         |
+| Action         | `<model>_action`       | `account_move_action`            |
+| Menu           | `<model>_menu`         | `account_move_menu`              |
+| Security group | `<model>_group_<name>` | `account_move_group_manager`     |
+| Rule           | `<model>_rule_<group>` | `account_move_rule_company`      |
+| Demo           | append `_demo`         | `res_partner_demo_customer_demo` |
 
 Usar el XML ID sin prefijo del módulo dentro del propio módulo (`my_view`).
 Usar `module.xml_id` para referencias cross-module (`base.view_partner_form`).

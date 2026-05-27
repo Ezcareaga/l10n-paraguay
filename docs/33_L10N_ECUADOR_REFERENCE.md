@@ -8,6 +8,7 @@ priority: critical
 # Ecuador — patrón EDI más cercano a Paraguay
 
 > **Por qué Ecuador es la mejor referencia para Paraguay:**
+>
 > 1. **Clave de acceso de 49 dígitos** — concepto análogo al CDC paraguayo de 44 dígitos
 > 2. **Certificado .p12 propio** del contribuyente → conexión directa al SRI
 >    (Paraguay: CCFE propio → conexión directa a SIFEN). Sin intermediarios IAP/OSE.
@@ -20,16 +21,16 @@ priority: critical
 
 ## 1. Módulos del paquete Ecuador
 
-| Módulo | Técnico | Disp. en Comm? |
-|--------|---------|----------------|
-| Ecuadorian Accounting | `l10n_ec` | ✓ (Odoo 18 community sparse-checked) |
-| Ecuadorian Accounting EDI | `l10n_ec_edi` | ✗ (Enterprise) |
-| Ecuadorian Accounting Reports | `l10n_ec_reports` | ✗ Enterprise |
-| ATS Report | `l10n_ec_reports_ats` | ✗ Enterprise |
-| OCA Ecuador EDI base | `l10n_ec_base` | ✓ (`references/l10n-ecuador-17.0/`) |
-| OCA Ecuador Account EDI | `l10n_ec_account_edi` | ✓ (idem) |
-| OCA Ecuador Credit Note | `l10n_ec_credit_note` | ✓ (idem) |
-| OCA Ecuador Withhold | `l10n_ec_withhold` | ✓ (idem) |
+| Módulo                        | Técnico               | Disp. en Comm?                       |
+| ----------------------------- | --------------------- | ------------------------------------ |
+| Ecuadorian Accounting         | `l10n_ec`             | ✓ (Odoo 18 community sparse-checked) |
+| Ecuadorian Accounting EDI     | `l10n_ec_edi`         | ✗ (Enterprise)                       |
+| Ecuadorian Accounting Reports | `l10n_ec_reports`     | ✗ Enterprise                         |
+| ATS Report                    | `l10n_ec_reports_ats` | ✗ Enterprise                         |
+| OCA Ecuador EDI base          | `l10n_ec_base`        | ✓ (`references/l10n-ecuador-17.0/`)  |
+| OCA Ecuador Account EDI       | `l10n_ec_account_edi` | ✓ (idem)                             |
+| OCA Ecuador Credit Note       | `l10n_ec_credit_note` | ✓ (idem)                             |
+| OCA Ecuador Withhold          | `l10n_ec_withhold`    | ✓ (idem)                             |
 
 **Implicación:** Para community EDI usar el OCA — está en 17.0, próximo a port
 a 18.0.
@@ -37,6 +38,7 @@ a 18.0.
 ## 2. Setup empresa
 
 ### Datos clave (mapea a `l10n_py_base` análogamente)
+
 - **Country**: Ecuador
 - **Identification Type**: RUC (13 dígitos)
 - **VAT field**: RUC
@@ -44,6 +46,7 @@ a 18.0.
 - **Forced to Keep Accounting Books**: Boolean (algunos contribuyentes están exentos)
 
 ### Equivalente Paraguay
+
 - **Country**: Paraguay
 - **Identification Type**: RUC
 - **VAT field**: RUC (8-9 dígitos + DV)
@@ -53,6 +56,7 @@ a 18.0.
 ## 3. Document types
 
 Ecuador maneja:
+
 - Factura
 - Nota de Crédito
 - Nota de Débito
@@ -63,6 +67,7 @@ Ecuador maneja:
 Cada uno con código SRI y sequence.
 
 ### Equivalente Paraguay
+
 - Factura Electrónica (01)
 - Autofactura (04) — análogo a Liquidación de Compras
 - Nota de Crédito (05)
@@ -74,20 +79,26 @@ Cada uno con código SRI y sequence.
 ## 4. Configuración tax (lo que va a `l10n_py_account`)
 
 ### Estructura naming Ecuador
+
 ```
 "IVA 12% (104, [form code] [tax support code] [tax support short name])"
 ```
+
 Cada tax referencia:
+
 - 104 form code (campo del reporte 104)
 - Tax support classification (sustento tributario)
 
 ### Estructura naming Paraguay (propuesta)
+
 ```
 "IVA 10% (Gravada)"
 "IVA 5% (Reducida)"
 "IVA Exenta"
 ```
+
 Campos custom en `account.tax`:
+
 - `l10n_py_tax_code`: código SIFEN del tax
 - `l10n_py_iva_proporcion`: 100, 85, 30, 50
 
@@ -97,39 +108,46 @@ otra estructura.
 ## 5. Configuración del journal de ventas
 
 ### Ecuador (lo que define el setup)
+
 ```
 [Entity]-[Point] [Document Type]
 Ej: "001-001 Sales Documents"
 ```
 
 Campos:
+
 - **Emission Entity**: número del establecimiento (3 dígitos)
 - **Emission Point**: número del punto de emisión (3 dígitos)
 - **Short Code**: prefijo de 5 dígitos para la sequence (ej: VT001)
 - **Electronic invoicing**: checkbox para activar transmisión
 
 ### Equivalente Paraguay
+
 ```
 [Establishment]-[Point] [Document]
 Ej: "001-001 Facturación"
 ```
 
 Campos custom en `account.journal`:
+
 - `l10n_py_establishment` (Char 3)
 - `l10n_py_point_of_emission` (Char 3)
 - `l10n_py_timbrado_id` (Many2one a `l10n_py.timbrado`)
 
 Y el field estándar:
+
 - `edi_format_ids` con el record SIFEN seleccionado
 
 ## 6. Electronic signature
 
 ### Ecuador
+
 - Formato: **PKCS#12 (.p12)**
 - Issued by SRI
 - Usado para firmar XML del documento
 
 ### Paraguay
+
 - Formato: **PKCS#12 (.p12 / .pfx)**
 - Issued by prestador autorizado por Autoridad Certificadora Raíz del Paraguay
 - Tipos F110 (PJ) o F211 (PF)
@@ -164,6 +182,7 @@ Ver detalle en [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md) librería `req
 ## 7. Clave de acceso vs CDC
 
 ### Ecuador: clave de acceso (49 dígitos)
+
 ```
 Posición  Largo  Campo
 1-8       8      Fecha emisión (DDMMYYYY)
@@ -178,6 +197,7 @@ Posición  Largo  Campo
 ```
 
 ### Paraguay: CDC (44 dígitos)
+
 ```
 Posición  Largo  Campo
 01-02     2      Tipo Documento Electrónico
@@ -194,6 +214,7 @@ Posición  Largo  Campo
 ```
 
 Diferencias:
+
 - Largo: 44 vs 49
 - Paraguay incluye `tipo_contribuyente`, Ecuador no
 - Paraguay tiene un "código de seguridad aleatorio" de 9 dígitos generado por
@@ -207,24 +228,30 @@ para clave de acceso es referencia directa para el CDC paraguayo.**
 ## 8. Withholdings (mapea a `l10n_py_withholding`)
 
 ### Ecuador
+
 Dos tipos:
+
 - **VAT Withholding (Retención IVA)**: % retenido sobre IVA en compras
 - **Income Tax Withholding (Retención a la Renta)**: % retenido sobre base
   imponible de la compra
 
 Configurado vía:
+
 - **SRI Taxpayer Type** del partner: define % a aplicar (consumibles, servicios,
   tarjeta crédito)
 - Account.tax con flag de withhold
 - Generación automática de "Comprobante de Retención" cuando se valida una bill
 
 ### Paraguay
+
 Estructura similar. Tipos:
+
 - **Retención IVA** (% sobre IVA en compras)
 - **Retención IRE** (Impuesto a la Renta Empresarial)
 - **Retención IRP** (Impuesto a la Renta Personal)
 
 Probable diseño:
+
 - Campo `l10n_py_withhold_type` en `account.tax`
 - Campo `l10n_py_taxpayer_type` en `res.partner`
 - Generación de "Comprobante de Retención" como subtipo de `account.move`
@@ -239,6 +266,7 @@ Detalle en una futura iteración cuando se implemente `l10n_py_withholding`.
 - **ATS Report** (Anexo Transaccional Simplificado) — XML export para DIMM
 
 ### Equivalente Paraguay
+
 - **Libro IVA Ventas**
 - **Libro IVA Compras**
 - **Hechauka** — sistema declaración DNIT (formato específico)
@@ -248,6 +276,7 @@ Detalle en una futura iteración cuando se implemente `l10n_py_withholding`.
 ## 10. Flujo de envío al SRI vs SIFEN
 
 ### Ecuador (SRI)
+
 1. Documento creado en Odoo con datos completos
 2. Sistema firma con .p12 (XMLDSig)
 3. Genera clave de acceso (49 dígitos)
@@ -257,6 +286,7 @@ Detalle en una futura iteración cuando se implemente `l10n_py_withholding`.
 7. Genera **RIDE** (representación impresa) para entregar al cliente
 
 ### Paraguay (SIFEN)
+
 1. Documento creado en Odoo con datos completos
 2. Sistema firma con CCFE (XMLDSig)
 3. Genera CDC (44 dígitos)
@@ -266,6 +296,7 @@ Detalle en una futura iteración cuando se implemente `l10n_py_withholding`.
 7. Genera **KuDE** (representación impresa) para entregar al cliente
 
 **Diferencias críticas:**
+
 - REST (EC) vs SOAP (PY)
 - Sin mutual TLS (EC) vs con mutual TLS (PY)
 - Modelos de error distintos

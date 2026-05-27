@@ -7,7 +7,6 @@ from .common import L10nPyAccountTestCase
 
 @tagged("post_install", "-at_install", "l10n_py")
 class TestTaxes(L10nPyAccountTestCase):
-
     def _tax_by_xmlid(self, xmlid):
         return self.env.ref(f"account.{self.company.id}_{xmlid}")
 
@@ -45,11 +44,17 @@ class TestTaxes(L10nPyAccountTestCase):
         )
 
     def test_afectacion_iva_fk_on_iva_taxes(self):
-        for xmlid in ["tax_iva_venta_10", "tax_iva_venta_5", "tax_iva_compra_10",
-                      "tax_iva_compra_5"]:
+        for xmlid in [
+            "tax_iva_venta_10",
+            "tax_iva_venta_5",
+            "tax_iva_compra_10",
+            "tax_iva_compra_5",
+        ]:
             tax = self._tax_by_xmlid(xmlid)
             self.assertEqual(
-                tax.l10n_py_afectacion_iva_id.code, "1", f"{xmlid} debe ser Gravado",
+                tax.l10n_py_afectacion_iva_id.code,
+                "1",
+                f"{xmlid} debe ser Gravado",
             )
 
     def test_compute_amount_iva_10(self):
@@ -69,7 +74,13 @@ class TestTaxes(L10nPyAccountTestCase):
         self.assertEqual(result["total_included"], 100.0)
 
     def test_taxes_have_correct_tax_group(self):
-        for xmlid in ["tax_iva_venta_10", "tax_iva_venta_5", "tax_iva_venta_exenta",
-                      "tax_iva_venta_export", "tax_iva_compra_10", "tax_iva_compra_5"]:
+        for xmlid in [
+            "tax_iva_venta_10",
+            "tax_iva_venta_5",
+            "tax_iva_venta_exenta",
+            "tax_iva_venta_export",
+            "tax_iva_compra_10",
+            "tax_iva_compra_5",
+        ]:
             tax = self._tax_by_xmlid(xmlid)
             self.assertEqual(tax.tax_group_id.name, "IVA Paraguay")

@@ -8,6 +8,7 @@ priority: important
 # Odoo 18 — Security Guide
 
 > Dos capas de seguridad en Odoo:
+>
 > 1. **Model-level (ACL)** — quién puede leer/escribir/crear/borrar registros de un modelo.
 > 2. **Record-level (Record Rules)** — qué registros específicos puede ver/editar (filtro por dominio).
 >
@@ -67,13 +68,13 @@ Filtran qué records específicos un usuario puede ver/escribir vía un dominio.
 
 ### Variables disponibles en `domain_force`
 
-| Variable | Significado |
-|----------|-------------|
-| `user` | recordset del usuario actual (singleton) |
-| `user.id` | ID del usuario |
-| `company_id` | ID de la company actual (int, no recordset) |
+| Variable      | Significado                                              |
+| ------------- | -------------------------------------------------------- |
+| `user`        | recordset del usuario actual (singleton)                 |
+| `user.id`     | ID del usuario                                           |
+| `company_id`  | ID de la company actual (int, no recordset)              |
 | `company_ids` | lista de IDs de companies a las que el user tiene acceso |
-| `time` | módulo `time` de Python |
+| `time`        | módulo `time` de Python                                  |
 
 ### Composición de reglas
 
@@ -122,6 +123,7 @@ se asignan a groups, no directamente a usuarios.
 ### Patrón "User + Manager"
 
 Casi todos los módulos OCA exponen 2 groups:
+
 - `module_group_user` — operación cotidiana
 - `module_group_manager` — admin/configuración
 
@@ -151,15 +153,16 @@ class L10nPyController(http.Controller):
 
 ### Niveles de `auth`
 
-| Valor | Comportamiento |
-|-------|----------------|
-| `'user'` | Requiere user logueado; rechaza si no hay sesión |
-| `'public'` | Acepta sesión `public` (no logueado) — útil para portal/web |
-| `'none'` | Bypass total (raro — solo health checks, webhooks con su propia auth) |
+| Valor      | Comportamiento                                                        |
+| ---------- | --------------------------------------------------------------------- |
+| `'user'`   | Requiere user logueado; rechaza si no hay sesión                      |
+| `'public'` | Acepta sesión `public` (no logueado) — útil para portal/web           |
+| `'none'`   | Bypass total (raro — solo health checks, webhooks con su propia auth) |
 
 ### CSRF protection
 
 Activado por default para POST. En formularios HTML:
+
 ```xml
 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 ```
@@ -211,14 +214,14 @@ records.with_context(lang='es_PY').name
 
 ## 6. Pitfalls comunes de seguridad
 
-| Riesgo | Cómo evitarlo |
-|--------|---------------|
-| SQL injection en query custom | Usar **siempre** parámetros: `cr.execute('SELECT ... WHERE id IN %s', (tuple(ids),))` |
-| XSS en templates QWeb | QWeb escapea por default; nunca uses `t-raw` con datos de usuario |
-| Métodos públicos de model accesibles via RPC | Prefix `_` para métodos privados; los públicos son llamables vía XML-RPC/JSON-RPC |
-| Subir archivos sin sanitizar | Validar mimetype, tamaño, contenido antes de guardar |
-| Hardcodear secretos | Variables de entorno o `ir.config_parameter` (encriptados si son sensibles) |
-| Exponer error stack traces en producción | Modo `--dev=none` (sin stack trace en HTTP responses) |
+| Riesgo                                       | Cómo evitarlo                                                                         |
+| -------------------------------------------- | ------------------------------------------------------------------------------------- |
+| SQL injection en query custom                | Usar **siempre** parámetros: `cr.execute('SELECT ... WHERE id IN %s', (tuple(ids),))` |
+| XSS en templates QWeb                        | QWeb escapea por default; nunca uses `t-raw` con datos de usuario                     |
+| Métodos públicos de model accesibles via RPC | Prefix `_` para métodos privados; los públicos son llamables vía XML-RPC/JSON-RPC     |
+| Subir archivos sin sanitizar                 | Validar mimetype, tamaño, contenido antes de guardar                                  |
+| Hardcodear secretos                          | Variables de entorno o `ir.config_parameter` (encriptados si son sensibles)           |
+| Exponer error stack traces en producción     | Modo `--dev=none` (sin stack trace en HTTP responses)                                 |
 
 ### `Markup` para HTML seguro
 
@@ -277,6 +280,7 @@ access_l10n_py_cancellation_wizard,l10n_py.cancellation.wizard,model_l10n_py_can
 ```
 
 Cargar en el manifest **antes** que las views:
+
 ```python
 'data': [
     'security/l10n_py_edi_security.xml',     # GROUPS primero

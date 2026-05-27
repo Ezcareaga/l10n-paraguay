@@ -22,7 +22,11 @@ class AccountMove(models.Model):
                WHERE indexname = 'account_move_unique_name' AND tablename = 'account_move'"""
         )
         row = self.env.cr.fetchone()
-        if row and "l10n_latam_document_type_id" not in row[0].split("USING btree")[1].split("WHERE")[0]:
+        if (
+            row
+            and "l10n_latam_document_type_id"
+            not in row[0].split("USING btree")[1].split("WHERE")[0]
+        ):
             drop_index(self.env.cr, "account_move_unique_name", self._table)
             self.env.cr.execute(
                 """

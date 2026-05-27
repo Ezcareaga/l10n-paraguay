@@ -7,12 +7,12 @@
 
 ## Entregables
 
-| Módulo | Versión | Tests | Estado |
-|---|---|---|---|
-| `l10n_py_base` | `18.0.1.1.0` | 23 | ✅ mergeado en `main` |
-| `l10n_py_account` | `18.0.1.0.0` | 74 | ✅ mergeado en `main` |
-| `scripts/extract_puc_rg49.py` | — | — | ✅ genera CSVs PUC desde XLS oficial DNIT |
-| **Total Fase 1** | — | **97 tests** | **100% verde** |
+| Módulo                        | Versión      | Tests        | Estado                                    |
+| ----------------------------- | ------------ | ------------ | ----------------------------------------- |
+| `l10n_py_base`                | `18.0.1.1.0` | 23           | ✅ mergeado en `main`                     |
+| `l10n_py_account`             | `18.0.1.0.0` | 74           | ✅ mergeado en `main`                     |
+| `scripts/extract_puc_rg49.py` | —            | —            | ✅ genera CSVs PUC desde XLS oficial DNIT |
+| **Total Fase 1**              | —            | **97 tests** | **100% verde**                            |
 
 ## Sub-fases
 
@@ -27,6 +27,7 @@ Bootstrap del repo + primer módulo OCA-style.
 - `72c9904` — fix(infra): silenciar FATAL de Postgres logs en docker-compose
 
 **Deliverables Fase 1a:**
+
 - `l10n_py_base 18.0.1.0.0` con catálogos SIFEN (regímenes, tipos de
   contribuyente, naturaleza receptor, distritos, ciudades, identification types)
 - Validación módulo 11 RUC + CI
@@ -51,10 +52,12 @@ Bootstrap del repo + primer módulo OCA-style.
 - `391cad4` docs: release notes 18.0.1.1.0
 
 **Modelos nuevos:**
+
 - `l10n_py.economic_activity` — catálogo SIFEN actividades (manual load por
   ahora; WS SET en Fase 2)
 
 **Extensiones a `res.company`:**
+
 - `l10n_py_taxpayer_type_id` (Many2one)
 - `l10n_py_regime_id` (Many2one)
 - `l10n_py_economic_activity_ids` (Many2many)
@@ -63,6 +66,7 @@ Bootstrap del repo + primer módulo OCA-style.
 - `@api.constrains` valida RUC módulo 11 si `country_id == PY`
 
 **Vistas:**
+
 - Nuevo tab "Paraguay (Fiscal)" en form view de `res.company`, visible solo si country == PY
 
 #### PR2 — `l10n_py_account 18.0.1.0.0` (20 commits)
@@ -70,10 +74,11 @@ Bootstrap del repo + primer módulo OCA-style.
 [GitHub PR #2](https://github.com/Ezcareaga/l10n-paraguay/pull/2) — mergeado vía rebase.
 
 **Modelos nuevos:**
+
 - `l10n_py.afectacion_iva` — catálogo SIFEN TABLA 6 (4 records: Gravado /
   Exonerado / Exento / Parcial)
 - `l10n_py.timbrado` — autorización DNIT con validaciones (8 dígitos numéricos,
-  single active per company, _sql_constraints uniqueness)
+  single active per company, \_sql_constraints uniqueness)
 - `l10n_py.point_of_emission` — establecimiento + punto de expedición SIFEN
   (3 dígitos zero-pad en `name`, `_sql_constraints` unique por
   `(company, est, code)`)
@@ -82,14 +87,14 @@ Bootstrap del repo + primer módulo OCA-style.
 
 **Extensiones:**
 
-| Modelo | Cambios |
-|---|---|
-| `res.company` | `_localization_use_documents` retorna True si `account_fiscal_country_id == PY`; `l10n_py_active_timbrado_id` computed; `l10n_py_timbrado_ids` O2M |
-| `account.journal` | `l10n_py_point_of_emission_id` (M2O); constraint requiere PoE en journals sale + PY + use_documents; constraint inverso (PoE → use_documents debe estar on); ambos constraints skip en `install_mode` para no romper chart_template load |
-| `account.move` | `_get_starting_sequence` retorna `EST-POE-0000000`; `_get_last_sequence_domain` filtra por doc_type; `_post` defensivo (solo sale journals) raise si falta PoE; `_get_sequence_cache` scoped por doc_type; `_auto_init` re-crea índice unique `account_move_unique_name` para incluir `l10n_latam_document_type_id` |
-| `account.move.line` | `l10n_py_iva_proporcion` (Integer 1-100) para "gravado parcial" SIFEN |
-| `account.tax` | `l10n_py_afectacion_iva_id` (M2O) para campo E731 del XML SIFEN |
-| `l10n_latam.document.type` | `_format_document_number` override valida y normaliza a `EEE-PPP-NNNNNNN` (3-3-7 dígitos zero-pad) |
+| Modelo                     | Cambios                                                                                                                                                                                                                                                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `res.company`              | `_localization_use_documents` retorna True si `account_fiscal_country_id == PY`; `l10n_py_active_timbrado_id` computed; `l10n_py_timbrado_ids` O2M                                                                                                                                                                  |
+| `account.journal`          | `l10n_py_point_of_emission_id` (M2O); constraint requiere PoE en journals sale + PY + use_documents; constraint inverso (PoE → use_documents debe estar on); ambos constraints skip en `install_mode` para no romper chart_template load                                                                            |
+| `account.move`             | `_get_starting_sequence` retorna `EST-POE-0000000`; `_get_last_sequence_domain` filtra por doc_type; `_post` defensivo (solo sale journals) raise si falta PoE; `_get_sequence_cache` scoped por doc_type; `_auto_init` re-crea índice unique `account_move_unique_name` para incluir `l10n_latam_document_type_id` |
+| `account.move.line`        | `l10n_py_iva_proporcion` (Integer 1-100) para "gravado parcial" SIFEN                                                                                                                                                                                                                                               |
+| `account.tax`              | `l10n_py_afectacion_iva_id` (M2O) para campo E731 del XML SIFEN                                                                                                                                                                                                                                                     |
+| `l10n_latam.document.type` | `_format_document_number` override valida y normaliza a `EEE-PPP-NNNNNNN` (3-3-7 dígitos zero-pad)                                                                                                                                                                                                                  |
 
 **Data (CSVs):**
 
@@ -102,36 +107,38 @@ Bootstrap del repo + primer módulo OCA-style.
 - `data/template/account.fiscal.position-py.csv` — placeholder vacío (Fase 2)
 
 **Chart template:**
+
 - `models/template_py.py` — Odoo 18 API moderna con `@template("py")` decorators
 - 3 decorators: base template data, `res.company` defaults, `account.journal` defaults
 - **No `code_digits`** — PUC RG 49/14 tiene códigos de 2-11 dígitos; padding
   uniforme distorsionaría códigos canónicos DNIT
 
 **Hooks + UX:**
+
 - `_post_init_hook` defensivo (Fase 2 lo extiende):
   - Detecta journals sale PY con `use_documents=True` pero sin PoE → desactiva
-    + crea mail activity para que el usuario los configure
+    - crea mail activity para que el usuario los configure
   - Warning si hay chart custom con >20 cuentas preexistentes (sugiere wizard)
 - 4 menús bajo `Contabilidad → Configuración → Paraguay`:
   Timbrados / Puntos de Emisión / Afectación IVA / Migración Chart
 
 **Tests (74):**
 
-| Test file | Cuenta |
-|---|---|
-| `test_account_move_defensive.py` | 3 |
-| `test_account_move_sequence.py` | 8 |
-| `test_chart_template.py` | 8 |
-| `test_company_extension.py` | 4 |
-| `test_document_types.py` | 12 |
-| `test_hechauka_critical_accounts.py` | 2 (leaf + groups) |
-| `test_journal_extension.py` | 7 |
-| `test_migration_wizard.py` | 3 |
-| `test_point_of_emission.py` | 6 |
-| `test_post_init_hook.py` | 2 |
-| `test_pyme_e2e.py` | 1 (smoke E2E completo) |
-| `test_taxes.py` | 10 |
-| `test_timbrado.py` | 8 |
+| Test file                            | Cuenta                 |
+| ------------------------------------ | ---------------------- |
+| `test_account_move_defensive.py`     | 3                      |
+| `test_account_move_sequence.py`      | 8                      |
+| `test_chart_template.py`             | 8                      |
+| `test_company_extension.py`          | 4                      |
+| `test_document_types.py`             | 12                     |
+| `test_hechauka_critical_accounts.py` | 2 (leaf + groups)      |
+| `test_journal_extension.py`          | 7                      |
+| `test_migration_wizard.py`           | 3                      |
+| `test_point_of_emission.py`          | 6                      |
+| `test_post_init_hook.py`             | 2                      |
+| `test_pyme_e2e.py`                   | 1 (smoke E2E completo) |
+| `test_taxes.py`                      | 10                     |
+| `test_timbrado.py`                   | 8                      |
 
 ## Decisiones técnicas relevantes
 
@@ -211,27 +218,27 @@ El decorator setea `cls.chart_template = "py"` antes de que corra
 
 ### Bugs descubiertos durante el plan (todos fixados antes de mergear)
 
-| # | Lugar | Bug | Fix |
-|---|---|---|---|
-| 1 | Plan Task 21 | `raise models.UserError(...)` (typo) | `from odoo.exceptions import UserError` |
-| 2 | Plan Task 17 | Códigos Hechauka 11-dígitos (`10103050102/3`) | Son 9-dígitos (`101030502/3`) en RG 49/14 |
-| 3 | Plan Task 10 | `chart_template_ref` kwarg a setUpClass | No existe en Odoo 18, usar decorator |
-| 4 | Múltiples tests | `company_id` en `account.account` | Es `company_ids` Many2many |
-| 5 | `extract_puc_rg49.py` | Heurística receivable solo `1010103*` | Detectar "DEUDORES" por nombre |
-| 6 | `template_py.py` | `code_digits=9` (paddeaba `1010101` → `001010101`) | Removido — PUC tiene longitud variable |
-| 7 | `account_move.py` `_post` | Verificaba PoE en TODOS los journals PY | Solo sale journals (purchase tiene PoE del proveedor) |
-| 8 | Infra docker | `docker exec` no re-corre entrypoint | Documentado en BUGS_BACKLOG #2 con comando correcto |
+| #   | Lugar                     | Bug                                                | Fix                                                   |
+| --- | ------------------------- | -------------------------------------------------- | ----------------------------------------------------- |
+| 1   | Plan Task 21              | `raise models.UserError(...)` (typo)               | `from odoo.exceptions import UserError`               |
+| 2   | Plan Task 17              | Códigos Hechauka 11-dígitos (`10103050102/3`)      | Son 9-dígitos (`101030502/3`) en RG 49/14             |
+| 3   | Plan Task 10              | `chart_template_ref` kwarg a setUpClass            | No existe en Odoo 18, usar decorator                  |
+| 4   | Múltiples tests           | `company_id` en `account.account`                  | Es `company_ids` Many2many                            |
+| 5   | `extract_puc_rg49.py`     | Heurística receivable solo `1010103*`              | Detectar "DEUDORES" por nombre                        |
+| 6   | `template_py.py`          | `code_digits=9` (paddeaba `1010101` → `001010101`) | Removido — PUC tiene longitud variable                |
+| 7   | `account_move.py` `_post` | Verificaba PoE en TODOS los journals PY            | Solo sale journals (purchase tiene PoE del proveedor) |
+| 8   | Infra docker              | `docker exec` no re-corre entrypoint               | Documentado en BUGS_BACKLOG #2 con comando correcto   |
 
 ## Cobertura por industria PyME
 
-| Industria | Cobertura | Notas |
-|---|---|---|
-| Comercio minorista (minimarket, almacén) | ✅ completa | — |
-| Gastronomía | ✅ completa | — |
-| Servicios profesionales | ✅ completa | — |
-| Importador / distribuidor | ⚠ activar manual | Cuentas exterior `4.06-4.08`, `1.01.04.11` Importaciones en curso |
-| Agro / ganadería | ⚠ activar manual | Grupos `4.02-4.05` ventas + `5.02-5.05` costos + activos biológicos |
-| Régimen Turismo / Zona Franca / Maquila | ⚠ activar manual | Grupos `4.10`, `5.10`, cuenta `1.01.03.05.04` IVA Crédito Régimen Turismo |
+| Industria                                | Cobertura         | Notas                                                                     |
+| ---------------------------------------- | ----------------- | ------------------------------------------------------------------------- |
+| Comercio minorista (minimarket, almacén) | ✅ completa       | —                                                                         |
+| Gastronomía                              | ✅ completa       | —                                                                         |
+| Servicios profesionales                  | ✅ completa       | —                                                                         |
+| Importador / distribuidor                | ⚠ activar manual | Cuentas exterior `4.06-4.08`, `1.01.04.11` Importaciones en curso         |
+| Agro / ganadería                         | ⚠ activar manual | Grupos `4.02-4.05` ventas + `5.02-5.05` costos + activos biológicos       |
+| Régimen Turismo / Zona Franca / Maquila  | ⚠ activar manual | Grupos `4.10`, `5.10`, cuenta `1.01.03.05.04` IVA Crédito Régimen Turismo |
 
 ## Pendientes para Fase 2 (`l10n_py_edi`)
 
@@ -251,15 +258,15 @@ Listados en `addons/l10n_py_account/readme/ROADMAP.rst`:
 
 ## Métricas de proceso
 
-| Métrica | Valor |
-|---|---|
-| Duración Fase 1b | 1 día (2026-05-25) |
-| Commits Fase 1b | 20 atómicos (Conventional Commits) |
-| Líneas neto Fase 1b | +2 460 / −1 |
-| Tests pre-Fase 1b → post | 17 → 97 (+471%) |
+| Métrica                             | Valor                                                     |
+| ----------------------------------- | --------------------------------------------------------- |
+| Duración Fase 1b                    | 1 día (2026-05-25)                                        |
+| Commits Fase 1b                     | 20 atómicos (Conventional Commits)                        |
+| Líneas neto Fase 1b                 | +2 460 / −1                                               |
+| Tests pre-Fase 1b → post            | 17 → 97 (+471%)                                           |
 | Subagent dispatches durante Fase 1b | ≈ 18 (mayoría sonnet; opus solo para debug arquitectural) |
-| Plan original (líneas) | 3 778 |
-| Diff plan vs realidad | 24 tasks intactas, 8 plan-bugs descubiertos y fixados |
+| Plan original (líneas)              | 3 778                                                     |
+| Diff plan vs realidad               | 24 tasks intactas, 8 plan-bugs descubiertos y fixados     |
 
 ## Referencias cruzadas
 

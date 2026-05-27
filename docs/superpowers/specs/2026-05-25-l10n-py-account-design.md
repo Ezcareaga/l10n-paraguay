@@ -21,6 +21,7 @@ de timbrado + punto de emisión + extensiones de `account.journal` y
 había diferido) bumpeando a `18.0.1.1.0`.
 
 **Out of scope (explícitamente diferido):**
+
 - Generación de CDC (44 dígitos) → Fase 2 `l10n_py_edi`.
 - Firma XAdES + cliente SOAP SIFEN → Fase 2.
 - Serie alfabética del timbrado (AA-ZZ) → Fase 2.
@@ -36,6 +37,7 @@ había diferido) bumpeando a `18.0.1.1.0`.
 ### 1.1. Dos módulos tocados
 
 **`l10n_py_base` → bump `18.0.1.1.0`** (cierra gap de Fase 1a):
+
 - Modelo nuevo `l10n_py.economic_activity` (catálogo SIFEN; vacío por defecto,
   se llenará vía WS SET en Fase 2; UI permite carga manual con 1-2 records demo).
 - Extensión `res.company`:
@@ -52,6 +54,7 @@ había diferido) bumpeando a `18.0.1.1.0`.
   idempotente).
 
 **`l10n_py_account` → nuevo módulo `18.0.1.0.0`**:
+
 - Manifest: `countries=['py']`, `auto_install=['account']`,
   `depends=['l10n_py_base', 'account', 'l10n_latam_invoice_document']`.
 - PUC RG 49/14 (subset comercio/servicios activo, resto inactive).
@@ -73,7 +76,7 @@ había diferido) bumpeando a `18.0.1.1.0`.
   futuro (ej. CRM PY) consuma RUC + régimen sin instalar contabilidad.
 - Patrón validado: `l10n_ec_base` OCA depende de `l10n_ec` core + `account`;
   Odoo core `l10n_ec` depende de `l10n_latam_base` + `l10n_latam_invoice_document`
-  + `account`. Mismo split de responsabilidades.
+  - `account`. Mismo split de responsabilidades.
 
 ### 1.3. Dependencias (DAG)
 
@@ -178,20 +181,20 @@ class AccountChartTemplate(models.AbstractModel):
 Target inicial: comercio minorista/servicios (minimarket, gastronomía,
 servicios profesionales). Cuentas activas por grupo:
 
-| Grupo | Cuentas activas |
-|---|---|
-| 1.01 Activo Corriente | Caja, Banco, Fondos fijos, Recaudaciones, Deudores por ventas, IVA Crédito 10/5%, Retenciones IVA crédito, IRP/IRACIS retenido, Mercaderías 10%/5%/exentas, Anticipos a proveedores, Gastos pagados por adelantado |
-| 1.02 Activo No Corriente | Inmuebles, Rodados, Muebles/útiles/enseres, Maquinarias, Equipos, Depreciación acumulada (99) |
-| 2.01 Pasivo Corriente | Proveedores locales, Préstamos bancos, IVA a Pagar, IRACIS/IRP a pagar, Retenciones a ingresar, Sueldos a pagar, IPS, Aguinaldo a pagar |
-| 2.02 Pasivo No Corriente | Préstamos largo plazo |
-| 3 Patrimonio | Capital integrado, Reserva legal, Resultados acumulados, Resultado del ejercicio |
-| 4 Ingresos | Ventas mercaderías 10%/5%/exentas, Ventas servicios gravados, Descuentos concedidos (98), Devoluciones (99) |
-| 5 Costos | Costo mercaderías gravadas/exentas, Costo servicios |
-| 8 Otros ingresos | Intereses ganados, Comisiones cobradas, Descuentos obtenidos, Diferencia de cambio |
-| 10/11 | Sueldos ventas, Publicidad, Fletes; Sueldos admin, Alquileres, Servicios (agua/luz/tel), Honorarios, Seguros, Útiles, Impuestos/patentes |
-| 13 | Intereses pagados, Comisiones bancarias, Diferencia cambio |
-| 15 | Depreciaciones del ejercicio, Amortizaciones del ejercicio |
-| 19/20 | Impuesto a la Renta, Resultado neto |
+| Grupo                    | Cuentas activas                                                                                                                                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1.01 Activo Corriente    | Caja, Banco, Fondos fijos, Recaudaciones, Deudores por ventas, IVA Crédito 10/5%, Retenciones IVA crédito, IRP/IRACIS retenido, Mercaderías 10%/5%/exentas, Anticipos a proveedores, Gastos pagados por adelantado |
+| 1.02 Activo No Corriente | Inmuebles, Rodados, Muebles/útiles/enseres, Maquinarias, Equipos, Depreciación acumulada (99)                                                                                                                      |
+| 2.01 Pasivo Corriente    | Proveedores locales, Préstamos bancos, IVA a Pagar, IRACIS/IRP a pagar, Retenciones a ingresar, Sueldos a pagar, IPS, Aguinaldo a pagar                                                                            |
+| 2.02 Pasivo No Corriente | Préstamos largo plazo                                                                                                                                                                                              |
+| 3 Patrimonio             | Capital integrado, Reserva legal, Resultados acumulados, Resultado del ejercicio                                                                                                                                   |
+| 4 Ingresos               | Ventas mercaderías 10%/5%/exentas, Ventas servicios gravados, Descuentos concedidos (98), Devoluciones (99)                                                                                                        |
+| 5 Costos                 | Costo mercaderías gravadas/exentas, Costo servicios                                                                                                                                                                |
+| 8 Otros ingresos         | Intereses ganados, Comisiones cobradas, Descuentos obtenidos, Diferencia de cambio                                                                                                                                 |
+| 10/11                    | Sueldos ventas, Publicidad, Fletes; Sueldos admin, Alquileres, Servicios (agua/luz/tel), Honorarios, Seguros, Útiles, Impuestos/patentes                                                                           |
+| 13                       | Intereses pagados, Comisiones bancarias, Diferencia cambio                                                                                                                                                         |
+| 15                       | Depreciaciones del ejercicio, Amortizaciones del ejercicio                                                                                                                                                         |
+| 19/20                    | Impuesto a la Renta, Resultado neto                                                                                                                                                                                |
 
 ### 2.7. Cuentas creadas pero `active=False` por default
 
@@ -214,22 +217,24 @@ RÉGIMEN ESPECIAL CUSTOM` sin armar la jerarquía padre.
 
 ### 2.9. Taxes IVA — 6 records
 
-| XML ID | Code (sale/purchase) | Name | Rate | Type | Afectación | account_id |
-|---|---|---|---|---|---|---|
-| `tax_iva_venta_10` | sale | IVA Débito Fiscal 10% | 10 | sale | gravado | `2010301` (IVA a Pagar) |
-| `tax_iva_venta_5` | sale | IVA Débito Fiscal 5% | 5 | sale | gravado | `2010301` |
-| `tax_iva_venta_exenta` | sale | IVA Exenta (ventas) | 0 | sale | exento | — |
-| `tax_iva_venta_export` | sale | IVA 0% Exportación | 0 | sale | gravado | — |
-| `tax_iva_compra_10` | purchase | IVA Crédito Fiscal 10% | 10 | purchase | gravado | `101030503` (IVA Crédito) |
-| `tax_iva_compra_5` | purchase | IVA Crédito Fiscal 5% | 5 | purchase | gravado | `101030503` |
+| XML ID                 | Code (sale/purchase) | Name                   | Rate | Type     | Afectación | account_id                |
+| ---------------------- | -------------------- | ---------------------- | ---- | -------- | ---------- | ------------------------- |
+| `tax_iva_venta_10`     | sale                 | IVA Débito Fiscal 10%  | 10   | sale     | gravado    | `2010301` (IVA a Pagar)   |
+| `tax_iva_venta_5`      | sale                 | IVA Débito Fiscal 5%   | 5    | sale     | gravado    | `2010301`                 |
+| `tax_iva_venta_exenta` | sale                 | IVA Exenta (ventas)    | 0    | sale     | exento     | —                         |
+| `tax_iva_venta_export` | sale                 | IVA 0% Exportación     | 0    | sale     | gravado    | —                         |
+| `tax_iva_compra_10`    | purchase             | IVA Crédito Fiscal 10% | 10   | purchase | gravado    | `101030503` (IVA Crédito) |
+| `tax_iva_compra_5`     | purchase             | IVA Crédito Fiscal 5%  | 5    | purchase | gravado    | `101030503`               |
 
 **`l10n_py.afectacion_iva`** (modelo nuevo en `l10n_py_account`):
+
 - Carga del CSV `data/catalogs/dnit/afectacion_iva.csv` (4 records: Gravado IVA,
   Exonerado, Exento, Gravado parcial).
 - Campos: `code` (Char), `name` (Char).
 - Cada `account.tax` PY tiene FK `l10n_py_afectacion_iva_id` (M2O).
 
 **Field adicional en `account.move.line`** (en `l10n_py_account`):
+
 - `l10n_py_iva_proporcion` (Integer 1-100, default 100).
 - Marca el caso "Gravado parcial" para el constructor XML de Fase 2.
 - No afecta cálculo de tax en Fase 1b.
@@ -249,15 +254,16 @@ por validaciones del Manual p.169: `C002=1` (FE), `C002=7` (NR).
 
 ### 3.2. Los 5 records `l10n_latam.document.type`
 
-| XML ID | code | name | doc_code_prefix | report_name | internal_type | sequence |
-|---|---|---|---|---|---|---|
-| `dt_fe` | `1` | Factura Electrónica | `""` | FACTURA ELECTRÓNICA | `invoice` | 10 |
-| `dt_af` | `4` | Autofactura Electrónica | `""` | AUTOFACTURA ELECTRÓNICA | `invoice` | 20 |
-| `dt_nc` | `5` | Nota de Crédito Electrónica | `""` | NOTA DE CRÉDITO ELECTRÓNICA | `credit_note` | 30 |
-| `dt_nd` | `6` | Nota de Débito Electrónica | `""` | NOTA DE DÉBITO ELECTRÓNICA | `debit_note` | 40 |
-| `dt_nr` | `7` | Nota de Remisión Electrónica | `""` | NOTA DE REMISIÓN ELECTRÓNICA | `""` (vacío) | 50 |
+| XML ID  | code | name                         | doc_code_prefix | report_name                  | internal_type | sequence |
+| ------- | ---- | ---------------------------- | --------------- | ---------------------------- | ------------- | -------- |
+| `dt_fe` | `1`  | Factura Electrónica          | `""`            | FACTURA ELECTRÓNICA          | `invoice`     | 10       |
+| `dt_af` | `4`  | Autofactura Electrónica      | `""`            | AUTOFACTURA ELECTRÓNICA      | `invoice`     | 20       |
+| `dt_nc` | `5`  | Nota de Crédito Electrónica  | `""`            | NOTA DE CRÉDITO ELECTRÓNICA  | `credit_note` | 30       |
+| `dt_nd` | `6`  | Nota de Débito Electrónica   | `""`            | NOTA DE DÉBITO ELECTRÓNICA   | `debit_note`  | 40       |
+| `dt_nr` | `7`  | Nota de Remisión Electrónica | `""`            | NOTA DE REMISIÓN ELECTRÓNICA | `""` (vacío)  | 50       |
 
 **Notas:**
+
 - `doc_code_prefix=""`: SIFEN no usa prefijo textual en el número visible. El
   `move.name` será `001-001-0000123` puro.
 - NR (7) con `internal_type=''`: patrón de `dc_aduana` en `l10n_ar`. Queda
@@ -272,6 +278,7 @@ por validaciones del Manual p.169: `C002=1` (FE), `C002=7` (NR).
 ### 3.3. Formato del número: EEE-PPP-NNNNNNN
 
 Verificado MT v150 p.65:
+
 - `C005 dEst` (Establecimiento): tipo `A 3 1-1`, zero-padded a la izquierda.
 - `C006 dPunExp` (Punto de Expedición): tipo `A 3 1-1`, zero-padded.
 - `C007 dNumDoc` (Número del documento): tipo `A 7 1-1`, zero-padded a 7
@@ -314,6 +321,7 @@ Normaliza `1-1-123` → `001-001-0000123`.
   - debit_note → ND (6) recibida del proveedor (manual numbering)
 
 **Manual vs auto:**
+
 - Sale journals: auto-numbered (Odoo genera con sequence + override `_get_starting_sequence`).
 - Purchase journals: **todos manual en Fase 1b**
   (`_is_manual_document_number` override retorna True para PY purchase). El
@@ -558,6 +566,7 @@ para PY), setea `l10n_latam_use_documents=True` en los journals
 sale/purchase **que el chart crea en ese momento**.
 
 Implicaciones:
+
 - Si el chart se carga en company nueva: journals sale/purchase nacen con
   `use_documents=True`. ✅
 - Si el módulo `l10n_py_account` se actualiza con `-u` después de instalado:
@@ -644,21 +653,21 @@ class L10nPyAccountTestCase(TransactionCase):
 
 ### 5.2. Tests por área
 
-| Archivo | Cubre | Tests |
-|---|---|---|
-| `test_chart_template.py` | Carga PUC; ~80 activas + ~200 totales; account.group jerárquico completo | 8 |
-| `test_hechauka_critical_accounts.py` | Lista hardcoded de ~25 códigos RG 49/14 obligatorios para Hechauka — todos existen | 1 (loop) |
-| `test_taxes.py` | 6 taxes IVA cableados a cuentas correctas; afectacion FK; computo monto | 10 |
-| `test_document_types.py` | 5 records cargados; `_format_document_number` normaliza/rechaza; filtro domain por journal+partner | 12 |
-| `test_timbrado.py` | Single-active; formato 8 dígitos; transición state; date_to opcional | 8 |
-| `test_point_of_emission.py` | Unique (company, est, point); validación numérica; compute name; domain address | 6 |
-| `test_journal_extension.py` | Constraint PoE requerido + bidireccional (PoE↔use_documents); auto-set use_documents | 7 |
-| `test_account_move_sequence.py` | FE numera `001-001-0000001`, 2ª FE `0000002`; NC en mismo journal arranca de `0000001` (sequence independiente); doc_type change resetea name | 8 |
-| `test_account_move_defensive.py` | Postear sin PoE → UserError con mensaje claro; postear con PoE OK | 3 |
-| `test_company_extension.py` | `_localization_use_documents()` True para PY; `l10n_py_active_timbrado_id` compute | 4 |
-| `test_pyme_e2e.py` | Smoke test: compra+venta+cierre mes; balance IVA Débito-Crédito = IVA a Pagar | 1 |
-| `test_post_init_hook.py` | Legacy journal sin PoE → desactiva use_documents + crea activity; chart custom preexistente → warning, no rompe | 2 |
-| `test_migration_wizard.py` | Wizard 3 modos: clean install / mapeo asistido / coexistir | 3 |
+| Archivo                              | Cubre                                                                                                                                         | Tests    |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `test_chart_template.py`             | Carga PUC; ~80 activas + ~200 totales; account.group jerárquico completo                                                                      | 8        |
+| `test_hechauka_critical_accounts.py` | Lista hardcoded de ~25 códigos RG 49/14 obligatorios para Hechauka — todos existen                                                            | 1 (loop) |
+| `test_taxes.py`                      | 6 taxes IVA cableados a cuentas correctas; afectacion FK; computo monto                                                                       | 10       |
+| `test_document_types.py`             | 5 records cargados; `_format_document_number` normaliza/rechaza; filtro domain por journal+partner                                            | 12       |
+| `test_timbrado.py`                   | Single-active; formato 8 dígitos; transición state; date_to opcional                                                                          | 8        |
+| `test_point_of_emission.py`          | Unique (company, est, point); validación numérica; compute name; domain address                                                               | 6        |
+| `test_journal_extension.py`          | Constraint PoE requerido + bidireccional (PoE↔use_documents); auto-set use_documents                                                         | 7        |
+| `test_account_move_sequence.py`      | FE numera `001-001-0000001`, 2ª FE `0000002`; NC en mismo journal arranca de `0000001` (sequence independiente); doc_type change resetea name | 8        |
+| `test_account_move_defensive.py`     | Postear sin PoE → UserError con mensaje claro; postear con PoE OK                                                                             | 3        |
+| `test_company_extension.py`          | `_localization_use_documents()` True para PY; `l10n_py_active_timbrado_id` compute                                                            | 4        |
+| `test_pyme_e2e.py`                   | Smoke test: compra+venta+cierre mes; balance IVA Débito-Crédito = IVA a Pagar                                                                 | 1        |
+| `test_post_init_hook.py`             | Legacy journal sin PoE → desactiva use_documents + crea activity; chart custom preexistente → warning, no rompe                               | 2        |
+| `test_migration_wizard.py`           | Wizard 3 modos: clean install / mapeo asistido / coexistir                                                                                    | 3        |
 
 **Total: ~73 tests** en `l10n_py_account`.
 
@@ -673,6 +682,7 @@ class L10nPyAccountTestCase(TransactionCase):
 ### 5.3. Entregables
 
 **PR 1: `l10n_py_base` → 1.1.0** (branch `feat/l10n-py-base-company`)
+
 - Modelo `l10n_py.economic_activity` + UI carga manual + 2 records demo.
 - Extensión `res.company` (5 campos + validación RUC).
 - Views: company form section + economic activity views + menu.
@@ -681,6 +691,7 @@ class L10nPyAccountTestCase(TransactionCase):
 - README actualizado (sección "What's new in 1.1.0").
 
 **PR 2: `l10n_py_account` 18.0.1.0.0** (branch `feat/l10n-py-account`)
+
 - Manifest + estructura completa Odoo 18 chart template API.
 - Data: PUC RG 49/14 CSV + groups + 6 taxes + 5 document types + afectacion_iva.
 - Modelos nuevos: `l10n_py.timbrado`, `l10n_py.point_of_emission`,
@@ -723,6 +734,7 @@ Total Fase 1b: ~3 semanas calendario.
 ### Riesgo 1 — PUC RG 49/14 incompleto para industrias específicas
 
 **Mitigaciones:**
+
 1. Cobertura jerárquica completa (todos los `account.group` records aunque las cuentas hoja estén inactive).
 2. Test `test_hechauka_critical_accounts.py` con ~25 códigos obligatorios hardcoded.
 3. Smoke test `test_pyme_e2e.py` con operación real (compra+venta+cierre).
@@ -736,6 +748,7 @@ Total Fase 1b: ~3 semanas calendario.
 ### Riesgo 2 — `_get_starting_sequence` falla con journals sin PoE
 
 **Mitigaciones:**
+
 1. Defensive check explícito en `_get_starting_sequence` con `UserError` claro y accionable.
 2. Constraint en `account.move._post()` (validación temprana antes de generar name).
 3. Constraint bidireccional en `account.journal` (PoE↔use_documents).
@@ -745,6 +758,7 @@ Total Fase 1b: ~3 semanas calendario.
 ### Riesgo 3 — `use_documents` interfiere con DBs con chart custom
 
 **Mitigaciones:**
+
 1. Detección pre-load en `@template('py')`: warning si company tiene >20 cuentas preexistentes.
 2. Wizard de migración 3 modos (clean install / mapeo asistido / coexistir) — el admin elige.
 3. `_post_init_hook` loguea warning + crea activity si detecta chart distinto.
@@ -783,20 +797,20 @@ Total Fase 1b: ~3 semanas calendario.
 
 ## 8. Decisiones de scope (consolidado)
 
-| Decisión | Resolución |
-|---|---|
-| PUC estrategia | A2 anclado a RG 49/14 (estándar de facto paraguayo) |
-| `res.company` extension | En `l10n_py_base` 1.1.0 (campos identidad fiscal) |
-| `_localization_use_documents` | En `l10n_py_account` (depende de l10n_latam_invoice_document) |
-| CDC field/algoritmo | Todo en `l10n_py_edi` (Fase 2) |
-| Códigos documento | `1, 4, 5, 6, 7` sin padding (verificado MT v150) |
-| NR (7) `internal_type` | Vacío (patrón `dc_aduana`); futura `l10n_py_stock` la consume |
-| Tipos "Futuro" (2, 3, 8) | No incluidos en data |
-| Autofactura (4) | Purchase journal, sequence propia, `internal_type='invoice'` |
-| Timbrado fields | `name` (8 chars), `date_from` requerido, `date_to` opcional |
-| Single active timbrado | Constraint sí (convención DNIT operacional) |
-| Serie alfabética timbrado | TODO Fase 2 |
-| Journal-PoE relación | 1:1 (un journal = un PoE) — patrón Ecuador |
-| Sequence per (journal, doc_type) | Sí, vía `_get_last_sequence_domain` override |
-| code_digits PUC | 9 (cuentas sin puntos, max length de jerarquía) |
-| Contador gate | Sin gate. Iteración por feedback post-release (patches 1.0.x) |
+| Decisión                         | Resolución                                                    |
+| -------------------------------- | ------------------------------------------------------------- |
+| PUC estrategia                   | A2 anclado a RG 49/14 (estándar de facto paraguayo)           |
+| `res.company` extension          | En `l10n_py_base` 1.1.0 (campos identidad fiscal)             |
+| `_localization_use_documents`    | En `l10n_py_account` (depende de l10n_latam_invoice_document) |
+| CDC field/algoritmo              | Todo en `l10n_py_edi` (Fase 2)                                |
+| Códigos documento                | `1, 4, 5, 6, 7` sin padding (verificado MT v150)              |
+| NR (7) `internal_type`           | Vacío (patrón `dc_aduana`); futura `l10n_py_stock` la consume |
+| Tipos "Futuro" (2, 3, 8)         | No incluidos en data                                          |
+| Autofactura (4)                  | Purchase journal, sequence propia, `internal_type='invoice'`  |
+| Timbrado fields                  | `name` (8 chars), `date_from` requerido, `date_to` opcional   |
+| Single active timbrado           | Constraint sí (convención DNIT operacional)                   |
+| Serie alfabética timbrado        | TODO Fase 2                                                   |
+| Journal-PoE relación             | 1:1 (un journal = un PoE) — patrón Ecuador                    |
+| Sequence per (journal, doc_type) | Sí, vía `_get_last_sequence_domain` override                  |
+| code_digits PUC                  | 9 (cuentas sin puntos, max length de jerarquía)               |
+| Contador gate                    | Sin gate. Iteración por feedback post-release (patches 1.0.x) |

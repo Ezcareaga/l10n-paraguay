@@ -40,26 +40,26 @@ priority: critical | important | reference
 
 ## Inventario
 
-| # | Archivo | Tema | Prioridad |
-|---|---|---|---|
-| 00 | [`00_OBJECTIVE.md`](00_OBJECTIVE.md) | Objetivo extendido del proyecto | critical |
-| 01 | [`01_SIFEN_KNOWLEDGE_BASE.md`](01_SIFEN_KNOWLEDGE_BASE.md) | Reglas conceptuales SIFEN (de ÑandeFact) | critical |
-| 02 | [`02_SIFEN_REFERENCIA_COMPLETA.md`](02_SIFEN_REFERENCIA_COMPLETA.md) | Referencia técnica SIFEN: CDC, XML, firma, SOAP, eventos | critical |
-| 03 | [`03_DOMAIN_MODEL.md`](03_DOMAIN_MODEL.md) | Modelo de dominio (entidades, VOs, agregados) | important |
-| 04 | [`04_USE_CASES.md`](04_USE_CASES.md) | Casos de uso (CrearFactura, EnviarDE, etc.) | important |
-| 05 | [`05_DATA_MODEL.md`](05_DATA_MODEL.md) | Schema PostgreSQL ÑandeFact (referencia, no destino) | reference |
-| 10 | [`10_ODOO_MODULE_STRUCTURE.md`](10_ODOO_MODULE_STRUCTURE.md) | Estructura canónica módulo Odoo | critical |
-| 11 | [`11_ODOO_ORM_GUIDE.md`](11_ODOO_ORM_GUIDE.md) | ORM Odoo | important |
-| 12 | [`12_ODOO_VIEWS_GUIDE.md`](12_ODOO_VIEWS_GUIDE.md) | Vistas XML, herencia, xpath | important |
-| 13 | [`13_ODOO_SECURITY_GUIDE.md`](13_ODOO_SECURITY_GUIDE.md) | Seguridad: ACL, record rules, groups | important |
-| 14 | [`14_ODOO_TESTING_GUIDE.md`](14_ODOO_TESTING_GUIDE.md) | Tests: TransactionCase, HttpCase, tags | important |
-| 15 | [`15_ODOO_ACCOUNT_EDI_FRAMEWORK.md`](15_ODOO_ACCOUNT_EDI_FRAMEWORK.md) | Framework `account.edi` nativo de Odoo | critical |
-| 20 | [`20_OCA_GUIDELINES.md`](20_OCA_GUIDELINES.md) | OCA conventions: naming, manifest, README | critical |
-| 21 | [`21_OCA_DEVELOPMENT_BOOK.md`](21_OCA_DEVELOPMENT_BOOK.md) | OCA development best practices | important |
-| 30 | [`30_L10N_LATAM_BASE.md`](30_L10N_LATAM_BASE.md) | Análisis `l10n_latam_base` | critical |
-| 31 | [`31_L10N_LATAM_INVOICE_DOCUMENT.md`](31_L10N_LATAM_INVOICE_DOCUMENT.md) | Framework tipos de documento | critical |
-| 32 | [`32_L10N_PERU_REFERENCE.md`](32_L10N_PERU_REFERENCE.md) | Análisis `l10n_pe` + `l10n_pe_edi` (patrón maestro) | critical |
-| 33 | [`33_L10N_ECUADOR_REFERENCE.md`](33_L10N_ECUADOR_REFERENCE.md) | Análisis `l10n_ec` (retenciones) | important |
-| 34 | [`34_L10N_ARGENTINA_REFERENCE.md`](34_L10N_ARGENTINA_REFERENCE.md) | Análisis `l10n_ar` (tipos de documento) | important |
-| 40 | [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md) | lxml, signxml, zeep, cryptography, qrcode | important |
-| 50 | [`50_MODULES_ROADMAP.md`](50_MODULES_ROADMAP.md) | Roadmap módulos `l10n_py_*` por fases | critical |
+| #   | Archivo                                                                  | Tema                                                     | Prioridad |
+| --- | ------------------------------------------------------------------------ | -------------------------------------------------------- | --------- |
+| 00  | [`00_OBJECTIVE.md`](00_OBJECTIVE.md)                                     | Objetivo extendido del proyecto                          | critical  |
+| 01  | [`01_SIFEN_KNOWLEDGE_BASE.md`](01_SIFEN_KNOWLEDGE_BASE.md)               | Reglas conceptuales SIFEN (de ÑandeFact)                 | critical  |
+| 02  | [`02_SIFEN_REFERENCIA_COMPLETA.md`](02_SIFEN_REFERENCIA_COMPLETA.md)     | Referencia técnica SIFEN: CDC, XML, firma, SOAP, eventos | critical  |
+| 03  | [`03_DOMAIN_MODEL.md`](03_DOMAIN_MODEL.md)                               | Modelo de dominio (entidades, VOs, agregados)            | important |
+| 04  | [`04_USE_CASES.md`](04_USE_CASES.md)                                     | Casos de uso (CrearFactura, EnviarDE, etc.)              | important |
+| 05  | [`05_DATA_MODEL.md`](05_DATA_MODEL.md)                                   | Schema PostgreSQL ÑandeFact (referencia, no destino)     | reference |
+| 10  | [`10_ODOO_MODULE_STRUCTURE.md`](10_ODOO_MODULE_STRUCTURE.md)             | Estructura canónica módulo Odoo                          | critical  |
+| 11  | [`11_ODOO_ORM_GUIDE.md`](11_ODOO_ORM_GUIDE.md)                           | ORM Odoo                                                 | important |
+| 12  | [`12_ODOO_VIEWS_GUIDE.md`](12_ODOO_VIEWS_GUIDE.md)                       | Vistas XML, herencia, xpath                              | important |
+| 13  | [`13_ODOO_SECURITY_GUIDE.md`](13_ODOO_SECURITY_GUIDE.md)                 | Seguridad: ACL, record rules, groups                     | important |
+| 14  | [`14_ODOO_TESTING_GUIDE.md`](14_ODOO_TESTING_GUIDE.md)                   | Tests: TransactionCase, HttpCase, tags                   | important |
+| 15  | [`15_ODOO_ACCOUNT_EDI_FRAMEWORK.md`](15_ODOO_ACCOUNT_EDI_FRAMEWORK.md)   | Framework `account.edi` nativo de Odoo                   | critical  |
+| 20  | [`20_OCA_GUIDELINES.md`](20_OCA_GUIDELINES.md)                           | OCA conventions: naming, manifest, README                | critical  |
+| 21  | [`21_OCA_DEVELOPMENT_BOOK.md`](21_OCA_DEVELOPMENT_BOOK.md)               | OCA development best practices                           | important |
+| 30  | [`30_L10N_LATAM_BASE.md`](30_L10N_LATAM_BASE.md)                         | Análisis `l10n_latam_base`                               | critical  |
+| 31  | [`31_L10N_LATAM_INVOICE_DOCUMENT.md`](31_L10N_LATAM_INVOICE_DOCUMENT.md) | Framework tipos de documento                             | critical  |
+| 32  | [`32_L10N_PERU_REFERENCE.md`](32_L10N_PERU_REFERENCE.md)                 | Análisis `l10n_pe` + `l10n_pe_edi` (patrón maestro)      | critical  |
+| 33  | [`33_L10N_ECUADOR_REFERENCE.md`](33_L10N_ECUADOR_REFERENCE.md)           | Análisis `l10n_ec` (retenciones)                         | important |
+| 34  | [`34_L10N_ARGENTINA_REFERENCE.md`](34_L10N_ARGENTINA_REFERENCE.md)       | Análisis `l10n_ar` (tipos de documento)                  | important |
+| 40  | [`40_PYTHON_LIBRARIES.md`](40_PYTHON_LIBRARIES.md)                       | lxml, signxml, zeep, cryptography, qrcode                | important |
+| 50  | [`50_MODULES_ROADMAP.md`](50_MODULES_ROADMAP.md)                         | Roadmap módulos `l10n_py_*` por fases                    | critical  |

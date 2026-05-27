@@ -21,23 +21,23 @@ Why it matters for Paraguay: The Dirección General de Ingresos (DGI) requires c
 
 The primary model you'll extend:
 
-| Field | Type | Purpose |
-|-------|------|---------|
-| id | Char | XML ID (e.g., l10n_latam_base.it_vat) |
-| name | Char | Short human-readable name (translatable) |
-| description | Char | Long form / help text (translatable) |
-| country_id | Many2one(res.country) | Country where valid; leave empty for generic types |
-| is_vat | Boolean | Marks this as the country's primary VAT/tax ID (used for validation & as default) |
-| sequence | Integer | Sort order; lower = shown first (default 10) |
-| active | Boolean | Enable/disable without deleting (default True) |
+| Field       | Type                  | Purpose                                                                           |
+| ----------- | --------------------- | --------------------------------------------------------------------------------- |
+| id          | Char                  | XML ID (e.g., l10n_latam_base.it_vat)                                             |
+| name        | Char                  | Short human-readable name (translatable)                                          |
+| description | Char                  | Long form / help text (translatable)                                              |
+| country_id  | Many2one(res.country) | Country where valid; leave empty for generic types                                |
+| is_vat      | Boolean               | Marks this as the country's primary VAT/tax ID (used for validation & as default) |
+| sequence    | Integer               | Sort order; lower = shown first (default 10)                                      |
+| active      | Boolean               | Enable/disable without deleting (default True)                                    |
 
 Standard Generic Types (shipped in base):
 
-| XML ID | Name | is_vat | Sequence |
-|--------|------|--------|----------|
-| l10n_latam_base.it_vat | VAT | True | 80 |
-| l10n_latam_base.it_pass | Passport | False | 90 |
-| l10n_latam_base.it_fid | Foreign ID | False | 100 |
+| XML ID                  | Name       | is_vat | Sequence |
+| ----------------------- | ---------- | ------ | -------- |
+| l10n_latam_base.it_vat  | VAT        | True   | 80       |
+| l10n_latam_base.it_pass | Passport   | False  | 90       |
+| l10n_latam_base.it_fid  | Foreign ID | False  | 100      |
 
 These appear in partner forms regardless of country. Country-specific types are filtered by partner's country_id.
 
@@ -62,11 +62,12 @@ Key Behavior:
 
 - vat is now semantic: its meaning depends on l10n_latam_identification_type_id.is_vat
 - VAT validation (from base_vat) only applies to records where is_vat=True
-- _commercial_fields() includes l10n_latam_identification_type_id so it propagates to child contacts
+- \_commercial_fields() includes l10n_latam_identification_type_id so it propagates to child contacts
 
 Automatic Defaults:
 
 On onchange('country_id'):
+
 1. Search for the country's is_vat identification type
 2. If not found, fall back to generic it_vat
 3. Only triggers if current type is missing or from a different country
@@ -91,6 +92,7 @@ l10n_latam_base.it_fid,Foreign ID,100,
 Create data/l10n_latam.identification.type.xml in your l10n_py module:
 
 `xml
+
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 <data>
@@ -115,11 +117,13 @@ Create data/l10n_latam.identification.type.xml in your l10n_py module:
         <field name='country_id' ref='base.py'/>
         <field name='sequence'>30</field>
     </record>
+
 </data>
 </odoo>
 `
 
 Key Rules:
+
 - Only is_vat=True for ONE type per country (typically RUC for Paraguay)
 - XML IDs must be unique; prefix with module name (e.g., l10n_py.it_ruc)
 - Reference base country ID: ref='base.py' for Paraguay
@@ -137,12 +141,13 @@ Inherit the model in your localization:
 from odoo import models, fields
 
 class L10nLatamIdentificationType(models.Model):
-    _inherit = "l10n_latam.identification.type"
+\_inherit = "l10n_latam.identification.type"
 
     l10n_py_dgi_code = fields.Char(
         "DGI Code",
         help="Code assigned by Dirección General de Ingresos"
     )
+
 `
 
 Example: Argentina does this with l10n_ar_afip_code to store AFIP's numeric codes.
@@ -156,7 +161,7 @@ from odoo import models, api
 from odoo.exceptions import ValidationError
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+\_inherit = 'res.partner'
 
     @api.constrains('vat', 'l10n_latam_identification_type_id')
     def check_vat(self):
@@ -164,7 +169,7 @@ class ResPartner(models.Model):
             lambda x: x.l10n_latam_identification_type_id.is_vat
         )
         super(ResPartner, ruc_records).check_vat()
-        
+
         ci_records = self.filtered(
             lambda x: x.l10n_latam_identification_type_id.name == 'CI'
         )
@@ -174,6 +179,7 @@ class ResPartner(models.Model):
 
     def _validate_ci(self, ci_number):
         return len(ci_number) == 8 and ci_number.isdigit()
+
 `
 
 ---
@@ -194,6 +200,7 @@ The module inherits base_vat.view_partner_base_vat_form and replaces:
 `
 
 Domain Logic:
+
 - If partner has country_id: show generic types + types for that country
 - If no country: show generic types + types for company's fiscal country
 - Partner's country changes -> identification type auto-updates if incompatible

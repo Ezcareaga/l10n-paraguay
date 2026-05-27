@@ -31,7 +31,13 @@ except ImportError:
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SOURCE_XLSX = REPO_ROOT / "data" / "catalogs" / "_verification" / "dnit_codigo_referencia_geografica.xlsx"
+SOURCE_XLSX = (
+    REPO_ROOT
+    / "data"
+    / "catalogs"
+    / "_verification"
+    / "dnit_codigo_referencia_geografica.xlsx"
+)
 OUT_DIR = REPO_ROOT / "data" / "catalogs" / "dnit"
 
 HEADER_COMMENT = """\
@@ -75,14 +81,16 @@ def read_dnit_rows() -> list[dict]:
         # Skip filas de header (texto en columna de código)
         if not isinstance(cod_dep, (int, float)):
             continue
-        out.append({
-            "cod_dep": int(cod_dep),
-            "nom_dep": str(nom_dep).strip(),
-            "cod_dis": int(cod_dis) if cod_dis is not None else None,
-            "nom_dis": str(nom_dis).strip() if nom_dis else None,
-            "cod_ciu": int(cod_ciu) if cod_ciu is not None else None,
-            "nom_ciu": str(nom_ciu).strip() if nom_ciu else None,
-        })
+        out.append(
+            {
+                "cod_dep": int(cod_dep),
+                "nom_dep": str(nom_dep).strip(),
+                "cod_dis": int(cod_dis) if cod_dis is not None else None,
+                "nom_dis": str(nom_dis).strip() if nom_dis else None,
+                "cod_ciu": int(cod_ciu) if cod_ciu is not None else None,
+                "nom_ciu": str(nom_ciu).strip() if nom_ciu else None,
+            }
+        )
     return out
 
 

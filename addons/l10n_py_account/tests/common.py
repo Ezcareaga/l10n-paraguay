@@ -16,20 +16,28 @@ class L10nPyAccountTestCase(AccountTestInvoicingCommon):
         # setup_chart_template setea account_fiscal_country_id via @template;
         # acá fijamos country_id (residencia) para que matchee.
         cls.company.country_id = cls.country_py
-        cls.timbrado = cls.env["l10n_py.timbrado"].create({
-            "name": "12345678",
-            "date_from": "2026-01-01",
-            "state": "active",
-            "company_id": cls.company.id,
-        })
-        cls.poe = cls.env["l10n_py.point_of_emission"].create({
-            "establishment_code": "001",
-            "code": "001",
-            "address_id": cls.company.partner_id.id,
-            "company_id": cls.company.id,
-        })
-        cls.sale_journal = cls.env["account.journal"].search([
-            ("type", "=", "sale"), ("company_id", "=", cls.company.id),
-        ], limit=1)
+        cls.timbrado = cls.env["l10n_py.timbrado"].create(
+            {
+                "name": "12345678",
+                "date_from": "2026-01-01",
+                "state": "active",
+                "company_id": cls.company.id,
+            }
+        )
+        cls.poe = cls.env["l10n_py.point_of_emission"].create(
+            {
+                "establishment_code": "001",
+                "code": "001",
+                "address_id": cls.company.partner_id.id,
+                "company_id": cls.company.id,
+            }
+        )
+        cls.sale_journal = cls.env["account.journal"].search(
+            [
+                ("type", "=", "sale"),
+                ("company_id", "=", cls.company.id),
+            ],
+            limit=1,
+        )
         # Asignar PoE antes de activar use_documents (que ya viene True por chart)
         cls.sale_journal.l10n_py_point_of_emission_id = cls.poe

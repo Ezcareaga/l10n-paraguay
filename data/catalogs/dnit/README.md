@@ -17,37 +17,37 @@ Manual identifica como fuente canónica (Tabla 2.1).
 
 ### Catálogos geográficos (desde DNIT XLSX)
 
-| Archivo | Filas | Origen | Status |
-|---|---|---|---|
-| `departamentos.csv` | 18 | XLSX, hoja "División Político-Administrativ" | ✅ |
-| `distritos.csv` | 270 | Idem | ✅ |
-| `ciudades.csv` | 6419 | Idem | ✅ |
+| Archivo             | Filas | Origen                                       | Status |
+| ------------------- | ----- | -------------------------------------------- | ------ |
+| `departamentos.csv` | 18    | XLSX, hoja "División Político-Administrativ" | ✅     |
+| `distritos.csv`     | 270   | Idem                                         | ✅     |
+| `ciudades.csv`      | 6419  | Idem                                         | ✅     |
 
 ### Catálogos fiscales chicos (desde el PDF, Capítulo 15 + definiciones de campo)
 
-| Archivo | Filas | Origen | Status |
-|---|---|---|---|
-| `regimenes.csv` | 8 | TABLA 1 (página 211) | ✅ |
-| `tipo_documento.csv` | 7 | Campo D208 (página 72) | ✅ |
-| `tipo_contribuyente.csv` | 2 | Campo D205 (página 72) | ✅ |
-| `naturaleza_receptor.csv` | 2 | Campo D201 (página 72) | ✅ |
-| `tipo_operacion.csv` | 4 | Campo D202 (página 72) | ✅ |
-| `indicador_presencia.csv` | 7 | Campo E011 (página 75) | ✅ |
-| `unidades.csv` | 34 | TABLA 5 (páginas 212-213) | ✅ |
-| `afectacion_iva.csv` | 4 | TABLA 6 (página 213) | ✅ |
-| `categorias_isc.csv` | 5 | TABLA 7 (página 213) | ✅ |
-| `tasas_isc.csv` | 12 | TABLA 8 (página 213) | ✅ |
-| `incoterms.csv` | 11 | TABLA 10 (página 214) | ✅ |
+| Archivo                   | Filas | Origen                    | Status |
+| ------------------------- | ----- | ------------------------- | ------ |
+| `regimenes.csv`           | 8     | TABLA 1 (página 211)      | ✅     |
+| `tipo_documento.csv`      | 7     | Campo D208 (página 72)    | ✅     |
+| `tipo_contribuyente.csv`  | 2     | Campo D205 (página 72)    | ✅     |
+| `naturaleza_receptor.csv` | 2     | Campo D201 (página 72)    | ✅     |
+| `tipo_operacion.csv`      | 4     | Campo D202 (página 72)    | ✅     |
+| `indicador_presencia.csv` | 7     | Campo E011 (página 75)    | ✅     |
+| `unidades.csv`            | 34    | TABLA 5 (páginas 212-213) | ✅     |
+| `afectacion_iva.csv`      | 4     | TABLA 6 (página 213)      | ✅     |
+| `categorias_isc.csv`      | 5     | TABLA 7 (página 213)      | ✅     |
+| `tasas_isc.csv`           | 12    | TABLA 8 (página 213)      | ✅     |
+| `incoterms.csv`           | 11    | TABLA 10 (página 214)     | ✅     |
 
 ### Catálogos NO incluidos (fuente externa o estándar internacional)
 
-| Catálogo | Razón |
-|---|---|
-| `actividades.csv` | Web service SET — diseñar caché en `l10n_py_base` |
-| `monedas.csv` | ISO 4217 — Odoo `res.currency` ya provee esto |
-| `paises.csv` | ISO 3166-1 alfa-3 — Odoo `res.country` ya provee esto |
-| Tipos vehículos | DNIT solo da "link de descarga" no publicado |
-| Regímenes aduaneros | Sitio aduana.gov.py — no necesario para POS MVP |
+| Catálogo            | Razón                                                 |
+| ------------------- | ----------------------------------------------------- |
+| `actividades.csv`   | Web service SET — diseñar caché en `l10n_py_base`     |
+| `monedas.csv`       | ISO 4217 — Odoo `res.currency` ya provee esto         |
+| `paises.csv`        | ISO 3166-1 alfa-3 — Odoo `res.country` ya provee esto |
+| Tipos vehículos     | DNIT solo da "link de descarga" no publicado          |
+| Regímenes aduaneros | Sitio aduana.gov.py — no necesario para POS MVP       |
 
 ## Schema canónico
 
@@ -60,13 +60,13 @@ codigo,nombre,nombre_display,codigo_padre,activo
 ...
 ```
 
-| Campo | Tipo | Notas |
-|---|---|---|
-| `codigo` | int o str (alfa para Incoterms) | Código SIFEN — el que va en el XML del DE |
-| `nombre` | str | UPPERCASE ASCII-safe (para matching exacto) |
-| `nombre_display` | str | Title-case con tildes (para UI) — ver `discrepancies.md` |
-| `codigo_padre` | int o vacío | Para hijos: distrito→depto, ciudad→distrito |
-| `activo` | 0/1 | `1` vigente, `0` dado de baja por DNIT |
+| Campo            | Tipo                            | Notas                                                    |
+| ---------------- | ------------------------------- | -------------------------------------------------------- |
+| `codigo`         | int o str (alfa para Incoterms) | Código SIFEN — el que va en el XML del DE                |
+| `nombre`         | str                             | UPPERCASE ASCII-safe (para matching exacto)              |
+| `nombre_display` | str                             | Title-case con tildes (para UI) — ver `discrepancies.md` |
+| `codigo_padre`   | int o vacío                     | Para hijos: distrito→depto, ciudad→distrito              |
+| `activo`         | 0/1                             | `1` vigente, `0` dado de baja por DNIT                   |
 
 **Nota sobre `nombre_display`:** para departamentos/distritos/ciudades sigue
 en UPPERCASE porque DNIT no provee versión con tildes. Ver `discrepancies.md`

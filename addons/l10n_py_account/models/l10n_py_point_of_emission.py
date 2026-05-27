@@ -67,6 +67,4 @@ class L10nPyPointOfEmission(models.Model):
                 (rec.code, "punto de expedición"),
             ]:
                 if not (val and val.isdigit() and len(val) <= 3):
-                    raise ValidationError(
-                        _("Código de %s: 1-3 dígitos numéricos", fld)
-                    )
+                    raise ValidationError(_("Código de %s: 1-3 dígitos numéricos", fld))
