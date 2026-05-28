@@ -45,13 +45,6 @@ repos:
     rev: v0.0.33
     hooks:
       - id: oca-checks-odoo-module
-        # `xml-deprecated-data-node` flags `<odoo><data noupdate="1">` en 7
-        # XMLs auto-generados por scripts/generate_module_data.py — Odoo 18
-        # prefiere `<odoo noupdate="1">`. Desactivado a nivel hook hasta
-        # regenerar template. El hook escanea el módulo entero por archivo
-        # manifest, así que un exclude por archivo no surte efecto; el check
-        # individual se silencia con --disable. Tracking: BUGS_BACKLOG TD-004.
-        args: ["--disable=xml-deprecated-data-node"]
       - id: oca-checks-po
         args: ["--disable=po-pretty-format"]
 
