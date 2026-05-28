@@ -1,8 +1,10 @@
 # l10n-paraguay
 
-[![License: AGPL-3](https://img.shields.io/badge/license-AGPL--3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0-standalone.html)
+[![CI](https://github.com/Ezcareaga/l10n-paraguay/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Ezcareaga/l10n-paraguay/actions/workflows/test.yml)
+[![pre-commit](https://github.com/Ezcareaga/l10n-paraguay/actions/workflows/pre-commit.yml/badge.svg?branch=main)](https://github.com/Ezcareaga/l10n-paraguay/actions/workflows/pre-commit.yml)
+[![codecov](https://codecov.io/gh/Ezcareaga/l10n-paraguay/branch/main/graph/badge.svg)](https://codecov.io/gh/Ezcareaga/l10n-paraguay)
+[![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 [![Odoo](https://img.shields.io/badge/Odoo-18.0%20Community-714B67.svg)](https://www.odoo.com/)
-[![Status: Bootstrap](https://img.shields.io/badge/status-bootstrap-orange.svg)](#estado)
 
 Suite de módulos **Odoo Community 18** para la localización fiscal de **Paraguay**
 (DNIT / SIFEN — facturación electrónica, plan de cuentas, retenciones, libros IVA).

@@ -1,0 +1,43 @@
+# Coverage scope (D-16): addons/l10n_py_* only.
+# Excludes tests, data files, manifest/init boilerplate, scripts and bin/.
+
+[run]
+branch = True
+source =
+    addons/l10n_py_base
+    addons/l10n_py_account
+    # Future addons (un-comment as added):
+    # addons/l10n_py_edi
+    # addons/l10n_py_reports
+    # addons/l10n_py_pos
+    # addons/l10n_py_withholding
+omit =
+    addons/*/tests/*
+    addons/*/data/*
+    addons/*/demo/*
+    addons/*/__manifest__.py
+    addons/*/__init__.py
+    addons/*/migrations/*
+    addons/*/wizards/*_views.xml
+    scripts/*
+    bin/*
+parallel = True
+relative_files = True
+
+[report]
+precision = 2
+show_missing = True
+skip_covered = False
+exclude_lines =
+    pragma: no cover
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    \.\.\.
+
+[html]
+directory = htmlcov
+title = l10n-paraguay coverage report
+
+[xml]
+output = coverage.xml
