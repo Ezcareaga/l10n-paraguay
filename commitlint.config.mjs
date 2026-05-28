@@ -1,8 +1,10 @@
 // Conventional Commits config for l10n-paraguay.
 // Consumed by .github/workflows/commitlint.yml (wagoid/commitlint-github-action@v6).
 // Locally usable with `npx commitlint --from=origin/main`.
+//
+// ESM (.mjs) is required by wagoid v6.2.1+ — .js extension is rejected.
 
-module.exports = {
+export default {
   extends: ["@commitlint/config-conventional"],
   rules: {
     "type-enum": [

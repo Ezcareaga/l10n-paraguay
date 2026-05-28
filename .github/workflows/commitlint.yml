@@ -19,7 +19,6 @@ jobs:
       - name: Validate PR commits
         uses: wagoid/commitlint-github-action@v6
         with:
-          configFile: commitlint.config.js
-          firstParent: false
+          configFile: commitlint.config.mjs
           failOnWarnings: false
           helpURL: https://www.conventionalcommits.org
