@@ -147,10 +147,11 @@ OCA, lo primero que llegue.
 **Refs:** `.flake8` (`ignore =`/`select =`),
 `.planning/phases/01-bloque-a-foundation-t-cnica-ci-cd-pre-commit/p1c-precommit-final-run.log`
 
-## TD-006 — Negative-path constraint tests dejan `ERROR odoo.sql_db` en log (ABIERTO)
+## TD-006 — Negative-path constraint tests dejan `ERROR odoo.sql_db` en log (RESUELTO)
 
 **Detectado:** 2026-05-28 durante Fase 1 P1-E PR #4 cuando `oca_checklog_odoo`
 falló el job a pesar de que los 97 tests pasaron verdes.
+**Resuelto:** 2026-05-28, PR #XX (TD-006 + TD-007 combinado).
 **Severidad:** baja (no afecta producción; solo CI noise).
 
 **Síntoma:** Dos tests negativos disparan SQL unique-constraint violations
@@ -180,9 +181,10 @@ parte del code review pre-PR OCA. Estimado: 10 min.
 **Refs:** `checklog-odoo.cfg`, PR #4 commit `409d284`,
 GitHub Actions run `26575788271`.
 
-## TD-007 — `_post_init_hook` translate warnings con traceback (ABIERTO)
+## TD-007 — `_post_init_hook` translate warnings con traceback (RESUELTO)
 
 **Detectado:** 2026-05-28 durante Fase 1 P1-E PR #4, misma corrida que TD-006.
+**Resuelto:** 2026-05-28, PR #XX (TD-006 + TD-007 combinado).
 **Severidad:** baja (warnings, no errores; solo CI noise).
 
 **Síntoma:** `addons/l10n_py_account/hooks.py:39-40` llama `_("...")` dentro
