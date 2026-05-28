@@ -1,6 +1,8 @@
 # Copyright 2026 Careaga Dev
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 """Tests del modelo l10n_py.timbrado."""
+from psycopg2 import IntegrityError
+
 from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase, tagged
 from odoo.tools import mute_logger
@@ -54,9 +56,8 @@ class TestTimbrado(TransactionCase):
         self._make_timbrado(name="11111111")
         # Mute sql_db logger: Postgres logs the unique-constraint violation at
         # ERROR level before assertRaises catches it (TD-006).
-        with self.assertRaises(Exception), mute_logger(
-            "odoo.sql_db"
-        ):  # IntegrityError envuelto
+        # IntegrityError es la clase específica (TD-005, B017).
+        with self.assertRaises(IntegrityError), mute_logger("odoo.sql_db"):
             self._make_timbrado(name="11111111")
 
     def test_transition_draft_to_active(self):

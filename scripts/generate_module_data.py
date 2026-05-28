@@ -61,16 +61,43 @@ def _write_csv(filename, src_name, fieldnames, rows):
 
 
 def _xml_record(xml_id, model, fields_dict):
-    """Construye un <record> XML."""
-    lines = [f'    <record id="{xml_id}" model="{model}">']
+    """Construye un <record> XML.
+
+    XML emite atributos con comillas dobles obligatorias; usamos
+    concatenación (no f-string) para evitar B907 sin cambiar el output.
+    """
+    q = '"'  # comillas dobles requeridas por XML
+    lines = ["    <record id=" + q + xml_id + q + " model=" + q + model + q + ">"]
     for fname, fval in fields_dict.items():
         if isinstance(fval, tuple) and fval[0] == "ref":
-            lines.append(f'        <field name="{fname}" ref="{fval[1]}"/>')
+            lines.append(
+                "        <field name="
+                + q
+                + fname
+                + q
+                + " ref="
+                + q
+                + fval[1]
+                + q
+                + "/>"
+            )
         elif isinstance(fval, bool):
-            lines.append(f'        <field name="{fname}" eval="{fval}"/>')
+            lines.append(
+                "        <field name="
+                + q
+                + fname
+                + q
+                + " eval="
+                + q
+                + str(fval)
+                + q
+                + "/>"
+            )
         else:
             safe = escape(str(fval))
-            lines.append(f'        <field name="{fname}">{safe}</field>')
+            lines.append(
+                "        <field name=" + q + fname + q + ">" + safe + "</field>"
+            )
     lines.append("    </record>")
     return "\n".join(lines)
 

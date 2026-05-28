@@ -31,9 +31,14 @@ class AccountMove(models.Model):
             self.env.cr.execute(
                 """
                 CREATE UNIQUE INDEX account_move_unique_name
-                                 ON account_move(name, journal_id, l10n_latam_document_type_id)
-                              WHERE (state = 'posted' AND name != '/'
-                                AND (l10n_latam_document_type_id IS NULL OR move_type NOT IN ('in_invoice', 'in_refund', 'in_receipt')));
+                    ON account_move(
+                        name, journal_id, l10n_latam_document_type_id
+                    )
+                    WHERE (state = 'posted' AND name != '/'
+                      AND (l10n_latam_document_type_id IS NULL
+                           OR move_type NOT IN (
+                               'in_invoice', 'in_refund', 'in_receipt'
+                           )));
                 """
             )
         return res

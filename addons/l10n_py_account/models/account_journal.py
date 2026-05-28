@@ -43,7 +43,8 @@ class AccountJournal(models.Model):
             if not j.l10n_py_point_of_emission_id:
                 raise ValidationError(
                     _(
-                        "Los diarios de ventas paraguayos con documentos requieren un Punto de Emisión."
+                        "Los diarios de ventas paraguayos con documentos "
+                        "requieren un Punto de Emisión."
                     )
                 )
 
@@ -55,6 +56,7 @@ class AccountJournal(models.Model):
             if not j.l10n_latam_use_documents:
                 raise ValidationError(
                     _(
-                        'Un diario con Punto de Emisión PY debe tener "Usar Documentos" habilitado.'
+                        "Un diario con Punto de Emisión PY debe tener "
+                        '"Usar Documentos" habilitado.'
                     )
                 )

@@ -31,7 +31,7 @@ def extract_range(pdf_path: Path, start: int, end: int) -> None:
 def search(pdf_path: Path, pattern: str) -> None:
     reader = PdfReader(str(pdf_path))
     rx = re.compile(pattern, re.IGNORECASE)
-    print(f"=== Search '{pattern}' in {pdf_path.name} ({len(reader.pages)} pages) ===")
+    print(f"=== Search {pattern!r} in {pdf_path.name} ({len(reader.pages)} pages) ===")
     hits = 0
     for i, page in enumerate(reader.pages, start=1):
         text = page.extract_text() or ""
