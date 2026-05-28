@@ -67,9 +67,10 @@ principal). `--addons-path` también hay que pasarlo explícito porque el
 que encapsule este comando con un módulo como argumento. No es bloqueante;
 documentar acá basta para que futuros subagentes lo conozcan.
 
-## TD-004 — XML data files use deprecated `<data noupdate="1">` wrapper (ABIERTO)
+## TD-004 — XML data files use deprecated `<data noupdate="1">` wrapper (RESUELTO)
 
 **Detectado:** 2026-05-27 durante Fase 1 P1-C (semantic baseline pre-commit run).
+**Resuelto:** 2026-05-28, PR fix/td-004-xml-regen.
 **Severidad:** baja (sin impacto en runtime — Odoo 18 sigue cargando el XML; es
 solo deprecation warning del hook `oca-checks-odoo-module`).
 
