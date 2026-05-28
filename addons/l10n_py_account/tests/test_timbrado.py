@@ -3,6 +3,7 @@
 """Tests del modelo l10n_py.timbrado."""
 from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase, tagged
+from odoo.tools import mute_logger
 
 
 @tagged("post_install", "-at_install", "l10n_py")
@@ -51,7 +52,11 @@ class TestTimbrado(TransactionCase):
 
     def test_unique_name_per_company(self):
         self._make_timbrado(name="11111111")
-        with self.assertRaises(Exception):  # IntegrityError envuelto
+        # Mute sql_db logger: Postgres logs the unique-constraint violation at
+        # ERROR level before assertRaises catches it (TD-006).
+        with self.assertRaises(Exception), mute_logger(
+            "odoo.sql_db"
+        ):  # IntegrityError envuelto
             self._make_timbrado(name="11111111")
 
     def test_transition_draft_to_active(self):

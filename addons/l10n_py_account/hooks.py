@@ -3,8 +3,6 @@
 """Hook post-install que maneja DBs preexistentes."""
 import logging
 
-from odoo import _
-
 _logger = logging.getLogger(__name__)
 
 
@@ -26,7 +24,8 @@ def _post_init_hook(env):
             ]
         )
         if broken_journals:
-            _logger.warning(
+            # Informational: post-install routine, not anomalous.
+            _logger.info(
                 "Company %s: %d journals sale sin PoE — desactivando use_documents",
                 company.name,
                 len(broken_journals),
@@ -34,10 +33,16 @@ def _post_init_hook(env):
             broken_journals.write({"l10n_latam_use_documents": False})
             for journal in broken_journals:
                 try:
+                    # Note: these strings are passed to activity_schedule which
+                    # stores them as DB fields — they're not user-facing UI
+                    # text rendered through the translation pipeline at write
+                    # time, and _() outside request context emits noisy
+                    # tracebacks (TD-007). Keep as plain strings; translation
+                    # can be added later via lazy_gettext if needed.
                     journal.activity_schedule(
                         "mail.mail_activity_data_todo",
-                        summary=_("Configurar Punto de Emisión Paraguay"),
-                        note=_(
+                        summary="Configurar Punto de Emisión Paraguay",
+                        note=(
                             "Este diario requiere Punto de Emisión para emitir "
                             "documentos PY. Configure el PoE y reactive "
                             '"Usar Documentos".'
@@ -45,6 +50,7 @@ def _post_init_hook(env):
                         user_id=env.user.id,
                     )
                 except Exception as exc:
+                    # Genuine failure to create the activity — keep as warning.
                     _logger.warning("No se pudo crear activity: %s", exc)
 
         # Caso B: chart custom preexistente
@@ -56,7 +62,8 @@ def _post_init_hook(env):
         )
         chart = company.chart_template
         if chart and chart != "py" and existing_accounts > 20:
-            _logger.warning(
+            # Informational: documents migration path, not a failure.
+            _logger.info(
                 "Company %s tiene chart '%s' con %d cuentas. l10n_py_account NO "
                 "cargó el chart 'py' automáticamente. Use Configuración → "
                 "Contabilidad → Migración Chart Paraguay.",
