@@ -1,0 +1,101 @@
+name: tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    container: ${{ matrix.container }}
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
+            name: test with Odoo
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: odoo
+        ports:
+          - 5432:5432
+    env:
+      ADDONS_DIR: "addons"
+      OCA_ENABLE_CHECKLOG_ODOO: "1"
+      # Restrict test selection to l10n_py tests only.
+      # NOTE (operational correction vs PLAN.md Appendix A.3):
+      # The originally-planned value "/l10n_py,-l10n_py_external,-standard"
+      # selected 0 tests because Odoo 18's tag parser interprets `-standard`
+      # as excluding post_install-tagged tests, which silently drops the
+      # entire suite. The proven filter from Phase 1a/1b retrospective is
+      # plain "l10n_py" — same one used locally via
+      # `docker exec ... -u l10n_py_base --test-tags=l10n_py`.
+      # See BUGS_BACKLOG.md (test-tag filter correction) for the audit trail.
+      # P-01: smoke-verify step below echoes this value so future PRs can
+      # detect if oca_run_tests stops honoring ODOO_TEST_TAGS.
+      # Fallback (if oca_run_tests ignores ODOO_TEST_TAGS): replace the
+      # "Run tests" step with:
+      #   odoo --test-enable --stop-after-init -d $PGDATABASE \
+      #        --test-tags=l10n_py \
+      #        -i l10n_py_base,l10n_py_account \
+      #        --addons-path=$ADDONS_PATH
+      ODOO_TEST_TAGS: "l10n_py"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install addons and dependencies
+        run: oca_install_addons
+
+      - name: Check licenses
+        run: manifestoo -d . check-licenses
+
+      - name: Check development status
+        run: manifestoo -d . check-dev-status --default-dev-status=Beta
+        continue-on-error: true # Beta is fine; do not block during Pre-Fase 2
+
+      - name: Initialize test database
+        run: oca_init_test_database
+
+      - name: Smoke-verify test tag env (P-01)
+        run: |
+          echo "ODOO_TEST_TAGS=$ODOO_TEST_TAGS"
+          echo "OCA_ENABLE_CHECKLOG_ODOO=$OCA_ENABLE_CHECKLOG_ODOO"
+          echo "PGDATABASE=$PGDATABASE"
+          echo "ADDONS_PATH=$ADDONS_PATH"
+          which oca_run_tests
+          # If oca_run_tests is a shell script, dump its first 50 lines for grep
+          head -50 "$(which oca_run_tests)" || true
+
+      - name: Run tests
+        run: oca_run_tests
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        if: ${{ always() }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          flags: unittests
+          fail_ci_if_error: false
+          verbose: true
+
+      - name: Upload screenshots from JS tests (on failure)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.name }}
+          path: /tmp/odoo_tests/${{ env.PGDATABASE }}
+          if-no-files-found: ignore

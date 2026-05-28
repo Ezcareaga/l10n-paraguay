@@ -146,3 +146,63 @@ OCA, lo primero que llegue.
 
 **Refs:** `.flake8` (`ignore =`/`select =`),
 `.planning/phases/01-bloque-a-foundation-t-cnica-ci-cd-pre-commit/p1c-precommit-final-run.log`
+
+## TD-006 — Negative-path constraint tests dejan `ERROR odoo.sql_db` en log (ABIERTO)
+
+**Detectado:** 2026-05-28 durante Fase 1 P1-E PR #4 cuando `oca_checklog_odoo`
+falló el job a pesar de que los 97 tests pasaron verdes.
+**Severidad:** baja (no afecta producción; solo CI noise).
+
+**Síntoma:** Dos tests negativos disparan SQL unique-constraint violations
+que Postgres loggea en `odoo.sql_db` a nivel ERROR ANTES de que
+`assertRaises` los capture en el test:
+
+- `addons/l10n_py_account/tests/test_point_of_emission.py` — constraint
+  `l10n_py_point_of_emission_estab_point_uniq`.
+- `addons/l10n_py_account/tests/test_timbrado.py` — constraint
+  `l10n_py_timbrado_name_uniq`.
+
+`checklog-odoo` (consumido por `oca_checklog_odoo` con
+`OCA_ENABLE_CHECKLOG_ODOO=1`) interpreta las líneas ERROR como falla
+de CI aunque los tests pasaron.
+
+**Mitigación actual:** `checklog-odoo.cfg` (raíz del repo) ignora la
+regex `ERROR.*odoo\.sql_db.*duplicate key value violates unique constraint`.
+CI verde con tests verdes.
+
+**Fix proper:** envolver los dos test methods en
+`with tools.mute_logger('odoo.sql_db'):` para que el ERROR no llegue al
+appender raíz. Patrón estándar Odoo para `assertRaises` con SQL constraints.
+
+**Owner:** mini-plan dentro de Pre-Fase 2 cuando haya bandwidth, o
+parte del code review pre-PR OCA. Estimado: 10 min.
+
+**Refs:** `checklog-odoo.cfg`, PR #4 commit `409d284`,
+GitHub Actions run `26575788271`.
+
+## TD-007 — `_post_init_hook` translate warnings con traceback (ABIERTO)
+
+**Detectado:** 2026-05-28 durante Fase 1 P1-E PR #4, misma corrida que TD-006.
+**Severidad:** baja (warnings, no errores; solo CI noise).
+
+**Síntoma:** `addons/l10n_py_account/hooks.py:39-40` llama `_("...")` dentro
+del `_post_init_hook` sin request context activo. Odoo emite WARNING con
+traceback multilínea que `checklog-odoo` interpreta como noise.
+
+**Mitigación actual:** `checklog-odoo.cfg` ignora `WARNING.*_post_init_hook`
+y `WARNING.*translation.*context`.
+
+**Fix proper:** una de dos opciones:
+
+1. Reemplazar `_("...")` por `lazy_gettext("...")` (mantiene traducción
+   diferida hasta que haya context).
+2. Skip la traducción cuando `request` no esté disponible:
+   ```python
+   from odoo.http import request
+   message = _("...") if request else "..."
+   ```
+
+**Owner:** mini-plan dentro de Pre-Fase 2, junto con TD-006.
+
+**Refs:** `addons/l10n_py_account/hooks.py:39-40`, `checklog-odoo.cfg`,
+PR #4 commit `409d284`, GitHub Actions run `26575788271`.
