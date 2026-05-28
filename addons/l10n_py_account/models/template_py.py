@@ -18,8 +18,10 @@ class AccountChartTemplate(models.AbstractModel):
             # (el script solo activa códigos nivel-3 bajo 4.01/5.01).
             # Se usan los códigos nivel-4 disponibles más cercanos.
             # Revisar en Task 17 si se requiere ajustar ACTIVE_CODES del script.
-            "property_account_income_categ_id": "py_4100103",  # Ventas A Clientes Locales
-            "property_account_expense_categ_id": "py_5100103",  # Costo De Ventas A Clientes Locales
+            # py_4100103 = Ventas A Clientes Locales
+            "property_account_income_categ_id": "py_4100103",
+            # py_5100103 = Costo De Ventas A Clientes Locales
+            "property_account_expense_categ_id": "py_5100103",
             "bank_account_code_prefix": "1010104",
             "cash_account_code_prefix": "1010102",
             "transfer_account_code_prefix": "1010103",

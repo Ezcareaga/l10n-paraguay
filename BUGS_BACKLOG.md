@@ -113,10 +113,13 @@ milestone Pre-Fase 2 — lo primero que llegue.
 - `.planning/phases/01-bloque-a-foundation-t-cnica-ci-cd-pre-commit/01-RESEARCH.md` (R-01)
 - `.pre-commit-config.yaml` (bloque `oca-checks-odoo-module: args:`)
 
-## TD-005 — Flake8/bugbear opinionated checks suprimidos (ABIERTO)
+## TD-005 — Flake8/bugbear opinionated checks suprimidos (RESUELTO)
 
 **Detectado:** 2026-05-27 durante Fase 1 P1-C cuando se bumpeó flake8
 3.9.2 → 7.1.1 y flake8-bugbear 21.9.2 → 24.10.31.
+**Resuelto:** 2026-05-28, PR fix/td-005-bugbear (B017/B907/B950 reparados;
+`.flake8` con `B9` restaurado en `select` y `B017`/`B907` removidos de
+`ignore`).
 **Severidad:** baja (refactor cosmético, sin impacto runtime).
 
 **Síntoma:** flake8-bugbear v24 introduce checks opinionados que el código

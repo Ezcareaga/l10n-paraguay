@@ -56,7 +56,9 @@ def cmd_search(args: argparse.Namespace) -> int:
             if tok.upper() in operators or tok in ("(", ")"):
                 parts.append(tok)
             elif re.search(r"[^\w]", tok):
-                parts.append(f'"{tok}"')
+                # FTS5 MATCH requires double-quoted phrases; concat (not f-string)
+                # to avoid B907 false-positive while preserving the syntax.
+                parts.append('"' + tok + '"')
             else:
                 parts.append(tok)
         fts_query = " ".join(parts)

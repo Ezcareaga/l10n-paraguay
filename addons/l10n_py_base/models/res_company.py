@@ -23,7 +23,10 @@ class ResCompany(models.Model):
     l10n_py_economic_activity_ids = fields.Many2many(
         comodel_name="l10n_py.economic_activity",
         string="Actividades Económicas",
-        help="Una empresa puede tener múltiples actividades. Una se marca como principal en el XML del DE.",
+        help=(
+            "Una empresa puede tener múltiples actividades. Una se marca "
+            "como principal en el XML del DE."
+        ),
     )
     l10n_py_nombre_fantasia = fields.Char(
         string="Nombre de Fantasía",
