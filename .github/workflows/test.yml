@@ -31,6 +31,7 @@ jobs:
         ports:
           - 5432:5432
     env:
+      ADDONS_DIR: "addons"
       OCA_ENABLE_CHECKLOG_ODOO: "1"
       # Restrict test selection to l10n_py tests only.
       # NOTE (operational correction vs PLAN.md Appendix A.3):
