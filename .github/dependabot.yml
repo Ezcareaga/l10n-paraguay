@@ -1,0 +1,49 @@
+# Dependabot config for l10n-paraguay.
+# Two ecosystems: pip (pyproject.toml dev deps) + github-actions (workflows).
+# Weekly schedule, grouped PRs per ecosystem, no auto-merge (deferred to Pre-Fase 3).
+
+version: 2
+
+updates:
+  # Python dev dependencies declared in pyproject.toml
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "America/Asuncion"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "build"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "python"
+    groups:
+      python-deps:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # GitHub Actions versions in .github/workflows/*.yml
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "America/Asuncion"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    groups:
+      actions-deps:
+        patterns:
+          - "*"
