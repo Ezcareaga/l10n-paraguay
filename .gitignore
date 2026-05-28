@@ -102,5 +102,8 @@ docs/original/*.partial
 .claude/settings.local.json
 .claude/memory/
 
+# Local Claude Code agent installer — convenience script, not part of the repo.
+install-agents.sh
+
 # Snapshots para pasar a Claude.ai (locales, no commit)
 SNAPSHOT_FOR_CLAUDE_AI.md
