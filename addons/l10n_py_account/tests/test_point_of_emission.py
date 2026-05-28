@@ -3,6 +3,7 @@
 """Tests del modelo l10n_py.point_of_emission."""
 from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase, tagged
+from odoo.tools import mute_logger
 
 
 @tagged("post_install", "-at_install", "l10n_py")
@@ -28,7 +29,9 @@ class TestPointOfEmission(TransactionCase):
 
     def test_unique_establishment_point_per_company(self):
         self._make_poe(establishment_code="001", code="001")
-        with self.assertRaises(Exception):
+        # Mute sql_db logger: Postgres logs the unique-constraint violation at
+        # ERROR level before assertRaises catches it (TD-006).
+        with self.assertRaises(Exception), mute_logger("odoo.sql_db"):
             self._make_poe(establishment_code="001", code="001")
 
     def test_two_points_in_same_establishment_allowed(self):
