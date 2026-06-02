@@ -30,7 +30,7 @@
 - [ ] **SEC-04**: `gitleaks` no encuentra secrets en history; si hay false positives, documentar en `.gitleaksignore`. Tokens reales detectados se rotan (NO se reescribe git history)
 - [ ] **SEC-05**: `Bandit` pasa en todos los addons sin warnings críticos (HIGH severity)
 - [ ] **SEC-06**: `docs/60_SECURITY_BASELINE.md` documenta: auth/2FA strategy admin Odoo, password policy, audit logs (qué, retention, GDPR/LGPD), backup strategy (frequency, retention, monthly restore test), CCFE encryption strategy (Fernet + key rotation 90d), network security (firewall rules VPS)
-- [ ] **SEC-07**: `docs/61_COMPLIANCE_LEY_6534.md` documenta Ley 6534/2020 PY Protección Datos Personales: qué aplica, DPO si aplica, consent management para datos de clientes
+- [ ] **SEC-07**: `docs/61_COMPLIANCE_LEY_7593.md` documenta Ley 7593/2025 PY Protección de Datos Personales (general, GDPR-style): qué aplica, criterio DPO, consent management para datos de clientes. _Amendment 2026-06-02: Ley 6534/2020 (CONTEXT.md original) aplica solo a datos crediticios bajo BCP; la ley general aplicable al proyecto es 7593/2025 (vigente 2027-11-27, autoridad supervisora = ANPDP/MITIC). Ver `.planning/phases/02-bloque-b-security-baseline/02-RESEARCH.md` §Ley 7593._
 
 ### DOC — Bloque C: Documentación operacional
 
