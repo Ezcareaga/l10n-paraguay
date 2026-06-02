@@ -376,7 +376,53 @@ No applicable — `gsd-sdk query todo.match-phase 2` no devolvió matches.
 
 </deferred>
 
+<post_research_amendments>
+
+## Post-Research Amendments (2026-06-02)
+
+Aplican sobre todas las decisiones D-NN anteriores y superseden cualquier
+mención previa en este documento. Origen: `02-RESEARCH.md` (commit `dfc0161`)
+
+- confirmación interactiva con el usuario.
+
+### A-01 — Ley aplicable a docs/61 es **Ley 7593/2025**, no Ley 6534/2020
+
+**Supersede:** secciones D-13, D-14, D-15 + nombre de archivo + heading
+"docs/61 alcance Ley 6534".
+
+La investigación confirmó que **Ley 6534/2020 cubre exclusivamente datos
+crediticios** (burós de crédito, supervisión BCP) y NO la PII general que
+maneja el proyecto. La ley general GDPR-style de Paraguay es
+**Ley 7593/2025** (promulgada 2025-11-27, vigente 2027-11-27, autoridad
+supervisora = **ANPDP** dentro de **MITIC** — no SENAC).
+
+**Acciones para el planner:**
+
+- Archivo a crear: `docs/61_COMPLIANCE_LEY_7593.md` (no `_LEY_6534.md`).
+- En el doc: nombrar la ley correcta, citar artículos relevantes desde
+  RESEARCH.md §Ley 7593, mapear derechos del titular a controles en
+  docs/60 (mantiene la lógica de D-14, solo cambia la ley fuente).
+- Matriz D-15 al final de docs/61: misma estructura, pero las filas
+  referencian artículos de 7593/2025 + artículo único de 6534/2020 (data
+  crediticia) como "fuera de scope — out-of-scope, no aplica a este proyecto".
+- DPO designation y supervisión: ANPDP/MITIC (responsabilidad operador),
+  no SENAC.
+- Mantener referencia a Ley 6534/2020 únicamente como nota al pie:
+  "scope crediticio — no aplica a Odoo client/invoice PII".
+
+### A-02 — Pin `gitleaks/gitleaks-action@v3`, no `@v2`
+
+**Supersede:** D-01 mención de "gitleaks-action".
+
+Pin definitivo en `security.yml`: `gitleaks/gitleaks-action@v3` (v3.0.0,
+mayo 2025). `@v2` reaches EOL cuando GitHub Actions remueve Node 20
+runners (~Sep 2026). Cambio de minor: ninguna diferencia funcional para
+el modo `gitleaks detect` que usamos (D-04).
+
+</post_research_amendments>
+
 ---
 
 _Phase: 2-bloque-b-security-baseline_
 _Context gathered: 2026-06-02_
+_Amended after research: 2026-06-02 (A-01, A-02)_
