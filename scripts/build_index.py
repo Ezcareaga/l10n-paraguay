@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 2026-06-02: probe PR — verifying CodeRabbit auto-review setup (will be closed without merge)
 """
 build_index.py — Construye el índice de búsqueda de l10n-paraguay.
 
