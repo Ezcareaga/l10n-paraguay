@@ -33,6 +33,8 @@ export default {
         "pre-commit",
         "ci",
         "docs",
+        "planning", // GSD planning artifacts under .planning/
+        "security", // Bloque B + Phase 2 security baseline (workflow, SECURITY.md, docs/60-61)
         "", // allow empty scope
       ],
     ],
