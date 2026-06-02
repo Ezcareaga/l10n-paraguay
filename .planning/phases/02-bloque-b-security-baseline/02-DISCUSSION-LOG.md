@@ -71,23 +71,34 @@
 
 | Option                                 | Description                                                                           | Selected |
 | -------------------------------------- | ------------------------------------------------------------------------------------- | -------- |
-| Generar PGP key + publicar fingerprint | GPG par (ed25519 o RSA 4096), public en keys.openpgp.org, fingerprint en SECURITY.md. | ✓        |
+| Generar PGP key + publicar fingerprint | GPG par (ed25519 o RSA 4096), public en keys.openpgp.org, fingerprint en SECURITY.md. |          |
 | Available on request                   | Mencionar PGP sin publicar fingerprint.                                               |          |
-| Skip PGP                               | Sin PGP, TLS de GH suficiente.                                                        |          |
+| Skip PGP                               | Sin PGP, TLS de GH suficiente.                                                        | ✓        |
 
-**User's choice:** Generar PGP key + publicar fingerprint (Recommended)
-**Notes:** Compatible con futuro security.txt RFC 9116.
+**User's choice (final):** Skip PGP completamente
+**Notes:** Selección revisada antes del merge (PR #14). Selección inicial fue
+"Generar PGP key + publicar fingerprint" (Recommended), reabierta al revisar
+CONTEXT.md y reconsiderada: TLS de GH Advisories cubre el canal primario, el
+email fallback queda como plaintext aceptado dado threat model 1-maintainer +
+tráfico de reportes esperado bajo. Evita mantener key infra (rotación,
+expiración, keyserver) sin consumidor real. Reabrir en follow-up si cambia
+el threat model. Ver D-06 en `02-CONTEXT.md`.
 
 ---
 
 | Option                                                  | Description                               | Selected |
 | ------------------------------------------------------- | ----------------------------------------- | -------- |
-| Tabla inline en SECURITY.md                             | Sección ## Hall of Fame en mismo archivo. | ✓        |
+| Tabla inline en SECURITY.md                             | Sección ## Hall of Fame en mismo archivo. |          |
 | Archivo separado docs/SECURITY_HALL_OF_FAME.md          | Listado dedicado.                         |          |
-| GH Security Advisories nativo (sin Hall of Fame propio) | Remitir a advisories publicados.          |          |
+| GH Security Advisories nativo (sin Hall of Fame propio) | Remitir a advisories publicados.          | ✓        |
 
-**User's choice:** Tabla inline en SECURITY.md (Recommended)
-**Notes:** Cero entries hoy; migrar a archivo separado si crece >10.
+**User's choice (final):** GH Security Advisories nativo (sin Hall of Fame propio)
+**Notes:** Selección revisada antes del merge (PR #14). Selección inicial fue
+"Tabla inline en SECURITY.md" (Recommended), reabierta al revisar CONTEXT.md y
+reconsiderada: GH publica advisories con créditos cuando se asigna CVE → cero
+mantenimiento manual, zero drift entre tabla y estado real. SECURITY.md tendrá
+sección "Acknowledgements" con link a `/security/advisories`. Ver D-07 en
+`02-CONTEXT.md`.
 
 ---
 
@@ -201,7 +212,8 @@ Items que el researcher/planner resuelve sin reabrir discuss:
 - Escalación Bandit a MEDIUM → post-Fase 2 EDI.
 - `.well-known/security.txt` RFC 9116 → Phase 4 o Pre-Fase 3.
 - Schedule weekly de gitleaks → Pre-Fase 3 si hay señal.
-- Migrar Hall of Fame a archivo separado → cuando >10 entries.
+- Reabrir PGP en SECURITY.md → si cambia threat model.
+- Tabla HoF manual en SECURITY.md → si GH Advisories nativo resulta insuficiente.
 - Consent capture form en Odoo → Fase 4 POS o Fase 5.
 - VPS / Caddy / Postgres prod provisioning → Pre-Fase 3.
 - Implementar `scripts/restore-smoke.sh` ejecutable → Pre-Fase 3.

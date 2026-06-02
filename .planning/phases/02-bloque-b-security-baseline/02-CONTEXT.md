@@ -20,7 +20,7 @@ idea sobre esos bloques va a Deferred.
 Sequencing interno sugerido (no locked — el planner termina de definir):
 
 1. SEC-01 `LICENSE` (AGPL-3.0 full text) + sync `__manifest__.py` license=AGPL-3
-2. SEC-02 `SECURITY.md` (canal + PGP + Hall of Fame + support policy)
+2. SEC-02 `SECURITY.md` (canal + support policy)
 3. SEC-03 `.github/workflows/security.yml` (3 jobs: gitleaks + Bandit + Dep Review)
 4. SEC-04/05 ejecutar y limpiar findings (gitleaks history + Bandit HIGH)
 5. SEC-06 `docs/60_SECURITY_BASELINE.md` (6 ejes + matriz)
@@ -63,22 +63,26 @@ Sequencing interno sugerido (no locked — el planner termina de definir):
   vulnerability" del Security tab (privado, integrado con CVE issuance + draft
   advisory workflow). Fallback: `careagaezz@gmail.com` para reportantes sin
   cuenta GH. _Razón:_ encaja con SARIF de D-03 (todo el security state en GH),
-  no requiere infra email extra, integrado con Hall of Fame nativo si se
-  activa después.
+  no requiere infra email extra, integrado con flow nativo de Hall of Fame
+  (ver D-07) cuando se publiquen advisories.
 
-- **D-06: PGP key generada + fingerprint publicado.** Generar par GPG
-  (ed25519 preferido por simplicidad y tamaño; RSA 4096 si tooling de
-  destinatario lo requiere) durante Phase 2 implementación. Public key sube a
-  `keys.openpgp.org` + fingerprint en SECURITY.md. Privada queda en gestor de
-  passwords del owner. Permite reportes cifrados via email fallback.
-  Compatible con futuro `.well-known/security.txt` RFC 9116 si se agrega
-  durante Phase 4.
+- **D-06: Sin PGP en SECURITY.md.** No se genera ni publica PGP key. El canal
+  primario (GH Security Advisories) ya provee cifrado en tránsito (TLS) +
+  contenedor privado para reportes; el email fallback queda como plaintext
+  asumiendo el riesgo bajo de 1 maintainer + tráfico de reportes esperado
+  muy bajo en el horizonte de Pre-Fase 2. Si en el futuro cambia el threat
+  model (más maintainers, reportes frecuentes, datos sensibles cruzando email)
+  se reabre y se agrega PGP en un follow-up. _Razón:_ cero ceremonia
+  inicial; evita mantener key infra (rotación, expiración, keyserver) sin
+  consumidor real.
 
-- **D-07: Hall of Fame = tabla inline en SECURITY.md.** Sección
-  `## Hall of Fame` con columnas: `Reporter`, `Date`, `Advisory ID`,
-  `Severity`. Inicialmente vacía con nota _"No vulnerabilities have been
-  reported yet."_. Si crece >10 entries, se evalúa migrar a archivo separado
-  (deferred).
+- **D-07: Sin Hall of Fame manual; remitir a GH Security Advisories.**
+  SECURITY.md NO contiene tabla propia. Sección "Acknowledgements" con un
+  link a `https://github.com/Ezcareaga/l10n-paraguay/security/advisories`
+  (lista pública de advisories publicados, con créditos al reportante via
+  flow nativo de GH cuando se asigna CVE). _Razón:_ cero mantenimiento manual
+  (cero entries hoy, GH actualiza solo cuando hay advisory publicado), zero
+  drift entre tabla y estado real, alineado con D-05 (canal primario en GH).
 
 - **D-08: Support policy = solo latest minor 18.0.x.** Tabla:
   `18.0.x — :white_check_mark:` / `other — :x:`. Alineado con Odoo Community
@@ -172,8 +176,8 @@ especificar sin reabrir discuss:
 - Texto literal de `LICENSE` AGPL-3.0 (copiar desde
   `https://www.gnu.org/licenses/agpl-3.0.txt` — versión canónica).
 - Estructura de secciones de SECURITY.md siguiendo template GitHub propuesto
-  (`Reporting a Vulnerability`, `Supported Versions`, `Hall of Fame`,
-  `Security Update Process`).
+  (`Reporting a Vulnerability`, `Supported Versions`, `Acknowledgements`
+  con link a `/security/advisories`, `Security Update Process`).
 - Mecánica exacta del rotation script CCFE outline (envelope schema, naming
   de wrap keys). Si requiere decisiones de arquitectura, planner crea entry
   en `<canonical_refs>` apuntando al ADR/spec que define el contrato.
@@ -256,7 +260,6 @@ para esta phase (verificar al ejecutar plan).
 - `PyCQA/bandit` — SAST Python; CLI vía `pip install bandit[toml]`
 - `actions/dependency-review-action@v4` — Dep Review de GitHub
 - `github/codeql-action/upload-sarif@v3` — upload SARIF al Security tab
-- `keys.openpgp.org` — public PGP keyserver para D-06
 
 </canonical_refs>
 
@@ -296,7 +299,9 @@ para esta phase (verificar al ejecutar plan).
 ### Integration Points
 
 - **`LICENSE`** (raíz, nuevo) — AGPL-3.0 full text.
-- **`SECURITY.md`** (raíz, nuevo) — reporte + PGP + Hall of Fame + support.
+- **`SECURITY.md`** (raíz, nuevo) — canal de reporte (GH Advisories + email
+  fallback), support policy, link a `/security/advisories`. Sin PGP, sin
+  tabla HoF manual.
 - **`.github/workflows/security.yml`** (nuevo) — 3 jobs paralelos.
 - **`.gitleaksignore`** (raíz, condicional) — solo si SEC-04 cleanup detecta
   false positives legítimos.
@@ -318,9 +323,9 @@ para esta phase (verificar al ejecutar plan).
 
 - **Cero ceremonia que no se pueda mantener con 1 maintainer.** Cada
   decisión (D-01..D-15) está calibrada para que la operación recurrente sea
-  baja: 1 workflow no 3, fail-gate solo HIGH, no schedule semanal, no
-  archivos separados para Hall of Fame vacío. Optimización para repo
-  pre-cliente.
+  baja: 1 workflow no 3, fail-gate solo HIGH, no schedule semanal, sin
+  tabla HoF manual (remite a GH Advisories), sin PGP infra. Optimización
+  para repo pre-cliente.
 - **CCFE encryption en docs/60 = blueprint, no implementación.** El usuario
   evitó scope creep al rechazar implementar Fernet helper ahora. El doc tiene
   que ser tan claro que cuando Fase 2 EDI lo lea, el código se escribe
@@ -349,8 +354,11 @@ para esta phase (verificar al ejecutar plan).
   alojarlo.
 - **Schedule weekly de gitleaks full-history** — Pre-Fase 3 si aparece señal
   de churn de secrets. Hoy no se justifica.
-- **Migrar Hall of Fame a archivo separado** — cuando crezca a >10 entries.
-  Hoy queda inline.
+- **Reabrir PGP en SECURITY.md** — si cambia el threat model (más
+  maintainers, reportes frecuentes via email, datos sensibles en tránsito).
+  Hoy diferido (D-06).
+- **Tabla Hall of Fame manual en SECURITY.md** — si GH Advisories nativo
+  resulta insuficiente como reconocimiento (improbable). Hoy diferido (D-07).
 - **Consent capture form en módulo Odoo** — Fase 4 POS o Fase 5 si surge un
   flow de signup propio. Por defecto es responsabilidad operador.
 - **Provisión real de VPS + Caddy + Postgres prod** — Pre-Fase 3.
