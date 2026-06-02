@@ -80,7 +80,7 @@ puedo X sin fricción"_.
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Visible meta files (LICENSE + SECURITY.md)
+- [x] 02-01-PLAN.md — Visible meta files (LICENSE + SECURITY.md) — COMPLETE 2026-06-02
 
 **Wave 2** _(blocked on Wave 1 completion)_
 
@@ -188,8 +188,8 @@ referencia desde DOC-08).
 | CI-06  | Phase 1 | A      | Pending |
 | CI-07  | Phase 1 | A      | Pending |
 | CI-08  | Phase 1 | A      | Pending |
-| SEC-01 | Phase 2 | B      | Pending |
-| SEC-02 | Phase 2 | B      | Pending |
+| SEC-01 | Phase 2 | B      | Done    |
+| SEC-02 | Phase 2 | B      | Done    |
 | SEC-03 | Phase 2 | B      | Pending |
 | SEC-04 | Phase 2 | B      | Pending |
 | SEC-05 | Phase 2 | B      | Pending |
@@ -225,7 +225,7 @@ referencia desde DOC-08).
 | Phase                                   | Plans Complete | Status      | Completed |
 | --------------------------------------- | -------------- | ----------- | --------- |
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -         |
-| 2. Bloque B — Security baseline         | 0/5            | Not started | -         |
+| 2. Bloque B — Security baseline         | 1/5            | In progress | -         |
 | 3. Bloque C — Documentación operacional | 0/0            | Not started | -         |
 | 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -         |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -         |
