@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v0.1.0
 milestone_name: milestone
-current_phase: "Phase 2 — Bloque B: Security baseline"
+current_phase: 02
 status: executing
-last_updated: "2026-06-02T15:10:35.331Z"
+last_updated: "2026-06-02T00:00:00Z"
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 6
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 17
 ---
 
 # STATE — l10n-paraguay
@@ -33,10 +33,10 @@ progress:
 ## Current Focus
 
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
-- **Current phase:** Phase 2 — Bloque B: Security baseline
-- **Active plan:** None yet (await `/gsd:plan-phase 2`)
-- **Status:** Ready to execute
-- **Last action:** `/gsd:discuss-phase 2` capturó 02-CONTEXT.md + 02-DISCUSSION-LOG.md (4 áreas: Workflow security.yml shape, SECURITY.md mecánica de reporte, docs/60 alcance + CCFE encryption, docs/61 alcance Ley 6534 — 15 decisiones D-01..D-15) (2026-06-02)
+- **Current phase:** 02
+- **Active plan:** 02-02 (next — CI security workflow)
+- **Status:** Executing Phase 02 — Plan 02-01 COMPLETE (Wave 1 complete)
+- **Last action:** `/gsd:execute-phase 2` executed Plan 02-01 — LICENSE AGPL-3.0 + SECURITY.md added at repo root; SEC-01 + SEC-02 closed (2026-06-02)
 - **Previous phase:** Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; commit baseline 3a10fc7+abd7395; branch protection activa en main)
 
 ---
@@ -45,18 +45,18 @@ progress:
 
 ```
 Milestone: Pre-Fase 2 Foundation
-Phase:     2 of 5  (Bloque B — Security baseline)
-Plan:      none yet
-Status: Ready to execute
+Phase: 02 (Bloque B — Security baseline) — EXECUTING
+Plan: 2 of 5 (Plan 02-01 complete; Wave 1 done)
+Status: Executing Phase 02 — Wave 2 next
 
 Progress:
 [x] Phase 1: Bloque A — CI/CD + pre-commit          (8/8 REQs)
-[ ] Phase 2: Bloque B — Security baseline           (0/7 REQs)
+[ ] Phase 2: Bloque B — Security baseline           (2/7 REQs — SEC-01, SEC-02 done)
 [ ] Phase 3: Bloque C — Docs operacionales          (0/10 REQs)
 [ ] Phase 4: Bloque D — Repo hygiene + Release      (0/6 REQs)
 [ ] Phase 5: Bloque E — Multi-rubro foundation      (0/4 REQs)
 
-Total: 8/35 v1 REQs complete (milestone Pre-Fase 2)
+Total: 10/35 v1 REQs complete (milestone Pre-Fase 2)
 ```
 
 ---
@@ -75,8 +75,8 @@ Total: 8/35 v1 REQs complete (milestone Pre-Fase 2)
 | CI/CD                                        | ✅ Activo (lint + test + commitlint workflows en main)                                                             |
 | Pre-commit                                   | ✅ Activo (commit baseline 3a10fc7+abd7395 aplicado)                                                               |
 | Branch protection en `main`                  | ✅ Activa (CI-07 cerrado)                                                                                          |
-| LICENSE file                                 | ❌ Solo en `pyproject.toml`, sin archivo (Phase 2 lo agrega)                                                       |
-| SECURITY.md / CONTRIBUTING.md / CHANGELOG.md | ❌ Inexistentes (Phase 2 crea SECURITY.md; Phase 3 el resto)                                                       |
+| LICENSE file                                 | ✅ `LICENSE` AGPL-3.0 en raíz (SHA256 verified, Plan 02-01)                                                        |
+| SECURITY.md / CONTRIBUTING.md / CHANGELOG.md | ✅ `SECURITY.md` creado (Plan 02-01); CONTRIBUTING/CHANGELOG en Phase 3                                            |
 | docs/60 + docs/61                            | ❌ Inexistentes (Phase 2 los crea)                                                                                 |
 | Issue/PR templates                           | ❌ Inexistentes (Phase 4)                                                                                          |
 | Release `v0.1.0`                             | ❌ Sin taggear (Phase 4)                                                                                           |
@@ -107,13 +107,16 @@ Total: 8/35 v1 REQs complete (milestone Pre-Fase 2)
 - **2026-05-26 — Mapeo REQ↔Phase fijo por categoría.** CI→1, SEC→2, DOC→3, REL→4, IND→5. Sin re-shuffling entre phases. (Decisión usuario.)
 - **2026-05-26 — Phase 1 sequencing interno NO paralelizable.** CI-01 → CI-02 (baseline commit) → CI-04 (lint workflow) son secuenciales obligatorias. CI-03/05/06 paralelos. CI-07 después de tener status checks. CI-08 al final. (De spec `docs/55` "Riesgos" — mitigación del commit baseline.)
 - **2026-06-02 — Phase 2 D-01..D-15.** 15 decisiones lockeadas en 02-CONTEXT.md. Highlights: (a) `security.yml` = 1 workflow con 3 jobs paralelos; (b) Bandit fail-gate HIGH only; (c) SARIF al Security tab; (d) GH Security Advisories como canal primario + PGP publicado; (e) CCFE encryption helper diferido a Fase 2 EDI (docs/60 deja blueprint); (f) OCA `auditlog` para audit retention 7y/1y; (g) Backup S3-compatible (Backblaze B2 default) + filesystem; (h) docs/61 split vendor/operador con matriz de cumplimiento Ley 6534. (Decisión usuario via discuss-phase 2.)
+- **2026-06-02 — Plan 02-01 executed.** LICENSE AGPL-3.0 descargado de canonical URL (SHA256 verified). SECURITY.md creado con skeleton de RESEARCH.md (GH Advisories primary, email fallback, SLA 72h/30d, sin PGP, sin HoF manual). Manifests ya tenían `license="AGPL-3"` — sin cambios. SEC-01 + SEC-02 cerrados. Wave 1 Phase 2 completa.
 
 ### Open todos / next steps
 
 - [x] User aprobó `ROADMAP.md` (implícito al ejecutar Phase 1 y Phase 2 discuss)
 - [x] Phase 1 completada (8/8 REQs CI-01..08)
-- [ ] Mergear PR `docs/phase-2-context` (CONTEXT + DISCUSSION-LOG + STATE update)
-- [ ] `/gsd:plan-phase 2` para decomponer Phase 2 (Bloque B) en plans ejecutables
+- [x] Mergear PR `docs/phase-2-context` (CONTEXT + DISCUSSION-LOG + STATE update)
+- [x] `/gsd:plan-phase 2` para decomponer Phase 2 (Bloque B) en plans ejecutables
+- [x] Plan 02-01 ejecutado: LICENSE + SECURITY.md creados (SEC-01, SEC-02 cerrados) — 2026-06-02
+- [ ] Ejecutar Plan 02-02: CI security workflow (gitleaks + Bandit + Dependency Review)
 - [ ] Verificar subagent `voltagent-qa-sec:security-auditor` (opus) instalado antes de ejecutar SEC-03..05
 - [ ] Antes de empezar Phase 3: verificar subagent `voltagent-dev-exp:documentation-engineer`
 
@@ -133,16 +136,23 @@ Ninguno. Phase 1 cerrada en `main` (último commit Phase 1: `0208748 chore: ci s
 
 ## Session Continuity
 
-### Last session (2026-06-02)
+### Last session (2026-06-02) — Plan 02-01 executed
+
+- **Command:** `/gsd:execute-phase 2` (Plan 02-01)
+- **Inputs:** `02-01-PLAN.md`, `02-CONTEXT.md`, `02-RESEARCH.md`, manifests, `pyproject.toml`
+- **Outputs:**
+  - `LICENSE` — AGPL-3.0 canonical text, SHA256 verified (commit `de5de11`)
+  - `SECURITY.md` — vulnerability disclosure policy, GH Advisories channel (commit `c365ea1`)
+  - `.planning/phases/02-bloque-b-security-baseline/02-01-SUMMARY.md` (commit `be7d166`)
+- **Branch:** `docs/phase-2-plans`
+- **REQs closed:** SEC-01, SEC-02
+- **Next session:** `/gsd:execute-phase 2` Plan 02-02 (CI security workflow)
+
+### Previous session (2026-06-02) — CONTEXT + PLAN
 
 - **Command:** `/gsd:discuss-phase 2` (resumed from checkpoint dejado 2026-05-28)
-- **Inputs:** `.planning/PROJECT.md`, `.planning/REQUIREMENTS.md`, `.planning/ROADMAP.md`, `.planning/STATE.md`, `docs/55_PRE_FASE_2_FOUNDATION.md` §Bloque B, `.planning/phases/01-.../01-CONTEXT.md`, checkpoint `02-DISCUSS-CHECKPOINT.json`
-- **Outputs:**
-  - `.planning/phases/02-bloque-b-security-baseline/02-CONTEXT.md` (15 decisiones D-01..D-15 + canonical refs + code context + deferred ideas)
-  - `.planning/phases/02-bloque-b-security-baseline/02-DISCUSSION-LOG.md` (audit trail con tabla de opciones por cada pregunta)
-  - Branch `docs/phase-2-context` con commits `docs(02): capture phase 2 context` + `docs(state): record phase 2 context session` (PR pendiente de merge)
-- **Areas discutidas:** Workflow security.yml shape (resumed), SECURITY.md mecánica de reporte, docs/60 alcance + CCFE encryption, docs/61 alcance Ley 6534
-- **Next session:** `/gsd:plan-phase 2` para decomponer Bloque B en plans atómicos (cuando PR mergee a `main`)
+- **Outputs:** `02-CONTEXT.md` (15 decisiones), `02-DISCUSSION-LOG.md`
+- **Next was:** `/gsd:plan-phase 2` → created `02-01-PLAN.md` through `02-05-PLAN.md`
 
 ### Previous session (2026-05-28)
 
@@ -161,7 +171,7 @@ Ninguno. Phase 1 cerrada en `main` (último commit Phase 1: `0208748 chore: ci s
 /gsd:resume-work
 ```
 
-Lee STATE.md → identifica current focus (Phase 2 CONTEXT.md ready, PR pendiente) → sugiere próximo comando (`/gsd:plan-phase 2` post-merge).
+Lee STATE.md → identifica current focus (Phase 2 Plan 02-01 complete, Wave 1 done) → sugiere próximo comando (`/gsd:execute-phase 2` para Plan 02-02 en branch `docs/phase-2-plans`).
 
 ---
 
@@ -182,3 +192,4 @@ Subagents disponibles relevantes para este milestone (verificar con `ls ~/.claud
 
 _STATE initialized: 2026-05-26 — initial GSD bootstrap of milestone Pre-Fase 2._
 _STATE updated: 2026-06-02 — Phase 1 closed, Phase 2 CONTEXT.md ready, awaiting plan-phase._
+_STATE updated: 2026-06-02 — Plan 02-01 complete (SEC-01, SEC-02 closed). Wave 1 Phase 2 done. Next: Plan 02-02._
