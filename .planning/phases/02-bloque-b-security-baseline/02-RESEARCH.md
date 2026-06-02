@@ -791,7 +791,7 @@ Las GitHub Actions (`gitleaks-action`, `dependency-review-action`, `codeql-actio
 
 ---
 
-## Risks & Open Questions
+## Risks & Open Questions (RESOLVED)
 
 ### Risk 1: Ley incorrecta en REQUIREMENTS.md (BLOCKER para docs/61)
 
@@ -828,10 +828,17 @@ Las GitHub Actions (`gitleaks-action`, `dependency-review-action`, `codeql-actio
 - **Lo que sabemos**: el spec dice `docs/61_COMPLIANCE_LEY_6534.md` pero la ley correcta es 7593/2025.
 - **Opciones**: (a) crear con nombre corregido `docs/61_COMPLIANCE_LEY_7593.md`, (b) mantener nombre del spec y aclarar en el contenido.
 - **Recomendación researcher**: opción (a) — el nombre del archivo es parte del contrato de docs con reviewers OCA.
+- **RESOLVED**: opción (a) locked. Ver `02-CONTEXT.md` amendment **A-01** + REQUIREMENTS.md SEC-07 (commit `cb4618b`). Plan 02-05 implementa.
 
 ### Open Question 2: Bandit actual vs `continue-on-error`
 
 La invocación de bandit en CI tiene un edge case: si `bandit.sarif` no se genera (bandit falla antes de crear el archivo), el step `upload-sarif` falla con "file not found". El workflow arriba usa `continue-on-error: true` en el step de bandit y `if: always()` en upload. El planner debe verificar que bandit genera el SARIF incluso cuando hay findings (lo hace — exit code != 0 pero el archivo se crea).
+
+- **RESOLVED**: pattern `continue-on-error: true` + `if: always()` adoptado en Plan 02-02 task 02-02-01 (acceptance criterion verifica ambos flags). Bandit genera SARIF aun con findings — verificado en bandit 1.9.4 docs.
+
+### Gitleaks v3 pin (no era Open Question explícita pero relacionada)
+
+- **RESOLVED**: `gitleaks/gitleaks-action@v3` locked. Ver `02-CONTEXT.md` amendment **A-02**. Plan 02-02 task 02-02-01 implementa (acceptance criterion verifica `@v3` presente y `@v2` count = 0).
 
 ---
 

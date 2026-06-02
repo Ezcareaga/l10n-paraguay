@@ -28,7 +28,7 @@ puedo X sin fricción"_.
 ## Phases
 
 - [ ] **Phase 1: Bloque A — Foundation técnica (CI/CD + pre-commit)** — Activar pre-commit OCA + GitHub Actions (lint, test, dependabot, commitlint) + branch protection en `main`
-- [ ] **Phase 2: Bloque B — Security baseline** — LICENSE + SECURITY.md + workflow `security.yml` (gitleaks + Bandit) + docs/60-61 (security baseline + compliance Ley 6534)
+- [ ] **Phase 2: Bloque B — Security baseline** — LICENSE + SECURITY.md + workflow `security.yml` (gitleaks + Bandit + Dependency Review) + docs/60 (security baseline) + docs/61 (compliance Ley 7593/2025)
 - [ ] **Phase 3: Bloque C — Documentación operacional** — README real + CHANGELOG + CONTRIBUTING + CODE_OF_CONDUCT + docs/70-72 (ARCHITECTURE, DEPLOYMENT, RUNBOOK) + ADRs 0001-0005
 - [ ] **Phase 4: Bloque D — Repo hygiene + Release process** — Issue/PR templates + CODEOWNERS + release.yml + tag `v0.1.0` + decisión semantic-release vs manual
 - [ ] **Phase 5: Bloque E — Multi-rubro foundation** — ADR-0004 + docs/80 multi-rubro roadmap + auditoría grep rubro-agnosticismo + guía mínima `l10n_py_industry_*`
@@ -52,6 +52,7 @@ puedo X sin fricción"_.
 5. CI-07 (branch protection) — necesita que los status checks ya existan en GitHub para poder marcarlos como required
 6. CI-08 (PR de prueba `chore: ci sanity check`) — verificación final end-to-end
    **Success Criteria** (what must be TRUE):
+
 7. `pre-commit run --all-files` corre limpio sobre todo el repo (hooks OCA: black, isort, flake8, pylint-odoo, oca-checks-odoo-module, oca-fix-manifest-version, codespell, yamllint)
 8. Push directo a `main` (incluso desde la cuenta owner `@Ezcareaga`) es rechazado por GitHub con mensaje de branch protection
 9. Una PR de prueba (`chore: ci sanity check`) dispara workflows `lint.yml` + `test.yml` y ambos terminan verdes antes de poder mergearse
@@ -73,9 +74,28 @@ puedo X sin fricción"_.
 3. `Bandit` corre en `addons/` sin un solo warning de severidad HIGH (warnings MEDIUM/LOW pueden quedar como tech debt documentada)
 4. `SECURITY.md` describe versiones soportadas, canal de reporte (email + PGP opcional), SLA (72h confirmación / 30d fix) y Hall of Fame
 5. `docs/60_SECURITY_BASELINE.md` documenta los 6 ejes: auth/2FA admin, password policy, audit logs (retention + GDPR/LGPD), backup (frequency + retention + monthly restore test), CCFE encryption (Fernet + key rotation 90d), network security (firewall VPS)
-6. `docs/61_COMPLIANCE_LEY_6534.md` cubre Ley 6534/2020 PY: qué aplica al proyecto, criterio DPO, consent management para datos de clientes
-   **Plans**: TBD
-   **UI hint**: no
+6. `docs/61_COMPLIANCE_LEY_7593.md` cubre Ley 7593/2025 PY (general, GDPR-style): vendor vs operador split, ARCO + consent management, matriz de cumplimiento. _Amendment 2026-06-02 A-01: Ley 7593/2025 supersedes Ley 6534/2020 (la 6534 sólo cubre datos crediticios bajo BCP)._
+   **Plans**: 5 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — Visible meta files (LICENSE + SECURITY.md)
+
+**Wave 2** _(blocked on Wave 1 completion)_
+
+- [ ] 02-02-PLAN.md — CI security workflow (gitleaks + Bandit + Dependency Review)
+
+**Wave 3** _(blocked on Wave 2 completion)_
+
+- [ ] 02-03-PLAN.md — History cleanup + Bandit triage + branch protection
+
+**Wave 4** _(blocked on Wave 3 completion)_
+
+- [ ] 02-04-PLAN.md — Security baseline doc + restore-smoke stub + README badge
+- [ ] 02-05-PLAN.md — Compliance Ley 7593/2025 doc
+
+  **UI hint**: no
 
 ### Phase 3: Bloque C — Documentación operacional
 
@@ -205,7 +225,7 @@ referencia desde DOC-08).
 | Phase                                   | Plans Complete | Status      | Completed |
 | --------------------------------------- | -------------- | ----------- | --------- |
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -         |
-| 2. Bloque B — Security baseline         | 0/0            | Not started | -         |
+| 2. Bloque B — Security baseline         | 0/5            | Not started | -         |
 | 3. Bloque C — Documentación operacional | 0/0            | Not started | -         |
 | 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -         |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -         |
