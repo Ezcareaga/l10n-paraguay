@@ -8,11 +8,11 @@ requires:
 provides:
   - gitleaks full-history baseline (0 findings — no .gitleaksignore needed)
   - Bandit HIGH gate baseline (0 HIGH/MEDIUM/LOW findings in addons/)
-  - Checkpoint handoff for branch protection update on main (task 02-03-03 — blocking-human)
+  - Branch protection on main now requires the 3 security jobs (gitleaks, bandit, dependency-review) alongside Phase 1 checks
 affects:
   - SEC-04 (closed — 2026-06-03; 0 active secrets in full history)
   - SEC-05 (closed — 2026-06-03; 0 HIGH Bandit findings in addons/)
-  - SEC-03-protection (pending — task 02-03-03 awaits resume-signal from repo owner)
+  - SEC-03-protection (closed — 2026-06-03; required_status_checks on main = 6 contexts confirmed via gh api)
 tech-stack:
   added:
     - bandit==1.9.4 (local-only — already pinned in security.yml CI workflow)
@@ -32,14 +32,14 @@ decisions:
   - "No history rewrite executed (`git reflog --all | Select-String 'filter-repo|filter-branch|BFG' -Quiet` returned False) — D-04 policy maintained"
   - "Task 02-03-03 deliberately NOT executed by the agent — `gh api -X PUT repos/.../required_status_checks/contexts` requires admin token the executor does not have; checkpoint returned for repo owner"
 metrics:
-  duration: "~20 min (env setup + 2 scans + audit + summary)"
+  duration: "~25 min (env setup + 2 scans + audit + summary + checkpoint closure)"
   completed: 2026-06-03
-  tasks_completed: 2
+  tasks_completed: 3
   tasks_total: 3
   files_created: 0
   files_modified: 0
-  commits: 0
-status: partial — task 03 pending human verification (branch protection update on main)
+  commits: 2 (executor SUMMARY + checkpoint closure)
+status: complete — Plan 02-03 closed; SEC-04, SEC-05, SEC-03-protection all green
 ---
 
 # Phase 2 Plan 02-03: gitleaks + Bandit triage + branch protection — Summary
@@ -48,21 +48,21 @@ status: partial — task 03 pending human verification (branch protection update
 
 ## Status
 
-**Partial — 2 of 3 tasks complete.**
+**Complete — 3 of 3 tasks done.**
 
 - Task 02-03-01 (gitleaks full-history scan): **DONE — 0 findings**
 - Task 02-03-02 (Bandit HIGH gate + MEDIUM/LOW audit): **DONE — 0 findings at every level**
-- Task 02-03-03 (branch protection update on `main`): **CHECKPOINT — awaits resume-signal from repo owner**
+- Task 02-03-03 (branch protection update on `main`): **DONE — required_status_checks updated; 6 contexts confirmed via `gh api`**
 
-No file changes were produced by tasks 01 and 02 (both auditorías limpias). This SUMMARY itself is the only commit-worthy artifact of the plan execution so far. Tasks 01 and 02 closed SEC-04 and SEC-05; SEC-03-protection (branch protection arm) closes only when task 03 is verified.
+No file changes were produced by tasks 01 and 02 (both auditorías limpias). Task 03 is a GitHub Settings change (no repo files). The only commit-worthy artifacts of this plan are this SUMMARY (split into two commits: initial baseline at task 02 close + checkpoint closure when 03 confirmed). Plan 02-03 closes **SEC-04**, **SEC-05**, and the branch-protection arm of **SEC-03** (T-SEC-03-protection).
 
 ## Completed Tasks
 
-| Task     | Name                                                                                               | Commit | Files                                            | Status                                         |
-| -------- | -------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------ | ---------------------------------------------- |
-| 02-03-01 | gitleaks full-history scan + rotate any live tokens + write .gitleaksignore if needed              | n/a    | (none — 0 findings → no .gitleaksignore created) | Done                                           |
-| 02-03-02 | Bandit `-lll -iii` HIGH gate on addons/ + document MEDIUM/LOW in BUGS_BACKLOG.md if any            | n/a    | (none — 0 findings at any severity)              | Done                                           |
-| 02-03-03 | Add `gitleaks`, `bandit`, `dependency-review` to required status checks for branch protection main | n/a    | (none — GitHub Settings UI / `gh api`)           | Checkpoint pending (blocking-human, see below) |
+| Task     | Name                                                                                               | Commit | Files                                            | Status                                    |
+| -------- | -------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------ | ----------------------------------------- |
+| 02-03-01 | gitleaks full-history scan + rotate any live tokens + write .gitleaksignore if needed              | n/a    | (none — 0 findings → no .gitleaksignore created) | Done                                      |
+| 02-03-02 | Bandit `-lll -iii` HIGH gate on addons/ + document MEDIUM/LOW in BUGS_BACKLOG.md if any            | n/a    | (none — 0 findings at any severity)              | Done                                      |
+| 02-03-03 | Add `gitleaks`, `bandit`, `dependency-review` to required status checks for branch protection main | n/a    | (none — GitHub Settings UI / `gh api`)           | Done — confirmed 2026-06-03 by repo owner |
 
 ## Task 02-03-01 — gitleaks full-history scan
 
@@ -192,17 +192,58 @@ This template is documented here so a future executor encountering findings on a
 
 Met. **SEC-05 closed.**
 
-## Task 02-03-03 — CHECKPOINT: branch protection update on main
+## Task 02-03-03 — branch protection update on main
 
 **Type:** `checkpoint:human-verify`
 **Gate:** `blocking-human`
-**Status:** Not executed by agent — handoff returned to orchestrator/repo owner.
+**Status:** Done — confirmed 2026-06-03 by repo owner `@Ezcareaga`.
 
-This task requires `repo admin` scope on a token that the executor does not hold by default. Per plan: "DO NOT attempt to run `gh api -X PUT ...` yourself — the executor does not have admin token by default."
+This task required `repo admin` scope on a token the executor does not hold by default. Per plan: "DO NOT attempt to run `gh api -X PUT ...` yourself — the executor does not have admin token by default." The repo owner performed the GitHub Settings change while logged in.
 
-The full checkpoint handoff (verbatim sections from PLAN.md task 02-03-03) is returned in the agent's final message to the orchestrator. The orchestrator forwards it to the user; the user performs the GitHub Settings change and types the resume-signal.
+### What was done (manual step)
 
-The agent ran tasks 01 and 02 to completion (atomic from a logical standpoint even though both produced 0 file changes), committed this SUMMARY, and stops. STATE.md and ROADMAP.md updates are deferred to the orchestrator after merge (worktree-isolation rule).
+Repo owner appended the 3 security job contexts to the required status checks list on `main` via the GitHub Settings UI (Settings → Branches → `main` → "Require status checks to pass before merging"). Alternative CLI form documented in the plan:
+
+```powershell
+gh api -X PUT repos/Ezcareaga/l10n-paraguay/branches/main/protection/required_status_checks/contexts `
+  -f "contexts[]=gitleaks" -f "contexts[]=bandit" -f "contexts[]=dependency-review"
+```
+
+### Verification — final state of required_status_checks
+
+```powershell
+gh api repos/Ezcareaga/l10n-paraguay/branches/main/protection/required_status_checks --jq '.contexts'
+```
+
+Output (provided by repo owner with the `"approved"` resume-signal):
+
+```json
+[
+  "gitleaks",
+  "bandit",
+  "dependency-review",
+  "pre-commit",
+  "test with Odoo",
+  "commitlint"
+]
+```
+
+All 6 expected contexts present — 3 new Phase 2 security jobs alongside the 3 Phase 1 entries. No regression.
+
+### Acceptance criteria — verification
+
+| Criterion                                                                                                    | Result                                                                                                                                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `gh api … --jq '.contexts'` array contains `gitleaks`, `bandit`, `dependency-review`                         | PASS — confirmed in the JSON dump above                                                                                                                                                                                                  |
+| Phase 1 status checks (`pre-commit`, `test (test with Odoo)`, `commitlint`) still present (no regression)    | PASS — `pre-commit`, `test with Odoo`, `commitlint` all present. Note: the Phase 1 check exposes as `test with Odoo` (the job name), not `test (test with Odoo)` (the GitHub-rendered "workflow / job" form). Same check, no regression. |
+| A test PR with a failing security check shows the "Merge" button disabled with "Required statuses must pass" | DEFERRED — to be confirmed on the first Wave 3 PR (this PR) once CI runs; security baseline is 0-findings so a "failing security check" test would require deliberately injecting a fake secret in a follow-up                           |
+| Resume-signal received from user                                                                             | PASS — repo owner replied `"approved"` with the `gh api … --jq '.contexts'` dump pasted in                                                                                                                                               |
+
+### Done criterion
+
+> "Branch protection on main requires the 3 security jobs to be green before merge; Phase 1 checks still required."
+
+Met. **SEC-03-protection closed.** The CI-07 + SEC-03 loop is now closed end-to-end: PRs cannot merge to `main` unless all 6 required checks (3 Phase 1 + 3 Phase 2) report green.
 
 ## Deviations from Plan
 
