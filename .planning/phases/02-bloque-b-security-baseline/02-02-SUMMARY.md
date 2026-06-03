@@ -10,7 +10,7 @@ provides:
   - SARIF results visible in GitHub Security tab under categories "gitleaks" and "bandit"
   - Required-status-check names (for Plan 03 branch-protection update): gitleaks, bandit, dependency-review
 affects:
-  - SEC-03 (closed pending checkpoint 02-02-02 sign-off)
+  - SEC-03 (closed — 2026-06-02)
 tech-stack:
   added:
     - gitleaks/gitleaks-action@v3
@@ -35,31 +35,33 @@ decisions:
   - "Risk 3 mitigation: actions/dependency-review-action@v4 (v5 requires runner v2.327.1+)"
   - "runs-on: ubuntu-22.04 in all 3 jobs (matches Phase 1 standard; never ubuntu-latest)"
 metrics:
-  duration: "~10 min (Task 02-02-01 only; Task 02-02-02 pending human checkpoint)"
+  duration: "~10 min (Task 02-02-01 + Task 02-02-02 manual checkpoint)"
   completed: 2026-06-02
-  tasks_completed: 1
+  tasks_completed: 2
   tasks_total: 2
   files_created: 1
   files_modified: 0
-status: partial-pending-checkpoint
+status: complete
 ---
 
 # Phase 2 Plan 02-02: CI Security Workflow — Summary
 
-**One-liner:** Security workflow `security.yml` con 3 jobs paralelos (gitleaks @v3, bandit 1.9.4 HIGH-only, dependency-review @v4) que publica SARIF al Security tab con categorías distintas; checkpoint pendiente para habilitar Dependency Graph + Dependabot alerts en GitHub Settings.
+**One-liner:** Security workflow `security.yml` con 3 jobs paralelos (gitleaks @v3, bandit 1.9.4 HIGH-only, dependency-review @v4) que publica SARIF al Security tab con categorías distintas; Dependency Graph + Dependabot alerts ya estaban habilitados en GitHub Settings (checkpoint aprobado).
 
 ## Status
 
-**Partial — pending checkpoint 02-02-02.**
+**Complete.**
 
-Task 02-02-01 ejecutado y commiteado. Task 02-02-02 (manual UI step en GitHub Settings) es `type=checkpoint:human-verify gate=blocking` y requiere acción del owner del repo (`@Ezcareaga`) antes de cerrar el plan. El plan no avanza hasta recibir el resume-signal "approved" (o un blocker reportado por el usuario).
+Task 02-02-01 ejecutado y commiteado. Task 02-02-02 (manual UI step en GitHub Settings) verificado por el owner del repo (`@Ezcareaga`) el 2026-06-02 — Dependency Graph + Dependabot alerts ya estaban habilitados desde antes (resume-signal: "approved — already enabled").
+
+La verificación end-to-end del job `dependency-review` (que la action no falla con "Dependency graph not enabled") sucede en el primer PR run después del push de `feat/sec-03-security-workflow` a GitHub — queda capturada como UAT item del Wave 2, no bloqueante del cierre del plan.
 
 ## Completed Tasks
 
-| Task     | Name                                             | Commit    | Files                                  | Status             |
-| -------- | ------------------------------------------------ | --------- | -------------------------------------- | ------------------ |
-| 02-02-01 | Author `.github/workflows/security.yml` (3 jobs) | `e393fd5` | `.github/workflows/security.yml` (new) | Done               |
-| 02-02-02 | Enable Dependency Graph + Dependabot alerts (UI) | n/a       | (none — GitHub Settings)               | Pending checkpoint |
+| Task     | Name                                             | Commit    | Files                                  | Status                                                       |
+| -------- | ------------------------------------------------ | --------- | -------------------------------------- | ------------------------------------------------------------ |
+| 02-02-01 | Author `.github/workflows/security.yml` (3 jobs) | `e393fd5` | `.github/workflows/security.yml` (new) | Done                                                         |
+| 02-02-02 | Enable Dependency Graph + Dependabot alerts (UI) | n/a       | (none — GitHub Settings)               | Approved 2026-06-02 (toggles already enabled per repo admin) |
 
 ## What Was Built
 
@@ -124,20 +126,25 @@ $f = '.github/workflows/security.yml'; $ok = (Test-Path $f) -and ((Select-String
 
 Result: `OK`.
 
-## Pending — Checkpoint 02-02-02
+## Checkpoint 02-02-02 — Approved 2026-06-02
 
-Task 02-02-02 es manual UI step en GitHub Settings que no es scriptable sin admin OAuth token + `gh api` rule editor. Requiere que el owner del repo (`@Ezcareaga`) habilite:
+Task 02-02-02 (manual UI step en GitHub Settings) verificado por el owner del repo `@Ezcareaga`. Resume-signal: **"Approved — already enabled"** — las toggles ya estaban habilitadas desde antes.
 
-1. **Dependency graph** → Settings → Security → Code security and analysis → Enable.
-2. **Dependabot alerts** → mismo lugar → Enable.
-3. **Dependabot security updates** → opcional pero recomendado.
+Estado esperado en GitHub Settings → Security → Code security and analysis:
 
-Después de habilitar, validar:
+- **Dependency graph** → Enabled
+- **Dependabot alerts** → Enabled
+- **Dependabot security updates** → Enabled (opcional, recomendado)
 
-- `gh api repos/Ezcareaga/l10n-paraguay --jq '.security_and_analysis.dependabot_alerts.status'` retorna `"enabled"`.
-- En el PR abierto para este plan, el job `dependency-review` reporta `success` (no falla con "Dependency graph is not enabled").
+### UAT item para el Wave 2 PR
 
-El plan no se considera cerrado hasta recibir el resume-signal explícito del usuario.
+Cuando se abra el PR de `feat/sec-03-security-workflow` a `main`:
+
+- Confirmar que el job `dependency-review` reporta `success` (no falla con "Dependency graph is not enabled").
+- Confirmar que SARIF de `gitleaks` y `bandit` aparece en GitHub Security → Code scanning con categorías distintas.
+- Confirmar que los 3 jobs (`gitleaks`, `bandit`, `dependency-review`) corren y figuran como checks separados en el PR.
+
+Esto NO bloquea el cierre del plan — es smoke verification del primer run real del workflow, que Plan 03 va a usar como insumo para sumar required-status-checks a branch protection.
 
 ## Deviations from Plan
 
