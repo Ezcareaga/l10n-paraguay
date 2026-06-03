@@ -9,8 +9,8 @@ progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 6
-  completed_plans: 1
-  percent: 17
+  completed_plans: 2
+  percent: 33
 ---
 
 # STATE — l10n-paraguay
@@ -34,9 +34,9 @@ progress:
 
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
 - **Current phase:** 02
-- **Active plan:** 02-02 (next — CI security workflow)
-- **Status:** Executing Phase 02 — Plan 02-01 COMPLETE (Wave 1 complete)
-- **Last action:** `/gsd:execute-phase 2` executed Plan 02-01 — LICENSE AGPL-3.0 + SECURITY.md added at repo root; SEC-01 + SEC-02 closed (2026-06-02)
+- **Active plan:** 02-03 (next — history cleanup + Bandit triage + branch protection)
+- **Status:** Executing Phase 02 — Plan 02-02 COMPLETE (Wave 2 complete)
+- **Last action:** `/gsd:execute-phase 2 --wave 2` executed Plan 02-02 — `.github/workflows/security.yml` created (gitleaks @v3 + bandit HIGH-only + dependency-review @v4); SEC-03 closed; Dependency Graph + Dependabot alerts approved (2026-06-02)
 - **Previous phase:** Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; commit baseline 3a10fc7+abd7395; branch protection activa en main)
 
 ---
@@ -46,17 +46,17 @@ progress:
 ```
 Milestone: Pre-Fase 2 Foundation
 Phase: 02 (Bloque B — Security baseline) — EXECUTING
-Plan: 2 of 5 (Plan 02-01 complete; Wave 1 done)
-Status: Executing Phase 02 — Wave 2 next
+Plan: 3 of 5 (Plans 02-01 + 02-02 complete; Waves 1+2 done)
+Status: Executing Phase 02 — Wave 3 next
 
 Progress:
 [x] Phase 1: Bloque A — CI/CD + pre-commit          (8/8 REQs)
-[ ] Phase 2: Bloque B — Security baseline           (2/7 REQs — SEC-01, SEC-02 done)
+[ ] Phase 2: Bloque B — Security baseline           (3/7 REQs — SEC-01, SEC-02, SEC-03 done)
 [ ] Phase 3: Bloque C — Docs operacionales          (0/10 REQs)
 [ ] Phase 4: Bloque D — Repo hygiene + Release      (0/6 REQs)
 [ ] Phase 5: Bloque E — Multi-rubro foundation      (0/4 REQs)
 
-Total: 10/35 v1 REQs complete (milestone Pre-Fase 2)
+Total: 11/35 v1 REQs complete (milestone Pre-Fase 2)
 ```
 
 ---
@@ -77,6 +77,8 @@ Total: 10/35 v1 REQs complete (milestone Pre-Fase 2)
 | Branch protection en `main`                  | ✅ Activa (CI-07 cerrado)                                                                                          |
 | LICENSE file                                 | ✅ `LICENSE` AGPL-3.0 en raíz (SHA256 verified, Plan 02-01)                                                        |
 | SECURITY.md / CONTRIBUTING.md / CHANGELOG.md | ✅ `SECURITY.md` creado (Plan 02-01); CONTRIBUTING/CHANGELOG en Phase 3                                            |
+| Security workflow `security.yml`             | ✅ Creado en Plan 02-02 (gitleaks @v3, bandit HIGH-only, dependency-review @v4); pendiente primer run real en PR   |
+| Dependency Graph + Dependabot alerts (GH)    | ✅ Enabled (approved 2026-06-02, ya estaban activos)                                                               |
 | docs/60 + docs/61                            | ❌ Inexistentes (Phase 2 los crea)                                                                                 |
 | Issue/PR templates                           | ❌ Inexistentes (Phase 4)                                                                                          |
 | Release `v0.1.0`                             | ❌ Sin taggear (Phase 4)                                                                                           |
@@ -108,6 +110,7 @@ Total: 10/35 v1 REQs complete (milestone Pre-Fase 2)
 - **2026-05-26 — Phase 1 sequencing interno NO paralelizable.** CI-01 → CI-02 (baseline commit) → CI-04 (lint workflow) son secuenciales obligatorias. CI-03/05/06 paralelos. CI-07 después de tener status checks. CI-08 al final. (De spec `docs/55` "Riesgos" — mitigación del commit baseline.)
 - **2026-06-02 — Phase 2 D-01..D-15.** 15 decisiones lockeadas en 02-CONTEXT.md. Highlights: (a) `security.yml` = 1 workflow con 3 jobs paralelos; (b) Bandit fail-gate HIGH only; (c) SARIF al Security tab; (d) GH Security Advisories como canal primario + PGP publicado; (e) CCFE encryption helper diferido a Fase 2 EDI (docs/60 deja blueprint); (f) OCA `auditlog` para audit retention 7y/1y; (g) Backup S3-compatible (Backblaze B2 default) + filesystem; (h) docs/61 split vendor/operador con matriz de cumplimiento Ley 6534. (Decisión usuario via discuss-phase 2.)
 - **2026-06-02 — Plan 02-01 executed.** LICENSE AGPL-3.0 descargado de canonical URL (SHA256 verified). SECURITY.md creado con skeleton de RESEARCH.md (GH Advisories primary, email fallback, SLA 72h/30d, sin PGP, sin HoF manual). Manifests ya tenían `license="AGPL-3"` — sin cambios. SEC-01 + SEC-02 cerrados. Wave 1 Phase 2 completa.
+- **2026-06-02 — Plan 02-02 executed.** `.github/workflows/security.yml` creado en worktree isolation, fast-forward merge a `feat/sec-03-security-workflow`. 3 jobs: gitleaks @v3 (no @v2 — A-02), bandit HIGH-only (`-lll -iii`, D-02), dependency-review @v4 (NO v5 — runner compat). SARIF con categorías distintas (D-03). Triggers conservadores: PR + push a main only (D-04). Checkpoint 02-02-02 approved — Dependency Graph + Dependabot alerts ya estaban habilitados. SEC-03 cerrado. Wave 2 Phase 2 completa. Required-status-check names para Plan 03: `gitleaks`, `bandit`, `dependency-review`.
 
 ### Open todos / next steps
 
@@ -116,8 +119,10 @@ Total: 10/35 v1 REQs complete (milestone Pre-Fase 2)
 - [x] Mergear PR `docs/phase-2-context` (CONTEXT + DISCUSSION-LOG + STATE update)
 - [x] `/gsd:plan-phase 2` para decomponer Phase 2 (Bloque B) en plans ejecutables
 - [x] Plan 02-01 ejecutado: LICENSE + SECURITY.md creados (SEC-01, SEC-02 cerrados) — 2026-06-02
-- [ ] Ejecutar Plan 02-02: CI security workflow (gitleaks + Bandit + Dependency Review)
-- [ ] Verificar subagent `voltagent-qa-sec:security-auditor` (opus) instalado antes de ejecutar SEC-03..05
+- [x] Plan 02-02 ejecutado: `.github/workflows/security.yml` creado (SEC-03 cerrado); Dependency Graph + Dependabot alerts approved — 2026-06-02
+- [ ] Push `feat/sec-03-security-workflow` y abrir PR; smoke-verify primer run de los 3 jobs (UAT item)
+- [ ] Ejecutar Plan 02-03: history cleanup (gitleaks scan) + Bandit triage + branch protection update
+- [ ] Verificar subagent `voltagent-qa-sec:security-auditor` (opus) instalado antes de ejecutar SEC-04..05
 - [ ] Antes de empezar Phase 3: verificar subagent `voltagent-dev-exp:documentation-engineer`
 
 ### Blockers actuales
@@ -193,3 +198,4 @@ Subagents disponibles relevantes para este milestone (verificar con `ls ~/.claud
 _STATE initialized: 2026-05-26 — initial GSD bootstrap of milestone Pre-Fase 2._
 _STATE updated: 2026-06-02 — Phase 1 closed, Phase 2 CONTEXT.md ready, awaiting plan-phase._
 _STATE updated: 2026-06-02 — Plan 02-01 complete (SEC-01, SEC-02 closed). Wave 1 Phase 2 done. Next: Plan 02-02._
+_STATE updated: 2026-06-02 — Plan 02-02 complete (SEC-03 closed). Wave 2 Phase 2 done. Next: Plan 02-03 (Wave 3)._

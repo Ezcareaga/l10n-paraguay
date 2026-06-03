@@ -84,7 +84,7 @@ Plans:
 
 **Wave 2** _(blocked on Wave 1 completion)_
 
-- [ ] 02-02-PLAN.md — CI security workflow (gitleaks + Bandit + Dependency Review)
+- [x] 02-02-PLAN.md — CI security workflow (gitleaks + Bandit + Dependency Review) — COMPLETE 2026-06-02
 
 **Wave 3** _(blocked on Wave 2 completion)_
 
@@ -190,7 +190,7 @@ referencia desde DOC-08).
 | CI-08  | Phase 1 | A      | Pending |
 | SEC-01 | Phase 2 | B      | Done    |
 | SEC-02 | Phase 2 | B      | Done    |
-| SEC-03 | Phase 2 | B      | Pending |
+| SEC-03 | Phase 2 | B      | Done    |
 | SEC-04 | Phase 2 | B      | Pending |
 | SEC-05 | Phase 2 | B      | Pending |
 | SEC-06 | Phase 2 | B      | Pending |
@@ -225,7 +225,7 @@ referencia desde DOC-08).
 | Phase                                   | Plans Complete | Status      | Completed |
 | --------------------------------------- | -------------- | ----------- | --------- |
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -         |
-| 2. Bloque B — Security baseline         | 1/5            | In progress | -         |
+| 2. Bloque B — Security baseline         | 2/5            | In progress | -         |
 | 3. Bloque C — Documentación operacional | 0/0            | Not started | -         |
 | 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -         |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -         |
