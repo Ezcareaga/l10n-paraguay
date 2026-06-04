@@ -31,18 +31,20 @@ responsable o encargado en territorio paraguayo.
 
 **Comparación rápida con GDPR (Reglamento (UE) 2016/679):**
 
-| Concepto                  | GDPR                                 | Ley 7593/2025 PY                        |
-| ------------------------- | ------------------------------------ | --------------------------------------- |
-| Base legal                | Art. 6                               | Art. 6                                  |
-| Derecho de acceso         | Art. 15                              | Art. 11                                 |
-| Derecho de rectificación  | Art. 16                              | Art. 12                                 |
-| Derecho de borrado        | Art. 17 ("right to be forgotten")    | Art. 14 (cancelación)                   |
-| Derecho de oposición      | Art. 21                              | Art. 15                                 |
-| Derecho de portabilidad   | Art. 20                              | Art. 16                                 |
-| Plazo notificación brecha | 72h                                  | 72h (Art. 17)                           |
-| Figura del DPO            | Art. 37                              | Art. 18                                 |
-| Autoridad supervisora     | DPA nacional (e.g., AEPD en España)  | **ANPDP** dentro de **MITIC**           |
-| Sanciones                 | Hasta 4% facturación anual / 20M EUR | Régimen escalonado (definido en la ley) |
+| Concepto                     | GDPR                                 | Ley 7593/2025 PY                        |
+| ---------------------------- | ------------------------------------ | --------------------------------------- |
+| Base legal                   | Art. 6                               | Art. 5 (condiciones tratamiento lícito) |
+| Derecho de acceso            | Art. 15                              | Art. 28                                 |
+| Derecho de rectificación     | Art. 16                              | Art. 29                                 |
+| Derecho de borrado           | Art. 17 ("right to be forgotten")    | Art. 31 (supresión / cancelación)       |
+| Derecho de oposición         | Art. 21                              | Art. 30                                 |
+| Derecho de portabilidad      | Art. 20                              | Art. 32                                 |
+| Plazo notificación brecha    | 72h                                  | 72h (Art. 17)                           |
+| Figura del DPO               | Art. 37                              | Art. 18                                 |
+| Transferencia internacional  | Art. 44-49                           | Art. 19                                 |
+| Evaluación de impacto (DPIA) | Art. 35                              | Arts. 14-15                             |
+| Autoridad supervisora        | DPA nacional (e.g., AEPD en España)  | **ANPDP** dentro de **MITIC**           |
+| Sanciones                    | Hasta 4% facturación anual / 20M EUR | Régimen escalonado (Arts. 43-47)        |
 
 **ANPDP en formación — caveat temporal:** la Ley 7593/2025 fue promulgada el
 27 de noviembre de 2025 con **vigencia diferida al 27 de noviembre de 2027**
@@ -76,11 +78,20 @@ cumpla con Ley 7593/2025.
 | Export / borrado         | ✅ Mecanismos documentados en §3 de este doc (Odoo built-in + OCA)                                   | Ejecutar a solicitud del titular dentro del plazo legal         |
 | Default password policy  | ✅ Documentado en [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §2 (Odoo built-in + 2FA) | Configurar en instancia + forzar 2FA para admins                |
 | DPO designation          | ❌ No corresponde al vendor                                                                          | Designar DPO según reglamentación ANPDP (Art. 18)               |
-| Notificación a ANPDP     | Notificar **brecha que afecte a vendor** vía email `careagaezz@gmail.com`                            | Notificar a ANPDP + titulares en **≤72h** (Art. 17)             |
+| Notificación a ANPDP     | ❌ No corresponde al vendor (notifica al operador, no a ANPDP)                                       | Notificar a ANPDP + titulares en **≤72h** (Art. 17)             |
 | Consent capture          | ❌ No incluido en módulos Odoo del proyecto                                                          | Implementar en formulario web propio o POS (Fase 4)             |
 | Contratos con encargados | ❌ No corresponde al vendor                                                                          | Firmar contratos de tratamiento con terceros (hosting, mailing) |
 | Política de retención    | ❌ Vendor no define retention business-specific                                                      | Definir retention por categoría de dato y tipo de negocio       |
 | Registro de tratamiento  | ❌ Plantilla mínima en blueprint                                                                     | Mantener registro vía OCA `privacy` (ver §4)                    |
+
+**Comunicación vendor → operador en caso de vulnerabilidad descubierta por el
+vendor:** si el vendor descubre una vulnerabilidad en los módulos que pueda
+afectar a deployers (vía `SECURITY.md` reporting o disclosure interno),
+notifica a operadores conocidos vía email `careagaezz@gmail.com` con prioridad
+alta. Esta comunicación **NO sustituye** la obligación del operador de
+notificar a la ANPDP en ≤72h (Art. 17 Ley 7593/2025); es un canal técnico
+complementario para que el operador pueda iniciar su propio proceso de
+notificación a tiempo.
 
 **Lectura clave:** el vendor proporciona **mecanismos**, el operador **los
 configura y los ejecuta** ante la ANPDP. La responsabilidad legal del
@@ -98,14 +109,14 @@ Cada derecho se mapea a un mecanismo Odoo concreto — built-in o módulo OCA
 disponible en 18.0. Cuando no hay módulo OCA, se documenta el gap y el
 proceso manual que el operador debe seguir.
 
-| Derecho (Ley 7593)             | Mecanismo Odoo                                                                                                                                                                                     | Módulo OCA 18.0                                                                                      | Instrucción al operador                                                                     |
-| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Acceso (Art. 11)               | Export estándar `res.partner` desde UI lista o Developer Mode (XLSX/CSV)                                                                                                                           | `base_export_anonymize` (control de acceso al export)                                                | Operador entrega export al titular en plazo legal; usar módulo OCA si necesita filtrar      |
-| Rectificación (Art. 12)        | Edit UI estándar — cualquier usuario con permiso `Contacts/Edit` puede corregir; `auditlog` registra el cambio (cross-ref [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §3 Audit logs) | — (se usa Odoo core + `auditlog`)                                                                    | Confirmar trazabilidad activa antes de aceptar el cambio; conservar log 7 años              |
-| Cancelación / Olvido (Art. 14) | Anonimización completa del `res.partner`: nombre, email, teléfono, RUC, avatar, chatter, users vinculados                                                                                          | **`privacy_partner_to_be_forgotten`** (módulo OCA 18.0 — ver §4 para módulos no disponibles en 18.0) | Instalar el módulo OCA; proceso iniciado por administrador con permiso explícito            |
-| Oposición (Art. 15)            | Campos `opt_out` / `opt_out_mailing` ya presentes en `res.partner` upstream (módulo `mass_mailing` de Odoo)                                                                                        | — (Odoo core)                                                                                        | Activar opt-out desde el portal del cliente o vía solicitud manual                          |
-| Portabilidad (Art. 16)         | Export XLSX/CSV de `res.partner` + facturas relacionadas vía Odoo Export                                                                                                                           | — (Odoo core)                                                                                        | Entregar paquete estructurado al titular (CSV legible por máquina, sin formato propietario) |
-| Consentimiento (Art. 6)        | Workflow de solicitud/respuesta de consentimiento por actividad de procesamiento                                                                                                                   | **`privacy_consent`**                                                                                | Instalar el módulo; configurar actividades; el vendor no captura consent en formularios     |
+| Derecho (Ley 7593)                | Mecanismo Odoo                                                                                                                                                                                     | Módulo OCA 18.0                                                                                      | Instrucción al operador                                                                                    |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Acceso (Art. 28)                  | Export estándar `res.partner` desde UI lista o Developer Mode (XLSX/CSV)                                                                                                                           | `base_export_anonymize` (control de acceso al export)                                                | Operador entrega export al titular en plazo legal (≤30 días, Art. 26); usar módulo OCA si necesita filtrar |
+| Rectificación (Art. 29)           | Edit UI estándar — cualquier usuario con permiso `Contacts/Edit` puede corregir; `auditlog` registra el cambio (cross-ref [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §3 Audit logs) | — (se usa Odoo core + `auditlog`)                                                                    | Confirmar trazabilidad activa antes de aceptar el cambio; conservar log 7 años                             |
+| Supresión / Cancelación (Art. 31) | Anonimización completa del `res.partner`: nombre, email, teléfono, RUC, avatar, chatter, users vinculados                                                                                          | **`privacy_partner_to_be_forgotten`** (módulo OCA 18.0 — ver §4 para módulos no disponibles en 18.0) | Instalar el módulo OCA; proceso iniciado por administrador con permiso explícito                           |
+| Oposición (Art. 30)               | Campos `opt_out` / `opt_out_mailing` ya presentes en `res.partner` upstream (módulo `mass_mailing` de Odoo)                                                                                        | — (Odoo core)                                                                                        | Activar opt-out desde el portal del cliente o vía solicitud manual                                         |
+| Portabilidad (Art. 32)            | Export XLSX/CSV de `res.partner` + facturas relacionadas vía Odoo Export                                                                                                                           | — (Odoo core)                                                                                        | Entregar paquete estructurado al titular (CSV legible por máquina, sin formato propietario)                |
+| Consentimiento (Art. 6)           | Workflow de solicitud/respuesta de consentimiento por actividad de procesamiento (Art. 6 = condiciones de consentimiento válido)                                                                   | **`privacy_consent`**                                                                                | Instalar el módulo; configurar actividades; el vendor no captura consent en formularios                    |
 
 **Notas sobre `privacy_partner_to_be_forgotten`** (módulo OCA 18.0.1.0.0,
 repo `OCA/data-protection`):
@@ -172,18 +183,21 @@ Tabla final con el detalle artículo → control técnico → estado de
 implementación. Esta es la vista panorámica para reviewers OCA y abogados
 del cliente.
 
-| Artículo Ley 7593/2025                  | Descripción                                                  | Control en docs/60                                                                                                                                    | Estado                               |
-| --------------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| Art. 6 — Bases legales                  | Consentimiento / contrato / int. legítimo / obligación legal | `privacy_consent` (OCA) — ver §3, §4                                                                                                                  | Documentado / TODO operador          |
-| Art. 11 — Acceso                        | Export datos del titular                                     | Odoo Export built-in + `base_export_anonymize` (OCA) — ver §3                                                                                         | Implementado (Odoo core)             |
-| Art. 12 — Rectificación                 | Corrección + trazabilidad                                    | `auditlog` (OCA) — [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §3 Audit logs                                                            | Documentado / implementar Fase 2 EDI |
-| Art. 14 — Cancelación                   | Anonimización PII (right to be forgotten)                    | `privacy_partner_to_be_forgotten` (OCA) — ver §3, §4                                                                                                  | Documentado / TODO operador          |
-| Art. 15 — Oposición                     | Opt-out de tratamiento                                       | `opt_out` / `opt_out_mailing` (Odoo core)                                                                                                             | Responsabilidad operador             |
-| Art. 16 — Portabilidad                  | Export estructurado (CSV/XLSX legible)                       | Odoo CSV/XLSX export                                                                                                                                  | Responsabilidad operador             |
-| Art. 17 — Breach notification           | 72h a ANPDP + titular                                        | Proceso documentado en §2 (vendor → operador → ANPDP); cifrado en reposo [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §5 CCFE encryption | Documentado (no código)              |
-| Art. 18 — DPO                           | Oficial de protección de datos                               | N/A vendor — operador designa según reglamentación                                                                                                    | Responsabilidad operador             |
-| Arts. 34-39 — ANPDP                     | Autoridad supervisora (creación + competencias)              | Notificación de brechas + canal oficial                                                                                                               | Documentado                          |
-| **Gap — `data_subject_access_request`** | Workflow formal de solicitud de acceso                       | Sin módulo OCA en 18.0; usar Odoo Export manual                                                                                                       | **TODO operador / Pre-Fase 4**       |
+| Artículo Ley 7593/2025                   | Descripción                                                              | Control en docs/60                                                                                                                                    | Estado                                 |
+| ---------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Art. 5 — Bases legales                   | Consentimiento / contrato / int. legítimo / obligación legal             | `privacy_consent` (OCA) — ver §3, §4                                                                                                                  | Documentado / TODO operador            |
+| Art. 6 — Condiciones del consentimiento  | Consentimiento previo, libre, informado, inequívoco                      | `privacy_consent` (OCA) versiona aviso de privacidad firmado                                                                                          | Documentado / TODO operador            |
+| Art. 28 — Acceso                         | Export datos del titular (plazo ≤30 días por Art. 26)                    | Odoo Export built-in + `base_export_anonymize` (OCA) — ver §3                                                                                         | Implementado (Odoo core)               |
+| Art. 29 — Rectificación                  | Corrección + trazabilidad                                                | `auditlog` (OCA) — [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §3 Audit logs                                                            | Documentado / implementar Fase 2 EDI   |
+| Art. 31 — Supresión / Cancelación        | Anonimización PII (right to be forgotten)                                | `privacy_partner_to_be_forgotten` (OCA) — ver §3, §4                                                                                                  | Documentado / TODO operador            |
+| Art. 30 — Oposición                      | Opt-out de tratamiento                                                   | `opt_out` / `opt_out_mailing` (Odoo core)                                                                                                             | Responsabilidad operador               |
+| Art. 32 — Portabilidad                   | Export estructurado (CSV/XLSX legible)                                   | Odoo CSV/XLSX export                                                                                                                                  | Responsabilidad operador               |
+| Art. 17 — Breach notification            | 72h a ANPDP + titular                                                    | Proceso documentado en §2 (vendor → operador → ANPDP); cifrado en reposo [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §5 CCFE encryption | Documentado (no código)                |
+| Art. 18 — DPO                            | Oficial de protección de datos                                           | N/A vendor — operador designa según reglamentación                                                                                                    | Responsabilidad operador               |
+| Art. 19 — Transferencias internacionales | Adecuación de destino, cláusulas contractuales, consentimiento explícito | Documentado en §7 (ver lista de servicios externos típicos)                                                                                           | Documentado / responsabilidad operador |
+| Arts. 14-15 — DPIA + consulta previa     | Evaluación de impacto + consulta a ANPDP si hay riesgo                   | N/A vendor — operador evalúa según reglamentación ANPDP                                                                                               | Responsabilidad operador               |
+| Arts. 34-39 — ANPDP                      | Autoridad supervisora (creación + competencias + director)               | Notificación de brechas + canal oficial                                                                                                               | Documentado                            |
+| **Gap — `data_subject_access_request`**  | Workflow formal de solicitud de acceso                                   | Sin módulo OCA en 18.0; usar Odoo Export manual                                                                                                       | **TODO operador / Pre-Fase 4**         |
 
 **Leyenda de estados:**
 
@@ -210,6 +224,63 @@ con [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §1-§6):
 
 ---
 
+## 7. Transferencias internacionales de datos
+
+Cuando el operador deployea l10n-paraguay con servicios externos para backup,
+monitoring, email, CI/CD u otros, los datos personales del titular pueden
+salir del territorio paraguayo. Esto constituye **transferencia internacional
+de datos personales** y está regulada por la **Ley 7593/2025 Art. 19**
+(adecuación del destino, cláusulas contractuales modelo, consentimiento
+explícito como base alternativa).
+
+**Servicios externos típicos usados en deploys del proyecto:**
+
+| Servicio                                      | Datos transferidos                                 | Jurisdicción típica       | Responsabilidad |
+| --------------------------------------------- | -------------------------------------------------- | ------------------------- | --------------- |
+| Backblaze B2 (backup offsite default §60.4)   | PII completa de la DB Odoo                         | US (East/West)            | Operador        |
+| AWS S3 (alternativa premium §60.4)            | PII completa                                       | US/EU/global según región | Operador        |
+| Gmail / Google Workspace (email del operador) | Direcciones de clientes en correos transaccionales | US                        | Operador        |
+| GitHub (código + planning artifacts)          | Sin PII de clientes — solo código y docs           | US                        | Vendor          |
+| Codecov (cobertura)                           | Sin PII — solo métricas                            | US                        | Vendor          |
+
+**Obligaciones del operador (Art. 19):**
+
+1. **Evaluar adecuación del destino:** verificar si el país donde reside el
+   servicio es considerado "adecuado" por la ANPDP cuando publique su lista de
+   países con nivel adecuado de protección.
+
+2. **Implementar salvaguardas si el país NO es adecuado:**
+
+   - Firmar **cláusulas contractuales modelo** equivalentes a las SCC del GDPR
+     cuando la ANPDP las publique.
+   - O obtener **consentimiento explícito e informado** del titular para la
+     transferencia específica.
+   - O recurrir a las excepciones del Art. 19 (cooperación judicial,
+     operaciones bancarias, finalidad médica, etc.).
+
+3. **Documentar las transferencias** en el registro de tratamiento del
+   operador (mantenido vía OCA `privacy` — ver §4).
+
+4. **Considerar alternativas con localización en PY** si el cliente exige
+   residencia local de datos:
+   - Hosting VPS en Paraguay (proveedores locales con datacenter en Asunción).
+   - Backup S3-compatible en proveedor latinoamericano si está disponible.
+   - Trade-off: costos típicamente más altos vs servicios internacionales.
+
+**Estado de este proyecto:**
+
+El vendor (este proyecto) **no realiza transferencias de PII de clientes
+finales** — solo procesa código y docs en GitHub (US) y métricas en Codecov
+(US). Las transferencias internacionales en deploys productivos son
+**enteramente responsabilidad del operador** según la configuración que elija
+(backup target, email provider, hosting).
+
+> Cross-ref: [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §4
+> documenta los backends de backup disponibles con sus pricings y
+> jurisdicciones.
+
+---
+
 > **Nota:** Ley 6534/2020 ("De Protección de Datos Personales Crediticios") regula
 > exclusivamente burós de crédito bajo supervisión del BCP. Su scope es datos
 > financieros/crediticios — **no aplica** a los datos de clientes/facturas que
@@ -217,5 +288,20 @@ con [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §1-§6):
 
 ---
 
-_Última revisión: 2026-06-03 (Phase 2 Bloque B — SEC-07)_
-_Versión: 1.0_
+**Numbering verificado contra Ley 7593/2025 texto oficial publicado** en
+[bacn.gov.py — Ley Nº 7593/2025](https://www.bacn.gov.py/leyes-paraguayas/12924/ley-n-7593-2025-de-proteccion-de-datos-personales-en-la-republica-del-paraguay)
+y cross-validado contra el texto en baselegal.com.py (consulta: 2026-06-04).
+
+**Cambios de numeración aplicados respecto a versión 1.0:** Derecho de acceso
+Art. 11 → **Art. 28**; rectificación Art. 12 → **Art. 29**; cancelación/
+supresión Art. 14 → **Art. 31**; oposición Art. 15 → **Art. 30**;
+portabilidad Art. 16 → **Art. 32**; bases legales Art. 6 → **Art. 5**
+(Art. 6 queda específico de condiciones del consentimiento). Art. 17
+(notificación brecha 72h), Art. 18 (DPO) y Arts. 34-39 (ANPDP) ya estaban
+correctos. Se agregaron: **Art. 19** (transferencias internacionales) y
+**Arts. 14-15** (DPIA + consulta previa).
+
+---
+
+_Última revisión: 2026-06-04 (Phase 2 Bloque B — SEC-07, post-review)_
+_Versión: 1.1_
