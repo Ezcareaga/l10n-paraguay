@@ -50,10 +50,26 @@ en Phase 2 contra infraestructura real.
 ### Por qué
 
 El admin de Odoo tiene acceso completo a la base de datos, incluyendo el
-campo `vat`/`l10n_py_dv` de todos los partners, las credenciales SIFEN del
-contribuyente (CCFE) y los timbrados. Compromiso de la cuenta admin = pérdida
-total de PII + capacidad de emitir DTE falsos en nombre del contribuyente
-(impacto fiscal directo).
+campo `vat`/`l10n_py_dv` de todos los partners. Compromiso de la cuenta
+admin = **pérdida total de PII en reposo**.
+
+Para la **emisión de DTE falsos**, el modelo de threat depende del estado
+de implementación de §5 (CCFE encryption blueprint):
+
+- **Sin el blueprint §5 implementado** (estado actual / Phase 2): el CCFE
+  vive como Binary en la DB o filesystem en plaintext. Compromiso de admin
+  permite extraer el CCFE y firmar DTE en nombre del contribuyente —
+  **impacto fiscal directo**.
+- **Con el blueprint §5 implementado** (target Fase 2 EDI + Pre-Fase 3
+  deploy): el CCFE está cifrado con data key, que a su vez está cifrada
+  con master key custodiada por systemd-creds fuera de PostgreSQL.
+  Compromiso de admin expone PII pero el CCFE descifrado requiere
+  **además** compromise del sistema operativo del VPS (acceso root o
+  escalación). El blast radius se reduce a PII en reposo; la capacidad
+  de firmar DTE queda detrás de una segunda barrera.
+
+La defensa en profundidad (2FA + password policy + audit logs + CCFE
+encryption + network security) es la suma de los 6 ejes de este documento.
 
 ### Comandos ilustrativos
 
@@ -229,10 +245,37 @@ Doble target — local + offsite — con test de restauración mensual:
 
 ```bash
 # /etc/cron.d/odoo-backup — diario 02:00 AM:
+# Opción A — compresión sin cifrar (DEFAULT — Backblaze B2 cifra en
+# tránsito + reposo del lado del proveedor, pero el archivo local
+# queda en plaintext):
 0 2 * * * postgres pg_dump -Fc odoo_prod | xz -T0 > /var/backups/odoo/odoo-$(date +\%F).sql.xz
+
+# Opción B — compresión + cifrado GPG (RECOMENDADO para compliance
+# estricto Ley 7593/2025 — protege el dump local contra exfiltración):
+# Pre-requisito: importar la GPG pubkey del operador como user `postgres`:
+#   sudo -u postgres gpg --import /path/to/operator-backup-pub.key
+0 2 * * * postgres pg_dump -Fc odoo_prod \
+    | gpg --encrypt --recipient backup@operador.com.py \
+    | xz -T0 > /var/backups/odoo/odoo-$(date +\%F).sql.gpg.xz
+
 # Rotación: keep 7 days
-30 2 * * * root find /var/backups/odoo/ -name 'odoo-*.sql.xz' -mtime +7 -delete
+30 2 * * * root find /var/backups/odoo/ -name 'odoo-*.sql*.xz' -mtime +7 -delete
 ```
+
+**Trade-off encryption local:**
+
+| Opción       | Compliance                         | Complejidad             | Latencia restore |
+| ------------ | ---------------------------------- | ----------------------- | ---------------- |
+| A — solo xz  | Riesgo: PII plaintext en disco VPS | Baja                    | Inmediato        |
+| B — gpg + xz | Cumple Ley 7593/2025 más estricto  | Media (gestión GPG key) | +30s (decrypt)   |
+
+**Para PyMEs**: opción A es aceptable si el VPS tiene controles de acceso
+fuertes (SSH key-only §6 + ufw + fail2ban + sin shell users no-admin) y el
+riesgo de compromise filesystem es bajo.
+
+**Para clientes con SLA estricto o auditoría externa**: opción B obligatoria.
+La gestión de la GPG private key del operador (custodia, rotación, backup
+separado) se documenta en `docs/72_RUNBOOK.md` (Pre-Fase 3).
 
 > Note: validar en Pre-Fase 3 cuando exista deploy real
 
@@ -381,6 +424,48 @@ sudo systemd-creds decrypt \
 
 [Cita: <https://systemd.io/CREDENTIALS> + manpages de `systemd-creds(1)`.]
 
+### Caveat de Disaster Recovery con `--with-key=host`
+
+El modo `--with-key=host` (línea 357 del bloque anterior) ata la master key
+al archivo `/var/lib/systemd/credential.secret` del VPS donde se ejecuta el
+encrypt. Esto tiene una consecuencia importante:
+
+**Si el VPS se rebuilea (provisioning nuevo, fallo de hardware, migración a
+otro provider, reinstall del OS), se pierde la capacidad de descifrar la
+master key cifrada.**
+
+Esto implica que el contenido cifrado por la master key (las data keys
+trimestrales) tampoco puede recuperarse desde un backup. Los CCFE cifrados
+con esa data key se vuelven inutilizables.
+
+**Mitigaciones:**
+
+1. **Procedimiento de rebuild planificado:**
+
+   - ANTES del rebuild: descifrar la master key a un archivo temporal seguro
+     (`systemd-creds decrypt ... > /tmp/master-key.tmp`).
+   - Hacer rebuild del VPS.
+   - Re-cifrar con la NUEVA host key del nuevo VPS:
+     `systemd-creds encrypt --with-key=host - /etc/credstore.encrypted/...`
+   - Eliminar archivo temporal: `shred -u /tmp/master-key.tmp`.
+
+2. **Para deploys con DR estricto** (cliente paga por alta disponibilidad):
+   considerar **HashiCorp Vault** o **AWS KMS** desde el inicio del deploy.
+   El blueprint general (envelope de master/data keys) sigue siendo el mismo
+   — solo cambia el storage de la master key.
+
+3. **Backup planeado de la master key:**
+   - Exportar a un secrets manager separado (1Password, Bitwarden Business,
+     etc.) con MFA obligatorio.
+   - Documentar el procedimiento de restore en `docs/72_RUNBOOK.md`
+     (Pre-Fase 3) con responsabilidad operador.
+
+> **Trade-off explícito:** `--with-key=host` es más simple pero acopla la
+> seguridad al hardware/host actual. Vault/KMS desacopla pero suma
+> dependencia operacional. Para el primer cliente PyME, el riesgo de
+> rebuild planificado es bajo y el procedimiento de mitigación 1 es
+> suficiente.
+
 ### `ir.config_parameter` storage layout
 
 ```python
@@ -503,6 +588,21 @@ bantime = 900
 # /etc/fail2ban/filter.d/odoo-auth.conf:
 # [Definition]
 # failregex = ^.*Login failed for db:.*login:.*from <HOST>.*$
+#
+# GAP CONOCIDO: Odoo Community 18.0 NO emite logs estructurados de
+# login failure con el formato anterior por default. La regex es ilustrativa;
+# en deploy real hay que:
+#
+# 1. Instrumentar logs via:
+#    a) Monkey-patch de res.users.authenticate() para emitir formato custom
+#    b) Modulo OCA auth_brute_force si esta portado a 18.0 (verificar)
+#    c) Hook en login form template para loguear desde JS
+#
+# 2. Ajustar el failregex al formato emitido por la opcion elegida en (1).
+#
+# 3. Validar con fail2ban-regex contra logs reales antes de activar el jail.
+#
+# Documentar el approach final en docs/72_RUNBOOK.md (Pre-Fase 3).
 ```
 
 > Note: validar en Pre-Fase 3 cuando exista deploy real
@@ -537,6 +637,12 @@ odoo.example.com {
   TODO operador / Pre-Fase 4 si el cliente lo amerita.
 - **SSH 22 público:** si el operador no tiene IP fija, considerar Tailscale o
   un bastion host en lugar de whitelisting CIDR.
+- **fail2ban + Odoo:** el approach genérico (monitorear `odoo.log`) no
+  funciona out-of-the-box en 18.0 por falta de logs estructurados de
+  login failure. Resolver en Pre-Fase 3 con instrumentación específica
+  (ver comentarios en el bloque `odoo-auth.conf` arriba). Mientras tanto,
+  el control de §1 (2FA) + §2 (password policy) + rate-limiting via Caddy
+  provee defensa razonable.
 
 ---
 
