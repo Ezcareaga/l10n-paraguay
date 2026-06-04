@@ -28,7 +28,7 @@ puedo X sin fricción"_.
 ## Phases
 
 - [ ] **Phase 1: Bloque A — Foundation técnica (CI/CD + pre-commit)** — Activar pre-commit OCA + GitHub Actions (lint, test, dependabot, commitlint) + branch protection en `main`
-- [ ] **Phase 2: Bloque B — Security baseline** — LICENSE + SECURITY.md + workflow `security.yml` (gitleaks + Bandit + Dependency Review) + docs/60 (security baseline) + docs/61 (compliance Ley 7593/2025)
+- [x] **Phase 2: Bloque B — Security baseline** — LICENSE + SECURITY.md + workflow `security.yml` (gitleaks + Bandit + Dependency Review) + docs/60 (security baseline) + docs/61 (compliance Ley 7593/2025) (completed 2026-06-04)
 - [ ] **Phase 3: Bloque C — Documentación operacional** — README real + CHANGELOG + CONTRIBUTING + CODE_OF_CONDUCT + docs/70-72 (ARCHITECTURE, DEPLOYMENT, RUNBOOK) + ADRs 0001-0005
 - [ ] **Phase 4: Bloque D — Repo hygiene + Release process** — Issue/PR templates + CODEOWNERS + release.yml + tag `v0.1.0` + decisión semantic-release vs manual
 - [ ] **Phase 5: Bloque E — Multi-rubro foundation** — ADR-0004 + docs/80 multi-rubro roadmap + auditoría grep rubro-agnosticismo + guía mínima `l10n_py_industry_*`
@@ -92,8 +92,8 @@ Plans:
 
 **Wave 4** _(blocked on Wave 3 completion)_
 
-- [ ] 02-04-PLAN.md — Security baseline doc + restore-smoke stub + README badge
-- [ ] 02-05-PLAN.md — Compliance Ley 7593/2025 doc
+- [x] 02-04-PLAN.md — Security baseline doc + restore-smoke stub + README badge
+- [x] 02-05-PLAN.md — Compliance Ley 7593/2025 doc
 
   **UI hint**: no
 
@@ -222,13 +222,13 @@ referencia desde DOC-08).
 
 ## Progress Table
 
-| Phase                                   | Plans Complete | Status      | Completed |
-| --------------------------------------- | -------------- | ----------- | --------- |
-| 1. Bloque A — Foundation técnica        | 0/0            | Not started | -         |
-| 2. Bloque B — Security baseline         | 2/5            | In progress | -         |
-| 3. Bloque C — Documentación operacional | 0/0            | Not started | -         |
-| 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -         |
-| 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -         |
+| Phase                                   | Plans Complete | Status      | Completed  |
+| --------------------------------------- | -------------- | ----------- | ---------- |
+| 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
+| 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
+| 3. Bloque C — Documentación operacional | 0/0            | Not started | -          |
+| 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -          |
+| 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 
 ---
 
