@@ -13,10 +13,15 @@
 // `type-enum` + revisión humana del PR para gobernanza. Conventional Commits
 // no exige scope-enum; OCA upstream tampoco lo hace.
 //
-// Límites de longitud (header/body) ampliados a 120 chars: cubre los headers
-// generados por el merger de worktrees GSD (`chore: merge executor worktree
-// (worktree-agent-<hash>) — Plan <NN-NN> <descripción>`) y los bodies de
-// SUMMARY commits con stats inline.
+// Límites de longitud:
+// - header-max-length: 120 (cubre los headers generados por el merger de
+//   worktrees GSD del tipo `chore: merge executor worktree
+//   (worktree-agent-<hash>) — Plan <NN-NN> <descripción>`).
+// - body-max-line-length: disabled. Los commits del executor GSD incluyen
+//   stats inline ("Bandit 1.9.4 -lll -iii on addons/ (2228 LOC): 0 HIGH
+//   findings; full audit also 0 MEDIUM/LOW → no BUGS_BACKLOG.md entry"),
+//   comandos completos, URLs largas, y referencias `[[memory-name]]`. El
+//   line-wrap a 120 mutila esa información sin agregar legibilidad.
 
 export default {
   extends: ["@commitlint/config-conventional"],
@@ -41,7 +46,7 @@ export default {
     "scope-enum": [0], // disabled — see header note (GSD scopes are dynamic)
     "subject-case": [2, "never", ["upper-case", "pascal-case", "start-case"]],
     "header-max-length": [2, "always", 120],
-    "body-max-line-length": [2, "always", 120],
+    "body-max-line-length": [0], // disabled — see header note (GSD stats/commands)
     "body-leading-blank": [2, "always"],
     "footer-leading-blank": [2, "always"],
   },
