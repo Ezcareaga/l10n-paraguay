@@ -41,7 +41,7 @@ responsable o encargado en territorio paraguayo.
 | Derecho de portabilidad      | Art. 20                              | Art. 32                                 |
 | Plazo notificación brecha    | 72h                                  | 72h (Art. 17)                           |
 | Figura del DPO               | Art. 37                              | Art. 18                                 |
-| Transferencia internacional  | Art. 44-49                           | Art. 19                                 |
+| Transferencia internacional  | Art. 44-50                           | Art. 19                                 |
 | Evaluación de impacto (DPIA) | Art. 35                              | Arts. 14-15                             |
 | Autoridad supervisora        | DPA nacional (e.g., AEPD en España)  | **ANPDP** dentro de **MITIC**           |
 | Sanciones                    | Hasta 4% facturación anual / 20M EUR | Régimen escalonado (Arts. 43-47)        |
@@ -155,12 +155,12 @@ Verificado contra `github.com/OCA/data-protection/tree/18.0` (auditado en
 investigación de Phase 2, 2026-06-02). Solo **4 módulos** están portados a
 Odoo 18.0:
 
-| Módulo                            | Versión      | Propósito                                                                                          | Derecho cubierto                              | Estado deploy                  |
-| --------------------------------- | ------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------- | ------------------------------ |
-| `privacy_consent`                 | `18.0.1.0.0` | Consentimiento explícito por actividad de procesamiento; versionado de avisos                      | Consentimiento (Art. 6)                       | TODO operador                  |
-| `privacy_partner_to_be_forgotten` | `18.0.1.0.0` | Anonimización completa de `res.partner` (nombre, email, teléfono, RUC, avatar, chatter, users)     | Cancelación / Right to be Forgotten (Art. 14) | TODO operador                  |
-| `base_export_anonymize`           | `18.0.1.0.0` | Anonimiza ciertos campos durante export para grupos sin privilegio                                 | Acceso controlado (Art. 11)                   | TODO operador (si corresponde) |
-| `privacy`                         | `18.0.1.0.0` | Framework base de actividades de procesamiento y registro de tratamiento (Art. 30 GDPR / Ley 7593) | Base de registros de tratamiento              | TODO operador                  |
+| Módulo                            | Versión      | Propósito                                                                                          | Derecho cubierto                             | Estado deploy                  |
+| --------------------------------- | ------------ | -------------------------------------------------------------------------------------------------- | -------------------------------------------- | ------------------------------ |
+| `privacy_consent`                 | `18.0.1.0.0` | Consentimiento explícito por actividad de procesamiento; versionado de avisos                      | Consentimiento (Art. 6)                      | TODO operador                  |
+| `privacy_partner_to_be_forgotten` | `18.0.1.0.0` | Anonimización completa de `res.partner` (nombre, email, teléfono, RUC, avatar, chatter, users)     | Supresión / Right to be Forgotten (Art. 31)  | TODO operador                  |
+| `base_export_anonymize`           | `18.0.1.0.0` | Anonimiza ciertos campos durante export para grupos sin privilegio                                 | Control técnico de export (no derecho ARSOP) | TODO operador (si corresponde) |
+| `privacy`                         | `18.0.1.0.0` | Framework base de actividades de procesamiento y registro de tratamiento (Art. 30 GDPR / Ley 7593) | Base de registros de tratamiento             | TODO operador                  |
 
 **Módulos AUSENTES en OCA 18.0** (documentar como gap o usar alternativa):
 
@@ -183,22 +183,22 @@ Tabla final con el detalle artículo → control técnico → estado de
 implementación. Esta es la vista panorámica para reviewers OCA y abogados
 del cliente.
 
-| Artículo Ley 7593/2025                     | Descripción                                                              | Control en docs/60                                                                                                  | Estado                                           |
-| ------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| Art. 5 — Bases legales                     | Consentimiento / contrato / int. legítimo / obligación legal             | `privacy_consent` (OCA) — ver §3, §4                                                                                | Documentado / TODO operador                      |
-| Art. 6 — Condiciones del consentimiento    | Consentimiento previo, libre, informado, inequívoco                      | `privacy_consent` (OCA) versiona aviso de privacidad firmado                                                        | Documentado / TODO operador                      |
-| Art. 28 — Acceso                           | Export datos del titular (plazo ≤30 días por Art. 26)                    | Odoo Export built-in + `base_export_anonymize` (OCA) — ver §3                                                       | Implementado (Odoo core)                         |
-| Art. 29 — Rectificación                    | Corrección + trazabilidad                                                | `auditlog` (OCA) — [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §3 Audit logs                          | Documentado / implementar Fase 2 EDI             |
-| Art. 31 — Supresión / Cancelación          | Anonimización PII (right to be forgotten)                                | `privacy_partner_to_be_forgotten` (OCA) — ver §3, §4                                                                | Documentado / TODO operador                      |
-| Art. 30 — Oposición                        | Opt-out de tratamiento                                                   | `opt_out` / `opt_out_mailing` (Odoo core)                                                                           | Responsabilidad operador                         |
-| Art. 32 — Portabilidad                     | Export estructurado (CSV/XLSX legible)                                   | Odoo CSV/XLSX export                                                                                                | Responsabilidad operador                         |
-| Art. 17 — Breach notification (proceso)    | Notificación a ANPDP + titular en ≤72h                                   | Proceso documentado en §2 de este doc (canal vendor → operador → ANPDP)                                             | Documentado (responsabilidad operador)           |
-| Art. 17 — Mitigant técnico de PII expuesta | Reducir alcance de PII en caso de brecha                                 | Cifrado en reposo: [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §5 (CCFE) + §4 (backup local opción B) | Blueprint (implementar Fase 2 EDI + deploy real) |
-| Art. 18 — DPO                              | Oficial de protección de datos                                           | N/A vendor — operador designa según reglamentación                                                                  | Responsabilidad operador                         |
-| Art. 19 — Transferencias internacionales   | Adecuación de destino, cláusulas contractuales, consentimiento explícito | Documentado en §7 (ver lista de servicios externos típicos)                                                         | Documentado / responsabilidad operador           |
-| Arts. 14-15 — DPIA + consulta previa       | Evaluación de impacto + consulta a ANPDP si hay riesgo                   | N/A vendor — operador evalúa según reglamentación ANPDP                                                             | Responsabilidad operador                         |
-| Arts. 34-39 — ANPDP                        | Autoridad supervisora (creación + competencias + director)               | Notificación de brechas + canal oficial                                                                             | Documentado                                      |
-| **Gap — `data_subject_access_request`**    | Workflow formal de solicitud de acceso                                   | Sin módulo OCA en 18.0; usar Odoo Export manual                                                                     | **TODO operador / Pre-Fase 4**                   |
+| Artículo Ley 7593/2025                     | Descripción                                                                                         | Control en docs/60                                                                                                  | Estado                                           |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| Art. 5 — Bases legales                     | Consentimiento / contrato / int. legítimo / obligación legal                                        | `privacy_consent` (OCA) — ver §3, §4                                                                                | Documentado / TODO operador                      |
+| Art. 6 — Condiciones del consentimiento    | Consentimiento previo, libre, informado, inequívoco                                                 | `privacy_consent` (OCA) versiona aviso de privacidad firmado                                                        | Documentado / TODO operador                      |
+| Art. 28 — Acceso                           | Export datos del titular (plazo ≤30 días por Art. 26)                                               | Odoo Export built-in + `base_export_anonymize` (OCA) — ver §3                                                       | Implementado (Odoo core)                         |
+| Art. 29 — Rectificación                    | Corrección + trazabilidad                                                                           | `auditlog` (OCA) — [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §3 Audit logs                          | Documentado / implementar Fase 2 EDI             |
+| Art. 31 — Supresión / Cancelación          | Anonimización PII (right to be forgotten)                                                           | `privacy_partner_to_be_forgotten` (OCA) — ver §3, §4                                                                | Documentado / TODO operador                      |
+| Art. 30 — Oposición                        | Opt-out de tratamiento                                                                              | `opt_out` / `opt_out_mailing` (Odoo core)                                                                           | Responsabilidad operador                         |
+| Art. 32 — Portabilidad                     | Export estructurado (CSV/XLSX legible)                                                              | Odoo CSV/XLSX export                                                                                                | Responsabilidad operador                         |
+| Art. 17 — Breach notification (proceso)    | Notificación a ANPDP + titular en ≤72h                                                              | Proceso documentado en §2 de este doc (canal vendor → operador → ANPDP)                                             | Documentado (responsabilidad operador)           |
+| Art. 17 — Mitigant técnico de PII expuesta | Reducir alcance de PII en caso de brecha                                                            | Cifrado en reposo: [`docs/60_SECURITY_BASELINE.md`](60_SECURITY_BASELINE.md) §5 (CCFE) + §4 (backup local opción B) | Blueprint (implementar Fase 2 EDI + deploy real) |
+| Art. 18 — DPO                              | Oficial de protección de datos                                                                      | N/A vendor — operador designa según reglamentación                                                                  | Responsabilidad operador                         |
+| Art. 19 — Transferencias internacionales   | Adecuación de destino, cláusulas contractuales, consentimiento explícito                            | Documentado en §7 (ver lista de servicios externos típicos)                                                         | Documentado / responsabilidad operador           |
+| Arts. 14-15 — DPIA + consulta previa       | Evaluación de impacto + consulta a ANPDP si hay riesgo                                              | N/A vendor — operador evalúa según reglamentación ANPDP                                                             | Responsabilidad operador                         |
+| Arts. 34-40 — ANPDP                        | Autoridad supervisora (creación, funciones, financiación, director, requisitos, duración del cargo) | Notificación de brechas + canal oficial                                                                             | Documentado                                      |
+| **Gap — `data_subject_access_request`**    | Workflow formal de solicitud de acceso                                                              | Sin módulo OCA en 18.0; usar Odoo Export manual                                                                     | **TODO operador / Pre-Fase 4**                   |
 
 **Leyenda de estados:**
 
@@ -290,20 +290,63 @@ finales** — solo procesa código y docs en GitHub (US) y métricas en Codecov
 
 ---
 
-**Numbering verificado contra Ley 7593/2025 texto oficial publicado** en
-[bacn.gov.py — Ley Nº 7593/2025](https://www.bacn.gov.py/leyes-paraguayas/12924/ley-n-7593-2025-de-proteccion-de-datos-personales-en-la-republica-del-paraguay)
-y cross-validado contra el texto en baselegal.com.py (consulta: 2026-06-04).
+## Procedencia de la verificación de numeración (transparencia)
+
+**Fuentes consultadas (2026-06-04, Phase 2 Bloque B):**
+
+- **Texto completo verbatim:** `baselegal.com.py/docs/c0a24e07-cc40-11f0-8c5a-525400343722/text`
+  (compendio legal privado paraguayo) — obtenido vía Exa MCP web fetch.
+- **Texto oficial BACN:**
+  `bacn.gov.py/leyes-paraguayas/12924/ley-n-7593-2025-de-proteccion-de-datos-personales-en-la-republica-del-paraguay`
+  — la página devuelve HTTP 403 a fetchers directos, pero Exa MCP web search
+  expuso highlights verbatim de Arts. 28, 29, 30, 31, 32 que coinciden
+  exactamente con el texto de baselegal.com.py. Es la fuente oficial pero NO
+  se accedió al cuerpo completo del PDF de BACN — solo a esos highlights y a
+  los metadatos publicados.
+- **Cross-check secundario:** dictamen previo del Congreso (`silpy.congreso.gov.py`
+  expediente D-2162170) que numeraba los derechos ARSOP en Arts. 18-22 —
+  versión del Senado anterior a la promulgación. El renumeramiento a Arts.
+  28-32 ocurrió en la versión finalmente sancionada.
+
+**Artículos verificados verbatim contra el texto descargado (19 en total):**
+Arts. 5, 6, 11, 14, 15, 17, 18, 19, 26, 28, 29, 30, 31, 32, 34, 35, 36, 37,
+38, 39, 40, 43, 44, 45, 46, 47.
+
+**Limitaciones de la verificación:**
+
+- No se accedió al PDF oficial de BACN ni a la publicación en Gaceta Oficial
+  directamente. Si el reglamento de aplicación de la ANPDP (pendiente)
+  reformula la numeración o el operador necesita certeza absoluta para
+  litigios, debe contrastar contra el PDF de BACN o copia de Gaceta Oficial.
+- La fuente principal usada (baselegal.com.py) es un compendio legal privado
+  paraguayo, no oficial. Su consistencia con los highlights oficiales de BACN
+  es alta pero no auditada por un abogado.
+- Recomendación: antes de release a OCA upstream o uso en negociaciones
+  contractuales con clientes, validar el numbering con un abogado paraguayo
+  contra el texto oficial promulgado.
 
 **Cambios de numeración aplicados respecto a versión 1.0:** Derecho de acceso
 Art. 11 → **Art. 28**; rectificación Art. 12 → **Art. 29**; cancelación/
 supresión Art. 14 → **Art. 31**; oposición Art. 15 → **Art. 30**;
 portabilidad Art. 16 → **Art. 32**; bases legales Art. 6 → **Art. 5**
 (Art. 6 queda específico de condiciones del consentimiento). Art. 17
-(notificación brecha 72h), Art. 18 (DPO) y Arts. 34-39 (ANPDP) ya estaban
+(notificación brecha 72h), Art. 18 (DPO) y Arts. 34-40 (ANPDP) ya estaban
 correctos. Se agregaron: **Art. 19** (transferencias internacionales) y
 **Arts. 14-15** (DPIA + consulta previa).
 
+**Correcciones aplicadas en v1.2 (post-verificación verbatim):**
+
+- Tabla §4: `privacy_partner_to_be_forgotten` ahora referencia **Art. 31**
+  (supresión), no Art. 14 (que es DPIA).
+- Tabla §4: `base_export_anonymize` ya no cita Art. 11 (que es "Encargado del
+  tratamiento", no un derecho ARSOP). Se documenta como control técnico de
+  export.
+- Tabla §1: GDPR transferencia internacional **Art. 44-50** (rango correcto
+  Capítulo V GDPR), no 44-49.
+- Matriz §5: ANPDP cubre **Arts. 34-40**, no 34-39 (Art. 40 = duración del
+  cargo del Director General).
+
 ---
 
-_Última revisión: 2026-06-04 (Phase 2 Bloque B — SEC-07, post-review)_
-_Versión: 1.1_
+_Última revisión: 2026-06-04 (Phase 2 Bloque B — SEC-07, verificación verbatim)_
+_Versión: 1.2_
