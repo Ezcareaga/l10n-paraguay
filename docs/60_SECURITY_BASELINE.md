@@ -155,13 +155,13 @@ correspondiente en su phase (probable Fase 2 EDI para `l10n_py_edi`).
 
 ### Modelos a auditar
 
-| Modelo                     | Módulo            | Campos sensibles                                         | Justificación                                                            |
-| -------------------------- | ----------------- | -------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `res.partner`              | `l10n_py_base`    | `vat`, `l10n_py_dv`, `l10n_latam_identification_type_id` | PII fiscal — cambios de RUC son auditables bajo Ley 125/91               |
-| `res.company`              | `l10n_py_base`    | `vat`, `l10n_py_dv`                                      | Configuración crítica de empresa contribuyente                           |
-| `l10n_py.timbrado`         | `l10n_py_account` | `name`, `state`, `expiry_date`                           | Timbrado determina validez legal del DTE — cualquier cambio es auditable |
-| `l10n_latam.document.type` | `l10n_py_account` | `code`, `internal_type`                                  | Tipos de documento SIFEN — cambios afectan generación XML                |
-| `account.move`             | Odoo core         | `state`, `name`, `amount_total` (post-Fase 2 EDI)        | Cuando SIFEN state (enviado/aprobado/cancelado) se agregue al modelo     |
+| Modelo                     | Módulo                                 | Campos sensibles                                               | Justificación                                                                                                                  |
+| -------------------------- | -------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `res.partner`              | `l10n_py_base`                         | `vat`, `l10n_py_dv`, `l10n_latam_identification_type_id`       | PII fiscal — cambios de RUC son auditables bajo Ley 125/91                                                                     |
+| `res.company`              | `l10n_py_base`                         | `vat`, `l10n_py_dv`                                            | Configuración crítica de empresa contribuyente                                                                                 |
+| `l10n_py.timbrado`         | `l10n_py_account`                      | `name`, `state`, `expiry_date`                                 | Timbrado determina validez legal del DTE — cualquier cambio es auditable                                                       |
+| `l10n_latam.document.type` | `l10n_py_account`                      | `code`, `internal_type`                                        | Tipos de documento SIFEN — cambios afectan generación XML                                                                      |
+| `account.move`             | Odoo core + `l10n_py_account` (Fase 1) | `state`, `name`, `amount_total`, `l10n_latam_document_type_id` | Trazabilidad de cambios post-emisión (Ley 125/91); en Fase 2 EDI se sumarán campos SIFEN (`sifen_state`, `cdc`, `fecha_envio`) |
 
 > Cross-ref: ver [`docs/61_COMPLIANCE_LEY_7593.md`](61_COMPLIANCE_LEY_7593.md) §3
 > "Derechos ARCO + mecanismos Odoo" — el audit log es el control que respalda
