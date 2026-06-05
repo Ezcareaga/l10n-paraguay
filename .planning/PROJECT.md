@@ -110,7 +110,7 @@ crea ahora, esto es la primera invocación).
   pattern (`30-34`)
 - Librerías Python runtime (`40`)
 - Roadmap macro 6 fases (`50_MODULES_ROADMAP.md`)
-- Retrospectiva Fase 1 consolidada (`60_FASE_1_RETROSPECTIVA.md`)
+- Retrospectiva Fase 1 consolidada (`65_FASE_1_RETROSPECTIVA.md`)
 
 **Indexación de referencias.** Repos en `references/` indexados con
 `bin/codegraph` (SQLite + FTS5 + AST symbol extraction). Lookups vía
@@ -207,7 +207,7 @@ This document evolves at phase transitions and milestone boundaries.
 
 - Objetivo extendido: [`docs/00_OBJECTIVE.md`](../docs/00_OBJECTIVE.md)
 - Roadmap macro 6 fases: [`docs/50_MODULES_ROADMAP.md`](../docs/50_MODULES_ROADMAP.md)
-- Retrospectiva Fase 1: [`docs/60_FASE_1_RETROSPECTIVA.md`](../docs/60_FASE_1_RETROSPECTIVA.md)
+- Retrospectiva Fase 1: [`docs/65_FASE_1_RETROSPECTIVA.md`](../docs/65_FASE_1_RETROSPECTIVA.md)
 - Conocimiento SIFEN: [`docs/01_SIFEN_KNOWLEDGE_BASE.md`](../docs/01_SIFEN_KNOWLEDGE_BASE.md) + [`docs/02_SIFEN_REFERENCIA_COMPLETA.md`](../docs/02_SIFEN_REFERENCIA_COMPLETA.md)
 - Framework `account_edi`: [`docs/15_ODOO_ACCOUNT_EDI_FRAMEWORK.md`](../docs/15_ODOO_ACCOUNT_EDI_FRAMEWORK.md)
 - Librerías Python: [`docs/40_PYTHON_LIBRARIES.md`](../docs/40_PYTHON_LIBRARIES.md)
