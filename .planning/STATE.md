@@ -33,10 +33,10 @@ progress:
 ## Current Focus
 
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
-- **Current phase:** 02
-- **Active plan:** none active — all 5 plans complete; phase verification pending
-- **Status:** Phase 02 — all 5 plans complete (5/5 SUMMARYs committed); awaiting `gsd-verifier` + `phase.complete` (Wave 4 executed 2026-06-04)
-- **Last action:** `/gsd:execute-phase 2 --wave 4` executed Plans 02-04 + 02-05 in parallel worktrees. Plan 02-05 completed normally (3 commits + SUMMARY). Plan 02-04 executor stalled post-Task-3 commit (~17h sin signal); orchestrator killed via `TaskStop` y completó 02-04-SUMMARY.md manualmente (Option 2 del workflow `<failure_handling>`). Both worktrees merged to `feat/sec-04-sec-05-baseline` (02-04 → `4d25dd6`, 02-05 → `7efe621` con conflict resuelto en `.codespellrc`). Tracking commit `1a72503` — ROADMAP marca Phase 2 `[x]`, plans 02-04/02-05 `[x]`. SEC-06 + SEC-07 closed (2026-06-04).
+- **Current phase:** 03 (context gathered; Phase 02 verification still pending)
+- **Active plan:** none — Phase 3 CONTEXT.md ready; next is `/gsd:plan-phase 3`
+- **Status:** Phase 3 context gathered 2026-06-05 (`03-CONTEXT.md`, 16 decisiones D-01..D-16 + DISCUSSION-LOG). Phase 02 sigue awaiting `gsd-verifier` + `phase.complete` (Wave 4 executed 2026-06-04 — PR #19 merged).
+- **Last action:** `/gsd:discuss-phase 3` — 4 áreas discutidas (README/idioma, changelog, ARCHITECTURE+ADRs, DEPLOYMENT+RUNBOOK). Highlights: inglés en meta files raíz / español en docs/; README OCA-style evaluador-primero; CHANGELOG.md reemplaza CHANGES.rst; hook `oca-gen-addon-readme` se activa; Mermaid para diagramas; ADRs híbrido Nygard/MADR; ADR-0004 stub Proposed (Phase 5 completa); RUNBOOK 10 incidentes locked; DOC-10 smoke = dev externo + issue. Commits `5782c1a` + `65a2a9b` + STATE en branch `docs/phase-3-context` (pending PR).
 - **Previous phase:** Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; commit baseline 3a10fc7+abd7395; branch protection activa en main)
 
 ---
