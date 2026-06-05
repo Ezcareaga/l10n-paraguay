@@ -122,8 +122,8 @@ Plans:
 
 **Wave 2** _(blocked on Wave 1)_
 
-- [ ] 03-02-PLAN.md — ADRs 0001-0005 + docs/adr/README.md (hybrid Nygard/MADR)
-- [ ] 03-03-PLAN.md — docs/70 ARCHITECTURE + docs/71 DEPLOYMENT + docs/72 RUNBOOK
+- [x] 03-02-PLAN.md — ADRs 0001-0005 + docs/adr/README.md (hybrid Nygard/MADR)
+- [x] 03-03-PLAN.md — docs/70 ARCHITECTURE + docs/71 DEPLOYMENT + docs/72 RUNBOOK
 
 **Wave 3** _(blocked on Wave 2)_
 
@@ -246,7 +246,7 @@ referencia desde DOC-08).
 | --------------------------------------- | -------------- | ----------- | ---------- |
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
 | 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
-| 3. Bloque C — Documentación operacional | 1/6            | In Progress |            |
+| 3. Bloque C — Documentación operacional | 3/6            | In Progress |            |
 | 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -          |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 
