@@ -4,13 +4,13 @@ milestone: v0.1.0
 milestone_name: milestone
 current_phase: 02
 status: executing
-last_updated: "2026-06-02T00:00:00Z"
+last_updated: "2026-06-05T00:00:00Z"
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 6
-  completed_plans: 3
-  percent: 50
+  total_plans: 5
+  completed_plans: 5
+  percent: 100
 ---
 
 # STATE — l10n-paraguay

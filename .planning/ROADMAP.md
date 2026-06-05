@@ -191,10 +191,10 @@ referencia desde DOC-08).
 | SEC-01 | Phase 2 | B      | Done    |
 | SEC-02 | Phase 2 | B      | Done    |
 | SEC-03 | Phase 2 | B      | Done    |
-| SEC-04 | Phase 2 | B      | Pending |
-| SEC-05 | Phase 2 | B      | Pending |
-| SEC-06 | Phase 2 | B      | Pending |
-| SEC-07 | Phase 2 | B      | Pending |
+| SEC-04 | Phase 2 | B      | Done    |
+| SEC-05 | Phase 2 | B      | Done    |
+| SEC-06 | Phase 2 | B      | Done    |
+| SEC-07 | Phase 2 | B      | Done    |
 | DOC-01 | Phase 3 | C      | Pending |
 | DOC-02 | Phase 3 | C      | Pending |
 | DOC-03 | Phase 3 | C      | Pending |

@@ -77,7 +77,7 @@ Agregados `ue` (sigla Unión Europea en cita "Reglamento (UE) 2016/679") y `anua
 | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | File name exact: `docs/61_COMPLIANCE_LEY_7593.md`                                   | ✅ True                                                              |
 | Wrong filename `_LEY_6534.md` does NOT exist                                        | ✅ False (correctly absent)                                          |
-| No YAML frontmatter (first line = `# `)                                             | ✅ True                                                              |
+| No YAML frontmatter (first line starts with `#`)                                    | ✅ True                                                              |
 | 5 H2 sections present (`## 1.` through `## 5.`)                                     | ✅ 5 + bonus §6                                                      |
 | Cites `Ley 7593/2025`                                                               | ✅ True                                                              |
 | `ANPDP` count                                                                       | ✅ 15 (>= 2)                                                         |

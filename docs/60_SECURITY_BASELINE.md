@@ -323,7 +323,7 @@ exfiltración de la base de datos o el disco del VPS.
 
 ### Envelope schema recomendado
 
-```
+```text
 Disco VPS:
   /etc/credstore.encrypted/odoo-ccfe-master-key
     └─ Master key cifrada con systemd-creds host key (TPM2 si disponible)

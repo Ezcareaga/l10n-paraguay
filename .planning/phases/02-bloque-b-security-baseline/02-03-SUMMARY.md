@@ -44,7 +44,7 @@ status: complete — Plan 02-03 closed; SEC-04, SEC-05, SEC-03-protection all gr
 
 # Phase 2 Plan 02-03: gitleaks + Bandit triage + branch protection — Summary
 
-**One-liner:** Auditoría local con gitleaks v8.30.1 (full history, 106 commits) y Bandit 1.9.4 (`addons/`) — ambas reportan **0 findings** a todos los niveles; el repo entra a Wave 3 con baseline limpio. La tarea 02-03-03 (branch protection update en `main`) queda pendiente como checkpoint blocking-human para el repo owner.
+**One-liner:** Auditoría local con gitleaks v8.30.1 (full history, 106 commits) y Bandit 1.9.4 (`addons/`) — ambas reportan **0 findings** a todos los niveles; el repo entra a Wave 3 con baseline limpio. La tarea 02-03-03 (branch protection update en `main`) se cerró el 2026-06-03 cuando el repo owner aplicó el cambio y confirmó los 6 `required_status_checks` vía `gh api`.
 
 ## Status
 
@@ -83,7 +83,7 @@ No file changes were produced by tasks 01 and 02 (both auditorías limpias). Tas
      --exit-code 0
    ```
 4. **Scan result.**
-   ```
+   ```text
    2:25PM INF 106 commits scanned.
    2:25PM INF scanned ~3268662 bytes (3.27 MB) in 1.48s
    2:25PM INF no leaks found
@@ -123,7 +123,7 @@ Met. **SEC-04 closed.**
 ### What was done
 
 1. **Install.** `pip install "bandit[sarif]==1.9.4"` (idempotent — already-satisfied deps reported; new packages `attrs`, `pbr`, `sarif-om`, `jschema-to-python`, `jsonpickle`, `setuptools` installed). Version confirmed:
-   ```
+   ```text
    bandit 1.9.4
      python version = 3.13.13 (tags/v3.13.13:01104ce, Apr  7 2026, 19:25:48) [MSC v.1944 64 bit (AMD64)]
    ```
@@ -133,7 +133,7 @@ Met. **SEC-04 closed.**
    bandit -r addons/ -lll -iii -f screen
    ```
    Result:
-   ```
+   ```text
    Total lines of code: 2228
    Total lines skipped (#nosec): 0
    Total issues (by severity): Undefined: 0  Low: 0  Medium: 0  High: 0
@@ -273,12 +273,12 @@ No other deviations.
 
 ## Threat Model Coverage
 
-| Threat ID           | Disposition | This plan's mitigation                                                                                                                                       |
-| ------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| T-SEC-04-leak       | mitigate    | Full-history gitleaks scan executed; 0 findings; no `.gitleaksignore` because nothing to allowlist                                                           |
-| T-SEC-05-sast       | mitigate    | Bandit `-lll -iii` returns 0 findings; full audit (`-r addons/`) returns 0 findings at every severity                                                        |
-| T-SEC-04-replay     | accept      | N/A — no rotated tokens (no tokens found)                                                                                                                    |
-| T-SEC-03-protection | mitigate    | Deferred to task 02-03-03 (checkpoint); the 3 job names (`gitleaks`, `bandit`, `dependency-review`) are confirmed and ready to add to required status checks |
+| Threat ID           | Disposition | This plan's mitigation                                                                                                                                                                                                               |
+| ------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| T-SEC-04-leak       | mitigate    | Full-history gitleaks scan executed; 0 findings; no `.gitleaksignore` because nothing to allowlist                                                                                                                                   |
+| T-SEC-05-sast       | mitigate    | Bandit `-lll -iii` returns 0 findings; full audit (`-r addons/`) returns 0 findings at every severity                                                                                                                                |
+| T-SEC-04-replay     | accept      | N/A — no rotated tokens (no tokens found)                                                                                                                                                                                            |
+| T-SEC-03-protection | mitigate    | Closed via task 02-03-03 (2026-06-03): repo owner applied the `required_status_checks` update on `main`; 6 contexts (`gitleaks`, `bandit`, `dependency-review`, `pre-commit`, `test with Odoo`, `commitlint`) confirmed via `gh api` |
 
 No new surface introduced. The 0-finding result is the strongest possible mitigation for T-SEC-04-leak and T-SEC-05-sast.
 

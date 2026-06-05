@@ -308,7 +308,7 @@ finales** — solo procesa código y docs en GitHub (US) y métricas en Codecov
   versión del Senado anterior a la promulgación. El renumeramiento a Arts.
   28-32 ocurrió en la versión finalmente sancionada.
 
-**Artículos verificados verbatim contra el texto descargado (19 en total):**
+**Artículos verificados verbatim contra el texto descargado (26 en total):**
 Arts. 5, 6, 11, 14, 15, 17, 18, 19, 26, 28, 29, 30, 31, 32, 34, 35, 36, 37,
 38, 39, 40, 43, 44, 45, 46, 47.
 
