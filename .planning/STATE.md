@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v0.1.0
 milestone_name: milestone
-current_phase: 03 (context gathered; Phase 02 verification still pending)
+current_phase: 03
 status: executing
-last_updated: "2026-06-05T17:54:19.958Z"
+last_updated: "2026-06-05T18:06:18.388Z"
 progress:
   total_phases: 5
   completed_phases: 1
@@ -33,9 +33,9 @@ progress:
 ## Current Focus
 
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
-- **Current phase:** 03 (context gathered; Phase 02 verification still pending)
+- **Current phase:** 03
 - **Active plan:** none — Phase 3 CONTEXT.md ready; next is `/gsd:plan-phase 3`
-- **Status:** Ready to execute
+- **Status:** Executing Phase 03
 - **Last action:** `/gsd:discuss-phase 3` — 4 áreas discutidas (README/idioma, changelog, ARCHITECTURE+ADRs, DEPLOYMENT+RUNBOOK). Highlights: inglés en meta files raíz / español en docs/; README OCA-style evaluador-primero; CHANGELOG.md reemplaza CHANGES.rst; hook `oca-gen-addon-readme` se activa; Mermaid para diagramas; ADRs híbrido Nygard/MADR; ADR-0004 stub Proposed (Phase 5 completa); RUNBOOK 10 incidentes locked; DOC-10 smoke = dev externo + issue. Commits `5782c1a` + `65a2a9b` + STATE en branch `docs/phase-3-context` (pending PR).
 - **Previous phase:** Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; commit baseline 3a10fc7+abd7395; branch protection activa en main)
 
@@ -45,9 +45,9 @@ progress:
 
 ```
 Milestone: Pre-Fase 2 Foundation
-Phase: 02 (Bloque B — Security baseline) — AWAITING VERIFIER
-Plan: 5 of 5 (Plans 02-01..02-05 all have SUMMARYs; Waves 1+2+3+4 done)
-Status: Ready to execute
+Phase: 03 (bloque-c-documentaci-n-operacional) — EXECUTING
+Plan: 1 of 6
+Status: Executing Phase 03
 Resume: /gsd:execute-phase 2  (resumes from handle_partial_wave_execution → continues to code-review + verifier + phase.complete)
 
 Progress:

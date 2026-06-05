@@ -118,7 +118,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 03-01-PLAN.md — Rename docs/60 retrospectiva to docs/65 + activate oca-gen-addon-readme hook (foundation prep)
+- [x] 03-01-PLAN.md — Rename docs/60 retrospectiva to docs/65 + activate oca-gen-addon-readme hook (foundation prep)
 
 **Wave 2** _(blocked on Wave 1)_
 
@@ -246,7 +246,7 @@ referencia desde DOC-08).
 | --------------------------------------- | -------------- | ----------- | ---------- |
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
 | 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
-| 3. Bloque C — Documentación operacional | 0/6            | Planned     | -          |
+| 3. Bloque C — Documentación operacional | 1/6            | In Progress |            |
 | 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -          |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 
