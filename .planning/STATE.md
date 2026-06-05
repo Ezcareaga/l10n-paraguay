@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v0.1.0
 milestone_name: milestone
-current_phase: 02
-status: verifying
-last_updated: "2026-06-05T15:15:51.028Z"
+current_phase: 03 (context gathered; Phase 02 verification still pending)
+status: executing
+last_updated: "2026-06-05T17:54:19.958Z"
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 6
+  total_plans: 12
   completed_plans: 5
   percent: 20
 ---
@@ -35,7 +35,7 @@ progress:
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
 - **Current phase:** 03 (context gathered; Phase 02 verification still pending)
 - **Active plan:** none — Phase 3 CONTEXT.md ready; next is `/gsd:plan-phase 3`
-- **Status:** Phase 3 context gathered 2026-06-05 (`03-CONTEXT.md`, 16 decisiones D-01..D-16 + DISCUSSION-LOG). Phase 02 sigue awaiting `gsd-verifier` + `phase.complete` (Wave 4 executed 2026-06-04 — PR #19 merged).
+- **Status:** Ready to execute
 - **Last action:** `/gsd:discuss-phase 3` — 4 áreas discutidas (README/idioma, changelog, ARCHITECTURE+ADRs, DEPLOYMENT+RUNBOOK). Highlights: inglés en meta files raíz / español en docs/; README OCA-style evaluador-primero; CHANGELOG.md reemplaza CHANGES.rst; hook `oca-gen-addon-readme` se activa; Mermaid para diagramas; ADRs híbrido Nygard/MADR; ADR-0004 stub Proposed (Phase 5 completa); RUNBOOK 10 incidentes locked; DOC-10 smoke = dev externo + issue. Commits `5782c1a` + `65a2a9b` + STATE en branch `docs/phase-3-context` (pending PR).
 - **Previous phase:** Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; commit baseline 3a10fc7+abd7395; branch protection activa en main)
 
@@ -47,7 +47,7 @@ progress:
 Milestone: Pre-Fase 2 Foundation
 Phase: 02 (Bloque B — Security baseline) — AWAITING VERIFIER
 Plan: 5 of 5 (Plans 02-01..02-05 all have SUMMARYs; Waves 1+2+3+4 done)
-Status: Phase 02 plans complete — pending gsd-verifier + phase.complete
+Status: Ready to execute
 Resume: /gsd:execute-phase 2  (resumes from handle_partial_wave_execution → continues to code-review + verifier + phase.complete)
 
 Progress:
