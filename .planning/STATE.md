@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v0.1.0
 milestone_name: milestone
 current_phase: 02
-status: executing
-last_updated: "2026-06-05T00:00:00Z"
+status: verifying
+last_updated: "2026-06-05T15:15:51.028Z"
 progress:
   total_phases: 5
-  completed_phases: 0
-  total_plans: 5
+  completed_phases: 1
+  total_plans: 6
   completed_plans: 5
-  percent: 100
+  percent: 20
 ---
 
 # STATE — l10n-paraguay
