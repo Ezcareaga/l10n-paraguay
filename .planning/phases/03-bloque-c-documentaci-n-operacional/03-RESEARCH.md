@@ -534,7 +534,7 @@ stateDiagram-v2
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **ADR-0005 hosting options (Claude's Discretion)**
 
