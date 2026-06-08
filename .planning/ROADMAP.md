@@ -128,7 +128,7 @@ Plans:
 **Wave 3** _(blocked on Wave 2)_
 
 - [x] 03-04-PLAN.md — README.md rewrite + CHANGELOG.md (replace CHANGES.rst)
-- [ ] 03-05-PLAN.md — CONTRIBUTING.md (6 ejes + DOC-09) + CODE_OF_CONDUCT.md
+- [x] 03-05-PLAN.md — CONTRIBUTING.md (6 ejes + DOC-09) + CODE_OF_CONDUCT.md
 
 **Wave 4** _(blocked on Wave 3)_
 
@@ -246,7 +246,7 @@ referencia desde DOC-08).
 | --------------------------------------- | -------------- | ----------- | ---------- |
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
 | 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
-| 3. Bloque C — Documentación operacional | 4/6            | In Progress |            |
+| 3. Bloque C — Documentación operacional | 5/6            | In Progress |            |
 | 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -          |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 
