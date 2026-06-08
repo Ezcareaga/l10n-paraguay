@@ -119,7 +119,7 @@ python scripts/build_index.py
 - **Fase 1b completada:** 2026-05-25. `l10n_py_base 18.0.1.1.0` + `l10n_py_account 18.0.1.0.0`,
   **97 tests verdes** (l10n_py_base 23 + l10n_py_account 74). PR1 + PR2
   mergeados a `main` vía rebase. Resumen consolidado:
-  [`docs/60_FASE_1_RETROSPECTIVA.md`](docs/60_FASE_1_RETROSPECTIVA.md).
+  [`docs/65_FASE_1_RETROSPECTIVA.md`](docs/65_FASE_1_RETROSPECTIVA.md).
 - **Próximo:** Fase 2 = `l10n_py_edi` (CDC + firma XAdES + SOAP SIFEN + KuDE + eventos).
 
 ## Skills + subagents — defaults del proyecto

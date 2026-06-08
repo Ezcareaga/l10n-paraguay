@@ -29,7 +29,7 @@ puedo X sin fricción"_.
 
 - [ ] **Phase 1: Bloque A — Foundation técnica (CI/CD + pre-commit)** — Activar pre-commit OCA + GitHub Actions (lint, test, dependabot, commitlint) + branch protection en `main`
 - [x] **Phase 2: Bloque B — Security baseline** — LICENSE + SECURITY.md + workflow `security.yml` (gitleaks + Bandit + Dependency Review) + docs/60 (security baseline) + docs/61 (compliance Ley 7593/2025) (completed 2026-06-04)
-- [ ] **Phase 3: Bloque C — Documentación operacional** — README real + CHANGELOG + CONTRIBUTING + CODE_OF_CONDUCT + docs/70-72 (ARCHITECTURE, DEPLOYMENT, RUNBOOK) + ADRs 0001-0005
+- [x] **Phase 3: Bloque C — Documentación operacional** — README real + CHANGELOG + CONTRIBUTING + CODE_OF_CONDUCT + docs/70-72 (ARCHITECTURE, DEPLOYMENT, RUNBOOK) + ADRs 0001-0005 (completed 2026-06-08)
 - [ ] **Phase 4: Bloque D — Repo hygiene + Release process** — Issue/PR templates + CODEOWNERS + release.yml + tag `v0.1.0` + decisión semantic-release vs manual
 - [ ] **Phase 5: Bloque E — Multi-rubro foundation** — ADR-0004 + docs/80 multi-rubro roadmap + auditoría grep rubro-agnosticismo + guía mínima `l10n_py_industry_*`
 
@@ -113,8 +113,28 @@ Plans:
 5. `docs/71_DEPLOYMENT.md` describe VPS requirements, Docker Compose prod, Caddy reverse proxy SSL, backup Postgres automatizado, health checks, update procedure; y `docs/72_RUNBOOK.md` cubre ≥10 incidentes (SIFEN timeout, Postgres disk full, SSL expira, CCFE expira, migración catálogos DNIT, etc.) con resolución y escalation path
 6. `docs/adr/` contiene ADRs 0001 (Odoo Community), 0002 (OCA-style desde día 1), 0003 (DNIT catalogs como source of truth), 0004 (multi-rubro strategy — cross-ref con IND-01 de Phase 5), 0005 (hosting strategy preliminar sin commit a vendor)
 7. Smoke test humano (DOC-10): un dev externo levanta el proyecto siguiendo SOLO `CONTRIBUTING.md`, sin pedir contexto extra
-   **Plans**: TBD
-   **UI hint**: no
+   **Plans**: 6 plans
+
+Plans:
+**Wave 1**
+
+- [x] 03-01-PLAN.md — Rename docs/60 retrospectiva to docs/65 + activate oca-gen-addon-readme hook (foundation prep)
+
+**Wave 2** _(blocked on Wave 1)_
+
+- [x] 03-02-PLAN.md — ADRs 0001-0005 + docs/adr/README.md (hybrid Nygard/MADR)
+- [x] 03-03-PLAN.md — docs/70 ARCHITECTURE + docs/71 DEPLOYMENT + docs/72 RUNBOOK
+
+**Wave 3** _(blocked on Wave 2)_
+
+- [x] 03-04-PLAN.md — README.md rewrite + CHANGELOG.md (replace CHANGES.rst)
+- [x] 03-05-PLAN.md — CONTRIBUTING.md (6 ejes + DOC-09) + CODE_OF_CONDUCT.md
+
+**Wave 4** _(blocked on Wave 3)_
+
+- [x] 03-06-PLAN.md — DOC-10 smoke-test GitHub issue (async UAT)
+
+  **UI hint**: no
 
 ### Phase 4: Bloque D — Repo hygiene + Release process
 
@@ -226,7 +246,7 @@ referencia desde DOC-08).
 | --------------------------------------- | -------------- | ----------- | ---------- |
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
 | 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
-| 3. Bloque C — Documentación operacional | 0/0            | Not started | -          |
+| 3. Bloque C — Documentación operacional | 6/6            | Complete    | 2026-06-08 |
 | 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -          |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 

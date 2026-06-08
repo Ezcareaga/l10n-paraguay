@@ -39,6 +39,12 @@ repos:
     hooks:
       - id: oca-fix-manifest-website
         args: ["https://github.com/Ezcareaga/l10n-paraguay"]
+      - id: oca-gen-addon-readme
+        args:
+          - "--addons-dir=addons"
+          - "--repo-name=l10n-paraguay"
+          - "--branch=18.0"
+          - "--no-gen-html"
 
   # -- OCA module structural checks (read-only) ---------------------------
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
@@ -142,3 +148,4 @@ repos:
       - id: check-xml
       - id: mixed-line-ending
         args: ["--fix=lf"]
+        exclude: /README\.rst$
