@@ -1,0 +1,14 @@
+* @Ezcareaga
+
+# CODEOWNERS — review routing for l10n-paraguay
+#
+# Syntax: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+# Rule precedence: LAST matching rule wins. The global `*` owner above stays FIRST
+# so that more specific (uncommented) area rules below can override it later.
+#
+# Uncomment area stubs as contributors join (each area gets a dedicated owner):
+# /addons/l10n_py_base/    @Ezcareaga
+# /addons/l10n_py_account/ @Ezcareaga
+# /addons/l10n_py_edi/     @Ezcareaga
+# /docs/                   @Ezcareaga
+# /.github/                @Ezcareaga
