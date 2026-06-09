@@ -34,8 +34,8 @@ progress:
 
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
 - **Current phase:** 04
-- **Active plan:** 04-03 next (HUMAN-ACTION gate) — Wave 1 (04-01 + 04-02) complete y en **PR #23** (`docs/phase-4-pr` → `main`); 04-03 + 04-04 son `autonomous: false` y requieren PR #23 mergeado a `main` primero.
-- **Status:** Phase 04 Wave 1 COMPLETE — bloqueado en gate human-action (esperando merge de PR #23 + comandos `gh`/`git` del owner)
+- **Active plan:** 04-03 next (HUMAN-ACTION gate) — Wave 1 (04-01 + 04-02) **MERGEADA a `main`** vía PR #23 (`0eab4ce`). 04-03 + 04-04 son `autonomous: false` (acciones GitHub outward-facing del owner). Base completa en `main`, listos para correr.
+- **Status:** Phase 04 Wave 1 MERGED to `main` — esperando comandos `gh`/`git` del owner para Waves 2-3 (Discussions+labels, tag+release). Side-fix: PR #24 mergeado (oca-gen-addon-readme determinista Windows/Linux).
 - **Last action:** `/gsd:execute-phase 4` (Wave 1, 2026-06-09) — ejecutados Plans 04-01 (issue intake: `.github/ISSUE_TEMPLATE/{bug_report,feature_request,config}.yml`) y 04-02 (`.github/CODEOWNERS`, `.github/release.yml`, `.github/PULL_REQUEST_TEMPLATE.md`, `CONTRIBUTING.md §Release`). 6 commits en `docs/phase-4-plans` (`cfba825` `bf3b1fd` `f653ea6` `76eac19` `b46f4df` `70aa0da`). PR limpio creado vía `/gsd:pr-branch`: rama `docs/phase-4-pr` (4 commits code-only, 0 archivos `.planning/`) → **PR #23**. REL-01..06 marcados implementados localmente. **PRÓXIMO (gate manual):** (1) merge PR #23 a `main`; (2) `/gsd:execute-phase 4 --wave 2` → 04-03 = correr `gh repo edit Ezcareaga/l10n-paraguay --enable-discussions` + 10 `gh label create` (RESEARCH Pattern 7); (3) `--wave 3` → 04-04 = date-stamp CHANGELOG `[0.1.0]` + `git tag -a v0.1.0` + `gh release create v0.1.0 --latest --notes-file` (RESEARCH Pattern 6).
 - **Previous phase:** Phase 2 — Security baseline — COMPLETE (PR #19 merged 2026-06-05); Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; branch protection activa en main)
 
