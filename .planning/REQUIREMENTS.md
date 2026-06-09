@@ -47,7 +47,7 @@
 
 ### REL — Bloque D: Repo hygiene + Release process
 
-- [ ] **REL-01**: `.github/ISSUE_TEMPLATE/` con templates: `bug_report.yml`, `feature_request.yml`, `question.yml`, `config.yml` con links a Discussions
+- [x] **REL-01**: `.github/ISSUE_TEMPLATE/` con templates: `bug_report.yml`, `feature_request.yml`, `question.yml`, `config.yml` con links a Discussions
 - [ ] **REL-02**: `.github/PULL_REQUEST_TEMPLATE.md` con checklist (tests, docs, ADR si aplica, conventional commits)
 - [ ] **REL-03**: `.github/CODEOWNERS` con `@Ezcareaga` para todo el repo por ahora; estructura preparada para agregar contribuidores por área futuro
 - [ ] **REL-04**: `.github/release.yml` con categorías auto para release notes (feat→Added, fix→Fixed, etc.)
@@ -120,43 +120,43 @@ Excluido explícitamente de este milestone con razonamiento (prevención de scop
 
 > Mapeo REQ → Phase del milestone Pre-Fase 2. Roadmap completo en [`.planning/ROADMAP.md`](ROADMAP.md).
 
-| Requirement | Phase   | Status  |
-| ----------- | ------- | ------- |
-| CI-01       | Phase 1 | Pending |
-| CI-02       | Phase 1 | Pending |
-| CI-03       | Phase 1 | Pending |
-| CI-04       | Phase 1 | Pending |
-| CI-05       | Phase 1 | Pending |
-| CI-06       | Phase 1 | Pending |
-| CI-07       | Phase 1 | Pending |
-| CI-08       | Phase 1 | Pending |
-| SEC-01      | Phase 2 | Pending |
-| SEC-02      | Phase 2 | Pending |
-| SEC-03      | Phase 2 | Pending |
-| SEC-04      | Phase 2 | Pending |
-| SEC-05      | Phase 2 | Pending |
-| SEC-06      | Phase 2 | Pending |
-| SEC-07      | Phase 2 | Pending |
-| DOC-01      | Phase 3 | Pending |
-| DOC-02      | Phase 3 | Pending |
-| DOC-03      | Phase 3 | Pending |
-| DOC-04      | Phase 3 | Pending |
-| DOC-05      | Phase 3 | Pending |
-| DOC-06      | Phase 3 | Pending |
-| DOC-07      | Phase 3 | Pending |
-| DOC-08      | Phase 3 | Pending |
-| DOC-09      | Phase 3 | Pending |
-| DOC-10      | Phase 3 | Pending |
-| REL-01      | Phase 4 | Pending |
-| REL-02      | Phase 4 | Pending |
-| REL-03      | Phase 4 | Pending |
-| REL-04      | Phase 4 | Pending |
-| REL-05      | Phase 4 | Pending |
-| REL-06      | Phase 4 | Pending |
-| IND-01      | Phase 5 | Pending |
-| IND-02      | Phase 5 | Pending |
-| IND-03      | Phase 5 | Pending |
-| IND-04      | Phase 5 | Pending |
+| Requirement | Phase   | Status   |
+| ----------- | ------- | -------- |
+| CI-01       | Phase 1 | Pending  |
+| CI-02       | Phase 1 | Pending  |
+| CI-03       | Phase 1 | Pending  |
+| CI-04       | Phase 1 | Pending  |
+| CI-05       | Phase 1 | Pending  |
+| CI-06       | Phase 1 | Pending  |
+| CI-07       | Phase 1 | Pending  |
+| CI-08       | Phase 1 | Pending  |
+| SEC-01      | Phase 2 | Pending  |
+| SEC-02      | Phase 2 | Pending  |
+| SEC-03      | Phase 2 | Pending  |
+| SEC-04      | Phase 2 | Pending  |
+| SEC-05      | Phase 2 | Pending  |
+| SEC-06      | Phase 2 | Pending  |
+| SEC-07      | Phase 2 | Pending  |
+| DOC-01      | Phase 3 | Pending  |
+| DOC-02      | Phase 3 | Pending  |
+| DOC-03      | Phase 3 | Pending  |
+| DOC-04      | Phase 3 | Pending  |
+| DOC-05      | Phase 3 | Pending  |
+| DOC-06      | Phase 3 | Pending  |
+| DOC-07      | Phase 3 | Pending  |
+| DOC-08      | Phase 3 | Pending  |
+| DOC-09      | Phase 3 | Pending  |
+| DOC-10      | Phase 3 | Pending  |
+| REL-01      | Phase 4 | Complete |
+| REL-02      | Phase 4 | Pending  |
+| REL-03      | Phase 4 | Pending  |
+| REL-04      | Phase 4 | Pending  |
+| REL-05      | Phase 4 | Pending  |
+| REL-06      | Phase 4 | Pending  |
+| IND-01      | Phase 5 | Pending  |
+| IND-02      | Phase 5 | Pending  |
+| IND-03      | Phase 5 | Pending  |
+| IND-04      | Phase 5 | Pending  |
 
 **Coverage:**
 
