@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v0.1.0
 milestone_name: milestone
 current_phase: 04
-status: executing
-last_updated: "2026-06-09T13:53:20.548Z"
+status: "Phase 04 Wave 2 COMPLETE — Discussions habilitado (Q&A slug q-a) + 10 labels creados vía gh CLI (REL-01/REL-04 outward arms cerrados). Falta Wave 3 (04-04: CHANGELOG date-stamp + tag v0.1.0 + gh release)."
+last_updated: "2026-06-09T17:37:14.171Z"
 progress:
   total_phases: 5
   completed_phases: 2
@@ -34,9 +34,9 @@ progress:
 
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
 - **Current phase:** 04
-- **Active plan:** 04-03 next (HUMAN-ACTION gate) — Wave 1 (04-01 + 04-02) **MERGEADA a `main`** vía PR #23 (`0eab4ce`). 04-03 + 04-04 son `autonomous: false` (acciones GitHub outward-facing del owner). Base completa en `main`, listos para correr.
-- **Status:** Phase 04 Wave 1 MERGED to `main` — esperando comandos `gh`/`git` del owner para Waves 2-3 (Discussions+labels, tag+release). Side-fix: PR #24 mergeado (oca-gen-addon-readme determinista Windows/Linux).
-- **Last action:** `/gsd:execute-phase 4` (Wave 1, 2026-06-09) — ejecutados Plans 04-01 (issue intake: `.github/ISSUE_TEMPLATE/{bug_report,feature_request,config}.yml`) y 04-02 (`.github/CODEOWNERS`, `.github/release.yml`, `.github/PULL_REQUEST_TEMPLATE.md`, `CONTRIBUTING.md §Release`). 6 commits en `docs/phase-4-plans` (`cfba825` `bf3b1fd` `f653ea6` `76eac19` `b46f4df` `70aa0da`). PR limpio creado vía `/gsd:pr-branch`: rama `docs/phase-4-pr` (4 commits code-only, 0 archivos `.planning/`) → **PR #23**. REL-01..06 marcados implementados localmente. **PRÓXIMO (gate manual):** (1) merge PR #23 a `main`; (2) `/gsd:execute-phase 4 --wave 2` → 04-03 = correr `gh repo edit Ezcareaga/l10n-paraguay --enable-discussions` + 10 `gh label create` (RESEARCH Pattern 7); (3) `--wave 3` → 04-04 = date-stamp CHANGELOG `[0.1.0]` + `git tag -a v0.1.0` + `gh release create v0.1.0 --latest --notes-file` (RESEARCH Pattern 6).
+- **Active plan:** 04-04 next (Wave 3, HUMAN-ACTION gate) — Waves 1-2 completas. Wave 2 (04-03) ejecutada 2026-06-09: Discussions ON + 10 labels creados, verificados vía `gh`.
+- **Status:** Phase 04 Wave 2 COMPLETE — Discussions habilitado (Q&A slug `q-a`) + 10 labels creados vía gh CLI (REL-01/REL-04 outward arms cerrados). Falta Wave 3 (04-04: CHANGELOG date-stamp + tag v0.1.0 + gh release).
+- **Last action:** `/gsd:execute-phase 4 --wave 2` (2026-06-09) — Plan 04-03 ejecutado: `gh repo edit --enable-discussions` (→ `hasDiscussionsEnabled: true`, Q&A slug `q-a`) + 10 `gh label create` (feat, fix, changed, refactor, chore, security, docs, skip-changelog, dependencies --force, github-actions --force). Checkpoints human-action resueltos con autorización del owner en sesión (Claude ejecutó los comandos `gh` autenticados). Opcional omitido: refinar contact_link Q&A al slug — URL genérica `/discussions` ya resuelve. **PRÓXIMO:** `/gsd:execute-phase 4 --wave 3` → 04-04 = date-stamp CHANGELOG `[0.1.0]` + `git tag -a v0.1.0` + `gh release create v0.1.0 --latest --notes-file` (RESEARCH Pattern 6).
 - **Previous phase:** Phase 2 — Security baseline — COMPLETE (PR #19 merged 2026-06-05); Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; branch protection activa en main)
 
 ---
@@ -46,16 +46,16 @@ progress:
 ```
 Milestone: Pre-Fase 2 Foundation
 Phase: 04 (bloque-d-repo-hygiene-release-process) — EXECUTING
-Plan: 3 of 4 (Plans 04-01 + 04-02 complete)
+Plan: 4 of 4 (Plans 04-01 + 04-02 + 04-03 complete)
 Status: Executing Phase 04
-Resume: /gsd:execute-phase 4  (Bloque D — Repo hygiene + Release; Plan 04-03 next — create release.yml labels)
+Resume: /gsd:execute-phase 4 --wave 3  (Bloque D — Repo hygiene + Release; Plan 04-04 next — tag v0.1.0 + gh release)
 
 Progress:
 [████████░░] 81%
 [x] Phase 1: Bloque A — CI/CD + pre-commit          (8/8 REQs)
 [x] Phase 2: Bloque B — Security baseline           (7/7 REQs — PR #19 merged)
 [x] Phase 3: Bloque C — Docs operacionales          (10/10 REQs implemented; DOC-10 = async UAT via issue #21, non-blocking)
-[~] Phase 4: Bloque D — Repo hygiene + Release      (4/6 REQs — REL-01/02/03/04/06 closed; Plans 04-01 + 04-02 done; REL-05 pending)
+[~] Phase 4: Bloque D — Repo hygiene + Release      (5/6 REQs — REL-01/02/03/04/06 closed incl. outward arms; Plans 04-01..04-03 done; REL-05 pending = Wave 3 release)
 [ ] Phase 5: Bloque E — Multi-rubro foundation      (0/4 REQs)
 
 Total: 30/35 v1 REQs implemented (milestone Pre-Fase 2)

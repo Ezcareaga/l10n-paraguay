@@ -160,7 +160,7 @@ Plans:
 
 **Wave 2** _(blocked on Wave 1, maintainer checkpoint, outward-facing)_
 
-- [ ] 04-03-PLAN.md — Enable GitHub Discussions + create 10 release labels — REL-01, REL-04
+- [x] 04-03-PLAN.md — Enable GitHub Discussions + create 10 release labels — REL-01, REL-04
 
 **Wave 3** _(blocked on Wave 2, maintainer checkpoint, last step)_
 
@@ -262,7 +262,7 @@ referencia desde DOC-08).
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
 | 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
 | 3. Bloque C — Documentación operacional | 6/6            | Complete    | 2026-06-08 |
-| 4. Bloque D — Repo hygiene + Release    | 2/4            | In Progress |            |
+| 4. Bloque D — Repo hygiene + Release    | 3/4            | In Progress |            |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 
 ---
