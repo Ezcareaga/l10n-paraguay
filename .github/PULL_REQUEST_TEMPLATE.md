@@ -20,4 +20,4 @@
 - [ ] Conventional Commit message format followed (`feat:`, `fix:`, `docs:`, etc.)
 - [ ] Docs updated if behavior changed (README, CONTRIBUTING, relevant `docs/`)
 - [ ] If this changes architecture: a new ADR is included in this PR (`docs/adr/` — see DOC-09)
-- [ ] CHANGELOG.md updated (if this is a release-worthy change — see [Release process](../CONTRIBUTING.md#release-process))
+- [ ] CHANGELOG.md updated (if this is a release-worthy change — see [Release process](CONTRIBUTING.md#release-process))
