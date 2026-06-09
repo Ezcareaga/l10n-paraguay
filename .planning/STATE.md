@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v0.1.0
 milestone_name: milestone
-current_phase: 04
-status: phase-4-context-gathered
-last_updated: "2026-06-09T12:19:13.528Z"
+current_phase: 04 — **CONTEXT GATHERED** (Bloque D — Repo hygiene + Release; 0/0 plans, REL-01..06)
+status: executing
+last_updated: "2026-06-09T13:22:07.051Z"
 progress:
   total_phases: 5
-  completed_phases: 3
-  total_plans: 11
+  completed_phases: 2
+  total_plans: 16
   completed_plans: 11
-  percent: 60
+  percent: 40
 ---
 
 # STATE — l10n-paraguay
@@ -35,7 +35,7 @@ progress:
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
 - **Current phase:** 04 — **CONTEXT GATHERED** (Bloque D — Repo hygiene + Release; 0/0 plans, REL-01..06)
 - **Active plan:** none — `04-CONTEXT.md` listo; próximo es `/gsd:plan-phase 4` (research-first ya elegido)
-- **Status:** Phase 04 discuss-phase complete (5 decisiones D-01..D-05 + amendment A-01). Phase 03 COMPLETE (6/6 plans, 10/10 DOC REQs; DOC-10 = UAT async issue #21, no bloquea).
+- **Status:** Ready to execute
 - **Last action:** `/gsd:discuss-phase 4` (2026-06-09) — capturadas 5 decisiones en `04-CONTEXT.md`: D-01 release manual documentado (no semantic-release), D-02 habilitar Discussions + omitir `question.yml` (amendment A-01 a REL-01), D-03 `release.yml` label-based etiquetado manual, D-04 CODEOWNERS global + stubs comentados + PR checklist como recordatorios, D-05 v0.1.0 = estado foundation, full release, notas manuales. Commits: `672fc46` (docs(04) context+log), `d5fd8fe` (chore: refresh oca-gen-addon-readme digests — generado por el hook always_run, contenido sin cambios). Próximo: `/gsd:plan-phase 4` con research-first.
 - **Previous phase:** Phase 2 — Security baseline — COMPLETE (PR #19 merged 2026-06-05); Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; branch protection activa en main)
 
@@ -47,7 +47,7 @@ progress:
 Milestone: Pre-Fase 2 Foundation
 Phase: 03 (bloque-c-documentaci-n-operacional) — COMPLETE
 Plan: 6 of 6 done
-Status: Phase 03 complete
+Status: Ready to execute
 Resume: /gsd:execute-phase 4  (Bloque D — Repo hygiene + Release; plan-phase 4 first if no plans exist)
 
 Progress:
