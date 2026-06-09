@@ -150,8 +150,23 @@ Plans:
 4. `.github/release.yml` mapea automáticamente labels/Conventional Commits a categorías de release notes (`feat:` → Added, `fix:` → Fixed, etc.)
 5. Tag `v0.1.0` existe en GitHub Releases con notes manuales que describen el estado post-Fase 1 (l10n_py_base 18.0.1.1.0 + l10n_py_account 18.0.1.0.0, 97 tests verdes)
 6. La sección "Release process" de `CONTRIBUTING.md` documenta explícitamente la decisión semantic-release vs manual: si semantic-release ON, hay `.releaserc.json` + workflow funcionando; si OFF, los pasos manuales están enumerados paso a paso
-   **Plans**: TBD
-   **UI hint**: no
+   **Plans**: 4 plans
+
+Plans:
+**Wave 1**
+
+- [x] 04-01-PLAN.md — Issue intake (bug_report + feature_request forms + config.yml; questions→Discussions, security→policy) — REL-01
+- [x] 04-02-PLAN.md — PR hygiene + release config (CODEOWNERS + release.yml + PR template + CONTRIBUTING release section) — REL-02, REL-03, REL-04, REL-06
+
+**Wave 2** _(blocked on Wave 1, maintainer checkpoint, outward-facing)_
+
+- [x] 04-03-PLAN.md — Enable GitHub Discussions + create 10 release labels — REL-01, REL-04
+
+**Wave 3** _(blocked on Wave 2, maintainer checkpoint, last step)_
+
+- [ ] 04-04-PLAN.md — Date-stamp CHANGELOG [0.1.0] + tag + publish full GitHub Release v0.1.0 — REL-05
+
+  **UI hint**: no
 
 ### Phase 5: Bloque E — Multi-rubro foundation
 
@@ -247,7 +262,7 @@ referencia desde DOC-08).
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
 | 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
 | 3. Bloque C — Documentación operacional | 6/6            | Complete    | 2026-06-08 |
-| 4. Bloque D — Repo hygiene + Release    | 0/0            | Not started | -          |
+| 4. Bloque D — Repo hygiene + Release    | 3/4            | In Progress |            |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 
 ---
