@@ -156,7 +156,7 @@ Plans:
 **Wave 1**
 
 - [x] 04-01-PLAN.md — Issue intake (bug_report + feature_request forms + config.yml; questions→Discussions, security→policy) — REL-01
-- [ ] 04-02-PLAN.md — PR hygiene + release config (CODEOWNERS + release.yml + PR template + CONTRIBUTING release section) — REL-02, REL-03, REL-04, REL-06
+- [x] 04-02-PLAN.md — PR hygiene + release config (CODEOWNERS + release.yml + PR template + CONTRIBUTING release section) — REL-02, REL-03, REL-04, REL-06
 
 **Wave 2** _(blocked on Wave 1, maintainer checkpoint, outward-facing)_
 
@@ -262,7 +262,7 @@ referencia desde DOC-08).
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
 | 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
 | 3. Bloque C — Documentación operacional | 6/6            | Complete    | 2026-06-08 |
-| 4. Bloque D — Repo hygiene + Release    | 1/4            | In Progress |            |
+| 4. Bloque D — Repo hygiene + Release    | 2/4            | In Progress |            |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 
 ---

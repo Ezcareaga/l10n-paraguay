@@ -4,13 +4,13 @@ milestone: v0.1.0
 milestone_name: milestone
 current_phase: 04
 status: executing
-last_updated: "2026-06-09T13:42:37.781Z"
+last_updated: "2026-06-09T13:53:20.548Z"
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 16
-  completed_plans: 12
-  percent: 75
+  completed_plans: 13
+  percent: 40
 ---
 
 # STATE — l10n-paraguay
@@ -34,9 +34,9 @@ progress:
 
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
 - **Current phase:** 04
-- **Active plan:** 04-02 next — Plan 04-01 (issue intake layer) executed; plans 04-02..04 pending
-- **Status:** Executing Phase 04 (Plan 04-01 complete)
-- **Last action:** `/gsd:execute-phase 4` (Plan 04-01, 2026-06-09) — created GitHub issue intake layer: `.github/ISSUE_TEMPLATE/{bug_report,feature_request,config}.yml`. `bug_report.yml` auto-labels `bug`, `feature_request.yml` auto-labels `enhancement`, `config.yml` sets `blank_issues_enabled:false` + 2 contact_links (Q&A → generic `/discussions` URL since Discussions not yet enabled; security → `/security/policy`). `question.yml` deliberately omitted (Amendment A-01 to REL-01). yamllint green on all 3 (A4 fallback not needed). Commits: `cfba825` (forms), `bf3b1fd` (config). REL-01 closed. Próximo: `/gsd:execute-phase 4` Plan 04-02.
+- **Active plan:** 04-03 next — Plans 04-01 (issue intake) + 04-02 (PR-hygiene + release-categorization) executed; plans 04-03..04 pending
+- **Status:** Executing Phase 04 (Plans 04-01 + 04-02 complete)
+- **Last action:** `/gsd:execute-phase 4` (Plan 04-02, 2026-06-09) — created PR-hygiene + release-categorization meta-files: `.github/CODEOWNERS` (`* @Ezcareaga` on line 1, last-match-wins, + commented future area stubs), `.github/PULL_REQUEST_TEMPLATE.md` (soft-reminder checklist: tests/pre-commit/Conventional Commits/docs/ADR-DOC-09/CHANGELOG + Type of change), `.github/release.yml` (7 categories Added/Fixed/Changed/Security/Documentation/Dependencies/Other ending in `"*"` catch-all; excludes `dependabot[bot]` + `skip-changelog`). Replaced CONTRIBUTING.md §Release process placeholder with manual 4-step process + PR-label→category table (kept heading + `---` separators). yamllint green on release.yml. Deviation: CODEOWNERS global rule moved to physical line 1 (Rule 3 — satisfy literal verify `head -n 1 | grep -qv '^#'`; semantics unchanged). Commits: `76eac19` (CODEOWNERS+PR template), `b46f4df` (release.yml+CONTRIBUTING). REL-02, REL-03, REL-04, REL-06 closed. Próximo: `/gsd:execute-phase 4` Plan 04-03 (create labels referenced by release.yml).
 - **Previous phase:** Phase 2 — Security baseline — COMPLETE (PR #19 merged 2026-06-05); Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; branch protection activa en main)
 
 ---
@@ -46,19 +46,19 @@ progress:
 ```
 Milestone: Pre-Fase 2 Foundation
 Phase: 04 (bloque-d-repo-hygiene-release-process) — EXECUTING
-Plan: 2 of 4 (Plan 04-01 complete)
+Plan: 3 of 4 (Plans 04-01 + 04-02 complete)
 Status: Executing Phase 04
-Resume: /gsd:execute-phase 4  (Bloque D — Repo hygiene + Release; Plan 04-02 next)
+Resume: /gsd:execute-phase 4  (Bloque D — Repo hygiene + Release; Plan 04-03 next — create release.yml labels)
 
 Progress:
-[████████░░] 75% (plans this milestone)
+[████████░░] 81%
 [x] Phase 1: Bloque A — CI/CD + pre-commit          (8/8 REQs)
 [x] Phase 2: Bloque B — Security baseline           (7/7 REQs — PR #19 merged)
 [x] Phase 3: Bloque C — Docs operacionales          (10/10 REQs implemented; DOC-10 = async UAT via issue #21, non-blocking)
-[~] Phase 4: Bloque D — Repo hygiene + Release      (1/6 REQs — REL-01 closed; Plan 04-01 done)
+[~] Phase 4: Bloque D — Repo hygiene + Release      (4/6 REQs — REL-01/02/03/04/06 closed; Plans 04-01 + 04-02 done; REL-05 pending)
 [ ] Phase 5: Bloque E — Multi-rubro foundation      (0/4 REQs)
 
-Total: 26/35 v1 REQs implemented (milestone Pre-Fase 2)
+Total: 30/35 v1 REQs implemented (milestone Pre-Fase 2)
 ```
 
 ---
@@ -106,6 +106,7 @@ Total: 26/35 v1 REQs implemented (milestone Pre-Fase 2)
 ---
 
 | Phase 04 P01 | 8min | 2 tasks | 3 files |
+| Phase 04 P02 | 6min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -119,6 +120,7 @@ Total: 26/35 v1 REQs implemented (milestone Pre-Fase 2)
 - **2026-06-02 — Plan 02-01 executed.** LICENSE AGPL-3.0 descargado de canonical URL (SHA256 verified). SECURITY.md creado con skeleton de RESEARCH.md (GH Advisories primary, email fallback, SLA 72h/30d, sin PGP, sin HoF manual). Manifests ya tenían `license="AGPL-3"` — sin cambios. SEC-01 + SEC-02 cerrados. Wave 1 Phase 2 completa.
 - **2026-06-02 — Plan 02-02 executed.** `.github/workflows/security.yml` creado en worktree isolation, fast-forward merge a `feat/sec-03-security-workflow`. 3 jobs: gitleaks @v3 (no @v2 — A-02), bandit HIGH-only (`-lll -iii`, D-02), dependency-review @v4 (NO v5 — runner compat). SARIF con categorías distintas (D-03). Triggers conservadores: PR + push a main only (D-04). Checkpoint 02-02-02 approved — Dependency Graph + Dependabot alerts ya estaban habilitados. SEC-03 cerrado. Wave 2 Phase 2 completa. Required-status-check names para Plan 03: `gitleaks`, `bandit`, `dependency-review`.
 - **2026-06-09 — Plan 04-01 executed.** GitHub issue intake layer creado en `.github/ISSUE_TEMPLATE/`: `bug_report.yml` (textareas required What happened?/Expected/Steps + input `odoo_version` + checkboxes Odoo Community 18.0; auto-labels `bug`), `feature_request.yml` (Problem/Solution required + Alternatives optional; auto-labels `enhancement`), `config.yml` (`blank_issues_enabled:false` + 2 contact_links: Q&A → generic `/discussions` URL [Pitfall 4 — Discussions aún no habilitado, Plan 03 lo habilita], security → `/security/policy`). `question.yml` omitido deliberadamente (Amendment A-01 a REL-01 — preguntas van a Discussions; el verifier NO debe fallar por su ausencia). yamllint verde en los 3 archivos (el `.yamllint` existente absorbe las keys del schema de issue-forms; fallback A4 no necesario). Sin deviations. Threat model: T-04-01 + T-04-03 mitigados, T-04-02 accept. Commits `cfba825` (forms) + `bf3b1fd` (config). REL-01 cerrado.
+- **2026-06-09 — Plan 04-02 executed.** PR-hygiene + release-categorization meta-files. `.github/CODEOWNERS`: `* @Ezcareaga` on physical line 1 (last-match-wins) + commented future area stubs (`l10n_py_base/account/edi`, `/docs/`, `/.github/`) — inert until contributors join (D-04). `.github/PULL_REQUEST_TEMPLATE.md`: soft-reminder checklist (tests `pytest addons/ -x`, pre-commit, Conventional Commits, docs-if-behavior-changed, ADR/DOC-09 if architectural, CHANGELOG if release-worthy) + `## Type of change` + `## Description` (D-04 — soft reminders, not hard gates; branch protection already forces CI). `.github/release.yml`: 7 categories (Added `feat`/`enhancement`, Fixed `bug`/`fix`, Changed `changed`/`refactor`/`chore`, Security, Documentation `documentation`/`docs`, Dependencies, Other `"*"` catch-all last) + `exclude` (`skip-changelog` label, `dependabot[bot]` author) (D-03). yamllint verde. `CONTRIBUTING.md` §Release process: placeholder `> Deferred to Phase 4` reemplazado por rationale "manual releases" + 4 pasos manuales (compile CHANGELOG → merge a main con 6 checks → `git tag -a` + push → `gh release create --notes-file --latest`) + tabla PR-label→categoría (D-01, REL-06); se conservaron el heading y los `---`. Deviation (Rule 3 — blocking): la regla global de CODEOWNERS se movió a la línea física 1 para satisfacer el verify literal del plan (`head -n 1 | grep -qv '^#'`); semántica last-match-wins intacta. Sin deletions, sin untracked espurios. Threat model: T-04-04 + T-04-05 mitigados, T-04-06 accept (wave order). Commits `76eac19` (CODEOWNERS+PR template) + `b46f4df` (release.yml+CONTRIBUTING). REL-02, REL-03, REL-04, REL-06 cerrados. Labels de release.yml aún no existen → Plan 04-03 los crea.
 - **2026-06-03 — Plan 02-03 executed.** Worktree isolation, merge `--no-ff` a `feat/sec-04-sec-05-baseline`. gitleaks v8.30.1 native Windows binary (Docker daemon no estaba; fallback pre-aprobado en RESEARCH.md) corrió full history (106 commits, 3.27 MB, 1.48s) — **0 findings**. Bandit 1.9.4 (`-lll -iii` y full audit en `addons/`, 2228 LOC) — **0 findings any severity/confidence**. No `.gitleaksignore`, no `BUGS_BACKLOG.md` append (política: archivos sólo existen si hay contenido que registrar). Checkpoint 02-03-03 cerrado por el repo owner: `gh api … required_status_checks --jq '.contexts'` ahora retorna `["gitleaks","bandit","dependency-review","pre-commit","test with Odoo","commitlint"]` — los 6 contexts en main. SEC-04, SEC-05, T-SEC-03-protection cerrados. Política D-04 (rotate-not-rewrite) mantenida — `git reflog --all | Select-String 'filter-repo|filter-branch|BFG'` returned False.
 
 ### Open todos / next steps
@@ -217,3 +219,4 @@ _STATE updated: 2026-06-02 — Plan 02-01 complete (SEC-01, SEC-02 closed). Wave
 _STATE updated: 2026-06-02 — Plan 02-02 complete (SEC-03 closed). Wave 2 Phase 2 done. Next: Plan 02-03 (Wave 3)._
 _STATE updated: 2026-06-03 — Plan 02-03 complete (SEC-04, SEC-05, T-SEC-03-protection closed). Wave 3 Phase 2 done. Next: Wave 4 = Plans 02-04 + 02-05 in parallel._
 _STATE updated: 2026-06-09 — Plan 04-01 complete (REL-01 closed). GitHub issue intake layer (`.github/ISSUE_TEMPLATE/{bug_report,feature_request,config}.yml`). Next: Plan 04-02._
+_STATE updated: 2026-06-09 — Plan 04-02 complete (REL-02, REL-03, REL-04, REL-06 closed). PR-hygiene + release-categorization meta-files (`.github/CODEOWNERS`, `.github/PULL_REQUEST_TEMPLATE.md`, `.github/release.yml`) + CONTRIBUTING.md §Release process documented. Commits `76eac19` + `b46f4df`. Next: Plan 04-03 (create release.yml labels)._

@@ -48,11 +48,11 @@
 ### REL — Bloque D: Repo hygiene + Release process
 
 - [x] **REL-01**: `.github/ISSUE_TEMPLATE/` con templates: `bug_report.yml`, `feature_request.yml`, `question.yml`, `config.yml` con links a Discussions
-- [ ] **REL-02**: `.github/PULL_REQUEST_TEMPLATE.md` con checklist (tests, docs, ADR si aplica, conventional commits)
-- [ ] **REL-03**: `.github/CODEOWNERS` con `@Ezcareaga` para todo el repo por ahora; estructura preparada para agregar contribuidores por área futuro
-- [ ] **REL-04**: `.github/release.yml` con categorías auto para release notes (feat→Added, fix→Fixed, etc.)
+- [x] **REL-02**: `.github/PULL_REQUEST_TEMPLATE.md` con checklist (tests, docs, ADR si aplica, conventional commits)
+- [x] **REL-03**: `.github/CODEOWNERS` con `@Ezcareaga` para todo el repo por ahora; estructura preparada para agregar contribuidores por área futuro
+- [x] **REL-04**: `.github/release.yml` con categorías auto para release notes (feat→Added, fix→Fixed, etc.)
 - [ ] **REL-05**: Release `v0.1.0` publicado en GitHub: tag `v0.1.0`, release notes manuales del primer release, asociado al estado actual post-Fase 1
-- [ ] **REL-06**: Decisión semantic-release vs manual documentada y release process escrito en `CONTRIBUTING.md`. Si SÍ semantic-release: `.releaserc.json` + workflow correspondiente. Si NO: pasos manuales documentados
+- [x] **REL-06**: Decisión semantic-release vs manual documentada y release process escrito en `CONTRIBUTING.md`. Si SÍ semantic-release: `.releaserc.json` + workflow correspondiente. Si NO: pasos manuales documentados
 
 ### IND — Bloque E: Multi-rubro foundation
 
@@ -148,11 +148,11 @@ Excluido explícitamente de este milestone con razonamiento (prevención de scop
 | DOC-09      | Phase 3 | Pending  |
 | DOC-10      | Phase 3 | Pending  |
 | REL-01      | Phase 4 | Complete |
-| REL-02      | Phase 4 | Pending  |
-| REL-03      | Phase 4 | Pending  |
-| REL-04      | Phase 4 | Pending  |
+| REL-02      | Phase 4 | Complete |
+| REL-03      | Phase 4 | Complete |
+| REL-04      | Phase 4 | Complete |
 | REL-05      | Phase 4 | Pending  |
-| REL-06      | Phase 4 | Pending  |
+| REL-06      | Phase 4 | Complete |
 | IND-01      | Phase 5 | Pending  |
 | IND-02      | Phase 5 | Pending  |
 | IND-03      | Phase 5 | Pending  |
