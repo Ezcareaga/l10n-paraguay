@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Q&A — GitHub Discussions
+    url: https://github.com/Ezcareaga/l10n-paraguay/discussions
+    about: Ask questions, share tips, or discuss usage. Please open a Discussion instead of an issue for questions.
+  - name: Report a Security Vulnerability
+    url: https://github.com/Ezcareaga/l10n-paraguay/security/policy
+    about: For security vulnerabilities, use our private reporting channel. Do NOT open a public issue.

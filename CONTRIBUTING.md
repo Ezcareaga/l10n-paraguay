@@ -215,9 +215,62 @@ Record) in `docs/adr/` **in the same PR**.
 
 ## Release process
 
-> **Deferred to Phase 4 (REL-06).** The semantic-release vs manual-tag decision
-> and the detailed release steps will be documented here once Phase 4 completes.
-> For now, releases are tagged manually on `main` after CI passes.
+Releases are tagged manually on `main`. No automated release tooling is used
+(semantic-release is deferred — see the project roadmap).
+
+### Decision: manual releases
+
+Rationale: single-maintainer project with early-stage history; automated release
+tools (semantic-release, release-please) require a perfect Conventional Commits
+history to generate clean changelogs. Starting manual allows iterating the process
+before automating. Reassess after several releases or when contributor volume grows.
+
+### Steps (for maintainer `@Ezcareaga`)
+
+1. **Compile the CHANGELOG entry** — update `CHANGELOG.md`: move items from
+   `[Unreleased]` into a new `[X.Y.Z]` section, add the release date, and verify
+   all notable changes since the last release are documented (format: Keep a Changelog).
+
+2. **Merge to `main` via PR** — open a PR titled `chore(release): vX.Y.Z`, get all
+   6 status checks green (lint, test, security, commitlint, pre-commit, Dependency Review),
+   then merge.
+
+3. **Tag the release commit** — on the merged `main` commit:
+
+   ```bash
+   git pull origin main
+   git tag -a vX.Y.Z -m "Release vX.Y.Z"
+   git push origin vX.Y.Z
+   ```
+
+4. **Publish the GitHub Release** — extract the `[X.Y.Z]` section from `CHANGELOG.md`
+   to a file, then:
+
+   ```bash
+   gh release create vX.Y.Z --title "vX.Y.Z" --notes-file CHANGELOG_SECTION.md --latest
+   ```
+
+   Or use `--generate-notes` for future releases to auto-categorize merged PRs by their
+   labels (configured in `.github/release.yml`).
+
+### PR label → release notes category map
+
+Apply these labels to PRs before merging so release notes are auto-categorized:
+
+| PR label         | release.yml category | Conventional Commit type |
+| ---------------- | -------------------- | ------------------------ |
+| `feat`           | Added                | `feat:`                  |
+| `enhancement`    | Added                | `feat:`                  |
+| `bug`            | Fixed                | `fix:`                   |
+| `fix`            | Fixed                | `fix:`                   |
+| `changed`        | Changed              | `refactor:`/`perf:`      |
+| `refactor`       | Changed              | `refactor:`              |
+| `chore`          | Changed              | `chore:`                 |
+| `security`       | Security             | (any security fix)       |
+| `documentation`  | Documentation        | `docs:`                  |
+| `docs`           | Documentation        | `docs:`                  |
+| `dependencies`   | Dependencies         | (dependabot PRs)         |
+| `skip-changelog` | (excluded)           | (any)                    |
 
 ---
 

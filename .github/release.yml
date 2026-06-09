@@ -1,0 +1,41 @@
+---
+# Automatically generated release notes configuration.
+# Read only from the default branch (`main`) at release time.
+# https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
+#
+# Categories group merged PRs by their labels (Keep a Changelog + Conventional
+# Commit types). The labels referenced here are created in a later plan; the
+# file is valid YAML regardless of whether the labels exist yet.
+changelog:
+  exclude:
+    labels:
+      - skip-changelog
+    authors:
+      - dependabot[bot]
+  categories:
+    - title: "Added"
+      labels:
+        - feat
+        - enhancement
+    - title: "Fixed"
+      labels:
+        - bug
+        - fix
+    - title: "Changed"
+      labels:
+        - changed
+        - refactor
+        - chore
+    - title: "Security"
+      labels:
+        - security
+    - title: "Documentation"
+      labels:
+        - documentation
+        - docs
+    - title: "Dependencies"
+      labels:
+        - dependencies
+    - title: "Other"
+      labels:
+        - "*"
