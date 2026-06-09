@@ -45,6 +45,14 @@ repos:
           - "--repo-name=l10n-paraguay"
           - "--branch=18.0"
           - "--no-gen-html"
+          # --keep-source-digest: mantiene el digest ya guardado en README.rst en
+          # lugar de recalcularlo. Necesario porque tools/_hash.py usa os.path.join()
+          # que produce separadores distintos en Windows (\) vs Linux (/), generando
+          # digests diferentes por OS y rompiendo CI. El digest solo debe actualizarse
+          # manualmente al cambiar fragmentos readme/, corriendo el hook SIN este flag
+          # desde un entorno Linux/WSL: pre-commit run oca-gen-addon-readme --all-files
+          # Ref: https://github.com/OCA/maintainer-tools/blob/master/tools/_hash.py
+          - "--keep-source-digest"
 
   # -- OCA module structural checks (read-only) ---------------------------
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
