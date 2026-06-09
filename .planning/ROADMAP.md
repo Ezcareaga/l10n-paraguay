@@ -164,7 +164,7 @@ Plans:
 
 **Wave 3** _(blocked on Wave 2, maintainer checkpoint, last step)_
 
-- [ ] 04-04-PLAN.md — Date-stamp CHANGELOG [0.1.0] + tag + publish full GitHub Release v0.1.0 — REL-05
+- [x] 04-04-PLAN.md — Date-stamp CHANGELOG [0.1.0] + tag + publish full GitHub Release v0.1.0 — REL-05 — COMPLETE 2026-06-09
 
   **UI hint**: no
 
@@ -262,7 +262,7 @@ referencia desde DOC-08).
 | 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
 | 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
 | 3. Bloque C — Documentación operacional | 6/6            | Complete    | 2026-06-08 |
-| 4. Bloque D — Repo hygiene + Release    | 3/4            | In Progress |            |
+| 4. Bloque D — Repo hygiene + Release    | 4/4            | Complete    | 2026-06-09 |
 | 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
 
 ---

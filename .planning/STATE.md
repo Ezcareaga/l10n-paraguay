@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v0.1.0
 milestone_name: milestone
 current_phase: 04
-status: "Phase 04 Wave 2 COMPLETE — Discussions habilitado (Q&A slug q-a) + 10 labels creados vía gh CLI (REL-01/REL-04 outward arms cerrados). Falta Wave 3 (04-04: CHANGELOG date-stamp + tag v0.1.0 + gh release)."
-last_updated: "2026-06-09T17:37:14.171Z"
+status: "Phase 04 COMPLETE — v0.1.0 tagged + GitHub Release published (REL-05 closed). All 4 plans done (04-01..04-04). 6/6 REQs REL-01..06 closed. Phase 05 Bloque E next."
+last_updated: "2026-06-09T18:30:00.000Z"
 progress:
   total_phases: 5
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 16
-  completed_plans: 13
-  percent: 40
+  completed_plans: 14
+  percent: 88
 ---
 
 # STATE — l10n-paraguay
@@ -33,11 +33,11 @@ progress:
 ## Current Focus
 
 - **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
-- **Current phase:** 04
-- **Active plan:** 04-04 next (Wave 3, HUMAN-ACTION gate) — Waves 1-2 completas. Wave 2 (04-03) ejecutada 2026-06-09: Discussions ON + 10 labels creados, verificados vía `gh`.
-- **Status:** Phase 04 Wave 2 COMPLETE — Discussions habilitado (Q&A slug `q-a`) + 10 labels creados vía gh CLI (REL-01/REL-04 outward arms cerrados). Falta Wave 3 (04-04: CHANGELOG date-stamp + tag v0.1.0 + gh release).
-- **Last action:** `/gsd:execute-phase 4 --wave 2` (2026-06-09) — Plan 04-03 ejecutado: `gh repo edit --enable-discussions` (→ `hasDiscussionsEnabled: true`, Q&A slug `q-a`) + 10 `gh label create` (feat, fix, changed, refactor, chore, security, docs, skip-changelog, dependencies --force, github-actions --force). Checkpoints human-action resueltos con autorización del owner en sesión (Claude ejecutó los comandos `gh` autenticados). Opcional omitido: refinar contact_link Q&A al slug — URL genérica `/discussions` ya resuelve. **PRÓXIMO:** `/gsd:execute-phase 4 --wave 3` → 04-04 = date-stamp CHANGELOG `[0.1.0]` + `git tag -a v0.1.0` + `gh release create v0.1.0 --latest --notes-file` (RESEARCH Pattern 6).
-- **Previous phase:** Phase 2 — Security baseline — COMPLETE (PR #19 merged 2026-06-05); Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28 (PRs #3-#6, #8, #10-#13 merged to `main`; branch protection activa en main)
+- **Current phase:** 05
+- **Active plan:** Phase 05 (Bloque E — Multi-rubro foundation) — next to start. Phase 04 COMPLETE.
+- **Status:** Phase 04 COMPLETE — v0.1.0 tagged + GitHub Release published (REL-05 closed). All 4 plans done (04-01..04-04). 6/6 REQs REL-01..06 closed. Awaiting `/gsd:plan-phase 5` or `/gsd:execute-phase 5`.
+- **Last action:** `/gsd:execute-phase 4 --wave 3` (2026-06-09, continuation agent) — Plan 04-04 executed: CHANGELOG [0.1.0] date-stamped (50834d4), PR #25 merged to main (01fe470, 9 CI checks green), annotated tag v0.1.0 pushed on main HEAD, GitHub Release v0.1.0 published (isDraft=false, isPrerelease=false, Latest=true). REL-05 closed. Phase 04 Bloque D execution complete (4/4 plans). Summary: `.planning/phases/04-bloque-d-repo-hygiene-release-process/04-04-SUMMARY.md`.
+- **Previous phase:** Phase 4 — Bloque D Repo hygiene + Release — COMPLETE (2026-06-09); Phase 3 — Bloque C Docs operacionales — COMPLETE (2026-06-08); Phase 2 — Security baseline — COMPLETE (PR #19 merged 2026-06-05); Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28
 
 ---
 
@@ -45,20 +45,20 @@ progress:
 
 ```
 Milestone: Pre-Fase 2 Foundation
-Phase: 04 (bloque-d-repo-hygiene-release-process) — EXECUTING
-Plan: 4 of 4 (Plans 04-01 + 04-02 + 04-03 complete)
-Status: Executing Phase 04
-Resume: /gsd:execute-phase 4 --wave 3  (Bloque D — Repo hygiene + Release; Plan 04-04 next — tag v0.1.0 + gh release)
+Phase: 05 (bloque-e-multi-rubro-foundation) — NEXT
+Plan: Phase 04 COMPLETE; Phase 05 Plans TBD
+Status: Phase 04 Done; Phase 05 not started
+Resume: /gsd:plan-phase 5  (Bloque E — Multi-rubro foundation; 4 REQs: IND-01..04)
 
 Progress:
-[████████░░] 81%
+[█████████░] 88%
 [x] Phase 1: Bloque A — CI/CD + pre-commit          (8/8 REQs)
 [x] Phase 2: Bloque B — Security baseline           (7/7 REQs — PR #19 merged)
 [x] Phase 3: Bloque C — Docs operacionales          (10/10 REQs implemented; DOC-10 = async UAT via issue #21, non-blocking)
-[~] Phase 4: Bloque D — Repo hygiene + Release      (5/6 REQs — REL-01/02/03/04/06 closed incl. outward arms; Plans 04-01..04-03 done; REL-05 pending = Wave 3 release)
+[x] Phase 4: Bloque D — Repo hygiene + Release      (6/6 REQs — REL-01..06 all closed; v0.1.0 tagged + released 2026-06-09)
 [ ] Phase 5: Bloque E — Multi-rubro foundation      (0/4 REQs)
 
-Total: 30/35 v1 REQs implemented (milestone Pre-Fase 2)
+Total: 31/35 v1 REQs implemented (milestone Pre-Fase 2)
 ```
 
 ---
@@ -107,6 +107,8 @@ Total: 30/35 v1 REQs implemented (milestone Pre-Fase 2)
 
 | Phase 04 P01 | 8min | 2 tasks | 3 files |
 | Phase 04 P02 | 6min | 2 tasks | 4 files |
+| Phase 04 P03 | 20min | 3 tasks | 0 files (GitHub API only) |
+| Phase 04 P04 | 30min | 2 tasks | 1 file (CHANGELOG.md) |
 
 ## Accumulated Context
 
@@ -220,3 +222,4 @@ _STATE updated: 2026-06-02 — Plan 02-02 complete (SEC-03 closed). Wave 2 Phase
 _STATE updated: 2026-06-03 — Plan 02-03 complete (SEC-04, SEC-05, T-SEC-03-protection closed). Wave 3 Phase 2 done. Next: Wave 4 = Plans 02-04 + 02-05 in parallel._
 _STATE updated: 2026-06-09 — Plan 04-01 complete (REL-01 closed). GitHub issue intake layer (`.github/ISSUE_TEMPLATE/{bug_report,feature_request,config}.yml`). Next: Plan 04-02._
 _STATE updated: 2026-06-09 — Plan 04-02 complete (REL-02, REL-03, REL-04, REL-06 closed). PR-hygiene + release-categorization meta-files (`.github/CODEOWNERS`, `.github/PULL_REQUEST_TEMPLATE.md`, `.github/release.yml`) + CONTRIBUTING.md §Release process documented. Commits `76eac19` + `b46f4df`. Next: Plan 04-03 (create release.yml labels)._
+_STATE updated: 2026-06-09 — Plan 04-04 complete (REL-05 closed). CHANGELOG [0.1.0] date-stamped (50834d4), PR #25 merged to main (01fe470, 9 CI checks green), annotated tag v0.1.0 pushed, GitHub Release v0.1.0 published (Latest, isDraft=false, isPrerelease=false). Phase 04 Bloque D COMPLETE (4/4 plans). Next: Phase 05 (Bloque E — Multi-rubro foundation) via `/gsd:plan-phase 5`._
