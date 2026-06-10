@@ -13,37 +13,37 @@
 
 ### CI — Bloque A: Foundation técnica (CI/CD + pre-commit)
 
-- [ ] **CI-01**: Pre-commit config (`.pre-commit-config.yaml`) con hooks OCA completos (black, isort, flake8, pylint-odoo incl. C8106 `manifest-version-format`, oca-checks-odoo-module, oca-fix-manifest-website, codespell, yamllint, prettier+plugin-xml) corre limpio sobre todo el repo. _Amendment 2026-05-27: `oca-fix-manifest-version` (no existe en OCA tooling) reemplazado por `oca-fix-manifest-website` + check read-only `manifest-version-format` via pylint-odoo — ver `.planning/phases/01-.../01-RESEARCH.md` R-01._
-- [ ] **CI-02**: Commit baseline `chore: apply pre-commit fixes baseline` aplicado antes de activar pre-commit en CI (mitigación de 100+ cambios cosméticos del primer run)
-- [ ] **CI-03**: GitHub Actions workflow `test.yml` ejecuta tests Odoo en matriz Python 3.11 + PostgreSQL 16 + Odoo 18.0, con tags `-standard,l10n_py` (skip external SIFEN)
-- [ ] **CI-04**: GitHub Actions workflow `lint.yml` corre pre-commit en cada PR contra `main`
-- [ ] **CI-05**: `.github/dependabot.yml` configurado para Python deps + GitHub Actions versions con frecuencia semanal
-- [ ] **CI-06**: `commitlint.config.js` + GitHub Action validan Conventional Commits en cada PR
-- [ ] **CI-07**: Branch protection en `main` configurado: PR required (incluso owner), status checks (lint + tests) must pass, conversation resolution required, no force push
-- [ ] **CI-08**: PR de prueba (`chore: ci sanity check`) verifica que push directo a `main` es rechazado y que el workflow completo (lint+test) corre verde
+- [x] **CI-01**: Pre-commit config (`.pre-commit-config.yaml`) con hooks OCA completos (black, isort, flake8, pylint-odoo incl. C8106 `manifest-version-format`, oca-checks-odoo-module, oca-fix-manifest-website, codespell, yamllint, prettier+plugin-xml) corre limpio sobre todo el repo. _Amendment 2026-05-27: `oca-fix-manifest-version` (no existe en OCA tooling) reemplazado por `oca-fix-manifest-website` + check read-only `manifest-version-format` via pylint-odoo — ver `.planning/phases/01-.../01-RESEARCH.md` R-01._
+- [x] **CI-02**: Commit baseline `chore: apply pre-commit fixes baseline` aplicado antes de activar pre-commit en CI (mitigación de 100+ cambios cosméticos del primer run)
+- [x] **CI-03**: GitHub Actions workflow `test.yml` ejecuta tests Odoo en matriz Python 3.11 + PostgreSQL 16 + Odoo 18.0, con tags `-standard,l10n_py` (skip external SIFEN)
+- [x] **CI-04**: GitHub Actions workflow `lint.yml` corre pre-commit en cada PR contra `main`
+- [x] **CI-05**: `.github/dependabot.yml` configurado para Python deps + GitHub Actions versions con frecuencia semanal
+- [x] **CI-06**: `commitlint.config.js` + GitHub Action validan Conventional Commits en cada PR
+- [x] **CI-07**: Branch protection en `main` configurado: PR required (incluso owner), status checks (lint + tests) must pass, conversation resolution required, no force push
+- [x] **CI-08**: PR de prueba (`chore: ci sanity check`) verifica que push directo a `main` es rechazado y que el workflow completo (lint+test) corre verde
 
 ### SEC — Bloque B: Security baseline
 
-- [ ] **SEC-01**: `LICENSE` file con texto completo AGPL-3.0 en la raíz, referenciado desde `__manifest__.py` de cada módulo (`l10n_py_base`, `l10n_py_account`)
-- [ ] **SEC-02**: `SECURITY.md` documenta versiones soportadas, canal de reporte de vulnerabilidades (email + PGP opcional), SLA (72h confirmación / 30d fix), Hall of Fame
-- [ ] **SEC-03**: GitHub Actions workflow `security.yml` corre `gitleaks` (secrets scan) + `Bandit` (SAST Python en `addons/`) + Dependency Review en cada PR
-- [ ] **SEC-04**: `gitleaks` no encuentra secrets en history; si hay false positives, documentar en `.gitleaksignore`. Tokens reales detectados se rotan (NO se reescribe git history)
-- [ ] **SEC-05**: `Bandit` pasa en todos los addons sin warnings críticos (HIGH severity)
-- [ ] **SEC-06**: `docs/60_SECURITY_BASELINE.md` documenta: auth/2FA strategy admin Odoo, password policy, audit logs (qué, retention, GDPR/LGPD), backup strategy (frequency, retention, monthly restore test), CCFE encryption strategy (Fernet + key rotation 90d), network security (firewall rules VPS)
-- [ ] **SEC-07**: `docs/61_COMPLIANCE_LEY_7593.md` documenta Ley 7593/2025 PY Protección de Datos Personales (general, GDPR-style): qué aplica, criterio DPO, consent management para datos de clientes. _Amendment 2026-06-02: Ley 6534/2020 (CONTEXT.md original) aplica solo a datos crediticios bajo BCP; la ley general aplicable al proyecto es 7593/2025 (vigente 2027-11-27, autoridad supervisora = ANPDP/MITIC). Ver `.planning/phases/02-bloque-b-security-baseline/02-RESEARCH.md` §Ley 7593._
+- [x] **SEC-01**: `LICENSE` file con texto completo AGPL-3.0 en la raíz, referenciado desde `__manifest__.py` de cada módulo (`l10n_py_base`, `l10n_py_account`)
+- [x] **SEC-02**: `SECURITY.md` documenta versiones soportadas, canal de reporte de vulnerabilidades (email + PGP opcional), SLA (72h confirmación / 30d fix), Hall of Fame
+- [x] **SEC-03**: GitHub Actions workflow `security.yml` corre `gitleaks` (secrets scan) + `Bandit` (SAST Python en `addons/`) + Dependency Review en cada PR
+- [x] **SEC-04**: `gitleaks` no encuentra secrets en history; si hay false positives, documentar en `.gitleaksignore`. Tokens reales detectados se rotan (NO se reescribe git history)
+- [x] **SEC-05**: `Bandit` pasa en todos los addons sin warnings críticos (HIGH severity)
+- [x] **SEC-06**: `docs/60_SECURITY_BASELINE.md` documenta: auth/2FA strategy admin Odoo, password policy, audit logs (qué, retention, GDPR/LGPD), backup strategy (frequency, retention, monthly restore test), CCFE encryption strategy (Fernet + key rotation 90d), network security (firewall rules VPS)
+- [x] **SEC-07**: `docs/61_COMPLIANCE_LEY_7593.md` documenta Ley 7593/2025 PY Protección de Datos Personales (general, GDPR-style): qué aplica, criterio DPO, consent management para datos de clientes. _Amendment 2026-06-02: Ley 6534/2020 (CONTEXT.md original) aplica solo a datos crediticios bajo BCP; la ley general aplicable al proyecto es 7593/2025 (vigente 2027-11-27, autoridad supervisora = ANPDP/MITIC). Ver `.planning/phases/02-bloque-b-security-baseline/02-RESEARCH.md` §Ley 7593._
 
 ### DOC — Bloque C: Documentación operacional
 
-- [ ] **DOC-01**: `README.md` raíz refleja estado real (no "TODO" en módulos terminados), badges (CI, license), quick start funcional con docker-compose, links a docs/
-- [ ] **DOC-02**: `CHANGELOG.md` formato Keep a Changelog con `v0.1.0` inicial documentando Fase 0 (bootstrap) + Fase 1 (base + account)
-- [ ] **DOC-03**: `CONTRIBUTING.md` cubre: setup dev environment, branch naming (`feat/`, `fix/`, `refactor/`, `docs/`), Conventional Commits, code review process, testing requirements (cobertura ≥80% en código nuevo), pre-commit hooks
-- [ ] **DOC-04**: `CODE_OF_CONDUCT.md` (OCA Code of Conduct boilerplate o Contributor Covenant 2.1)
-- [ ] **DOC-05**: `docs/70_ARCHITECTURE.md` (overview vivo): C4 Context (actores externos DNIT/SET/Bancos), C4 Container (módulos `l10n_py_*` + dependencies OCA + Odoo core), Sequence diagram emisión FE end-to-end, State machine ciclo DTE (draft→posted→sent→approved→cancelled)
-- [ ] **DOC-06**: `docs/71_DEPLOYMENT.md`: VPS requirements (specs, OS, ports), Docker Compose prod, Caddy reverse proxy SSL automático, Postgres backup automatizado (pg_dump + rsync S3), health checks, update procedure
-- [ ] **DOC-07**: `docs/72_RUNBOOK.md` cubre ≥10 incidentes comunes con resolución: SIFEN timeout, Postgres disk full, SSL cert expira, CCFE expira, migración catálogos DNIT, escalation path
-- [ ] **DOC-08**: `docs/adr/` inicializado con ADRs 0001-0005: 0001 Odoo Community no Enterprise, 0002 OCA-style from day one, 0003 DNIT catalogs as source of truth, 0004 Multi-rubro strategy (cross-ref con IND-01), 0005 Hosting strategy preliminar (sin commit a vendor)
-- [ ] **DOC-09**: Regla en `CONTRIBUTING.md` — cambio arquitectónico = nuevo ADR en el mismo PR (prevención de ADR rot)
-- [ ] **DOC-10**: Smoke test docs (validación humana): cualquier dev externo puede levantar el proyecto siguiendo solo `CONTRIBUTING.md`
+- [x] **DOC-01**: `README.md` raíz refleja estado real (no "TODO" en módulos terminados), badges (CI, license), quick start funcional con docker-compose, links a docs/
+- [x] **DOC-02**: `CHANGELOG.md` formato Keep a Changelog con `v0.1.0` inicial documentando Fase 0 (bootstrap) + Fase 1 (base + account)
+- [x] **DOC-03**: `CONTRIBUTING.md` cubre: setup dev environment, branch naming (`feat/`, `fix/`, `refactor/`, `docs/`), Conventional Commits, code review process, testing requirements (cobertura ≥80% en código nuevo), pre-commit hooks
+- [x] **DOC-04**: `CODE_OF_CONDUCT.md` (OCA Code of Conduct boilerplate o Contributor Covenant 2.1)
+- [x] **DOC-05**: `docs/70_ARCHITECTURE.md` (overview vivo): C4 Context (actores externos DNIT/SET/Bancos), C4 Container (módulos `l10n_py_*` + dependencies OCA + Odoo core), Sequence diagram emisión FE end-to-end, State machine ciclo DTE (draft→posted→sent→approved→cancelled)
+- [x] **DOC-06**: `docs/71_DEPLOYMENT.md`: VPS requirements (specs, OS, ports), Docker Compose prod, Caddy reverse proxy SSL automático, Postgres backup automatizado (pg_dump + rsync S3), health checks, update procedure
+- [x] **DOC-07**: `docs/72_RUNBOOK.md` cubre ≥10 incidentes comunes con resolución: SIFEN timeout, Postgres disk full, SSL cert expira, CCFE expira, migración catálogos DNIT, escalation path
+- [x] **DOC-08**: `docs/adr/` inicializado con ADRs 0001-0005: 0001 Odoo Community no Enterprise, 0002 OCA-style from day one, 0003 DNIT catalogs as source of truth, 0004 Multi-rubro strategy (cross-ref con IND-01), 0005 Hosting strategy preliminar (sin commit a vendor)
+- [x] **DOC-09**: Regla en `CONTRIBUTING.md` — cambio arquitectónico = nuevo ADR en el mismo PR (prevención de ADR rot)
+- [x] **DOC-10**: Smoke test docs (validación humana): cualquier dev externo puede levantar el proyecto siguiendo solo `CONTRIBUTING.md` _(UAT async vía issue #21, non-blocking — Phase 3 closeout)_
 
 ### REL — Bloque D: Repo hygiene + Release process
 
@@ -56,10 +56,10 @@
 
 ### IND — Bloque E: Multi-rubro foundation
 
-- [ ] **IND-01**: `docs/adr/0004-multi-rubro-strategy.md` formaliza decisión: `l10n_py_base` y `l10n_py_account` son **rubro-agnósticos**, NO contienen asunciones de minimarket/gastronomía/servicios; rubros específicos se construyen como módulos `l10n_py_industry_*` (retail, hospitality, services, ecommerce) que extienden `l10n_py_pos` (Fase 4) con presets, demo data, vistas
-- [ ] **IND-02**: `docs/80_MULTI_RUBRO_ROADMAP.md`: cuándo se construye cada `l10n_py_industry_*` (post Fase 6 OCA), demo data por rubro, hardware compatibility matrix por rubro (lector de barras retail, impresora térmica hospitality), onboarding wizard que pregunta rubro y aplica presets
-- [ ] **IND-03**: Auditoría del código actual confirma rubro-agnosticismo: `grep -r "minimarket\|gastronom\|hospedaje\|comercio\|restaurante" addons/` no encuentra strings que asuman rubro. Si encuentra, refactorizar o documentar como tech debt en `BUGS_BACKLOG.md`
-- [ ] **IND-04**: Documentación de cómo crear un `l10n_py_industry_*` nuevo (template mínimo, qué hereda de base, qué agrega)
+- [x] **IND-01**: `docs/adr/0004-multi-rubro-strategy.md` formaliza decisión: `l10n_py_base` y `l10n_py_account` son **rubro-agnósticos**, NO contienen asunciones de minimarket/gastronomía/servicios; rubros específicos se construyen como módulos `l10n_py_industry_*` (retail, hospitality, services, ecommerce) que extienden `l10n_py_pos` (Fase 4) con presets, demo data, vistas
+- [x] **IND-02**: `docs/80_MULTI_RUBRO_ROADMAP.md`: cuándo se construye cada `l10n_py_industry_*` (post Fase 6 OCA), demo data por rubro, hardware compatibility matrix por rubro (lector de barras retail, impresora térmica hospitality), onboarding wizard que pregunta rubro y aplica presets
+- [x] **IND-03**: Auditoría del código actual confirma rubro-agnosticismo: `grep -r "minimarket\|gastronom\|hospedaje\|comercio\|restaurante" addons/` no encuentra strings que asuman rubro. Si encuentra, refactorizar o documentar como tech debt en `BUGS_BACKLOG.md`
+- [x] **IND-04**: Documentación de cómo crear un `l10n_py_industry_*` nuevo (template mínimo, qué hereda de base, qué agrega)
 
 ---
 
@@ -122,41 +122,41 @@ Excluido explícitamente de este milestone con razonamiento (prevención de scop
 
 | Requirement | Phase   | Status   |
 | ----------- | ------- | -------- |
-| CI-01       | Phase 1 | Pending  |
-| CI-02       | Phase 1 | Pending  |
-| CI-03       | Phase 1 | Pending  |
-| CI-04       | Phase 1 | Pending  |
-| CI-05       | Phase 1 | Pending  |
-| CI-06       | Phase 1 | Pending  |
-| CI-07       | Phase 1 | Pending  |
-| CI-08       | Phase 1 | Pending  |
-| SEC-01      | Phase 2 | Pending  |
-| SEC-02      | Phase 2 | Pending  |
-| SEC-03      | Phase 2 | Pending  |
-| SEC-04      | Phase 2 | Pending  |
-| SEC-05      | Phase 2 | Pending  |
-| SEC-06      | Phase 2 | Pending  |
-| SEC-07      | Phase 2 | Pending  |
-| DOC-01      | Phase 3 | Pending  |
-| DOC-02      | Phase 3 | Pending  |
-| DOC-03      | Phase 3 | Pending  |
-| DOC-04      | Phase 3 | Pending  |
-| DOC-05      | Phase 3 | Pending  |
-| DOC-06      | Phase 3 | Pending  |
-| DOC-07      | Phase 3 | Pending  |
-| DOC-08      | Phase 3 | Pending  |
-| DOC-09      | Phase 3 | Pending  |
-| DOC-10      | Phase 3 | Pending  |
+| CI-01       | Phase 1 | Complete |
+| CI-02       | Phase 1 | Complete |
+| CI-03       | Phase 1 | Complete |
+| CI-04       | Phase 1 | Complete |
+| CI-05       | Phase 1 | Complete |
+| CI-06       | Phase 1 | Complete |
+| CI-07       | Phase 1 | Complete |
+| CI-08       | Phase 1 | Complete |
+| SEC-01      | Phase 2 | Complete |
+| SEC-02      | Phase 2 | Complete |
+| SEC-03      | Phase 2 | Complete |
+| SEC-04      | Phase 2 | Complete |
+| SEC-05      | Phase 2 | Complete |
+| SEC-06      | Phase 2 | Complete |
+| SEC-07      | Phase 2 | Complete |
+| DOC-01      | Phase 3 | Complete |
+| DOC-02      | Phase 3 | Complete |
+| DOC-03      | Phase 3 | Complete |
+| DOC-04      | Phase 3 | Complete |
+| DOC-05      | Phase 3 | Complete |
+| DOC-06      | Phase 3 | Complete |
+| DOC-07      | Phase 3 | Complete |
+| DOC-08      | Phase 3 | Complete |
+| DOC-09      | Phase 3 | Complete |
+| DOC-10      | Phase 3 | Complete |
 | REL-01      | Phase 4 | Complete |
 | REL-02      | Phase 4 | Complete |
 | REL-03      | Phase 4 | Complete |
 | REL-04      | Phase 4 | Complete |
 | REL-05      | Phase 4 | Complete |
 | REL-06      | Phase 4 | Complete |
-| IND-01      | Phase 5 | Pending  |
-| IND-02      | Phase 5 | Pending  |
-| IND-03      | Phase 5 | Pending  |
-| IND-04      | Phase 5 | Pending  |
+| IND-01      | Phase 5 | Complete |
+| IND-02      | Phase 5 | Complete |
+| IND-03      | Phase 5 | Complete |
+| IND-04      | Phase 5 | Complete |
 
 **Coverage:**
 

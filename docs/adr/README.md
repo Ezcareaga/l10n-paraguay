@@ -30,7 +30,7 @@ conductores de decisión es el apropiado.
 | [0001](0001-odoo-community.md)                | Odoo Community Edition (no Enterprise)     | Nygard liviano | Accepted | @Ezcareaga |
 | [0002](0002-oca-style-from-day-one.md)        | Convenciones OCA desde el día uno          | Nygard liviano | Accepted | @Ezcareaga |
 | [0003](0003-dnit-catalogs-source-of-truth.md) | Catálogos DNIT/SIFEN como fuente de verdad | Nygard liviano | Accepted | @Ezcareaga |
-| [0004](0004-multi-rubro-strategy.md)          | Estrategia multi-rubro                     | MADR           | Proposed | @Ezcareaga |
+| [0004](0004-multi-rubro-strategy.md)          | Estrategia multi-rubro                     | MADR           | Accepted | @Ezcareaga |
 | [0005](0005-hosting-strategy.md)              | Estrategia de hosting                      | MADR           | Proposed | @Ezcareaga |
 
 ---
