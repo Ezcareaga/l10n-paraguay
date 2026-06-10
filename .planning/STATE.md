@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v0.1.0
 milestone_name: milestone
-current_phase: 04
-status: "Phase 04 COMPLETE — v0.1.0 tagged + GitHub Release published (REL-05 closed). All 4 plans done (04-01..04-04). 6/6 REQs REL-01..06 closed. Phase 05 Bloque E next."
-last_updated: "2026-06-09T18:30:00.000Z"
+current_phase: 05
+status: "MILESTONE COMPLETE — Phase 05 Bloque E done 2026-06-10 (IND-01..04 closed, ejecución directa sin plans GSD). 35/35 v1 REQs. Next: /gsd:complete-milestone → Fase 2 l10n_py_edi."
+last_updated: "2026-06-10T00:00:00.000Z"
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 5
   total_plans: 16
   completed_plans: 14
-  percent: 88
+  percent: 100
 ---
 
 # STATE — l10n-paraguay
@@ -32,11 +32,11 @@ progress:
 
 ## Current Focus
 
-- **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping
-- **Current phase:** 05
-- **Active plan:** Phase 05 (Bloque E — Multi-rubro foundation) — next to start. Phase 04 COMPLETE.
-- **Status:** Phase 04 COMPLETE — v0.1.0 tagged + GitHub Release published (REL-05 closed). All 4 plans done (04-01..04-04). 6/6 REQs REL-01..06 closed. Awaiting `/gsd:plan-phase 5` or `/gsd:execute-phase 5`.
-- **Last action:** `/gsd:execute-phase 4 --wave 3` (2026-06-09, continuation agent) — Plan 04-04 executed: CHANGELOG [0.1.0] date-stamped (50834d4), PR #25 merged to main (01fe470, 9 CI checks green), annotated tag v0.1.0 pushed on main HEAD, GitHub Release v0.1.0 published (isDraft=false, isPrerelease=false, Latest=true). REL-05 closed. Phase 04 Bloque D execution complete (4/4 plans). Summary: `.planning/phases/04-bloque-d-repo-hygiene-release-process/04-04-SUMMARY.md`.
+- **Active milestone:** Pre-Fase 2 — Foundation & Housekeeping — **COMPLETE**
+- **Current phase:** 05 (COMPLETE)
+- **Active plan:** Phase 05 COMPLETE (IND-01..04 cerrados, ejecución directa sin plans GSD). Milestone Pre-Fase 2 COMPLETE 35/35 REQs.
+- **Status:** MILESTONE COMPLETE — Phase 05 Bloque E done 2026-06-10 (IND-01..04 closed, ejecución directa sin plans GSD). 35/35 v1 REQs. Next: `/gsd:complete-milestone` → Fase 2 `l10n_py_edi`.
+- **Last action:** Phase 05 Bloque E ejecutada directamente (2026-06-10, documentation-engineer subagent) — ADR-0004 aceptado con auditoría grep (IND-01, IND-03), `docs/80_MULTI_RUBRO_ROADMAP.md` creado (IND-02, IND-04), tracking docs sincronizados a 35/35 REQs.
 - **Previous phase:** Phase 4 — Bloque D Repo hygiene + Release — COMPLETE (2026-06-09); Phase 3 — Bloque C Docs operacionales — COMPLETE (2026-06-08); Phase 2 — Security baseline — COMPLETE (PR #19 merged 2026-06-05); Phase 1 — CI/CD + pre-commit — CLOSED 2026-05-28
 
 ---
@@ -44,21 +44,21 @@ progress:
 ## Current Position
 
 ```text
-Milestone: Pre-Fase 2 Foundation
-Phase: 05 (bloque-e-multi-rubro-foundation) — NEXT
-Plan: Phase 04 COMPLETE; Phase 05 Plans TBD
-Status: Phase 04 Done; Phase 05 not started
-Resume: /gsd:plan-phase 5  (Bloque E — Multi-rubro foundation; 4 REQs: IND-01..04)
+Milestone: Pre-Fase 2 Foundation — COMPLETE
+Phase: 05 (bloque-e-multi-rubro-foundation) — COMPLETE
+Plan: Phase 05 COMPLETE (ejecución directa sin plans GSD)
+Status: MILESTONE COMPLETE — 35/35 REQs
+Resume: /gsd:complete-milestone
 
 Progress:
-[█████████░] 88%
+[██████████] 100%
 [x] Phase 1: Bloque A — CI/CD + pre-commit          (8/8 REQs)
 [x] Phase 2: Bloque B — Security baseline           (7/7 REQs — PR #19 merged)
 [x] Phase 3: Bloque C — Docs operacionales          (10/10 REQs implemented; DOC-10 = async UAT via issue #21, non-blocking)
 [x] Phase 4: Bloque D — Repo hygiene + Release      (6/6 REQs — REL-01..06 all closed; v0.1.0 tagged + released 2026-06-09)
-[ ] Phase 5: Bloque E — Multi-rubro foundation      (0/4 REQs)
+[x] Phase 5: Bloque E — Multi-rubro foundation      (4/4 REQs — IND-01..04 closed 2026-06-10)
 
-Total: 31/35 v1 REQs implemented (milestone Pre-Fase 2)
+Total: 35/35 v1 REQs implemented (milestone Pre-Fase 2 COMPLETE)
 ```
 
 ---
@@ -141,6 +141,7 @@ Total: 31/35 v1 REQs implemented (milestone Pre-Fase 2)
 - [x] Push `feat/sec-04-sec-05-baseline` y abrir PR (Wave 3 PR) — completado vía PR #19 (merged 2026-06-05)
 - [x] Ejecutar Wave 4 (Plans 02-04 + 02-05): docs/60 + docs/61 + restore-smoke stub + README badge — completado vía PR #19 (SEC-06/07 cerrados)
 - [x] Verificar subagent `voltagent-dev-exp:documentation-engineer` — Phase 3 ejecutada y cerrada (PR #22, 2026-06-08)
+- [x] Phase 5 Bloque E completada — IND-01..04 cerrados vía ejecución directa (2026-06-10)
 
 ### Blockers actuales
 
@@ -227,3 +228,4 @@ _STATE updated: 2026-06-03 — Plan 02-03 complete (SEC-04, SEC-05, T-SEC-03-pro
 _STATE updated: 2026-06-09 — Plan 04-01 complete (REL-01 closed). GitHub issue intake layer (`.github/ISSUE_TEMPLATE/{bug_report,feature_request,config}.yml`). Next: Plan 04-02._
 _STATE updated: 2026-06-09 — Plan 04-02 complete (REL-02, REL-03, REL-04, REL-06 closed). PR-hygiene + release-categorization meta-files (`.github/CODEOWNERS`, `.github/PULL_REQUEST_TEMPLATE.md`, `.github/release.yml`) + CONTRIBUTING.md §Release process documented. Commits `76eac19` + `b46f4df`. Next: Plan 04-03 (create release.yml labels)._
 _STATE updated: 2026-06-09 — Plan 04-04 complete (REL-05 closed). CHANGELOG [0.1.0] date-stamped (50834d4), PR #25 merged to main (01fe470, 9 CI checks green), annotated tag v0.1.0 pushed, GitHub Release v0.1.0 published (Latest, isDraft=false, isPrerelease=false). Phase 04 Bloque D COMPLETE (4/4 plans). Next: Phase 05 (Bloque E — Multi-rubro foundation) via `/gsd:plan-phase 5`._
+_STATE updated: 2026-06-10 — Phase 05 complete (IND-01..04 closed via direct execution, ADR-0004 accepted, docs/80 created, grep audit clean). Milestone Pre-Fase 2 COMPLETE 35/35 REQs._

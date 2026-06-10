@@ -27,11 +27,11 @@ puedo X sin fricción"_.
 
 ## Phases
 
-- [ ] **Phase 1: Bloque A — Foundation técnica (CI/CD + pre-commit)** — Activar pre-commit OCA + GitHub Actions (lint, test, dependabot, commitlint) + branch protection en `main`
+- [x] **Phase 1: Bloque A — Foundation técnica (CI/CD + pre-commit)** — Activar pre-commit OCA + GitHub Actions (lint, test, dependabot, commitlint) + branch protection en `main` (completed 2026-05-28)
 - [x] **Phase 2: Bloque B — Security baseline** — LICENSE + SECURITY.md + workflow `security.yml` (gitleaks + Bandit + Dependency Review) + docs/60 (security baseline) + docs/61 (compliance Ley 7593/2025) (completed 2026-06-04)
 - [x] **Phase 3: Bloque C — Documentación operacional** — README real + CHANGELOG + CONTRIBUTING + CODE_OF_CONDUCT + docs/70-72 (ARCHITECTURE, DEPLOYMENT, RUNBOOK) + ADRs 0001-0005 (completed 2026-06-08)
-- [ ] **Phase 4: Bloque D — Repo hygiene + Release process** — Issue/PR templates + CODEOWNERS + release.yml + tag `v0.1.0` + decisión semantic-release vs manual
-- [ ] **Phase 5: Bloque E — Multi-rubro foundation** — ADR-0004 + docs/80 multi-rubro roadmap + auditoría grep rubro-agnosticismo + guía mínima `l10n_py_industry_*`
+- [x] **Phase 4: Bloque D — Repo hygiene + Release process** — Issue/PR templates + CODEOWNERS + release.yml + tag `v0.1.0` + decisión semantic-release vs manual (completed 2026-06-09)
+- [x] **Phase 5: Bloque E — Multi-rubro foundation** — ADR-0004 + docs/80 multi-rubro roadmap + auditoría grep rubro-agnosticismo + guía mínima `l10n_py_industry_*` (completed 2026-06-10)
 
 ---
 
@@ -213,43 +213,43 @@ referencia desde DOC-08).
 
 ## Coverage Map
 
-| REQ-ID | Phase   | Bloque | Status  |
-| ------ | ------- | ------ | ------- |
-| CI-01  | Phase 1 | A      | Pending |
-| CI-02  | Phase 1 | A      | Pending |
-| CI-03  | Phase 1 | A      | Pending |
-| CI-04  | Phase 1 | A      | Pending |
-| CI-05  | Phase 1 | A      | Pending |
-| CI-06  | Phase 1 | A      | Pending |
-| CI-07  | Phase 1 | A      | Pending |
-| CI-08  | Phase 1 | A      | Pending |
-| SEC-01 | Phase 2 | B      | Done    |
-| SEC-02 | Phase 2 | B      | Done    |
-| SEC-03 | Phase 2 | B      | Done    |
-| SEC-04 | Phase 2 | B      | Done    |
-| SEC-05 | Phase 2 | B      | Done    |
-| SEC-06 | Phase 2 | B      | Done    |
-| SEC-07 | Phase 2 | B      | Done    |
-| DOC-01 | Phase 3 | C      | Pending |
-| DOC-02 | Phase 3 | C      | Pending |
-| DOC-03 | Phase 3 | C      | Pending |
-| DOC-04 | Phase 3 | C      | Pending |
-| DOC-05 | Phase 3 | C      | Pending |
-| DOC-06 | Phase 3 | C      | Pending |
-| DOC-07 | Phase 3 | C      | Pending |
-| DOC-08 | Phase 3 | C      | Pending |
-| DOC-09 | Phase 3 | C      | Pending |
-| DOC-10 | Phase 3 | C      | Pending |
-| REL-01 | Phase 4 | D      | Pending |
-| REL-02 | Phase 4 | D      | Pending |
-| REL-03 | Phase 4 | D      | Pending |
-| REL-04 | Phase 4 | D      | Pending |
-| REL-05 | Phase 4 | D      | Pending |
-| REL-06 | Phase 4 | D      | Pending |
-| IND-01 | Phase 5 | E      | Pending |
-| IND-02 | Phase 5 | E      | Pending |
-| IND-03 | Phase 5 | E      | Pending |
-| IND-04 | Phase 5 | E      | Pending |
+| REQ-ID | Phase   | Bloque | Status |
+| ------ | ------- | ------ | ------ |
+| CI-01  | Phase 1 | A      | Done   |
+| CI-02  | Phase 1 | A      | Done   |
+| CI-03  | Phase 1 | A      | Done   |
+| CI-04  | Phase 1 | A      | Done   |
+| CI-05  | Phase 1 | A      | Done   |
+| CI-06  | Phase 1 | A      | Done   |
+| CI-07  | Phase 1 | A      | Done   |
+| CI-08  | Phase 1 | A      | Done   |
+| SEC-01 | Phase 2 | B      | Done   |
+| SEC-02 | Phase 2 | B      | Done   |
+| SEC-03 | Phase 2 | B      | Done   |
+| SEC-04 | Phase 2 | B      | Done   |
+| SEC-05 | Phase 2 | B      | Done   |
+| SEC-06 | Phase 2 | B      | Done   |
+| SEC-07 | Phase 2 | B      | Done   |
+| DOC-01 | Phase 3 | C      | Done   |
+| DOC-02 | Phase 3 | C      | Done   |
+| DOC-03 | Phase 3 | C      | Done   |
+| DOC-04 | Phase 3 | C      | Done   |
+| DOC-05 | Phase 3 | C      | Done   |
+| DOC-06 | Phase 3 | C      | Done   |
+| DOC-07 | Phase 3 | C      | Done   |
+| DOC-08 | Phase 3 | C      | Done   |
+| DOC-09 | Phase 3 | C      | Done   |
+| DOC-10 | Phase 3 | C      | Done   |
+| REL-01 | Phase 4 | D      | Done   |
+| REL-02 | Phase 4 | D      | Done   |
+| REL-03 | Phase 4 | D      | Done   |
+| REL-04 | Phase 4 | D      | Done   |
+| REL-05 | Phase 4 | D      | Done   |
+| REL-06 | Phase 4 | D      | Done   |
+| IND-01 | Phase 5 | E      | Done   |
+| IND-02 | Phase 5 | E      | Done   |
+| IND-03 | Phase 5 | E      | Done   |
+| IND-04 | Phase 5 | E      | Done   |
 
 **Coverage:** 35/35 ✓ (0 orphaned, 0 duplicated)
 
@@ -257,13 +257,13 @@ referencia desde DOC-08).
 
 ## Progress Table
 
-| Phase                                   | Plans Complete | Status      | Completed  |
-| --------------------------------------- | -------------- | ----------- | ---------- |
-| 1. Bloque A — Foundation técnica        | 0/0            | Not started | -          |
-| 2. Bloque B — Security baseline         | 5/5            | Complete    | 2026-06-04 |
-| 3. Bloque C — Documentación operacional | 6/6            | Complete    | 2026-06-08 |
-| 4. Bloque D — Repo hygiene + Release    | 4/4            | Complete    | 2026-06-09 |
-| 5. Bloque E — Multi-rubro foundation    | 0/0            | Not started | -          |
+| Phase                                   | Plans Complete                        | Status   | Completed  |
+| --------------------------------------- | ------------------------------------- | -------- | ---------- |
+| 1. Bloque A — Foundation técnica        | n/a (ejecución directa sin plans GSD) | Complete | 2026-05-28 |
+| 2. Bloque B — Security baseline         | 5/5                                   | Complete | 2026-06-04 |
+| 3. Bloque C — Documentación operacional | 6/6                                   | Complete | 2026-06-08 |
+| 4. Bloque D — Repo hygiene + Release    | 4/4                                   | Complete | 2026-06-09 |
+| 5. Bloque E — Multi-rubro foundation    | n/a (ejecución directa sin plans GSD) | Complete | 2026-06-10 |
 
 ---
 
