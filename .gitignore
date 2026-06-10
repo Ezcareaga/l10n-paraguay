@@ -101,6 +101,8 @@ docs/original/*.partial
 .claude/CLAUDE.local.md
 .claude/settings.local.json
 .claude/memory/
+.claude/tsc-cache/
+.claude/worktrees/
 
 # Local Claude Code agent installer — convenience script, not part of the repo.
 install-agents.sh
