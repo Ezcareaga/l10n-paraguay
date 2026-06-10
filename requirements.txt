@@ -1,0 +1,6 @@
+# Python deps de los addons l10n_py_* que no están en el mapping de
+# setuptools-odoo ni en los requirements de Odoo core.
+# La imagen OCA CI (oca_install_addons) instala este archivo automáticamente.
+signxml>=3.2
+zeep>=4.2
+requests-pkcs12>=1.25
