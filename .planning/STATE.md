@@ -43,7 +43,7 @@ progress:
 
 ## Current Position
 
-```
+```text
 Milestone: Pre-Fase 2 Foundation
 Phase: 05 (bloque-e-multi-rubro-foundation) — NEXT
 Plan: Phase 04 COMPLETE; Phase 05 Plans TBD
@@ -105,10 +105,14 @@ Total: 31/35 v1 REQs implemented (milestone Pre-Fase 2)
 
 ---
 
-| Phase 04 P01 | 8min | 2 tasks | 3 files |
-| Phase 04 P02 | 6min | 2 tasks | 4 files |
-| Phase 04 P03 | 20min | 3 tasks | 0 files (GitHub API only) |
-| Phase 04 P04 | 30min | 2 tasks | 1 file (CHANGELOG.md) |
+### Execution metrics — Phase 04
+
+| Plan         | Duration | Tasks   | Files touched             |
+| ------------ | -------- | ------- | ------------------------- |
+| Phase 04 P01 | 8min     | 2 tasks | 3 files                   |
+| Phase 04 P02 | 6min     | 2 tasks | 4 files                   |
+| Phase 04 P03 | 20min    | 3 tasks | 0 files (GitHub API only) |
+| Phase 04 P04 | 30min    | 2 tasks | 1 file (CHANGELOG.md)     |
 
 ## Accumulated Context
 
@@ -134,9 +138,9 @@ Total: 31/35 v1 REQs implemented (milestone Pre-Fase 2)
 - [x] Plan 02-01 ejecutado: LICENSE + SECURITY.md creados (SEC-01, SEC-02 cerrados) — 2026-06-02
 - [x] Plan 02-02 ejecutado: `.github/workflows/security.yml` creado (SEC-03 cerrado); Dependency Graph + Dependabot alerts approved — 2026-06-02
 - [x] Plan 02-03 ejecutado: gitleaks history scan + Bandit baseline + branch protection update (SEC-04, SEC-05, T-SEC-03-protection cerrados) — 2026-06-03
-- [ ] Push `feat/sec-04-sec-05-baseline` y abrir PR (Wave 3 PR — SUMMARY + STATE + ROADMAP); smoke-verify primer run de los 3 security jobs sobre commits sin secrets (UAT item)
-- [ ] Ejecutar Wave 4 (Plans 02-04 + 02-05 en paralelo): docs/60 SECURITY_BASELINE + docs/61 COMPLIANCE_LEY_7593 + restore-smoke stub + README badge
-- [ ] Antes de empezar Phase 3: verificar subagent `voltagent-dev-exp:documentation-engineer`
+- [x] Push `feat/sec-04-sec-05-baseline` y abrir PR (Wave 3 PR) — completado vía PR #19 (merged 2026-06-05)
+- [x] Ejecutar Wave 4 (Plans 02-04 + 02-05): docs/60 + docs/61 + restore-smoke stub + README badge — completado vía PR #19 (SEC-06/07 cerrados)
+- [x] Verificar subagent `voltagent-dev-exp:documentation-engineer` — Phase 3 ejecutada y cerrada (PR #22, 2026-06-08)
 
 ### Blockers actuales
 

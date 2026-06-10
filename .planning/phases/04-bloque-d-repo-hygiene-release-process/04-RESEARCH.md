@@ -792,12 +792,12 @@ before automating. Reassess after several releases or when contributor volume gr
    then merge.
 
 3. **Tag the release commit** — on the merged `main` commit:
+
    ```bash
    git pull origin main
    git tag -a vX.Y.Z -m "Release vX.Y.Z"
    git push origin vX.Y.Z
    ```
-````
 
 4. **Publish the GitHub Release** — extract the `[X.Y.Z]` section from `CHANGELOG.md`
    to a file, then:
@@ -825,19 +825,18 @@ Apply these labels to PRs before merging so release notes are auto-categorized:
 | `docs`           | Documentation        | `docs:`                  |
 | `dependencies`   | Dependencies         | (dependabot PRs)         |
 | `skip-changelog` | (excluded)           | (any)                    |
-
 ````
 
 ---
 
 ## Don't Hand-Roll
 
-| Problem | Don't Build | Use Instead | Why |
-|---------|-------------|-------------|-----|
-| Issue routing for security reports | Custom GitHub Action or webhook | `config.yml` `contact_links` | GitHub renders contact links natively in the issue chooser; no code needed |
-| Release note generation | Custom script parsing commit messages | `.github/release.yml` + `gh release create --generate-notes` | Native GitHub feature, reads PR labels, no maintenance overhead |
-| Enabling Discussions | Clicking through UI manually in CI | `gh repo edit --enable-discussions` | Single CLI command, scriptable, auditable in plan |
-| Label creation | Manual web UI click per label | `gh label create` script | 10 labels × 3 clicks each = 30+ clicks; script is reproducible |
+| Problem                            | Don't Build                           | Use Instead                                                  | Why                                                                        |
+| ---------------------------------- | ------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Issue routing for security reports | Custom GitHub Action or webhook       | `config.yml` `contact_links`                                 | GitHub renders contact links natively in the issue chooser; no code needed |
+| Release note generation            | Custom script parsing commit messages | `.github/release.yml` + `gh release create --generate-notes` | Native GitHub feature, reads PR labels, no maintenance overhead            |
+| Enabling Discussions               | Clicking through UI manually in CI    | `gh repo edit --enable-discussions`                          | Single CLI command, scriptable, auditable in plan                          |
+| Label creation                     | Manual web UI click per label         | `gh label create` script                                     | 10 labels × 3 clicks each = 30+ clicks; script is reproducible             |
 
 **Key insight:** This entire phase is "configure GitHub's built-in features correctly." Every
 hand-rolled solution here would be strictly worse — more code, more maintenance, less reliable.
@@ -936,11 +935,11 @@ This is an informational note — the template file itself is correct.
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|-----------------|--------------|--------|
-| Markdown issue templates (`.github/ISSUE_TEMPLATE/bug_report.md`) | YAML issue forms (`.github/ISSUE_TEMPLATE/bug_report.yml`) | GitHub 2021 | Forms have structured fields, validations, required fields, dropdowns — much better UX |
-| Manual release notes (always) | `release.yml` auto-categorization via PR labels | GitHub 2022 | Auto-generated notes still need `release.yml` for categories; pure auto-generation without config produces flat list |
-| `gh repo edit` without `--enable-discussions` | `gh repo edit --enable-discussions` available | gh CLI v2.x | Can script Discussions enablement; no web UI required |
+| Old Approach                                                      | Current Approach                                           | When Changed | Impact                                                                                                               |
+| ----------------------------------------------------------------- | ---------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Markdown issue templates (`.github/ISSUE_TEMPLATE/bug_report.md`) | YAML issue forms (`.github/ISSUE_TEMPLATE/bug_report.yml`) | GitHub 2021  | Forms have structured fields, validations, required fields, dropdowns — much better UX                               |
+| Manual release notes (always)                                     | `release.yml` auto-categorization via PR labels            | GitHub 2022  | Auto-generated notes still need `release.yml` for categories; pure auto-generation without config produces flat list |
+| `gh repo edit` without `--enable-discussions`                     | `gh repo edit --enable-discussions` available              | gh CLI v2.x  | Can script Discussions enablement; no web UI required                                                                |
 
 **Deprecated/outdated:**
 
@@ -958,14 +957,14 @@ is human-smoke-test driven:
 
 ### Phase Requirements → Test Map
 
-| Req ID | Behavior | Test Type | Verification Method |
-|--------|----------|-----------|-------------------|
-| REL-01 | Issue chooser shows 2 templates + 2 contact_links; blank issues blocked | manual | Open new issue on GitHub; verify chooser UI |
-| REL-02 | PR body auto-populates with checklist on web PR creation | manual | Open a PR via GitHub web UI; verify template appears |
-| REL-03 | PR on `main` auto-requests review from `@Ezcareaga` | manual | Open a test PR; verify review request |
-| REL-04 | `release.yml` parses without error; categories appear in future releases | automated (indirectly) | `gh release create --generate-notes --draft` test |
-| REL-05 | `gh release view v0.1.0` returns full release with notes | automated | `gh release view v0.1.0` in verification step |
-| REL-06 | `CONTRIBUTING.md §Release process` no longer contains "Deferred" placeholder | automated | `grep -n "Deferred to Phase 4" CONTRIBUTING.md` returns nothing |
+| Req ID | Behavior                                                                     | Test Type              | Verification Method                                             |
+| ------ | ---------------------------------------------------------------------------- | ---------------------- | --------------------------------------------------------------- |
+| REL-01 | Issue chooser shows 2 templates + 2 contact_links; blank issues blocked      | manual                 | Open new issue on GitHub; verify chooser UI                     |
+| REL-02 | PR body auto-populates with checklist on web PR creation                     | manual                 | Open a PR via GitHub web UI; verify template appears            |
+| REL-03 | PR on `main` auto-requests review from `@Ezcareaga`                          | manual                 | Open a test PR; verify review request                           |
+| REL-04 | `release.yml` parses without error; categories appear in future releases     | automated (indirectly) | `gh release create --generate-notes --draft` test               |
+| REL-05 | `gh release view v0.1.0` returns full release with notes                     | automated              | `gh release view v0.1.0` in verification step                   |
+| REL-06 | `CONTRIBUTING.md §Release process` no longer contains "Deferred" placeholder | automated              | `grep -n "Deferred to Phase 4" CONTRIBUTING.md` returns nothing |
 
 ### YAML Linting (pre-commit)
 
@@ -974,7 +973,7 @@ on commit. The `yamllint` config must not reject the GitHub-specific fields. Ver
 
 ```bash
 pre-commit run yamllint --all-files
-````
+```
 
 If yamllint raises on `release.yml` or issue form YAML (due to GitHub-specific keys), add a
 `.yamllint.yml` exclusion for `.github/ISSUE_TEMPLATE/` (issue forms use GitHub-specific schema
