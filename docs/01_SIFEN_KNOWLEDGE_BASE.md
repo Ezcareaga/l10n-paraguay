@@ -75,7 +75,7 @@ Posición  Largo  Campo
    y las libs de producción xmlgen/jsifenlib, 2026-06-11).
 3. Sumar los productos parciales.
 4. `resto = suma % 11`.
-5. Si `resto == 0` → DV = 0. Si `resto == 1` → DV = 1. Sino → DV = 11 − resto.
+5. Si `resto <= 1` → DV = 0. Sino → DV = 11 − resto.
 
 ### Reglas del CDC
 
