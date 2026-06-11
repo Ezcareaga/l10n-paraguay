@@ -1,12 +1,13 @@
 # Copyright 2026 Careaga Dev
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 """Tests del algoritmo módulo 11 — Python puro, no requiere Odoo registry."""
-import unittest
+from odoo.tests import BaseCase, tagged
 
 from odoo.addons.l10n_py_base.models import modulo11
 
 
-class TestModulo11(unittest.TestCase):
+@tagged("standard", "l10n_py")
+class TestModulo11(BaseCase):
     """Casos conocidos de la práctica DNIT y del Manual Técnico SIFEN v150."""
 
     # ------------------------------------------------------------------
