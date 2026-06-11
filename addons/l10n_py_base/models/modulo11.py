@@ -3,11 +3,13 @@
 """Algoritmo módulo 11 para identificadores fiscales paraguayos.
 
 Helper Python puro (sin dependencias Odoo) para que pueda usarse desde tests
-unitarios `tagged('-at_install')` sin levantar registry y desde otros módulos
-(`l10n_py_edi` lo usará para el DV del CDC con basemax=9).
+unitarios `tagged('-at_install')` sin levantar registry y desde otros módulos.
 
-Algoritmo según Manual Técnico SIFEN v150, sección 3 (CDC) y práctica estándar
-DNIT para RUC (basemax=11).
+Algoritmo según Manual Técnico SIFEN v150 y rutina oficial módulo 11 de la SET:
+pesos cíclicos 2..basemax de derecha a izquierda; resto <= 1 -> DV 0, si no
+DV = 11 - resto. Tanto el RUC como el DV del CDC usan basemax=11 (verificado
+contra el ejemplo oficial del manual y las libs de producción del ecosistema;
+la mención "factores 2-9" que circula en resúmenes del manual es incorrecta).
 """
 import re
 
@@ -19,8 +21,8 @@ def calculate_dv(numero_str, basemax=11):
 
     :param numero_str: cadena de dígitos sin DV. Caracteres no numéricos se
         descartan antes de procesar.
-    :param basemax: peso máximo cíclico. Por convención SIFEN: ``11`` para RUC,
-        ``9`` para CDC.
+    :param basemax: peso máximo cíclico. SIFEN usa ``11`` tanto para el DV
+        del RUC como para el DV del CDC.
     :return: dígito verificador (entero 0-9).
     :raises ValueError: si la cadena no contiene dígitos.
     """
@@ -38,7 +40,10 @@ def calculate_dv(numero_str, basemax=11):
 
     remainder = total % 11
     if remainder <= 1:
-        return remainder
+        # Rutina oficial SET (y las dos implementaciones de producción del
+        # ecosistema: facturacionelectronicapy-xmlgen y rshk-jsifenlib):
+        # resto 0 y resto 1 mapean ambos a DV 0.
+        return 0
     return 11 - remainder
 
 

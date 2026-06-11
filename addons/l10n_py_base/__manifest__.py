@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
 {
     "name": "Paraguay - Base",
-    "version": "18.0.1.1.0",
+    "version": "18.0.1.1.1",
     "category": "Accounting/Localizations",
     "license": "AGPL-3",
     "author": "Careaga Dev, Odoo Community Association (OCA)",
