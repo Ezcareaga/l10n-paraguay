@@ -73,7 +73,9 @@ class ResCompany(models.Model):
     )
     l10n_py_ccfe_ruc = fields.Char(string="RUC del CCFE", readonly=True, copy=False)
     l10n_py_ccfe_loaded = fields.Boolean(
-        string="CCFE cargado", compute="_compute_ccfe_loaded"
+        string="CCFE cargado",
+        compute="_compute_ccfe_loaded",
+        compute_sudo=True,
     )
 
     # ------------------------------------------------------------------
@@ -108,6 +110,8 @@ class ResCompany(models.Model):
             try:
                 p12_bytes = base64.b64decode(cert_b64)
             except ValueError as exc:
+                # binascii.Error es subclase de ValueError; listarlo aparte
+                # violaría flake8 B014, por eso se captura solo ValueError.
                 raise UserError(_("El archivo subido no es válido.")) from exc
             company.l10n_py_edi_set_certificate(p12_bytes, password)
             # Limpiar caché ORM: los campos de input son write-only, el compute
@@ -121,6 +125,10 @@ class ResCompany(models.Model):
         for company in self:
             if company.l10n_py_csc:
                 company.l10n_py_edi_set_csc(company.l10n_py_csc)
+                # Limpiar caché ORM: campo de input write-only, el compute
+                # devuelve False; forzar invalidación para que el ORM no sirva
+                # el valor escrito en lugar del resultado del compute.
+                company.invalidate_recordset(["l10n_py_csc"])
 
     # ------------------------------------------------------------------
     # Key management
@@ -188,8 +196,12 @@ class ResCompany(models.Model):
                 "l10n_py_ccfe_password_token": crypto.encrypt_secret(
                     password.encode(), key
                 ).decode(),
-                "l10n_py_ccfe_valid_from": info.not_valid_before.replace(tzinfo=None),
-                "l10n_py_ccfe_valid_until": info.not_valid_after.replace(tzinfo=None),
+                "l10n_py_ccfe_valid_from": info.not_valid_before.replace(
+                    tzinfo=None
+                ),  # UTC-aware → naive UTC para columna Datetime de Odoo
+                "l10n_py_ccfe_valid_until": info.not_valid_after.replace(
+                    tzinfo=None
+                ),  # UTC-aware → naive UTC para columna Datetime de Odoo
                 "l10n_py_ccfe_ruc": info.ruc,
             }
         )
