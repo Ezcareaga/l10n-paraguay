@@ -56,6 +56,13 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Install repo-level python requirements
+        # oca_install_addons solo instala las external_dependencies de los
+        # manifests (nombres sin versión); este step hace cumplir los floors
+        # de requirements.txt (zeep>=4.2) y agrega lxml_html_clean antes de
+        # que la resolución de signxml fuerce lxml>=5.2.
+        run: pip install -r requirements.txt
+
       - name: Install addons and dependencies
         run: oca_install_addons
 
