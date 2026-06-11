@@ -3,3 +3,4 @@
 from . import test_crypto
 from . import test_certificate
 from . import test_company_edi
+from . import test_cdc
