@@ -11,6 +11,8 @@ from odoo.tests import tagged
 from odoo.addons.l10n_py_account.tests.common import L10nPyAccountTestCase
 from odoo.addons.l10n_py_edi.services import certificate, crypto
 from odoo.addons.l10n_py_edi.tests import fixtures
+from odoo.addons.l10n_py_edi.tests.common import TEST_CSC as COMMON_TEST_CSC
+from odoo.addons.l10n_py_edi.tests.common import L10nPyEdiTestCase
 
 KEY_ENV = "L10N_PY_EDI_CCFE_KEY"
 TEST_CSC = "ABCD0000000000000000000000000000"
@@ -140,3 +142,12 @@ class TestCompanyEdi(L10nPyAccountTestCase):
         # por lo que en un registro nuevo siempre devuelve False.
         new_company = self.env["res.company"].create({"name": "Nueva PY"})
         self.assertFalse(new_company.l10n_py_ccfe_loaded)
+
+
+@tagged("post_install", "-at_install", "l10n_py")
+class TestEdiCommon(L10nPyEdiTestCase):
+    def test_common_fixture_ready(self):
+        self.assertTrue(self.company.l10n_py_ccfe_loaded)
+        info = self.company._l10n_py_edi_get_certificate_info()
+        self.assertEqual(info.ruc, "80069563-1")
+        self.assertEqual(self.company._l10n_py_edi_get_csc(), COMMON_TEST_CSC)
