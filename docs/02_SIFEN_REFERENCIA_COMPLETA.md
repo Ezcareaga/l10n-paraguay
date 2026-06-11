@@ -72,10 +72,14 @@ Posición  | Largo | Campo                        | Ejemplo
 ### Algoritmo del DV del CDC
 
 1. Tomar los primeros 43 dígitos del CDC.
-2. Aplicar módulo 11 con factores multiplicadores del 2 al 9 (derecha a izquierda, cíclico).
+2. Aplicar módulo 11 con factores multiplicadores del 2 al 11 (derecha a izquierda, cíclico).
 3. Sumar todos los productos parciales.
 4. Calcular `resto = suma % 11`.
-5. Si `resto == 0` → DV = 0; si `resto == 1` → DV = 1; sino → DV = 11 - resto.
+5. Si `resto <= 1` → DV = 0; sino → DV = 11 - resto.
+
+> Verificado 2026-06-11: el ejemplo oficial de abajo solo valida con factores
+> 2-11. `facturacionelectronicapy-xmlgen` (TIPS-SA) y `rshk-jsifenlib` (Roshka)
+> implementan exactamente esta rutina (`basemax=11`, `resto > 1 ? 11 - resto : 0`).
 
 ### Reglas del CDC
 
