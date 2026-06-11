@@ -21,25 +21,26 @@ TEST_CSC = "ABCD0000000000000000000000000000"
 @tagged("post_install", "-at_install", "l10n_py")
 class TestCompanyEdi(L10nPyAccountTestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.fernet_key = crypto.generate_data_key()
-        # Odoo 18's check_attrs() iterates patchers and accesses .target, which
-        # _patch_dict objects don't have. Set os.environ directly to avoid
-        # registering a patch.dict with addClassCleanup.
-        cls._original_key_env = os.environ.get(KEY_ENV)
-        os.environ[KEY_ENV] = cls.fernet_key.decode()
-        cls.password = "test-password"
-        cls.p12 = fixtures.make_test_p12(password=cls.password)
-
-    @classmethod
-    def tearDownClass(cls):
-        # Restore original env state (or remove if it wasn't set).
+    def _restore_key_env(cls):
+        """Restaura (o elimina) la env var KEY_ENV al estado previo al test."""
         if cls._original_key_env is None:
             os.environ.pop(KEY_ENV, None)
         else:
             os.environ[KEY_ENV] = cls._original_key_env
-        super().tearDownClass()
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.fernet_key = crypto.generate_data_key()
+        # Odoo 18's check_attrs() iterates patchers and accesses .target, which
+        # _patch_dict objects don't have. Set os.environ directly.
+        cls._original_key_env = os.environ.get(KEY_ENV)
+        os.environ[KEY_ENV] = cls.fernet_key.decode()
+        # Register cleanup immediately after mutation so it runs even if the
+        # rest of setUpClass raises (tearDownClass would be skipped in that case).
+        cls.addClassCleanup(cls._restore_key_env)
+        cls.password = "test-password"
+        cls.p12 = fixtures.make_test_p12(password=cls.password)
 
     def _upload_cert(self, p12=None, password=None):
         self.company.write(
