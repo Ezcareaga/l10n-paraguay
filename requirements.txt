@@ -12,3 +12,8 @@ lxml_html_clean
 # con esa ABI (X509_V_FLAG_NOTIFY_POLICY removido) — subir en tándem.
 cryptography>=42
 pyopenssl>=23.2
+# urllib3 1.26.5 (pin de la imagen CI) importa un API privado de cryptography
+# removido en >=42 (_Certificate); 1.26.18+ lo corrigió manteniendo
+# contrib.pyopenssl (que Odoo 18 usa). urllib3 2.x re-agregó contrib.pyopenssl
+# en versiones tardías, pero el pin <2 evita regresiones en la imagen CI.
+urllib3>=1.26.18,<2
