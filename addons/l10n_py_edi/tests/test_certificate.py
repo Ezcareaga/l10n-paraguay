@@ -32,6 +32,12 @@ class TestCertificate(BaseCase):
         with self.assertRaises(certificate.CertificateLoadError):
             certificate.load_pkcs12(b"garbage-not-a-p12", self.password)
 
+    def test_extract_ruc_without_hyphen(self):
+        """serialNumber RUC800695631 (sin guión) → RUC canónico '80069563-1'."""
+        p12_no_hyphen = fixtures.make_test_p12(password=self.password, ruc="800695631")
+        info = certificate.load_pkcs12(p12_no_hyphen, self.password)
+        self.assertEqual(info.ruc, "80069563-1")
+
     def test_ruc_missing_serial_number(self):
         p12 = fixtures.make_test_p12(password=self.password, serial_number_attr=False)
         info = certificate.load_pkcs12(p12, self.password)
