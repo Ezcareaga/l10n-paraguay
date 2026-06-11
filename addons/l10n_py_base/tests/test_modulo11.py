@@ -37,14 +37,25 @@ class TestModulo11(BaseCase):
         with self.assertRaises(ValueError):
             modulo11.calculate_dv("abc")
 
-    def test_calculate_dv_basemax_9_for_cdc(self):
-        """CDC usa basemax=9 según docs/01 sección 3."""
-        # Sanity: el mismo número con basemax distinto da resultados distintos.
-        dv_11 = modulo11.calculate_dv("123456789", basemax=11)
-        dv_9 = modulo11.calculate_dv("123456789", basemax=9)
-        # Ambos deben estar en rango 0-10 (módulo 11)
-        self.assertIn(dv_11, range(11))
-        self.assertIn(dv_9, range(11))
+    def test_calculate_dv_cdc_official_example(self):
+        """Ejemplo oficial del Manual Técnico SIFEN v150 (sección CDC).
+
+        CDC completo: 01800695631001003000013712022010619364760029
+        Los primeros 43 dígitos producen DV=9 con basemax=11 (verificado
+        contra facturacionelectronicapy-xmlgen y rshk-jsifenlib, 2026-06-11).
+        """
+        base43 = "0180069563100100300001371202201061936476002"
+        self.assertEqual(len(base43), 43)
+        self.assertEqual(modulo11.calculate_dv(base43, basemax=11), 9)
+
+    def test_calculate_dv_remainder_one_maps_to_zero(self):
+        """Rutina oficial SET: resto 0 y resto 1 mapean ambos a DV 0.
+
+        '6' con basemax=11: 6*2=12, 12%11=1 -> DV 0 (no 1).
+        """
+        self.assertEqual(modulo11.calculate_dv("6", basemax=11), 0)
+        # resto == 0 también da 0: '0' -> suma 0
+        self.assertEqual(modulo11.calculate_dv("0", basemax=11), 0)
 
     # ------------------------------------------------------------------
     # split_ruc
