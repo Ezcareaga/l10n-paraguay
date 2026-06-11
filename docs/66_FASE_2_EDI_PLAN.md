@@ -94,8 +94,9 @@ PKCS#12), qrcode, requests-pkcs12.
 
 - [ ] `services/cdc.py` puro: `compose_cdc(...)` (43 dígitos desde tipo DE,
       RUC+DV, est, punto, número, tipo contribuyente, fecha YYYYMMDD, tipo
-      emisión, código seguridad) + `cdc_check_digit()` módulo 11 pesos cíclicos
-      2-9 derecha→izquierda + `generate_security_code()` (9 dígitos, `secrets`)
+      emisión, código seguridad) + `cdc_check_digit()` = `modulo11.calculate_dv`
+      con basemax=11 (pesos 2-11 — la mención "2-9" era un error de docs,
+      corregido) + `generate_security_code()` (9 dígitos, `secrets`)
 - [ ] Verificar contra el CDC ejemplo de docs/01 (`018006956310010030000137...9`)
 - [ ] `account.move`: campos `l10n_py_cdc` (char 44, readonly, copy=False, indexed),
       `l10n_py_security_code`, `l10n_py_emission_type` (default normal);
@@ -103,7 +104,9 @@ PKCS#12), qrcode, requests-pkcs12.
 - [ ] Regla de reutilización: si el DE fue rechazado y la corrección no toca
       campos del CDC → mismo CDC (no regenerar security code)
 
-**Research pendiente:** ninguno — algoritmo completo en docs/01:48-85 y docs/02:72-78.
+**Research cerrado 2026-06-11:** el DV del CDC usa basemax=11 (no 2-9 como
+decían docs/01-02 — corregidos). Fix de mapping resto==1 aplicado a
+`modulo11.calculate_dv` en l10n_py_base 18.0.1.1.1.
 
 ### PR-3 — XML builder del DE (FE + NC)
 

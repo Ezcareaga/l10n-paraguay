@@ -69,7 +69,10 @@ Posición  Largo  Campo
 ### Algoritmo del DV del CDC
 
 1. Tomar los primeros 43 dígitos.
-2. Aplicar módulo 11 con factores 2-9 cíclicos de derecha a izquierda.
+2. Aplicar módulo 11 con factores 2-11 cíclicos de derecha a izquierda
+   (misma rutina que el DV del RUC; la mención "factores 2-9" de algunos
+   resúmenes del manual es incorrecta — verificado contra el ejemplo oficial
+   y las libs de producción xmlgen/jsifenlib, 2026-06-11).
 3. Sumar los productos parciales.
 4. `resto = suma % 11`.
 5. Si `resto == 0` → DV = 0. Si `resto == 1` → DV = 1. Sino → DV = 11 − resto.
