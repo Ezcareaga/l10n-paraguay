@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="SIFEN (EDI)" name="l10n_py_edi">
+                <page string="SIFEN (EDI)" name="l10n_py_edi" invisible="country_id and country_id != %(base.py)d">
                     <group>
                         <group string="Ambiente">
                             <field name="l10n_py_edi_environment"/>
