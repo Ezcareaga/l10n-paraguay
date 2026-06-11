@@ -1,3 +1,10 @@
+18.0.1.1.1 (2026-06-11)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Fix modulo 11 DV mapping: resto 1 now maps to DV 0 per official SET
+  routine (RUCs previously accepted with DV 1 for resto-1 bodies are now
+  rejected; the correct DV 0 variant is now accepted)
+
 18.0.1.1.0 (2026-05-25)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 

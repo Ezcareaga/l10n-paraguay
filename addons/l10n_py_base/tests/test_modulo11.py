@@ -14,11 +14,11 @@ class TestModulo11(BaseCase):
     # calculate_dv
     # ------------------------------------------------------------------
     def test_calculate_dv_simple_ruc(self):
-        """Casos reales conocidos de RUC paraguayos (basemax=11)."""
-        # Estos cuerpos + DV son tomados de RUCs públicos de empresas paraguayas.
-        # El algoritmo módulo 11 base 11 debe reproducirlos.
+        """Caso de referencia: RUC del ejemplo de CDC del Manual Técnico SIFEN v150."""
+        # Cuerpo + DV tomados del ejemplo de CDC del Manual Técnico SIFEN v150.
+        # El algoritmo módulo 11 base 11 debe reproducirlo.
         cases = [
-            ("80069563", 1),  # Caso de prueba estándar (CDC ejemplo Manual SIFEN)
+            ("80069563", 1),  # RUC ejemplo CDC Manual Técnico SIFEN v150
         ]
         for cuerpo, dv_esperado in cases:
             with self.subTest(cuerpo=cuerpo):
@@ -94,6 +94,11 @@ class TestModulo11(BaseCase):
         cuerpo = "80069563"
         wrong_dv = (modulo11.calculate_dv(cuerpo, basemax=11) + 1) % 10
         self.assertFalse(modulo11.validate_ruc(f"{cuerpo}-{wrong_dv}"))
+
+    def test_validate_ruc_remainder_one_body(self):
+        """Cuerpo con resto 1: DV correcto es 0, no 1 (fix 18.0.1.1.1)."""
+        self.assertTrue(modulo11.validate_ruc("80000003-0"))
+        self.assertFalse(modulo11.validate_ruc("80000003-1"))
 
     def test_validate_ruc_garbage(self):
         self.assertFalse(modulo11.validate_ruc(""))
