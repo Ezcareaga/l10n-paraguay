@@ -14,10 +14,11 @@ import re
 from dataclasses import dataclass
 
 from cryptography import x509
+from cryptography.exceptions import UnsupportedAlgorithm
 from cryptography.hazmat.primitives.serialization import pkcs12
 from cryptography.x509.oid import NameOID
 
-RUC_IN_SUBJECT = re.compile(r"RUC\s*([0-9]{1,8}-?[0-9])", re.IGNORECASE)
+RUC_IN_SUBJECT = re.compile(r"RUC\s*([0-9]{1,8})-?([0-9])", re.IGNORECASE)
 
 
 class CertificateError(Exception):
@@ -44,7 +45,7 @@ class CertificateInfo:
     private_key: object
     not_valid_before: datetime.datetime
     not_valid_after: datetime.datetime
-    ruc: str  # None si el subject no trae serialNumber RUC
+    ruc: str | None
 
 
 def load_pkcs12(p12_bytes, password):
@@ -58,7 +59,9 @@ def load_pkcs12(p12_bytes, password):
         key, cert, _additional = pkcs12.load_key_and_certificates(
             p12_bytes, password.encode() if password else None
         )
-    except (ValueError, TypeError) as exc:
+    except (ValueError, TypeError, UnsupportedAlgorithm) as exc:
+        # UnsupportedAlgorithm cubre p12 legacy con RC2/3DES que la lib moderna
+        # rechaza; se trata igual que un archivo corrupto.
         raise CertificateLoadError(
             "No se pudo abrir el .p12: archivo inválido o password incorrecta"
         ) from exc
@@ -74,12 +77,16 @@ def load_pkcs12(p12_bytes, password):
 
 
 def extract_ruc(cert):
-    """Extrae el RUC del atributo serialNumber del subject, o None."""
+    """Extrae el RUC del atributo serialNumber del subject, o None.
+
+    Normaliza a forma canónica ``cuerpo-dv`` (ej. ``80069563-1``) tanto si el
+    PSC emitió ``RUC80069563-1`` como si emitió ``RUC800695631`` (sin guión).
+    """
     attrs = cert.subject.get_attributes_for_oid(NameOID.SERIAL_NUMBER)
     for attr in attrs:
         match = RUC_IN_SUBJECT.search(attr.value)
         if match:
-            return match.group(1)
+            return "%s-%s" % (match.group(1), match.group(2))
     return None
 
 
