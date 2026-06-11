@@ -7,3 +7,8 @@ requests-pkcs12>=1.25
 # lxml>=5.2 separó lxml.html.clean en package propio; Odoo lo importa.
 # Necesario porque signxml>=4.0 fuerza lxml>=5.2.1 en la imagen OCA CI.
 lxml_html_clean
+# signxml>=4 y services/certificate.py (not_valid_*_utc) requieren
+# cryptography>=42; pyOpenSSL 21.0.0 (pin de la imagen CI) es incompatible
+# con esa ABI (X509_V_FLAG_NOTIFY_POLICY removido) — subir en tándem.
+cryptography>=42
+pyopenssl>=23.2
