@@ -15,7 +15,6 @@ from odoo.addons.l10n_py_edi.tests.common import TEST_CSC as COMMON_TEST_CSC
 from odoo.addons.l10n_py_edi.tests.common import L10nPyEdiTestCase
 
 KEY_ENV = "L10N_PY_EDI_CCFE_KEY"
-TEST_CSC = "ABCD0000000000000000000000000000"
 
 
 @tagged("post_install", "-at_install", "l10n_py")
@@ -117,10 +116,10 @@ class TestCompanyEdi(L10nPyAccountTestCase):
             self.company._l10n_py_edi_get_certificate()
 
     def test_csc_encrypted_roundtrip(self):
-        self.company.write({"l10n_py_csc": TEST_CSC, "l10n_py_csc_id": "0001"})
+        self.company.write({"l10n_py_csc": COMMON_TEST_CSC, "l10n_py_csc_id": "0001"})
         self.assertTrue(self.company.l10n_py_csc_token)
-        self.assertNotIn(TEST_CSC, self.company.l10n_py_csc_token)
-        self.assertEqual(self.company._l10n_py_edi_get_csc(), TEST_CSC)
+        self.assertNotIn(COMMON_TEST_CSC, self.company.l10n_py_csc_token)
+        self.assertEqual(self.company._l10n_py_edi_get_csc(), COMMON_TEST_CSC)
         self.assertEqual(self.company.l10n_py_csc_id, "0001")
 
     def test_inputs_are_write_only(self):
