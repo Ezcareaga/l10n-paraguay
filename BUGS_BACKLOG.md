@@ -213,14 +213,17 @@ y `WARNING.*translation.*context`.
 **Refs:** `addons/l10n_py_account/hooks.py:39-40`, `checklog-odoo.cfg`,
 PR #4 commit `409d284`, GitHub Actions run `26575788271`.
 
-## test_modulo11.py sin @tagged("l10n_py") — probablemente excluido del CI
+## test_modulo11.py sin @tagged("l10n_py") — probablemente excluido del CI (RESUELTO)
 
 - **Detectado:** 2026-06-10, planning PR-1 l10n_py_edi.
+- **Resuelto:** 2026-06-11 en PR #30 — BaseCase + tagged("standard", "l10n_py").
 - **Síntoma:** `addons/l10n_py_base/tests/test_modulo11.py` define
   `TestModulo11(unittest.TestCase)` sin decorator `@tagged`. Con
   `ODOO_TEST_TAGS="l10n_py"` en CI, el filtro selecciona solo tests con tag
   `l10n_py`, así que esta suite no corre en CI (sí corre localmente sin filtro).
-- **Fix propuesto:** agregar `@tagged("standard", "l10n_py")` (import desde
-  `odoo.tests`) y verificar en el log del CI que el conteo de tests sube.
+- **Fix aplicado:** herencia cambiada de `unittest.TestCase` a `odoo.tests.BaseCase`
+  (el runner Odoo 18 requiere la metaclase de BaseCase para inyectar `test_module`);
+  decorator `@tagged("standard", "l10n_py")` agregado; imports actualizados a
+  `from odoo.tests import BaseCase, tagged` (eliminado `import unittest`).
 - **Prioridad:** media — el algoritmo está cubierto indirectamente por
   test_ruc_validation, pero la suite directa quedó invisible.
