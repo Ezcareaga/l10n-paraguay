@@ -18,14 +18,8 @@ class TestAccountMoveCdc(L10nPyAccountTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        partner = cls.company.partner_id
-        partner.l10n_latam_identification_type_id = cls.env.ref(
-            "l10n_py_base.id_type_py_ruc"
-        )
-        partner.vat = "80069563-1"
-        cls.company.l10n_py_taxpayer_type_id = cls.env.ref(
-            "l10n_py_base.taxpayer_type_2"
-        )
+        # RUC y tipo de contribuyente ya los provee L10nPyAccountTestCase.setUpClass;
+        # no repetir aquí para evitar divergencia si cambia el RUC canónico.
 
     def _post_invoice(self, move_type="out_invoice", invoice_date=None):
         move = self.init_invoice(

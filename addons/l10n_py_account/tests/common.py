@@ -41,3 +41,14 @@ class L10nPyAccountTestCase(AccountTestInvoicingCommon):
         )
         # Asignar PoE antes de activar use_documents (que ya viene True por chart)
         cls.sale_journal.l10n_py_point_of_emission_id = cls.poe
+        # RUC y tipo de contribuyente mínimos para que _l10n_py_edi_assign_cdc()
+        # no levante UserError cuando l10n_py_edi está instalado y se postea
+        # cualquier documento de venta SIFEN (FE/NC/ND).
+        partner = cls.company.partner_id
+        partner.l10n_latam_identification_type_id = cls.env.ref(
+            "l10n_py_base.id_type_py_ruc"
+        )
+        partner.vat = "80069563-1"
+        cls.company.l10n_py_taxpayer_type_id = cls.env.ref(
+            "l10n_py_base.taxpayer_type_2"
+        )
