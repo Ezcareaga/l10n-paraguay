@@ -140,3 +140,20 @@ class TestCdc(BaseCase):
         self.assertFalse(cdc.validate_cdc("abc"))
         self.assertFalse(cdc.validate_cdc(""))
         self.assertFalse(cdc.validate_cdc(None))
+
+    def test_compose_and_parse_contingency_emission(self):
+        """emission_type='2' (contingencia) round-trips correctamente."""
+        result = cdc.compose_cdc(**self._official_kwargs(emission_type="2"))
+        self.assertEqual(cdc.parse_cdc(result)["emission_type"], "2")
+
+    def test_parse_invalid_date_raises(self):
+        """CDC con DV válido pero fecha imposible (mes 13) -> CdcError."""
+        # OFFICIAL_CDC layout (0-based):
+        #   [0:25]  = doc_type(2)+ruc(8)+ruc_dv(1)+estab(3)+exppt(3)+docnum(7)+taxpayer(1)
+        #   [25:33] = date YYYYMMDD
+        #   [33:43] = emission_type(1) + security_code(9)
+        #   [43]    = check_digit
+        base = OFFICIAL_CDC[:25] + "20221306" + OFFICIAL_CDC[33:43]
+        bad = base + str(cdc.cdc_check_digit(base))
+        with self.assertRaises(cdc.CdcError):
+            cdc.parse_cdc(bad)
