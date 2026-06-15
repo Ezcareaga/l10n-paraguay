@@ -11,7 +11,7 @@ lxml_html_clean
 # cryptography>=42; pyOpenSSL 21.0.0 (pin de la imagen CI) es incompatible
 # con esa ABI (X509_V_FLAG_NOTIFY_POLICY removido) — subir en tándem.
 cryptography>=42
-pyopenssl>=23.2
+pyopenssl>=26.3.0
 # urllib3 1.26.5 (pin de la imagen CI) usa un API privado de cryptography
 # removido en >=42, y toda la serie 1.x tiene CVEs high que bloquean
 # dependency-review. Odoo 18 funciona con 2.x (validado en container dev).
