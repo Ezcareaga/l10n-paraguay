@@ -128,6 +128,10 @@ class AccountMove(models.Model):
             "expedition_point": poe.code,
             "document_number": match.group(3),
             "taxpayer_type": taxpayer_type,
+            # IMPORTANTE: esta fecha (posiciones 26-33 del CDC) debe ser
+            # byte-idéntica al campo dFeEmiDE del XML del DE. Cuando se escriba
+            # el XML builder (Fase 2), extraer un helper _l10n_py_edi_issue_date()
+            # compartido para que CDC y XML no puedan divergir. Ver TD-008.
             "issue_date": self.invoice_date or self.date,
             "emission_type": self.l10n_py_emission_type or "1",
         }
