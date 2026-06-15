@@ -41,7 +41,7 @@ def _digits(value, length, label, pad=True):
     :raises CdcError: si no es numérico o excede el largo.
     """
     text = str(value if value is not None else "").strip()
-    if not text or not text.isdigit():
+    if not text or not (text.isascii() and text.isdigit()):
         raise CdcError("%s inválido: %r (se esperan dígitos)" % (label, value))
     if pad:
         text = text.zfill(length)
@@ -63,7 +63,7 @@ def cdc_check_digit(base43):
     :raises CdcError: si ``base43`` no son exactamente 43 dígitos.
     """
     base43 = str(base43 or "")
-    if len(base43) != CDC_LENGTH - 1 or not base43.isdigit():
+    if len(base43) != CDC_LENGTH - 1 or not (base43.isascii() and base43.isdigit()):
         raise CdcError(
             "Base del CDC inválida: se esperan 43 dígitos, llegó %r" % base43
         )
@@ -138,7 +138,7 @@ def parse_cdc(cdc_str):
     :raises CdcError: largo/formato/DV inválidos.
     """
     cdc_str = str(cdc_str or "")
-    if len(cdc_str) != CDC_LENGTH or not cdc_str.isdigit():
+    if len(cdc_str) != CDC_LENGTH or not (cdc_str.isascii() and cdc_str.isdigit()):
         raise CdcError("CDC inválido: se esperan 44 dígitos, llegó %r" % cdc_str)
     if int(cdc_str[43]) != cdc_check_digit(cdc_str[:43]):
         raise CdcError("CDC inválido: dígito verificador incorrecto")
