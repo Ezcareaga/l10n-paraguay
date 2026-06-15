@@ -14,6 +14,8 @@ exclude: |
   ^addons/[^/]+/data/.*\.csv$|
   # Formato custom GSD para PROJECT.md
   ^\.planning/PROJECT\.md$|
+  # Official SIFEN XSDs — referencia oficial DNIT, no mutar (ver docs/original/xsd/README.md)
+  ^docs/original/xsd/.*\.(xsd|xml)$|
   # Files we don't want pre-commit to mess with
   \.svg$|
   ^README\.rst$|
