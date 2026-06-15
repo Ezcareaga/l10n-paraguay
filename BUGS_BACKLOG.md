@@ -260,9 +260,23 @@ self.date` para la posición 26-33 del CDC. Esa fecha **debe** ser
 5. **Tests faltantes:** camino de contingencia end-to-end
    (`l10n_py_emission_type == "2"` → posición 34 del CDC en un move posteado)
    y rechazo por largo de RUC > 8 en el modelo.
+6. **Fixture `L10nPyEdiTestCase` propia.** En PR-2 se agregó `vat` +
+   `taxpayer_type` a la fixture base `L10nPyAccountTestCase`
+   (`addons/l10n_py_account/tests/common.py`) porque los tests de CDC heredan
+   directamente de ella y `_post()` exige RUC válido. Cuando aparezca una
+   fixture `L10nPyEdiTestCase` (probablemente en el PR del XML builder), mover
+   ahí esos datos para no acoplar la fixture de account al comportamiento de
+   edi.
+7. **Nota de migración del cambio de comportamiento de `modulo11`.** El fix
+   18.0.1.1.1 (resto==1 → DV 0) rechaza RUCs con DV=1 sobre cuerpos de
+   resto==1 que antes se aceptaban. No hay script de migración porque el
+   módulo aún no tiene despliegues en producción; si llega a haber clientes
+   antes de estabilizar, agregar un `migrations/` `end-` que re-valide los
+   `res.partner.vat` existentes y avise de los que queden inválidos.
 
-**Owner:** PR del XML builder del DE (ítem 1 es co-requisito de ese PR) +
-mini-hardening cuando haya bandwidth (ítems 2-5).
+**Owner:** PR del XML builder del DE (ítems 1 y 6 son co-requisitos de ese PR)
+
+- mini-hardening cuando haya bandwidth (ítems 2-5, 7).
 
 **Refs:** code review PR-2 (commit `1c02923`),
 `addons/l10n_py_edi/models/account_move.py`,
