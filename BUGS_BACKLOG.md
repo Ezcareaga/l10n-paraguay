@@ -227,3 +227,43 @@ PR #4 commit `409d284`, GitHub Actions run `26575788271`.
   `from odoo.tests import BaseCase, tagged` (eliminado `import unittest`).
 - **Prioridad:** media — el algoritmo está cubierto indirectamente por
   test_ruc_validation, pero la suite directa quedó invisible.
+
+## TD-008 — Hardening del generador CDC (diferido de PR-2)
+
+**Detectado:** 2026-06-15 en code review de PR-2 (generador CDC, `l10n_py_edi`).
+**Severidad:** baja (ninguno bloquea el MVP; el CDC se genera correcto y
+validado contra el ejemplo oficial del Manual v150).
+
+Ítems acordados como backlog para PRs posteriores de la Fase 2 (sobre todo el
+PR del XML builder del DE, que comparte la fecha de emisión con el CDC):
+
+1. **Helper compartido de fecha de emisión.** `account_move.py`
+   `_l10n_py_edi_cdc_components()` usa `issue_date = self.invoice_date or
+self.date` para la posición 26-33 del CDC. Esa fecha **debe** ser
+   byte-idéntica al campo `dFeEmiDE` del XML del DE. Cuando se escriba el XML
+   builder, extraer un único `_l10n_py_edi_issue_date()` (devolviendo `date`)
+   que consuman tanto el CDC como el XML, para que no puedan divergir. Por
+   ahora hay un comentario en el modelo señalando el acoplamiento.
+2. **Retry/mensaje amigable ante colisión de security code.** Dos posteos
+   concurrentes que saquen el mismo código de 9 dígitos (`secrets`, ~1e-9) y
+   compartan el resto de componentes disparan un `psycopg2 UniqueViolation`
+   crudo en vez de un `UserError` traducible. Agregar un regenerate-and-retry
+   single-shot o envolver el error.
+3. **Validación de largo de RUC con mensaje accionable.** Un cuerpo de RUC > 8
+   dígitos cae en el `CdcError` genérico (`_digits(ruc, 8, ...)`). Validar el
+   largo en `_l10n_py_edi_cdc_components()` con un mensaje específico de
+   configuración, como los otros prerequisitos.
+4. **DRY del doble parse de RUC.** `_l10n_py_edi_cdc_components()` llama
+   `split_ruc(vat)` y después `validate_ruc(vat)` (que vuelve a hacer
+   `split_ruc` + recomputa el DV). Validar una sola vez con los valores ya
+   separados (`calculate_dv(ruc, basemax=11) == ruc_dv`).
+5. **Tests faltantes:** camino de contingencia end-to-end
+   (`l10n_py_emission_type == "2"` → posición 34 del CDC en un move posteado)
+   y rechazo por largo de RUC > 8 en el modelo.
+
+**Owner:** PR del XML builder del DE (ítem 1 es co-requisito de ese PR) +
+mini-hardening cuando haya bandwidth (ítems 2-5).
+
+**Refs:** code review PR-2 (commit `1c02923`),
+`addons/l10n_py_edi/models/account_move.py`,
+`addons/l10n_py_edi/services/cdc.py`.
