@@ -50,11 +50,17 @@ def format_cdc_date(value: "datetime.date | datetime.datetime") -> str:
     """Formatea una fecha para el campo CDC (posiciones 26-33).
 
     :param value: :class:`datetime.date` o :class:`datetime.datetime`.
-        Si es ``datetime``, usa su componente ``.date()``.
+        Si es ``datetime`` **naive**, usa su componente ``.date()`` directamente
+        (se asume que ya está en hora local de Paraguay).
+        Si es ``datetime`` **tz-aware**, convierte primero a ``America/Asuncion``
+        y extrae la fecha local resultante — consistente con ``format_de_datetime``,
+        garantizando que CDC y dFeEmiDE reflejen el mismo día calendárico (TD-008).
     :returns: Cadena ``YYYYMMDD`` (8 dígitos, sin separadores).
     :raises TypeError: si ``value`` no es ``date`` ni ``datetime``.
     """
     if isinstance(value, datetime.datetime):
+        if value.tzinfo is not None:
+            value = value.astimezone(_PY_TZ)
         value = value.date()
     if not isinstance(value, datetime.date):
         raise TypeError(

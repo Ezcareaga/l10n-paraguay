@@ -19,6 +19,7 @@ from odoo.addons.l10n_py_edi.services import datetime_helpers
 
 _PY_TZ = ZoneInfo("America/Asuncion")
 _UTC_TZ = ZoneInfo("UTC")
+_UTC_DT_TZ = datetime.timezone.utc
 
 # Patrón XSD fecHhmmss (DE_Types_v150.xsd §343-352)
 _XSD_PATTERN = re.compile(r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d$")
@@ -176,6 +177,9 @@ class TestDatetimeHelpers(BaseCase):
             datetime.datetime(2022, 1, 6, 14, 30, 0),
             datetime.datetime(2020, 5, 7, 15, 3, 57),
             datetime.datetime(2025, 12, 31, 23, 59, 59),
+            # Caso edge UTC: la fecha local PY difiere de la UTC
+            # 00:30 UTC del 2022-01-01 = 31-dic-2021 en PY (UTC-3 verano)
+            datetime.datetime(2022, 1, 1, 0, 30, 0, tzinfo=_UTC_DT_TZ),
         ]
         for dt in test_datetimes:
             with self.subTest(dt=dt):
@@ -191,3 +195,20 @@ class TestDatetimeHelpers(BaseCase):
                         f"CDC={cdc_date_str!r}, dFeEmiDE fecha={de_date_str!r}"
                     ),
                 )
+
+    def test_format_cdc_date_normalizes_aware_to_py_local(self):
+        """format_cdc_date con tz-aware debe usar la fecha local PY, no la UTC.
+
+        00:30 UTC del 2022-01-01 corresponde al 2021-12-31 en America/Asuncion
+        (Paraguay en horario de verano, UTC-3). El CDC debe reflejar la fecha
+        local PY para alinearse con dFeEmiDE y no ser rechazado por SIFEN.
+        """
+        aware_dt = datetime.datetime(2022, 1, 1, 0, 30, 0, tzinfo=_UTC_DT_TZ)
+        # Computar el esperado vía conversión explícita para no hardcodear offset
+        expected = (
+            aware_dt.astimezone(ZoneInfo("America/Asuncion")).date().strftime("%Y%m%d")
+        )
+        result = datetime_helpers.format_cdc_date(aware_dt)
+        self.assertEqual(result, expected)
+        # Documentar la intención: la fecha UTC no debe filtrarse al CDC
+        self.assertNotEqual(result, "20220101")

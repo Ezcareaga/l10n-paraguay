@@ -99,8 +99,10 @@ def compose_cdc(
     :return: CDC de 44 dígitos (str).
     :raises CdcError: ante cualquier componente inválido.
     """
-    if isinstance(issue_date, datetime.datetime):
-        issue_date = issue_date.date()
+    # No coercer a .date() acá: format_cdc_date normaliza tz-aware a hora PY
+    # antes de extraer la fecha. Coercer acá tomaría la fecha UTC y rompería
+    # el acoplamiento CDC/dFeEmiDE (ver TD-008). datetime es subclase de date,
+    # así que este isinstance acepta ambos.
     if not isinstance(issue_date, datetime.date):
         raise CdcError("issue_date debe ser datetime.date, llegó %r" % (issue_date,))
     taxpayer = str(taxpayer_type or "").strip()
