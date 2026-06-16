@@ -23,6 +23,8 @@ import secrets
 
 from odoo.addons.l10n_py_base.models import modulo11
 
+from . import datetime_helpers
+
 EMISSION_NORMAL = "1"
 EMISSION_CONTINGENCY = "2"
 TAXPAYER_TYPES = ("1", "2")  # 1=Persona Física, 2=Persona Jurídica
@@ -121,7 +123,7 @@ def compose_cdc(
             _digits(expedition_point, 3, "Punto de expedición"),
             _digits(document_number, 7, "Número de documento"),
             taxpayer,
-            issue_date.strftime("%Y%m%d"),
+            datetime_helpers.format_cdc_date(issue_date),
             emission,
             _digits(security_code, 9, "Código de seguridad", pad=False),
         )
@@ -143,7 +145,7 @@ def parse_cdc(cdc_str):
     if int(cdc_str[43]) != cdc_check_digit(cdc_str[:43]):
         raise CdcError("CDC inválido: dígito verificador incorrecto")
     try:
-        issue_date = datetime.datetime.strptime(cdc_str[25:33], "%Y%m%d").date()
+        issue_date = datetime_helpers.parse_cdc_date(cdc_str[25:33])
     except ValueError as exc:
         raise CdcError("CDC inválido: fecha de emisión %r" % cdc_str[25:33]) from exc
     return {
