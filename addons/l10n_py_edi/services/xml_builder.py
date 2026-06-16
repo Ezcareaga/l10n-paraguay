@@ -98,6 +98,7 @@ El argumento ``data`` de :func:`build_de` debe tener la siguiente forma::
                 # IVA por ítem:
                 "iva_type": int,       # iAfecIVA
                 "iva_proportion": str, # dPropIVA (p. ej. "100.00")
+                "iva_rate": int,       # dTasaIVA (0, 5 o 10)
                 "iva_base": str,       # dBasGravIVA
                 "iva_amount": str,     # dLiqIVAItem
             }
