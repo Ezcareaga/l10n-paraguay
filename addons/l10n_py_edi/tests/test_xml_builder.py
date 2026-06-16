@@ -18,6 +18,7 @@ Casos cubiertos
 from __future__ import annotations
 
 import datetime
+import unittest
 from pathlib import Path
 
 from lxml import etree
@@ -115,6 +116,7 @@ _ITEM_10 = {
     "total_gross": "110000",
     "total_item": "110000",
     "iva_type": C.IVA_GRAVADO_10,
+    "iva_rate": 10,
     "iva_proportion": "100.00",
     "iva_base": "100000",
     "iva_amount": "10000",
@@ -131,6 +133,7 @@ _ITEM_EXENTO = {
     "total_gross": "100000",
     "total_item": "100000",
     "iva_type": C.IVA_EXENTO,
+    "iva_rate": 0,
     "iva_proportion": "100.00",
     "iva_base": "0",
     "iva_amount": "0",
@@ -147,6 +150,7 @@ _ITEM_5 = {
     "total_gross": "21000",
     "total_item": "21000",
     "iva_type": C.IVA_GRAVADO_5,
+    "iva_rate": 5,
     "iva_proportion": "100.00",
     "iva_base": "20000",
     "iva_amount": "1000",
@@ -520,6 +524,152 @@ class TestXmlBuilder(BaseCase):
         items_golden = de_golden.findall(".//{%s}gCamItem" % ns)
         self.assertEqual(len(items_new), len(items_golden))
 
+    # ── Tests de ValueError (contratos de entrada) ────────────────────────────
+
+    def test_cdc_too_short_raises(self):
+        """CDC con longitud incorrecta debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["cdc"] = "1234"
+        with self.assertRaises(ValueError, msg="cdc corto debe lanzar ValueError"):
+            builder.build_de(data)
+
+    def test_cdc_not_digits_raises(self):
+        """CDC con caracteres no numéricos debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["cdc"] = "A" * 44
+        with self.assertRaises(ValueError):
+            builder.build_de(data)
+
+    def test_security_code_mismatch_raises(self):
+        """security_code que no coincide con CDC[34:43] debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["security_code"] = "000000000"  # distinto de cdc[34:43]
+        with self.assertRaises(
+            ValueError, msg="security_code incorrecto debe lanzar ValueError"
+        ):
+            builder.build_de(data)
+
+    def test_dv_id_mismatch_raises(self):
+        """dv_id que no coincide con el último dígito del CDC debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        correct_dv = int(data["cdc"][-1])
+        data["dv_id"] = (correct_dv + 1) % 10  # valor incorrecto deliberado
+        with self.assertRaises(
+            ValueError, msg="dv_id incorrecto debe lanzar ValueError"
+        ):
+            builder.build_de(data)
+
+    def test_non_pyg_operation_currency_raises(self):
+        """Moneda de operación distinta de PYG debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["operation"] = {**_OPERATION, "currency": "USD"}
+        with self.assertRaises(ValueError, msg="moneda USD no soportada"):
+            builder.build_de(data)
+
+    def test_non_pyg_payment_currency_raises(self):
+        """Moneda de pago distinta de PYG debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["condition"] = {
+            "condition_type": 1,
+            "payments": [
+                {
+                    "payment_type": 1,
+                    "payment_desc": "Efectivo",
+                    "amount": "110000",
+                    "currency": "EUR",
+                }
+            ],
+        }
+        with self.assertRaises(ValueError, msg="moneda EUR en pago no soportada"):
+            builder.build_de(data)
+
+    def test_empty_economic_activities_raises(self):
+        """Lista vacía de actividades económicas debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["issuer"] = {**_ISSUER, "economic_activities": []}
+        with self.assertRaises(
+            ValueError, msg="lista vacía de actividades debe lanzar ValueError"
+        ):
+            builder.build_de(data)
+
+    def test_too_many_economic_activities_raises(self):
+        """Más de 9 actividades económicas debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        activity = {"code": "47111", "desc": "Venta al por menor"}
+        data["issuer"] = {**_ISSUER, "economic_activities": [activity] * 10}
+        with self.assertRaises(ValueError):
+            builder.build_de(data)
+
+    def test_empty_items_raises(self):
+        """Lista vacía de ítems debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["items"] = []
+        with self.assertRaises(
+            ValueError, msg="lista vacía de ítems debe lanzar ValueError"
+        ):
+            builder.build_de(data)
+
+    def test_contribuyente_missing_ruc_raises(self):
+        """Receptor contribuyente sin ruc/ruc_dv/taxpayer_type debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["receiver"] = {
+            "nature": C.RECEIVER_CONTRIBUYENTE,
+            "operation_type": C.OPER_B2B,
+            "country": C.PAIS_PY,
+            "country_desc": C.PAIS_PY_DESC,
+            "name": "CLIENTE SA",
+            # taxpayer_type, ruc, ruc_dv ausentes
+        }
+        with self.assertRaises(
+            ValueError, msg="campos RUC faltantes deben lanzar ValueError"
+        ):
+            builder.build_de(data)
+
+    def test_nc_de_type_raises(self):
+        """Tipo de DE NC (iTiDE=5) debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["timbrado"] = {**_TIMBRADO, "de_type": C.DE_TYPE_NC}
+        with self.assertRaises(
+            ValueError, msg="NC no soportado debe lanzar ValueError"
+        ):
+            builder.build_de(data)
+
+    def test_nd_de_type_raises(self):
+        """Tipo de DE ND (iTiDE=6) debe lanzar ValueError."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        data["timbrado"] = {**_TIMBRADO, "de_type": C.DE_TYPE_ND}
+        with self.assertRaises(ValueError):
+            builder.build_de(data)
+
+    def test_invalid_iva_rate_raises(self):
+        """iva_rate distinto de 0/5/10 debe lanzar ValueError."""
+        item_bad = {**_ITEM_10, "iva_rate": 7}
+        data = _make_data(self.dt, [item_bad], _TOTALS_SIMPLE)
+        with self.assertRaises(ValueError, msg="iva_rate=7 debe lanzar ValueError"):
+            builder.build_de(data)
+
+    def test_iva_rate_emitted_correctly(self):
+        """dTasaIVA debe provenir de item['iva_rate'], no de IVA_RATE lookup."""
+        data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
+        de = builder.build_de(data)
+        ns = C.SIFEN_NS
+        tasa = de.find(".//{%s}dTasaIVA" % ns)
+        self.assertIsNotNone(tasa)
+        self.assertEqual(tasa.text, "10")
+
+    def test_amount_no_scientific_notation(self):
+        """amount() no debe emitir notación científica para valores grandes."""
+        self.assertEqual(builder.amount(10000), "10000")
+        self.assertEqual(builder.amount(1000000), "1000000")
+        self.assertEqual(builder.amount(100.00), "100")
+
+    def test_amount_infinite_raises(self):
+        """amount() debe lanzar ValueError para valores no finitos."""
+        from decimal import Decimal
+
+        with self.assertRaises(ValueError):
+            builder.amount(Decimal("Infinity"))
+
     # ── Helpers privados ──────────────────────────────────────────────────────
 
     @staticmethod
@@ -530,6 +680,7 @@ class TestXmlBuilder(BaseCase):
             return []
         except XsdValidationError as exc:
             return exc.errors
-        except FileNotFoundError:
-            # Si los XSD no están disponibles en el entorno CI, skip silencioso
-            return []
+        except FileNotFoundError as exc:
+            raise unittest.SkipTest(
+                "XSD files are unavailable in this environment; skipping XSD validation test."
+            ) from exc

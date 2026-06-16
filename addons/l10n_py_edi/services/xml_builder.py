@@ -191,6 +191,17 @@ def build_de(data: dict) -> etree._Element:
     :raises ValueError: si un valor no cumple la estructura esperada.
     """
     cdc: str = data["cdc"]
+    if not isinstance(cdc, str) or len(cdc) != 44 or not cdc.isdigit():
+        raise ValueError("cdc must be a 44-digit string")
+
+    security_code = str(data["security_code"])
+    if security_code != cdc[34:43]:
+        raise ValueError("security_code must match CDC positions 35-43")
+
+    dv_id = int(data["dv_id"])
+    if dv_id != int(cdc[-1]):
+        raise ValueError("dv_id must match the CDC verifier digit")
+
     emission_dt: datetime.datetime = data["emission_datetime"]
     de_datetime_str = format_de_datetime(emission_dt)
 
@@ -199,7 +210,7 @@ def build_de(data: dict) -> etree._Element:
     de.set("Id", cdc)
 
     # dDVId — dígito verificador del CDC (última posición)
-    _e(de, "dDVId", int(cdc[43]))
+    _e(de, "dDVId", dv_id)
 
     # dFecFirma — fecha/hora de firma (misma que emisión antes de firmar)
     _e(de, "dFecFirma", de_datetime_str)
@@ -280,6 +291,8 @@ def _build_g_ope_com(parent: etree._Element, oper: dict) -> None:
     _e(g, "iTImp", tax_type)
     _e(g, "dDesTImp", C.TAX_TYPE_DESC[tax_type])
     currency: str = oper.get("currency", C.CURRENCY_PYG)
+    if currency != C.CURRENCY_PYG:
+        raise ValueError("Foreign currency operations are not supported yet")
     _e(g, "cMoneOpe", currency)
     _e(g, "dDesMoneOpe", _currency_desc(currency))
     _opt(g, "dCondTiCam", oper.get("exchange_condition"))
@@ -317,7 +330,10 @@ def _build_g_emis(parent: etree._Element, issuer: dict) -> None:
     _opt(g, "dDenSuc", issuer.get("branch_name"))
 
     # gActEco — 1 a 9 actividades económicas (obligatorio al menos 1)
-    for act in issuer["economic_activities"]:
+    activities = issuer["economic_activities"]
+    if not 1 <= len(activities) <= 9:
+        raise ValueError("issuer.economic_activities must contain 1 to 9 entries")
+    for act in activities:
         g_act = _e(g, "gActEco")
         _e(g_act, "cActEco", act["code"])
         _e(g_act, "dDesActEco", act["desc"])
@@ -344,9 +360,17 @@ def _build_g_dat_rec(parent: etree._Element, receiver: dict) -> None:
 
     if nature == C.RECEIVER_CONTRIBUYENTE:
         # Contribuyente: RUC obligatorio
-        _opt(g, "iTiContRec", receiver.get("taxpayer_type"))
-        _opt(g, "dRucRec", receiver.get("ruc"))
-        _opt(g, "dDVRec", receiver.get("ruc_dv"))
+        required_fields = ("taxpayer_type", "ruc", "ruc_dv")
+        missing = [
+            field for field in required_fields if receiver.get(field) in (None, "")
+        ]
+        if missing:
+            raise ValueError(
+                f"receiver contributor fields are required: {', '.join(missing)}"
+            )
+        _e(g, "iTiContRec", receiver["taxpayer_type"])
+        _e(g, "dRucRec", receiver["ruc"])
+        _e(g, "dDVRec", receiver["ruc_dv"])
     else:
         # No contribuyente: tipo de doc / número (puede ser innominado)
         doc_type = receiver.get("doc_type")
@@ -380,16 +404,11 @@ def _build_g_dtip_de(parent: etree._Element, data: dict) -> None:
     g = _e(parent, "gDtipDE")
     de_type: int = data["timbrado"]["de_type"]
 
-    # gCamFE (solo para iTiDE=1)
-    if de_type == C.DE_TYPE_FE:
-        _build_g_cam_fe(g, data)
+    if de_type != C.DE_TYPE_FE:
+        raise ValueError("Only Factura Electrónica (iTiDE=1) is supported")
 
-    # gCamNCDE (solo para iTiDE=5 NC / 6 ND)
-    if de_type in (C.DE_TYPE_NC, C.DE_TYPE_ND):
-        nc = data.get("credit_note", {})
-        g_nc = _e(g, "gCamNCDE")
-        _e(g_nc, "iMotEmi", nc["reason_type"])
-        _e(g_nc, "dDesMotEmi", nc["reason_desc"])
+    # gCamFE (solo para iTiDE=1)
+    _build_g_cam_fe(g, data)
 
     # Condición de pago (gCamCond) — opcional
     condition = data.get("condition")
@@ -397,7 +416,10 @@ def _build_g_dtip_de(parent: etree._Element, data: dict) -> None:
         _build_g_cam_cond(g, condition)
 
     # gCamItem — 1 a 999 ítems (obligatorio)
-    for item in data["items"]:
+    items = data["items"]
+    if not 1 <= len(items) <= 999:
+        raise ValueError("items must contain 1 to 999 entries")
+    for item in items:
         _build_g_cam_item(g, item)
 
 
@@ -421,12 +443,15 @@ def _build_g_cam_cond(parent: etree._Element, condition: dict) -> None:
 
     # Pagos al contado (gPaConEIni)
     for pago in condition.get("payments", []):
+        payment_currency = pago.get("currency", C.CURRENCY_PYG)
+        if payment_currency != C.CURRENCY_PYG:
+            raise ValueError("Foreign currency payments are not supported yet")
         gp = _e(g, "gPaConEIni")
         _e(gp, "iTiPago", pago["payment_type"])
         _e(gp, "dDesTiPag", pago["payment_desc"])
         _e(gp, "dMonTiPag", pago["amount"])
-        _e(gp, "cMoneTiPag", pago.get("currency", C.CURRENCY_PYG))
-        _e(gp, "dDMoneTiPag", pago.get("currency_desc", C.CURRENCY_PYG_DESC))
+        _e(gp, "cMoneTiPag", payment_currency)
+        _e(gp, "dDMoneTiPag", C.CURRENCY_PYG_DESC)
         _opt(gp, "dTiCamTiPag", pago.get("exchange_rate"))
 
 
@@ -462,7 +487,10 @@ def _build_g_cam_iva(parent: etree._Element, item: dict) -> None:
     _e(g, "iAfecIVA", iva_type)
     _e(g, "dDesAfecIVA", C.IVA_AFEC_DESC.get(iva_type, str(iva_type)))
     _e(g, "dPropIVA", item["iva_proportion"])
-    _e(g, "dTasaIVA", C.IVA_RATE.get(iva_type, 0))
+    iva_rate = int(item["iva_rate"])
+    if iva_rate not in (0, 5, 10):
+        raise ValueError("item.iva_rate must be one of 0, 5, or 10")
+    _e(g, "dTasaIVA", iva_rate)
     _e(g, "dBasGravIVA", item["iva_base"])
     _e(g, "dLiqIVAItem", item["iva_amount"])
 
@@ -527,4 +555,7 @@ def amount(value: int | float | Decimal) -> str:
     cualquier decimal positivo. Usar esta función garantiza que 10000 no se
     serialice como "1e4" en casos edge con Decimal.
     """
-    return str(Decimal(str(value)).normalize())
+    decimal_value = Decimal(str(value))
+    if not decimal_value.is_finite():
+        raise ValueError("amount must be finite")
+    return format(decimal_value.normalize(), "f")

@@ -108,6 +108,7 @@ PRES_DESC: dict[int, str] = {
     PRES_VENTA_DOMICILIO: "Venta a domicilio",
     PRES_OPERACION_BANCARIA: "Operación bancaria",
     PRES_OPERACION_CICLICA: "Operación cíclica",
+    PRES_OTRO: "Otro",
 }
 
 # ── Tipo de transacción (iTipTra) ─────────────────────────────────────────────
@@ -185,4 +186,5 @@ DOC_REC_DESC: dict[int, str] = {
     DOC_REC_CARNET_RES: "Carnet de residencia",
     DOC_REC_INNOMINADO: "Innominado",
     DOC_REC_TARJ_DIPLOM: "Tarjeta Diplomática de exoneración fiscal",
+    DOC_REC_OTRO: "Otro",
 }
