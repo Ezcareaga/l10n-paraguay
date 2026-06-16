@@ -108,7 +108,7 @@ def _make_client_with_mock(operation: str, soap_result=None, side_effect=None):
         Tuple (client, mock_zeep_client).
     """
     fake_p12 = b"fake-p12-data"
-    fake_password = "fake-pass"
+    dummy_p12_password = "dummy-pass"
 
     mock_zeep = MagicMock(spec=zeep.Client)
     mock_service = MagicMock()
@@ -128,7 +128,7 @@ def _make_client_with_mock(operation: str, soap_result=None, side_effect=None):
     elif soap_result is not None:
         mock_method.return_value = soap_result
 
-    client = SifenClient(fake_p12, fake_password, environment=ENVIRONMENT_TEST)
+    client = SifenClient(fake_p12, dummy_p12_password, environment=ENVIRONMENT_TEST)
     # Inyectar el mock directamente en el caché de clientes zeep
     client._zeep_clients[operation] = mock_zeep
 
@@ -629,20 +629,24 @@ class TestSifenClientExternal(BaseCase):
 
     def setUp(self):
         super().setUp()
-        sifen_url = os.environ.get("SIFEN_TEST_URL")
         p12_path = os.environ.get("SIFEN_TEST_P12_PATH")
-        if not sifen_url or not p12_path:
+        if not p12_path:
             self.skipTest(
-                "Tests de integración SIFEN requieren SIFEN_TEST_URL y "
-                "SIFEN_TEST_P12_PATH en las variables de entorno. "
+                "Tests de integración SIFEN requieren SIFEN_TEST_P12_PATH "
+                "en las variables de entorno. "
                 "Omitiendo — solo para uso con CCFE de prueba DNIT."
             )
         p12_password = os.environ.get("SIFEN_TEST_P12_PASSWORD", "")
-        with open(p12_path, "rb") as f:
-            self.p12_bytes = f.read()
-        self.p12_pass = p12_password  # gitleaks:allow
+        try:
+            with open(p12_path, "rb") as f:
+                self.p12_bytes = f.read()
+        except OSError as exc:
+            self.skipTest(f"No se pudo leer SIFEN_TEST_P12_PATH: {exc}")
+        self.p12_pass = p12_password
         self.client = SifenClient(
-            self.p12_bytes, self.p12_pass, environment=ENVIRONMENT_TEST
+            self.p12_bytes,
+            self.p12_pass,
+            environment=ENVIRONMENT_TEST,  # gitleaks:allow
         )
 
     def test_send_de_simple_fe(self):
