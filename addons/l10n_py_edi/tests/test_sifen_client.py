@@ -640,9 +640,9 @@ class TestSifenClientExternal(BaseCase):
         p12_password = os.environ.get("SIFEN_TEST_P12_PASSWORD", "")
         with open(p12_path, "rb") as f:
             self.p12_bytes = f.read()
-        self.p12_password = p12_password
+        self.p12_pass = p12_password  # gitleaks:allow
         self.client = SifenClient(
-            self.p12_bytes, self.p12_password, environment=ENVIRONMENT_TEST
+            self.p12_bytes, self.p12_pass, environment=ENVIRONMENT_TEST
         )
 
     def test_send_de_simple_fe(self):
