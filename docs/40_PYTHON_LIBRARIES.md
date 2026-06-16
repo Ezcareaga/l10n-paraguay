@@ -82,7 +82,9 @@ signer = XMLSigner(
     method=methods.enveloped,
     signature_algorithm='rsa-sha256',
     digest_algorithm='sha256',
-    c14n_algorithm='http://www.w3.org/TR/2001/REC-xml-c14n-20010315',
+    # SIFEN exige C14N EXCLUSIVA (xml-exc-c14n#); inclusiva genera DigestValue rechazado
+    # Ver docs/research/xades_sifen.md §Q1 para detalle
+    c14n_algorithm='http://www.w3.org/2001/10/xml-exc-c14n#',
 )
 signed_root = signer.sign(
     root,                              # lxml Element
