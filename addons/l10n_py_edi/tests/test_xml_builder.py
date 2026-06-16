@@ -503,7 +503,13 @@ class TestXmlBuilder(BaseCase):
         xml_bytes = builder.serialize(de, pretty=True)
 
         if not golden.exists():
-            golden.write_bytes(xml_bytes)
+            try:
+                golden.parent.mkdir(parents=True, exist_ok=True)
+                golden.write_bytes(xml_bytes)
+            except OSError:
+                self.skipTest(
+                    "Golden file no creado (filesystem read-only): %s" % golden
+                )
             self.skipTest("Golden file creado: %s" % golden)
 
         # Comparar CDC (el security_code puede variar si se regenera)
