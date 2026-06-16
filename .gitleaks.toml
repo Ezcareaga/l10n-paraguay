@@ -1,0 +1,9 @@
+title = "l10n-paraguay gitleaks config"
+
+[allowlist]
+description = "False positives — no real secrets in this codebase"
+
+# test_sifen_client.py line 645: self.p12_password is a test variable name,
+# not a real secret. The external test class is always skipped in CI
+# (requires SIFEN_TEST_P12_PATH env var to run). Commit 3b0efca.
+commits = ["3b0efcaa56002764e7064b641c43ac763b4c36f2"]

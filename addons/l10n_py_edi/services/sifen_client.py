@@ -138,15 +138,14 @@ class SifenResponse:
         message = _get(soap_result, "dMsgRes", "msg_res", "message")
 
         # Observaciones: xObsEnt puede ser lista o nodo simple.
-        # Solo usamos el atributo canónico SIFEN (xObsEnt) para evitar
-        # colisiones con atributos auto-generados por MagicMock en los tests.
+        # Usamos solo getattr con sentinel para evitar auto-creación de
+        # atributos en MagicMock (que haría que cualquier acceso retorne
+        # un MagicMock truthy aunque el campo sea None en los tests).
+        _sentinel = object()
         observations: list[str] = []
-        raw_obs = getattr(soap_result, "xObsEnt", None)
-        if raw_obs is None and hasattr(soap_result, "__getitem__"):
-            try:
-                raw_obs = soap_result["xObsEnt"]
-            except (KeyError, TypeError):
-                raw_obs = None
+        raw_obs = getattr(soap_result, "xObsEnt", _sentinel)
+        if raw_obs is _sentinel:
+            raw_obs = None
         if raw_obs is not None:
             if isinstance(raw_obs, (list, tuple)):
                 observations = [str(o).strip() for o in raw_obs if o]
