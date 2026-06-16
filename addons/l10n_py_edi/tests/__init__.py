@@ -7,3 +7,4 @@ from . import test_cdc
 from . import test_account_move_cdc
 from . import test_datetime_helpers
 from . import test_xml_builder
+from . import test_sifen_client
