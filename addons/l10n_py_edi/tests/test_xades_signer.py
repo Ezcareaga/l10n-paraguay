@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+from pathlib import Path
 
 from cryptography.hazmat.primitives import serialization
 from lxml import etree
@@ -24,13 +25,23 @@ from signxml.exceptions import InvalidSignature
 from odoo.tests import BaseCase, tagged
 
 from odoo.addons.l10n_py_edi.services import certificate, xades_signer
-from odoo.addons.l10n_py_edi.services.xsd_validator import _xsd_dir
 from odoo.addons.l10n_py_edi.tests import fixtures
 
 _SIFEN_NS = "http://ekuatia.set.gov.py/sifen/xsd"
 _DS = "http://www.w3.org/2000/09/xmldsig#"
 _CDC = "01000000019001001100005022020050710000000231"
 _PWD = "test-password"
+# Ejemplo oficial DNIT resuelto desde la raíz del repo: el test está en
+# <repo>/addons/l10n_py_edi/tests/ → parents[3] == <repo>. NO usar
+# xsd_validator._xsd_dir() (usa parents[4] y apunta por encima de la raíz en
+# CI — bug colateral, ver BUGS_BACKLOG).
+_OFFICIAL_DE = (
+    Path(__file__).resolve().parents[3]
+    / "docs"
+    / "original"
+    / "xsd"
+    / "Extructura_xml_DE.xml"
+)
 
 
 def _q(local, ns=_DS):
@@ -48,9 +59,8 @@ class TestXadesSigner(BaseCase):
 
     def _official_rde_bytes(self, keep_gcamfufd=True):
         """``<rDE>`` oficial con [dVerFor, DE(, gCamFuFD)] — sin ``<Signature>``."""
-        path = _xsd_dir() / "Extructura_xml_DE.xml"
         parser = etree.XMLParser(remove_blank_text=True)
-        rde = etree.parse(str(path), parser).getroot()
+        rde = etree.parse(str(_OFFICIAL_DE), parser).getroot()
         for el in rde.findall(_q("Signature")):
             rde.remove(el)
         if not keep_gcamfufd:
