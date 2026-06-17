@@ -333,6 +333,30 @@ Si en algún momento DNIT publica un release con DE de ejemplo binary-reproducib
 como complemento del approach actual. Por ahora, el approach estructural es el
 único técnicamente correcto.
 
+### Bug colateral: `_xsd_dir()` parents[4] y la validación XSD rota (TD-009/010/011)
+
+Durante el spike se intentó re-habilitar la validación XSD del DE generado y se
+descubrió una cadena de problemas:
+
+- `addons/l10n_py_edi/services/xsd_validator.py` resolvía el directorio de XSDs
+  con `parents[4]`, que sobrepasa la raíz del repo en CI. Consecuencia:
+  `test_xml_builder.py::test_fe_simple_xsd_valid` saltaba silenciosamente
+  (`FileNotFoundError` → `SkipTest("XSD files are unavailable")`, mensaje
+  engañoso). **Corregido en este PR:** `parents[4] → parents[3]`.
+- Con el path corregido, el test falla: los XSD oficiales de SIFEN **declaran
+  tipos, no elementos globales**, así que `lxml.XMLSchema.validate(<DE>)` no
+  puede anclar (`No matching global declaration`). El approach de
+  `validate_against_xsd` requiere reescritura con wrapper-schema por tipo
+  (TD-011).
+- Validando con esa técnica correcta (probada en el spike) afloran **dos bugs
+  reales de contenido del DE** que SIFEN rechazaría:
+  `dDesAfecIVA="Gravado IVA 10%"` (debe ser `"Gravado IVA"`, TD-009) y
+  `dDesDepEmi="Central"` (debe ser `"CENTRAL"`, TD-010).
+
+**Alcance en PR-4a:** solo el fix de `parents` + skip honesto del test +
+registro en BUGS_BACKLOG (TD-009..TD-012). Las correcciones del builder y la
+reescritura del validador van en un PR dedicado.
+
 ## Fuentes consultadas
 
 **Locales:**

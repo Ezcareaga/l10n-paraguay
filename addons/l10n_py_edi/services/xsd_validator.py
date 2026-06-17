@@ -12,9 +12,10 @@ from pathlib import Path
 from lxml import etree
 
 # Ruta canónica a los XSD oficiales (en el repo, bajo docs/original/xsd/).
-# En producción se puede apuntar a una copia bundleada en el módulo; por ahora
-# el path se resuelve relativo a este mismo archivo para tests de integración.
-_XSD_DIR = Path(__file__).resolve().parents[4] / "docs" / "original" / "xsd"
+# Se resuelve relativo a este archivo: services/ -> l10n_py_edi/ -> addons/ ->
+# parents[3] == raíz del repo. (Antes parents[4], que sobrepasaba la raíz en CI
+# y hacía que la validación XSD se saltara silenciosamente — ver TD-011.)
+_XSD_DIR = Path(__file__).resolve().parents[3] / "docs" / "original" / "xsd"
 
 
 class XsdValidationError(ValueError):

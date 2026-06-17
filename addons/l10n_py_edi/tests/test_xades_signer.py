@@ -32,9 +32,9 @@ _DS = "http://www.w3.org/2000/09/xmldsig#"
 _CDC = "01000000019001001100005022020050710000000231"
 _PWD = "test-password"
 # Ejemplo oficial DNIT resuelto desde la raíz del repo: el test está en
-# <repo>/addons/l10n_py_edi/tests/ → parents[3] == <repo>. NO usar
-# xsd_validator._xsd_dir() (usa parents[4] y apunta por encima de la raíz en
-# CI — bug colateral, ver BUGS_BACKLOG).
+# <repo>/addons/l10n_py_edi/tests/ → parents[3] == <repo>. El _xsd_dir() de
+# xsd_validator ya usa parents[3] (corregido en este PR; antes parents[4]
+# sobrepasaba la raíz — ver TD-011).
 _OFFICIAL_DE = (
     Path(__file__).resolve().parents[3]
     / "docs"
