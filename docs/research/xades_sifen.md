@@ -279,6 +279,60 @@ envolver en try/except con mensaje user-friendly.
    oficial + las dos implementaciones de referencia ya corroboran la decisión,
    pero si OCA/PR pide la cita del manual, bajar el PDF v150 del portal ekuatia.
 
+## Hallazgo de spike (post-research, durante implementación PR-4a)
+
+**Fecha:** 2026-06-17
+
+### Extructura_xml_DE.xml NO es binary-reproducible
+
+Durante el spike de implementación de PR-4a se confirmó que el archivo de
+referencia `docs/original/xsd/Extructura_xml_DE.xml` provisto por DNIT en el
+release de XSDs v150 es **ilustrativo**, no funcional:
+
+- El `<X509Certificate>` está redactado/ofuscado (no es un cert válido descifrable).
+- El `<DigestValue>` (ej. `4koJaq...`) fue generado contra el documento ORIGINAL
+  no-redactado, que NO está disponible públicamente.
+- Ninguna canonicalización estándar (exclusiva o inclusiva, con/sin namespace
+  ordering, con/sin pretty-print) reproduce ese DigestValue desde el archivo
+  publicado.
+
+### Implicación para tests
+
+**El test de round-trip de PR-4a NO debe comparar DigestValue literal contra
+el archivo oficial.** Eso es imposible por diseño (DNIT ofuscó intencionalmente
+los valores criptográficos para no exponer su PKI de ejemplo).
+
+El approach correcto (implementado en PR-4a) es validar:
+
+1. URIs de algoritmos verbatim contra los oficiales SIFEN.
+2. Position estructural del bloque Signature (después de DE, antes de gCamFuFD).
+3. DigestValue derivado correctamente desde NUESTRA propia canonicalización
+   (assert DigestValue == base64(sha256(exc_c14n(DE_element)))).
+4. Verify end-to-end con nuestro cert de test (sign + verify roundtrip).
+5. Tamper detection (modificar DE invalida la firma).
+
+### Para qué SÍ sirve Extructura_xml_DE.xml
+
+- Validar la **estructura** del XML (orden de elementos, namespaces, prefijos).
+- Confirmar la **posición** del bloque Signature dentro del documento.
+- Confirmar los **URIs** de algoritmos y transformaciones esperados por SIFEN.
+
+### Confianza actualizada
+
+Esto reduce la confianza de Q5 de "MEDIA" a "ALTA con caveat":
+
+- Confianza alta en que signxml canonicaliza correctamente (verificado por spike).
+- Caveat: la confirmación final solo viene cuando SIFEN test acepte un DE
+  firmado con CCFE real (PR-4c). Mientras tanto, los tests con CCFE mock validan
+  todo lo que es validable sin contraparte real.
+
+### Acción para futuros readers
+
+Si en algún momento DNIT publica un release con DE de ejemplo binary-reproducible
+(con cert válido + DigestValue calculable), agregar test de comparación literal
+como complemento del approach actual. Por ahora, el approach estructural es el
+único técnicamente correcto.
+
 ## Fuentes consultadas
 
 **Locales:**
