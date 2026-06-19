@@ -18,7 +18,6 @@ Casos cubiertos
 from __future__ import annotations
 
 import datetime
-import unittest
 from pathlib import Path
 
 from lxml import etree
@@ -31,7 +30,7 @@ from odoo.addons.l10n_py_edi.services.cdc import compose_cdc
 from odoo.addons.l10n_py_edi.services.datetime_helpers import format_de_datetime
 from odoo.addons.l10n_py_edi.services.xsd_validator import (
     XsdValidationError,
-    validate_against_xsd,
+    validate_de,
 )
 
 _FIXTURES_DIR = Path(__file__).parent / "xml_fixtures"
@@ -44,8 +43,7 @@ _ISSUER = {
     "name": "EMPRESA TEST SA",
     "address": "Av. Mariscal López",
     "house_number": "1234",
-    "department": 11,
-    "department_desc": "Central",
+    "department": 12,  # 12 = CENTRAL (dDesDepEmi se deriva del código)
     "city": 1,
     "city_desc": "Asunción",
     "phone": "021123456",
@@ -254,36 +252,22 @@ class TestXmlBuilder(BaseCase):
 
     # ── Test 1: FE simple → valida XSD ───────────────────────────────────────
 
-    @unittest.skip(
-        "XSD validation disabled: SIFEN XSDs declare types not globals; "
-        "validate_against_xsd approach is broken (TD-011). "
-        "Also surfaces dDesAfecIVA enum mismatch (TD-009) and "
-        "dDesDepEmi case mismatch (TD-010). "
-        "Re-enable when xml_builder + xsd_validator fixes land."
-    )
     def test_fe_simple_xsd_valid(self):
-        """FE de 1 ítem IVA 10% debe pasar la validación del XSD SIFEN v150."""
+        """FE de 1 ítem IVA 10% debe pasar la validación del XSD SIFEN v150.
+
+        Usa el enfoque wrapper-schema de xsd_validator.validate_de() que ancla
+        la validación al tipo tDE del XSD oficial (TD-011 resuelto).
+        Los valores dDesAfecIVA y dDesDepEmi deben coincidir byte a byte con
+        las enumeraciones del XSD (TD-009 y TD-010 resueltos).
+        """
         data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
         de = builder.build_de(data)
-        # El XSD valida el elemento <DE>, no <rDE> completo (sin firma todavía)
-        # pero el schema espera el elemento raíz rDE; validamos el DE directamente
-        # wrapeándolo en rDE con dVerFor para la validación estructural
-        # Nota: la firma (ds:Signature) es requerida por rDE — por eso
-        # validamos el <DE> contra tDE (element-level) vía xmlschema validate()
-        # que acepta el elemento si el tipo coincide. Sin embargo lxml.validate()
-        # requiere el elemento raíz del schema. Usamos assertRaises para confirmar
-        # que el DE está bien formado y el error es SOLO por la firma faltante.
+        # validate_de() lanza XsdValidationError si hay errores; si no, retorna None
         errors = self._get_xsd_errors(de)
-        # Solo errores relacionados con la firma o el wrapper rDE (esperado en
-        # esta fase pre-firma); NO debe haber errores de estructura del DE
-        sig_keywords = {"Signature", "rDE", "dVerFor", "gCamFuFD"}
-        structural_errors = [
-            e for e in errors if not any(kw in e for kw in sig_keywords)
-        ]
         self.assertFalse(
-            structural_errors,
-            "Errores estructurales en el DE (no relacionados con firma/rDE):\n"
-            + "\n".join(structural_errors),
+            errors,
+            "El DE generado no pasó la validación XSD SIFEN v150:\n"
+            + "\n".join(errors),
         )
 
     def test_fe_simple_element_structure(self):
@@ -349,12 +333,14 @@ class TestXmlBuilder(BaseCase):
         self.assertEqual(len(items), 3)
 
         # Verificar IVA de cada ítem
+        # IVA_GRAVADO_10 == IVA_GRAVADO_5 == IVA_GRAVADO == 1 (per XSD tiAfecIVA);
+        # la tasa real va en dTasaIVA. IVA_EXENTO == 3.
         iva_types = [
             items[0].find("{%s}gCamIVA/{%s}iAfecIVA" % (ns, ns)).text,
             items[1].find("{%s}gCamIVA/{%s}iAfecIVA" % (ns, ns)).text,
             items[2].find("{%s}gCamIVA/{%s}iAfecIVA" % (ns, ns)).text,
         ]
-        self.assertEqual(iva_types, ["4", "3", "5"])
+        self.assertEqual(iva_types, ["1", "3", "1"])
 
         # Verificar subtotales mixtos
         g_tot = de.find("{%s}gTotSub" % ns)
@@ -507,29 +493,62 @@ class TestXmlBuilder(BaseCase):
     # ── Test 9: Golden file FE simple ────────────────────────────────────────
 
     def test_fe_simple_golden_file(self):
-        """Genera el golden file de FE simple si no existe; lo verifica si existe."""
+        """Verifica que el DE generado coincide con el golden file commiteado.
+
+        El golden ``tests/xml_fixtures/fe_simple.xml`` fue pre-generado con el
+        builder ya corregido (post TD-009/010/011) y commiteado en el repo.
+
+        Para regenerar el golden (p. ej. tras un cambio intencional de estructura):
+            ECC_REGENERATE_GOLDEN=1 python -m pytest ...::test_fe_simple_golden_file
+        El test falla tras regenerar para obligar una revisión del diff antes de
+        commitear.
+        """
+        import os
+
         golden = _FIXTURES_DIR / "fe_simple.xml"
         data = _make_data(self.dt, [_ITEM_10], _TOTALS_SIMPLE)
         de = builder.build_de(data)
         xml_bytes = builder.serialize(de, pretty=True)
 
-        if not golden.exists():
-            try:
-                golden.parent.mkdir(parents=True, exist_ok=True)
-                golden.write_bytes(xml_bytes)
-            except OSError:
-                self.skipTest(
-                    "Golden file no creado (filesystem read-only): %s" % golden
-                )
-            self.skipTest("Golden file creado: %s" % golden)
+        if os.environ.get("ECC_REGENERATE_GOLDEN") == "1":
+            golden.parent.mkdir(parents=True, exist_ok=True)
+            golden.write_bytes(xml_bytes)
+            self.fail(
+                "Golden file regenerado en %s — revisá el diff y commiteá si es "
+                "intencional. Re-correr sin ECC_REGENERATE_GOLDEN=1 para verificar."
+                % golden
+            )
 
-        # Comparar CDC (el security_code puede variar si se regenera)
+        self.assertTrue(
+            golden.exists(),
+            "Golden file no encontrado: %s — commitear el archivo generado." % golden,
+        )
+
         de_golden = etree.parse(str(golden)).getroot()
-        # Verificar que la estructura es la misma (mismo número de gCamItem)
         ns = C.SIFEN_NS
+
+        # Comparar estructura completa: elementos clave del DE
         items_new = de.findall(".//{%s}gCamItem" % ns)
         items_golden = de_golden.findall(".//{%s}gCamItem" % ns)
-        self.assertEqual(len(items_new), len(items_golden))
+        self.assertEqual(
+            len(items_new),
+            len(items_golden),
+            "Número de ítems difiere del golden file",
+        )
+
+        # Comparar dDesAfecIVA — crítico para TD-009
+        afec_new = [el.text for el in de.findall(".//{%s}dDesAfecIVA" % ns)]
+        afec_golden = [el.text for el in de_golden.findall(".//{%s}dDesAfecIVA" % ns)]
+        self.assertEqual(afec_new, afec_golden, "dDesAfecIVA difiere del golden file")
+
+        # Comparar dDesDepEmi — crítico para TD-010
+        dep_new = de.find(".//{%s}dDesDepEmi" % ns)
+        dep_golden = de_golden.find(".//{%s}dDesDepEmi" % ns)
+        self.assertIsNotNone(dep_new)
+        self.assertIsNotNone(dep_golden)
+        self.assertEqual(
+            dep_new.text, dep_golden.text, "dDesDepEmi difiere del golden file"
+        )
 
     # ── Tests de ValueError (contratos de entrada) ────────────────────────────
 
@@ -681,13 +700,14 @@ class TestXmlBuilder(BaseCase):
 
     @staticmethod
     def _get_xsd_errors(de_element: etree._Element) -> list[str]:
-        """Valida el elemento DE y retorna la lista de errores XSD (puede estar vacía)."""
+        """Valida el elemento DE contra el XSD SIFEN v150 y retorna los errores.
+
+        Usa el wrapper-schema de validate_de() (TD-011 resuelto).
+        Un FileNotFoundError es ahora un error duro: los XSD están en el repo
+        y parents[3] está corregido — no debe ocurrir en CI ni localmente.
+        """
         try:
-            validate_against_xsd(de_element)
+            validate_de(etree.tostring(de_element, encoding="unicode").encode("utf-8"))
             return []
         except XsdValidationError as exc:
             return exc.errors
-        except FileNotFoundError as exc:
-            raise unittest.SkipTest(
-                "XSD files are unavailable in this environment; skipping XSD validation test."
-            ) from exc

@@ -268,10 +268,21 @@ envolver en try/except con mensaje user-friendly.
 4. **NO agregar `InclusiveNamespaces` PrefixList.**
 5. **Serializar sin pretty-print** entre firma y transporte.
 6. **Cargar CCFE** con `pkcs12.load_key_and_certificates(p12_bytes, pwd.encode())`.
-7. **Test de regresión obligatorio (Nyquist de PR-4):** round-trip firmar el DE
-   y matchear `DigestValue`/`SignatureValue` contra el bloque `<Signature>` del
-   `docs/original/xsd/Extructura_xml_DE.xml` (o un DE de prueba aprobado por
-   SIFEN). Es la única forma de cerrar el riesgo MEDIA de Q5.
+7. **Test de regresión obligatorio (Nyquist de PR-4):** round-trip de firma
+   XAdES-BES con criterios reproducibles (no comparación literal contra
+   `Extructura_xml_DE.xml` — ese archivo es ilustrativo y sus valores
+   criptográficos no son reproducibles; ver §"Hallazgo de spike"):
+   - `DigestValue == base64(sha256(exc_c14n(DE_element)))` — derivado de
+     nuestra propia canonicalización exclusiva sobre el DE.
+   - Verificación end-to-end: firmar con el certificado de test y verificar
+     la firma (sign + verify round-trip pasa).
+   - Tamper detection: modificar un byte del DE invalida la firma.
+   - URIs de algoritmos verbatim: `xml-exc-c14n#`, `xmlenc#sha256`,
+     `rsa-sha256`; posición estructural correcta (Signature después de DE,
+     antes de gCamFuFD).
+     Si en el futuro DNIT publica un DE de ejemplo con valores criptográficos
+     reproducibles (cert válido + DigestValue calculable), agregar comparación
+     literal como complemento — no como sustituto del approach actual.
 8. **Corregir `docs/40_PYTHON_LIBRARIES.md:85`**: cambiar el `c14n_algorithm`
    inclusivo por exc-c14n (doc bug; hacerlo en el PR-4, no es código de prod).
 9. **Pendiente fuera de scope:** citar el Manual Técnico SIFEN v150 (texto
@@ -333,7 +344,9 @@ Si en algún momento DNIT publica un release con DE de ejemplo binary-reproducib
 como complemento del approach actual. Por ahora, el approach estructural es el
 único técnicamente correcto.
 
-### Bug colateral: `_xsd_dir()` parents[4] y la validación XSD rota (TD-009/010/011)
+### Bug colateral resuelto: `_xsd_dir()` parents[4] y la validación XSD rota (TD-009/010/011)
+
+**RESUELTO en PR fix/edi-xml-builder-xsd-compliance.**
 
 Durante el spike se intentó re-habilitar la validación XSD del DE generado y se
 descubrió una cadena de problemas:
@@ -342,11 +355,23 @@ descubrió una cadena de problemas:
   con `parents[4]`, que sobrepasa la raíz del repo en CI. Consecuencia:
   `test_xml_builder.py::test_fe_simple_xsd_valid` saltaba silenciosamente
   (`FileNotFoundError` → `SkipTest("XSD files are unavailable")`, mensaje
-  engañoso). **Corregido en este PR:** `parents[4] → parents[3]`.
-- Con el path corregido, el test falla: los XSD oficiales de SIFEN **declaran
+  engañoso). **Corregido en PR-4a:** `parents[4] → parents[3]`.
+- Con el path corregido, el test fallaba: los XSD oficiales de SIFEN **declaran
   tipos, no elementos globales**, así que `lxml.XMLSchema.validate(<DE>)` no
-  puede anclar (`No matching global declaration`). El approach de
-  `validate_against_xsd` requiere reescritura con wrapper-schema por tipo
+  podía anclar (`No matching global declaration`). El approach de
+  `validate_against_xsd` requería reescritura con wrapper-schema por tipo.
+- **Solución implementada:** `xsd_validator.py` reescrito con enfoque
+  wrapper-schema. La función `validate_de(xml_bytes)` construye un mini-schema
+  en memoria que declara `<xs:element name="DE" type="sifen:tDE"/>` e incluye
+  `DE_v150.xsd` con `<xs:include schemaLocation="{uri}"/>`. lxml puede entonces
+  anclar la validación al tipo `tDE` y validar el subárbol completo.
+- **`dDesAfecIVA` (TD-009) resuelto:** `IVA_AFEC_DESC` en `xml_constants.py`
+  actualizado con los valores verbatim del XSD: `"Gravado IVA"`, `"Exonerado
+(Art. 83- Ley 125/91)"`, `"Exento"`, `"Gravado parcial (Grav- Exento)"`.
+  Los aliases `IVA_GRAVADO_10` / `IVA_GRAVADO_5` apuntan ahora a `IVA_GRAVADO=1`.
+- **`dDesDepEmi` (TD-010) resuelto:** `xml_builder.py` deriva el valor de
+  `DEPT_DESC[issuer["department"]]` (tabla canónica MAYÚSCULAS del XSD) en vez
+  de confiar en el string provisto por el caller.
   (TD-011).
 - Validando con esa técnica correcta (probada en el spike) afloran **dos bugs
   reales de contenido del DE** que SIFEN rechazaría:

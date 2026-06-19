@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<DE xmlns="http://ekuatia.set.gov.py/sifen/xsd" Id="01800695631001001000000122025061511234567890">
+  <dDVId>0</dDVId>
+  <dFecFirma>2025-06-15T10:30:00</dFecFirma>
+  <dSisFact>1</dSisFact>
+  <gOpeDE>
+    <iTipEmi>1</iTipEmi>
+    <dDesTipEmi>Normal</dDesTipEmi>
+    <dCodSeg>123456789</dCodSeg>
+  </gOpeDE>
+  <gTimb>
+    <iTiDE>1</iTiDE>
+    <dDesTiDE>Factura electrónica</dDesTiDE>
+    <dNumTim>12345678</dNumTim>
+    <dEst>001</dEst>
+    <dPunExp>001</dPunExp>
+    <dNumDoc>0000001</dNumDoc>
+    <dFeIniT>2025-01-01</dFeIniT>
+  </gTimb>
+  <gDatGralOpe>
+    <dFeEmiDE>2025-06-15T10:30:00</dFeEmiDE>
+    <gOpeCom>
+      <iTipTra>1</iTipTra>
+      <dDesTipTra>Venta de mercadería</dDesTipTra>
+      <iTImp>1</iTImp>
+      <dDesTImp>IVA</dDesTImp>
+      <cMoneOpe>PYG</cMoneOpe>
+      <dDesMoneOpe>Guaraní</dDesMoneOpe>
+    </gOpeCom>
+    <gEmis>
+      <dRucEm>80069563</dRucEm>
+      <dDVEmi>1</dDVEmi>
+      <iTipCont>2</iTipCont>
+      <dNomEmi>EMPRESA TEST SA</dNomEmi>
+      <dDirEmi>Av. Mariscal López</dDirEmi>
+      <dNumCas>1234</dNumCas>
+      <cDepEmi>12</cDepEmi>
+      <dDesDepEmi>CENTRAL</dDesDepEmi>
+      <cCiuEmi>1</cCiuEmi>
+      <dDesCiuEmi>Asunción</dDesCiuEmi>
+      <dTelEmi>021123456</dTelEmi>
+      <dEmailE>test@empresa.com.py</dEmailE>
+      <gActEco>
+        <cActEco>47111</cActEco>
+        <dDesActEco>Venta al por menor en comercios no especializados</dDesActEco>
+      </gActEco>
+    </gEmis>
+    <gDatRec>
+      <iNatRec>1</iNatRec>
+      <iTiOpe>1</iTiOpe>
+      <cPaisRec>PRY</cPaisRec>
+      <dDesPaisRe>Paraguay</dDesPaisRe>
+      <iTiContRec>2</iTiContRec>
+      <dRucRec>12345678</dRucRec>
+      <dDVRec>9</dDVRec>
+      <dNomRec>CLIENTE SA</dNomRec>
+    </gDatRec>
+  </gDatGralOpe>
+  <gDtipDE>
+    <gCamFE>
+      <iIndPres>1</iIndPres>
+      <dDesIndPres>Operación presencial</dDesIndPres>
+    </gCamFE>
+    <gCamItem>
+      <dCodInt>001</dCodInt>
+      <dDesProSer>Producto de prueba</dDesProSer>
+      <cUniMed>77</cUniMed>
+      <dDesUniMed>UNI</dDesUniMed>
+      <dCantProSer>1</dCantProSer>
+      <gValorItem>
+        <dPUniProSer>110000</dPUniProSer>
+        <dTotBruOpeItem>110000</dTotBruOpeItem>
+        <gValorRestaItem>
+          <dTotOpeItem>110000</dTotOpeItem>
+        </gValorRestaItem>
+      </gValorItem>
+      <gCamIVA>
+        <iAfecIVA>1</iAfecIVA>
+        <dDesAfecIVA>Gravado IVA</dDesAfecIVA>
+        <dPropIVA>100.00</dPropIVA>
+        <dTasaIVA>10</dTasaIVA>
+        <dBasGravIVA>100000</dBasGravIVA>
+        <dLiqIVAItem>10000</dLiqIVAItem>
+      </gCamIVA>
+    </gCamItem>
+  </gDtipDE>
+  <gTotSub>
+    <dSub10>110000</dSub10>
+    <dTotOpe>110000</dTotOpe>
+    <dTotDesc>0</dTotDesc>
+    <dTotDescGlotem>0</dTotDescGlotem>
+    <dTotAntItem>0</dTotAntItem>
+    <dTotAnt>0</dTotAnt>
+    <dPorcDescTotal>0.00</dPorcDescTotal>
+    <dDescTotal>0</dDescTotal>
+    <dAnticipo>0</dAnticipo>
+    <dRedon>0</dRedon>
+    <dTotGralOpe>110000</dTotGralOpe>
+    <dIVA10>100000</dIVA10>
+    <dLiqTotIVA10>10000</dLiqTotIVA10>
+    <dTotIVA>10000</dTotIVA>
+    <dBaseGrav10>100000</dBaseGrav10>
+    <dTBasGraIVA>100000</dTBasGraIVA>
+  </gTotSub>
+</DE>

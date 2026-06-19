@@ -320,8 +320,15 @@ def _build_g_emis(parent: etree._Element, issuer: dict) -> None:
     _e(g, "dNumCas", issuer["house_number"])
     _opt(g, "dCompDir1", issuer.get("address_complement_1"))
     _opt(g, "dCompDir2", issuer.get("address_complement_2"))
-    _e(g, "cDepEmi", issuer["department"])
-    _e(g, "dDesDepEmi", issuer["department_desc"])
+    dept_code: int = issuer["department"]
+    dept_desc = C.DEPT_DESC.get(dept_code)
+    if dept_desc is None:
+        raise ValueError(
+            "issuer.department %r no es un código de departamento SIFEN válido"
+            % dept_code
+        )
+    _e(g, "cDepEmi", dept_code)
+    _e(g, "dDesDepEmi", dept_desc)
     _opt(g, "cDisEmi", issuer.get("district"))
     _opt(g, "dDesDisEmi", issuer.get("district_desc"))
     _e(g, "cCiuEmi", issuer["city"])
