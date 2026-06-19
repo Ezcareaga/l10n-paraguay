@@ -134,30 +134,68 @@ TRANS_DESC: dict[int, str] = {
     13: "Muestras médicas (Art. 3 RG 24/2014)",
 }
 
-# ── Afectación IVA por ítem (iAfecIVA) ───────────────────────────────────────
-# Verificar con DE_Types_v150.xsd tiAfecIVA
+# ── Afectación IVA por ítem (iAfecIVA / dDesAfecIVA) ─────────────────────────
+# Fuente autoritativa: DE_Types_v150.xsd — tiAfecIVA (enumeración 1-4) y
+# tdDesAfecIVA (enumeración verbatim). La tasa va separada en dTasaIVA.
+#
+# Mapeo correcto (verificado contra XSD líneas 1305-1338):
+#   1 → "Gravado IVA"                         (ítems al 5% o 10%)
+#   2 → "Exonerado (Art. 83- Ley 125/91)"
+#   3 → "Exento"
+#   4 → "Gravado parcial (Grav- Exento)"
 
-IVA_GRAVADO_PARCIAL = 1  # Gravado parcial (Ley 125/91 Art. 43 num 2)
-IVA_EXONERADO = 2  # Exonerado (Art. 100 Ley 6380/19)
+IVA_GRAVADO = 1  # Gravado IVA (5% o 10% según dTasaIVA)
+IVA_EXONERADO = 2  # Exonerado (Art. 83- Ley 125/91)
 IVA_EXENTO = 3  # Exento
-IVA_GRAVADO_10 = 4  # Gravado al 10%
-IVA_GRAVADO_5 = 5  # Gravado al 5%
+IVA_GRAVADO_PARCIAL = 4  # Gravado parcial (Grav- Exento)
 
+# Aliases de conveniencia para callers que distinguen entre 5% y 10%:
+# ambos usan iAfecIVA=1; la tasa real va en dTasaIVA del ítem.
+IVA_GRAVADO_10 = IVA_GRAVADO
+IVA_GRAVADO_5 = IVA_GRAVADO
+
+# Descripciones canónicas — deben coincidir BYTE A BYTE con el enum del XSD.
 IVA_AFEC_DESC: dict[int, str] = {
-    IVA_GRAVADO_PARCIAL: "Gravado parcial",
-    IVA_EXONERADO: "Exonerado",
+    IVA_GRAVADO: "Gravado IVA",
+    IVA_EXONERADO: "Exonerado (Art. 83- Ley 125/91)",
     IVA_EXENTO: "Exento",
-    IVA_GRAVADO_10: "Gravado IVA 10%",
-    IVA_GRAVADO_5: "Gravado IVA 5%",
+    IVA_GRAVADO_PARCIAL: "Gravado parcial (Grav- Exento)",
 }
 
-# Tasa IVA por código de afectación
+# Tasa IVA por código de afectación (solo referencia; el ítem provee dTasaIVA)
 IVA_RATE: dict[int, int] = {
-    IVA_GRAVADO_PARCIAL: 0,
+    IVA_GRAVADO: 0,  # placeholder: la tasa real depende del ítem
     IVA_EXONERADO: 0,
     IVA_EXENTO: 0,
-    IVA_GRAVADO_10: 10,
-    IVA_GRAVADO_5: 5,
+    IVA_GRAVADO_PARCIAL: 0,
+}
+
+# ── Departamentos (cDepEmi / dDesDepEmi) ──────────────────────────────────────
+# Fuente: Departamentos_v141.xsd — tDepartamentos (código) y tDesDepartamento
+# (descripción MAYÚSCULAS). Ambas enumeraciones son verbatim del XSD oficial.
+# Usar DEPT_DESC[codigo] para obtener el valor canónico de dDesDepEmi.
+
+DEPT_DESC: dict[int, str] = {
+    1: "CAPITAL",
+    2: "CONCEPCION",
+    3: "SAN PEDRO",
+    4: "CORDILLERA",
+    5: "GUAIRA",
+    6: "CAAGUAZU",
+    7: "CAAZAPA",
+    8: "ITAPUA",
+    9: "MISIONES",
+    10: "PARAGUARI",
+    11: "ALTO PARANA",
+    12: "CENTRAL",
+    13: "NEEMBUCU",
+    14: "AMAMBAY",
+    15: "PTE. HAYES",
+    16: "BOQUERON",
+    17: "ALTO PARAGUAY",
+    18: "CANINDEYU",
+    19: "CHACO",
+    20: "NUEVA ASUNCION",
 }
 
 # ── Sistema de facturación (dSisFact) ─────────────────────────────────────────
