@@ -279,6 +279,84 @@ envolver en try/except con mensaje user-friendly.
    oficial + las dos implementaciones de referencia ya corroboran la decisión,
    pero si OCA/PR pide la cita del manual, bajar el PDF v150 del portal ekuatia.
 
+## Hallazgo de spike (post-research, durante implementación PR-4a)
+
+**Fecha:** 2026-06-17
+
+### Extructura_xml_DE.xml NO es binary-reproducible
+
+Durante el spike de implementación de PR-4a se confirmó que el archivo de
+referencia `docs/original/xsd/Extructura_xml_DE.xml` provisto por DNIT en el
+release de XSDs v150 es **ilustrativo**, no funcional:
+
+- El `<X509Certificate>` está redactado/ofuscado (no es un cert válido descifrable).
+- El `<DigestValue>` (ej. `4koJaq...`) fue generado contra el documento ORIGINAL
+  no-redactado, que NO está disponible públicamente.
+- Ninguna canonicalización estándar (exclusiva o inclusiva, con/sin namespace
+  ordering, con/sin pretty-print) reproduce ese DigestValue desde el archivo
+  publicado.
+
+### Implicación para tests
+
+**El test de round-trip de PR-4a NO debe comparar DigestValue literal contra
+el archivo oficial.** Eso es imposible por diseño (DNIT ofuscó intencionalmente
+los valores criptográficos para no exponer su PKI de ejemplo).
+
+El approach correcto (implementado en PR-4a) es validar:
+
+1. URIs de algoritmos verbatim contra los oficiales SIFEN.
+2. Position estructural del bloque Signature (después de DE, antes de gCamFuFD).
+3. DigestValue derivado correctamente desde NUESTRA propia canonicalización
+   (assert DigestValue == base64(sha256(exc_c14n(DE_element)))).
+4. Verify end-to-end con nuestro cert de test (sign + verify roundtrip).
+5. Tamper detection (modificar DE invalida la firma).
+
+### Para qué SÍ sirve Extructura_xml_DE.xml
+
+- Validar la **estructura** del XML (orden de elementos, namespaces, prefijos).
+- Confirmar la **posición** del bloque Signature dentro del documento.
+- Confirmar los **URIs** de algoritmos y transformaciones esperados por SIFEN.
+
+### Confianza actualizada
+
+Esto reduce la confianza de Q5 de "MEDIA" a "ALTA con caveat":
+
+- Confianza alta en que signxml canonicaliza correctamente (verificado por spike).
+- Caveat: la confirmación final solo viene cuando SIFEN test acepte un DE
+  firmado con CCFE real (PR-4c). Mientras tanto, los tests con CCFE mock validan
+  todo lo que es validable sin contraparte real.
+
+### Acción para futuros readers
+
+Si en algún momento DNIT publica un release con DE de ejemplo binary-reproducible
+(con cert válido + DigestValue calculable), agregar test de comparación literal
+como complemento del approach actual. Por ahora, el approach estructural es el
+único técnicamente correcto.
+
+### Bug colateral: `_xsd_dir()` parents[4] y la validación XSD rota (TD-009/010/011)
+
+Durante el spike se intentó re-habilitar la validación XSD del DE generado y se
+descubrió una cadena de problemas:
+
+- `addons/l10n_py_edi/services/xsd_validator.py` resolvía el directorio de XSDs
+  con `parents[4]`, que sobrepasa la raíz del repo en CI. Consecuencia:
+  `test_xml_builder.py::test_fe_simple_xsd_valid` saltaba silenciosamente
+  (`FileNotFoundError` → `SkipTest("XSD files are unavailable")`, mensaje
+  engañoso). **Corregido en este PR:** `parents[4] → parents[3]`.
+- Con el path corregido, el test falla: los XSD oficiales de SIFEN **declaran
+  tipos, no elementos globales**, así que `lxml.XMLSchema.validate(<DE>)` no
+  puede anclar (`No matching global declaration`). El approach de
+  `validate_against_xsd` requiere reescritura con wrapper-schema por tipo
+  (TD-011).
+- Validando con esa técnica correcta (probada en el spike) afloran **dos bugs
+  reales de contenido del DE** que SIFEN rechazaría:
+  `dDesAfecIVA="Gravado IVA 10%"` (debe ser `"Gravado IVA"`, TD-009) y
+  `dDesDepEmi="Central"` (debe ser `"CENTRAL"`, TD-010).
+
+**Alcance en PR-4a:** solo el fix de `parents` + skip honesto del test +
+registro en BUGS_BACKLOG (TD-009..TD-012). Las correcciones del builder y la
+reescritura del validador van en un PR dedicado.
+
 ## Fuentes consultadas
 
 **Locales:**

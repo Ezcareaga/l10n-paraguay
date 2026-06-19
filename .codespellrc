@@ -6,7 +6,7 @@
 
 [codespell]
 # Lowercase canonical form — codespell matches case-insensitively.
-ignore-words-list = agai,alternativos,anual,asent,auxiliar,caf,calle,calles,codo,comando,comandos,cristal,caracteres,clases,cliente,controles,extensiones,falso,fase,fases,flor,fram,hace,ine,ines,inmutable,instale,imposible,inicial,jave,maka,millon,mision,nane,nd,noe,oriente,parana,posible,residencial,requiere,responsable,secuencial,serie,servin,soler,simular,thirdparty,vai,vas,vender,yau,accesible,aceptable,aplicable,argumentos,arquitectural,asume,autor,componentes,comercial,contener,detecte,direccion,doble,dobles,fiel,funcional,historial,ignora,implemente,limite,manifiesto,mis,momento,oficial,pase,previos,profesional,registre,relevante,responde,ser,te,termine,valide,varios,visibles,ue,diagramas,avance,colateral,persisten,importan,excede
+ignore-words-list = agai,alternativos,anual,asent,auxiliar,caf,calle,calles,codo,comando,comandos,cristal,caracteres,clases,cliente,controles,extensiones,falso,fase,fases,flor,fram,hace,ine,ines,inmutable,instale,imposible,inicial,jave,maka,millon,mision,nane,nd,noe,oriente,parana,posible,residencial,requiere,responsable,secuencial,serie,servin,soler,simular,thirdparty,vai,vas,vender,yau,accesible,aceptable,aplicable,argumentos,arquitectural,asume,autor,componentes,comercial,contener,detecte,direccion,doble,dobles,fiel,funcional,historial,ignora,implemente,limite,manifiesto,mis,momento,oficial,pase,previos,profesional,registre,relevante,responde,ser,te,termine,valide,validador,varios,visibles,ue,diagramas,avance,colateral,persisten,importan,excede,algoritmos,interpolar
 
 # Skip non-English content paths (Paraguayan catalogs, vendored references,
 # generated artifacts, planning notes, ISO-8859-1 INE CSVs, official SIFEN XSDs).
