@@ -287,6 +287,7 @@ self.date` para la posición 26-33 del CDC. Esa fecha **debe** ser
 **Detectado:** 2026-06-17 durante PR-4a (spike XAdES), al re-habilitar la
 validación XSD del DE tras corregir `_xsd_dir()` (ver TD-011).
 **Severidad:** **alta** — SIFEN rechazaría toda FE con ítem gravado (el caso común).
+**Status: RESUELTO en PR fix/edi-xml-builder-xsd-compliance**
 
 **Síntoma:** validando el `<DE>` generado contra `DE_Types_v150.xsd` (vía
 wrapper-schema por tipo), `dDesAfecIVA="Gravado IVA 10%"` falla el facet
@@ -294,22 +295,19 @@ wrapper-schema por tipo), `dDesAfecIVA="Gravado IVA 10%"` falla el facet
 `{"Gravado IVA", "Exonerado (Art. 83- Ley 125/91)", "Exento", "Gravado parcial (Grav- Exento)"}`.
 
 **Origen:** `addons/l10n_py_edi/services/xml_constants.py:146-152`
-(`IVA_AFEC_DESC`). 4 de 5 valores son incorrectos:
+(`IVA_AFEC_DESC`). 4 de 5 valores eran incorrectos:
 
-- `IVA_GRAVADO_10: "Gravado IVA 10%"` → debe ser `"Gravado IVA"` (la tasa va en `dTasaIVA`)
-- `IVA_GRAVADO_5: "Gravado IVA 5%"` → debe ser `"Gravado IVA"`
-- `IVA_EXONERADO: "Exonerado"` → debe ser `"Exonerado (Art. 83- Ley 125/91)"`
-- `IVA_GRAVADO_PARCIAL: "Gravado parcial"` → debe ser `"Gravado parcial (Grav- Exento)"`
-- `IVA_EXENTO: "Exento"` → ✓ correcto
+- `IVA_GRAVADO_10: "Gravado IVA 10%"` → corregido a `"Gravado IVA"` (la tasa va en `dTasaIVA`)
+- `IVA_GRAVADO_5: "Gravado IVA 5%"` → corregido a `"Gravado IVA"`
+- `IVA_EXONERADO: "Exonerado"` → corregido a `"Exonerado (Art. 83- Ley 125/91)"`
+- `IVA_GRAVADO_PARCIAL: "Gravado parcial"` → corregido a `"Gravado parcial (Grav- Exento)"`
+- `IVA_EXENTO: "Exento"` → ✓ ya era correcto
 
-**Fix:** alinear `IVA_AFEC_DESC` al enum del XSD. Verificar también la
-correspondencia código `iAfecIVA` ↔ descripción contra el Manual Técnico v150
-(el módulo usa 5 códigos; el XSD `tiAfecIVA` arranca en "1").
+También se corrigió el código numérico: el XSD `tiAfecIVA` solo define 1-4.
+`IVA_GRAVADO_10` e `IVA_GRAVADO_5` son ahora aliases de `IVA_GRAVADO=1`; la
+tasa (5 o 10) va únicamente en `dTasaIVA`. `IVA_GRAVADO_PARCIAL` pasó de 1 a 4.
 
-**Owner:** PR dedicado "xml_builder XSD compliance + validator rewrite"
-(junto con TD-010 y TD-011).
-
-**Refs:** `xml_constants.py:146-152`, `DE_Types_v150.xsd:1305-1335`,
+**Refs:** `xml_constants.py`, `DE_Types_v150.xsd:1305-1338`,
 `docs/research/xades_sifen.md` §"Hallazgo de spike".
 
 ## TD-010 — `dDesDepEmi` case mismatch ("Central" → "CENTRAL")
@@ -317,54 +315,42 @@ correspondencia código `iAfecIVA` ↔ descripción contra el Manual Técnico v1
 **Detectado:** 2026-06-17 durante PR-4a, misma corrida que TD-009.
 **Severidad:** media — SIFEN rechaza departamentos cuyo nombre no matchee el
 enum exacto (MAYÚSCULAS).
+**Status: RESUELTO en PR fix/edi-xml-builder-xsd-compliance**
 
 **Síntoma:** `dDesDepEmi="Central"` falla el facet `enumeration` del XSD; el
 set oficial está en MAYÚSCULAS (`..., "CENTRAL", ...`).
 
 **Origen:** `addons/l10n_py_edi/services/xml_builder.py:324` — pass-through
-directo de `issuer["department_desc"]`. El builder confía en que el caller
-provea el nombre canónico en vez de derivarlo del código `cDepEmi`.
+directo de `issuer["department_desc"]`. El builder confiaba en que el caller
+proveyera el nombre canónico en vez de derivarlo del código `cDepEmi`.
 
-**Fix:** derivar `dDesDepEmi` del código `cDepEmi` vía una tabla canónica de
-departamentos (SIFEN los enumera en `Departamentos_v141.xsd`), haciendo el
-campo a prueba del caller. Alternativa mínima: corregir el fixture y validar
-el contrato.
+**Fix aplicado (Option A):** se agregó `DEPT_DESC: dict[int, str]` en
+`xml_constants.py` con los 20 departamentos verbatim del XSD. El builder
+deriva `dDesDepEmi` de `DEPT_DESC[issuer["department"]]` y lanza `ValueError`
+si el código no es válido. El campo `department_desc` del issuer ya no se usa
+para emitir el XML.
 
-**Owner:** PR dedicado "xml_builder XSD compliance + validator rewrite".
-
-**Refs:** `xml_builder.py:323-324`, `Departamentos_v141.xsd`.
+**Refs:** `xml_builder.py`, `xml_constants.py`, `Departamentos_v141.xsd`.
 
 ## TD-011 — `validate_against_xsd` necesita wrapper-schema (XSDs declaran tipos, no globals)
 
 **Detectado:** 2026-06-17 durante PR-4a, al corregir `_xsd_dir()`
 (`parents[4]→parents[3]`) y re-habilitar la validación.
-**Severidad:** media — la validación XSD del DE no funciona como está escrita;
+**Severidad:** media — la validación XSD del DE no funcionaba como estaba escrita;
 el test la enmascaraba con un skip silencioso.
+**Status: RESUELTO en PR fix/edi-xml-builder-xsd-compliance**
 
-**Síntoma:** `lxml.etree.XMLSchema.validate(<DE>)` contra `DE_v150.xsd` falla
-con `SCHEMAV_CVC_ELT_1: ... 'DE': No matching global declaration available for
-the validation root`. Inspección de los 9 XSD: **ninguno declara elementos
-globales** — son bibliotecas de tipos (`tDE`, `tiAfecIVA`, …) + includes. Solo
-`xmldsig-core-schema.xsd` (W3C) tiene globals. lxml exige que la raíz a validar
-matchee una declaración de elemento global; no existe `DE` ni `rDE` global.
-
-**Causa de raíz del skip silencioso:** `_xsd_dir()` usaba `parents[4]`
-(sobrepasaba la raíz del repo) → `FileNotFoundError` → `test_fe_simple_xsd_valid`
-lo capturaba como `SkipTest("XSD files are unavailable")`. El skip era engañoso:
-los XSD SÍ están en el repo. `parents[4]→parents[3]` ya está corregido en PR-4a;
-el test quedó con `@unittest.skip` honesto apuntando a este TD.
-
-**Fix:** reescribir `validate_against_xsd` con la técnica wrapper-schema:
-generar un schema que `include` el XSD de tipos y declare un elemento global
-del tipo a validar (`<xs:element name="DE" type="sifen:tDE"/>`), luego validar.
-Probado funcionando en el spike (ancla y valida el subárbol DE completo — fue
-así que se detectaron TD-009 y TD-010).
-
-**Owner:** PR dedicado "xml_builder XSD compliance + validator rewrite".
-Re-habilita `test_fe_simple_xsd_valid` (sin skip) y resuelve TD-009/TD-010.
+**Fix aplicado:** `xsd_validator.py` reescrito con enfoque wrapper-schema.
+La función pública es ahora `validate_de(xml_bytes)` que construye (y cachea)
+un mini-schema wrapper que declara `<xs:element name="DE" type="sifen:tDE"/>` e
+incluye `DE_v150.xsd`. lxml puede anclar la validación al tipo `tDE` y validar
+el subárbol completo. Se mantiene `validate_against_xsd(element)` por
+compatibilidad hacia atrás (delega a `validate_de`). El escape hatch
+`FileNotFoundError → SkipTest` fue eliminado del test helper — ahora es error
+duro. `test_fe_simple_xsd_valid` re-habilitado sin `@unittest.skip`.
 
 **Refs:** `addons/l10n_py_edi/services/xsd_validator.py`,
-`addons/l10n_py_edi/tests/test_xml_builder.py:257`,
+`addons/l10n_py_edi/tests/test_xml_builder.py`,
 `docs/research/xades_sifen.md` §"Hallazgo de spike".
 
 ## TD-012 — `test_fe_simple_golden_file` skipea silenciosamente (auto-crea golden y salta)
@@ -372,18 +358,13 @@ Re-habilita `test_fe_simple_xsd_valid` (sin skip) y resuelve TD-009/TD-010.
 **Detectado:** 2026-06-17 durante PR-4a, al correr la suite con la validación
 XSD activa.
 **Severidad:** baja — el test no asegura nada en CI.
+**Status: RESUELTO en PR fix/edi-xml-builder-xsd-compliance**
 
-**Síntoma:** `test_fe_simple_golden_file` escribe el golden
-`tests/xml_fixtures/fe_simple.xml` la primera vez que corre y hace
-`skipped: Golden file creado: ...`. El fixture no está commiteado, así que en
-CI (checkout limpio) **siempre** crea-y-skipea — nunca compara contra un golden.
+**Fix aplicado:** golden `tests/xml_fixtures/fe_simple.xml` generado desde un
+DE válido (post TD-009/TD-010) y commiteado en el repo. El test reescrito para
+comparar dDesAfecIVA y dDesDepEmi del DE fresco contra el golden y fallar ante
+drift. La ruta de regeneración queda disponible bajo `ECC_REGENERATE_GOLDEN=1`
+(escribe el golden y falla con instrucción de revisar el diff antes de commitear).
 
-**Fix:** commitear un golden válido y que el test compare (falle ante drift),
-o convertir el patrón a aserción directa. Co-requisito: el golden debe
-generarse desde un DE válido (post TD-009/TD-010), por eso va en el mismo PR
-dedicado.
-
-**Owner:** PR dedicado "xml_builder XSD compliance + validator rewrite".
-
-**Refs:** `addons/l10n_py_edi/tests/test_xml_builder.py`
-(`test_fe_simple_golden_file`).
+**Refs:** `addons/l10n_py_edi/tests/test_xml_builder.py` (`test_fe_simple_golden_file`),
+`addons/l10n_py_edi/tests/xml_fixtures/fe_simple.xml`.
