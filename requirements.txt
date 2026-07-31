@@ -15,4 +15,4 @@ pyopenssl>=23.2
 # urllib3 1.26.5 (pin de la imagen CI) usa un API privado de cryptography
 # removido en >=42, y toda la serie 1.x tiene CVEs high que bloquean
 # dependency-review. Odoo 18 funciona con 2.x (validado en container dev).
-urllib3>=2.0
+urllib3>=2.7.0
